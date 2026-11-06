@@ -162,7 +162,7 @@ const AudioFX = (() => {
     const src = document.currentScript && document.currentScript.src;
     return src ? src.replace(/audio\.js(\?.*)?$/, '') : '';
   })();
-  const clipUrl = url => (/^(https?:|\/|\.\.?\/|blob:|data:)/.test(url) ? url : ROOT_BASE + url);
+  const clipUrl = url => (/^([a-z][a-z0-9+.-]*:|\/|\.\.?\/)/i.test(url) ? url : ROOT_BASE + url);   // 주소 틀(https·blob·data·capacitor 기기 파일 = 이름 바꾸기 녹음)은 그대로
 
   /* 녹음 미리 받기: 동화를 시작하면 이 동화의 녹음 파일을 순서대로(동시에 4개씩) 받아 둔다.
      받은 파일(압축된 mp3)만 들고 있다가 말할 때 풀어 쓴다 → 대사가 바로 나온다 (메모리도 적게) */
@@ -226,7 +226,8 @@ const AudioFX = (() => {
   const EN_RATE = 0.9;
   /* 앱 묶음은 영어 클립을 미리 0.9배로 늘려 담는다(tools/app/build_www.sh 가 아래 줄을 true 로 바꾼다). true 면 재생 때 늘리지 않는다 */
   const EN_PRESLOWED = false;
-  const slowEn = url => !EN_PRESLOWED && typeof url === 'string' && /(^|\/)audio\/el\/.*\/en\//.test(url);
+  /* 이름 바꾸기 영어 녹음(engine/names.js, 주소 끝 #nm-en)은 늘리지 않고 받으므로 앱·웹 모두 재생 때 늘린다 */
+  const slowEn = url => typeof url === 'string' && (/#nm-en$/.test(url) || (!EN_PRESLOWED && /(^|\/)audio\/el\/.*\/en\//.test(url)));
   /* 목소리 늘리기(WSOLA): 40ms 창을 반씩 겹쳐 붙이되, 이어 붙일 자리를 앞 조각과 가장 닮은 곳에서 찾아 음 높이를 지킨다 */
   function stretchBuffer(c, buf, rate) {
     const sr = buf.sampleRate, N = Math.round(sr * .04) & ~1, Hs = N / 2, Ha = Hs * rate, tol = Math.round(N / 4);
@@ -698,6 +699,8 @@ const Narrator = (() => {
   }
 
   function hideBubble() { bubble().hidden = true; }
+  /* 이름 바꾸기(engine/names.js): 자막 글자의 아이·강아지 이름을 바꾼다. 꺼져 있거나 없으면 글 그대로. 녹음 열쇠(text)는 그대로 쓴다 */
+  const nameView = t => { try { return typeof Names !== 'undefined' ? Names.view(t) : t; } catch (e) { return t; } };
 
   /* 말하기: ① 사전 녹음 신경망 음성 → ② 말풍선만(녹음이 없거나 실패하면 소리 없이)
      세대 카운터로, 뒤이어 시작된 내레이션의 말풍선을 앞선 호출이 지우지 못하게 한다 */
@@ -710,7 +713,7 @@ const Narrator = (() => {
     const gen = ++speakGen;
     AudioFX.stopNarration(); // 겹침 방지: 진행 중인 클립 중단
     const en = englishOn() && NARRATION_CLIPS_EN[text]; // 영어 자료가 없는 문장은 한국어로
-    if (bubble) showBubble(en ? en.t : text); else hideBubble();     // 홈은 말풍선 없이 목소리만(2026-10-28 사용자 결정)
+    if (bubble) showBubble(nameView(en ? en.t : text)); else hideBubble();     // 홈은 말풍선 없이 목소리만(2026-10-28 사용자 결정)
     const clip = en ? en.c : (typeof NARRATION_CLIPS !== 'undefined') && NARRATION_CLIPS[text];
     if (clip) {
       /* 이 말하기 뒤에 멈춤(Narrator.stop·AudioFX.stopNarration)이 오면 cut: 기다림을 바로 끝내고 남은 조각도 틀지 않는다 */

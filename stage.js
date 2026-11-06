@@ -26,6 +26,8 @@
     tileSrc: () => '', title: id => id, onClose: () => {}, motion: () => !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches),
   };
   const L = (ko, en) => H.L(ko, en);
+  /* 스티커 이름 글자: 이름 바꾸기(engine/names.js)가 켜져 있으면 아이·강아지 이름을 바꾼다. 소리는 원래 열쇠(c.ko/c.en)로 — 홈 맵을 덮어 새 이름 녹음이 나온다 */
+  const nameL = c => { const t = L(c.ko, c.en); try { return typeof Names !== 'undefined' ? Names.view(t, 'home') : t; } catch (e) { return t; } };
   const motion = () => H.motion();
   const sfx = (n, v) => { try { if (typeof AudioFX !== 'undefined') AudioFX.sfx(n, v); } catch (e) { /* 소리 없이 */ } };
   /* 말은 녹음된 한국어 문구를 열쇠로 부른다(영어 모드면 audio.js 가 같은 열쇠의 영어 클립을 고른다). 녹음 없는 말은 하지 않는다 */
@@ -236,7 +238,7 @@
     el.dataset.k = key;
     el.innerHTML = `<div class="sg-face"><img class="f" src="${b.flat}" alt="" draggable="false"><img class="u" src="${b.up}" alt="" draggable="false"></div>`;
     el.setAttribute('role', 'img');
-    const c = info(key); if (c) el.setAttribute('aria-label', L(c.ko, c.en));
+    const c = info(key); if (c) el.setAttribute('aria-label', nameL(c));
     return el;
   }
   function sizeEl(el, key, b) {
@@ -271,7 +273,7 @@
         html += `<button type="button" class="sg-tale" data-tale="${c.tale}" aria-label="${H.title(c.tale)}">${src ? `<img src="${src}" alt="" draggable="false" decoding="async">` : ''}</button>`;
       }
       const on = scene.items.some(i => i.c === key);
-      html += `<button type="button" class="sg-cell${on ? ' used' : ''}${shiny(key) ? ' shiny' : ''}" role="listitem" data-k="${key}" aria-label="${L(c.ko, c.en)}"><img src="${c.img}" alt="" draggable="false" decoding="async"></button>`;
+      html += `<button type="button" class="sg-cell${on ? ' used' : ''}${shiny(key) ? ' shiny' : ''}" role="listitem" data-k="${key}" aria-label="${nameL(c)}"><img src="${c.img}" alt="" draggable="false" decoding="async"></button>`;
     });
     drawer.innerHTML = html;
   }

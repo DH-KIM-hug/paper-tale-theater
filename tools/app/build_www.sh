@@ -12,6 +12,8 @@ node tools/app/unused_v3w.mjs > www/.v3w_raw && sed 's#^#/v3w/#' www/.v3w_raw > 
 for d in fonts home icons thumbs thumb ui v3w stickers banner stage; do   # stage = 스티커북 내 무대 배경(2026-11-06). banner = 홈 맨 위 추천 배너(2026-11-02 출시 점검: 빠져 있어 앱 홈 배너가 404)
    [ -d assets/$d ] && rsync -a --exclude='.DS_Store' --exclude='*_raw.png' --exclude='thumb/patjuk.png' --exclude='tiles.json' $([ "$d" = v3w ] && echo --exclude-from=www/.v3w_exclude) assets/$d www/assets/; done
 rm -f www/.v3w_exclude www/.v3w_raw
+# 이름 바꾸기(2026-11-06, docs/NAME_CHANGE_PLAN.md): engine/name_form.js(받침 함수)·engine/names.js(기기 파일 덮어쓰기·보호자 화면 도우미)는 위 engine 복사와 아래 engine/*.js 줄이기에 함께 들어간다. 빠지면 앱에서 이름 바꾸기가 조용히 꺼지므로 확인한다. 녹음 파일은 기기(Filesystem Directory.Data/names)에만 생기고 www 에는 없다
+for f in engine/name_form.js engine/names.js; do [ -f "www/$f" ] || { echo "빠짐: www/$f"; exit 1; }; done
 cp sounds/CREDITS.md www/sounds/CREDITS.txt   # 앱에는 *.md 를 넣지 않으므로 .txt 로 복사: 보호자 영역 '정보' > 그림·소리 출처가 읽는다
 # 녹음: el = 기본 목소리(ElevenLabs), tc = Typecast(el 에 없는 줄만), bremen = 브레멘 음악대 소리
 mkdir -p www/audio && node tools/app/used_audio.mjs > www/.audio_list && rsync -a --files-from=www/.audio_list audio/ www/audio/ && rm www/.audio_list && python3 tools/app/shrink_audio.py www/audio   # 64kbps 모노로 다시 압축(원본 128~320k, ~/.paper-tale/cache/audio64 에 보관). 녹음은 실제로 쓰는 것만(2026-11-02): ElevenLabs 에 덮인 Typecast 클립·오디션·옛 곡은 빠진다. 목록 기준은 tools/app/used_audio.mjs

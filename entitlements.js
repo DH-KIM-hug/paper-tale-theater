@@ -14,6 +14,7 @@ const Entitlements = (() => {
   /* 서버 주소는 여기 한 곳. 빌드/시험에서 window.PAPERTALE_API_BASE 로 바꿀 수 있고, 비어 있으면 동기화를 끈다 */
   const API_BASE = (typeof window !== 'undefined' && window.PAPERTALE_API_BASE) || '';
   const PRODUCT_ID = 'com.papertale.theater.unlockall';
+  const RENAME_ID = 'com.papertale.theater.rename';   // 이름 바꾸기 이용권 0.99달러(소모성, 4.99 산 사람만). docs/NAME_CHANGE_PLAN.md 확정 사항
 
   const FREE_ALWAYS = ['rabbit', 'turnip', 'cinderella', 'patjuk'];
   const PER_WEEK = 4;
@@ -25,7 +26,7 @@ const Entitlements = (() => {
   const ID_RE = /^[a-z0-9_]{1,40}$/;
   const CAST_RE = /^[a-z0-9_]{1,40}\.[a-z0-9_]{1,40}$/;
   const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
-  let price = '$4.99';
+  let price = '$4.99', renamePrice = '$0.99';
   const OWNED_KEY = 'owned_all';        // 옛 구매 기록(호환): state.owned 와 함께 읽는다
   const K_ACCOUNT = 'sync_account', K_STATE = 'sync_state', K_DIRTY = 'sync_dirty', K_RECEIPT = 'sync_receipt';
   const store = {
@@ -416,15 +417,52 @@ const Entitlements = (() => {
     return r.ok;
   }
 
+  /* 이름 바꾸기 서버(/v1/name/*, docs/NAME_CHANGE_PLAN.md): 같은 계정 인증. binary 면 성공 응답을 바이트(mp3)로 돌려준다.
+     → { ok, status, data } | { ok, status, bytes } | { ok:false, status, error }. 녹음 한 줄은 몇 초 걸리므로 시간 제한 40초 */
+  async function nameCall(method, path, body, { binary = false } = {}) {
+    if (!enabled()) return { ok: false, status: 0, error: 'offline' };
+    const acc = await ensureAccount();
+    if (!acc) return { ok: false, status: 0, error: 'offline' };
+    const ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const tm = ctl && setTimeout(() => ctl.abort(), 40000);
+    try {
+      const headers = { Authorization: 'Bearer ' + acc.accountId + '.' + acc.token };
+      if (body !== undefined) headers['Content-Type'] = 'application/json';
+      const r = await fetch(API_BASE + '/v1' + path, { method, headers, body: body === undefined ? undefined : JSON.stringify(body), signal: ctl ? ctl.signal : undefined });
+      if (r.ok && binary) return { ok: true, status: r.status, bytes: await r.arrayBuffer() };
+      let j = null; try { j = await r.json(); } catch (e) { /* 본문 없음 */ }
+      if (r.ok) return { ok: true, status: r.status, data: j || {} };
+      return { ok: false, status: r.status, error: (j && j.error) || 'server_error', data: j };
+    } catch (e) { return { ok: false, status: 0, error: 'offline' }; }
+    finally { if (tm) clearTimeout(tm); }
+  }
+  /* 이름 바꾸기 이용권 사기: 결제(부모 확인은 화면 쪽) → 영수증을 서버로(상품 ID 로 서버가 구분) → 성공이면 true.
+     앱은 네이티브 Store.purchaseRename, 시험은 setBridge({ purchaseRename }) */
+  async function purchaseRename() {
+    if (!owned()) return { ok: false, error: 'not_owned' };
+    let r = null;
+    try {
+      if (bridge && bridge.purchaseRename) r = await bridge.purchaseRename();
+      else return { ok: false, error: 'no_store' };
+    } catch (e) { return { ok: false, error: 'store_error' }; }
+    if (!r || !r.purchased || !r.signedTransaction) return { ok: false, error: (r && r.reason) || 'cancelled' };
+    const sent = await sendReceipt({ signedTransaction: r.signedTransaction, productId: RENAME_ID });
+    return sent ? { ok: true } : { ok: false, error: 'receipt_pending' };   // 못 보낸 영수증은 보관했다가 다음 동기화 때 다시 보낸다
+  }
+
   /* 실제 앱(Capacitor)이면 네이티브 StoreKit 플러그인(Store)에 연결: 스토어 거래 기록이 구매 여부의 기준 */
   const nativeStore = typeof window !== 'undefined' && window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Store;
   if (nativeStore) {
     const viaStore = async r => { if (r && r.owned) { sendReceipt(r); return true; } return false; };
     bridge = {
       purchase: async () => viaStore(await nativeStore.purchase()),
-      restore: async () => viaStore(await nativeStore.restore())
+      restore: async () => viaStore(await nativeStore.restore()),
+      purchaseRename: () => nativeStore.purchaseRename()
     };
+    /* 이름 바꾸기 이용권이 결제 화면 밖에서 끝난 경우(승인 대기 뒤 등): 영수증을 서버로 */
+    nativeStore.addListener('renamePurchased', r => { if (r && r.signedTransaction) sendReceipt({ signedTransaction: r.signedTransaction, productId: RENAME_ID }); });
     nativeStore.getPrice().then(r => { if (r && r.price) price = r.price; }).catch(() => {});
+    if (nativeStore.getRenamePrice) nativeStore.getRenamePrice().then(r => { if (r && r.price) renamePrice = r.price; }).catch(() => {});
     nativeStore.isOwned().then(r => { if (r && r.owned) { markOwnedQuiet(); sendReceipt(r); } }).catch(() => {});
     nativeStore.addListener('ownedChanged', r => { if (r && r.owned) { markOwnedQuiet(); sendReceipt(r); } });
   }
@@ -443,7 +481,7 @@ const Entitlements = (() => {
   function _reset(s) { st = s === undefined ? null : normalize(s); }
 
   const api = {
-    FREE_ALWAYS, PER_WEEK, STAR_NEED, STICKER_MAX, get PRICE() { return price; }, API_BASE, PRODUCT_ID,
+    FREE_ALWAYS, PER_WEEK, STAR_NEED, STICKER_MAX, get PRICE() { return price; }, get RENAME_PRICE() { return renamePrice; }, API_BASE, PRODUCT_ID, RENAME_ID, nameCall, purchaseRename, owned,
     appMode, weekNumber, dateStr, freeThisWeek, status, canPlay, isFree, lockedChoices,
     purchase, restore, grantAll, revokeAll, setBridge, guard,
     state: () => load(), merge, normalize, balanceOf,

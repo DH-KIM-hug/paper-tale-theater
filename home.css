@@ -987,6 +987,18 @@ body.app .shelf::-webkit-scrollbar { display: none; }   /* 큰 그림과 목록�
 .link-input:focus-visible { outline: 2px solid var(--reward); outline-offset: 2px; }
 .link-in .how { margin: 0; }
 @media (max-width: 420px) { .link-code { font-size: 32px; } }
+/* 우리 아이 이름(보호자, engine/names.js): 기기 연결 입력칸(.link-input)을 그대로 쓰고 글자 모양만 이름에 맞춘다 */
+.nm-row { display: grid; grid-template-columns: max-content minmax(0, 1fr) minmax(0, 1fr) max-content; gap: 10px 12px; align-items: center; padding: 10px 0; box-shadow: var(--rule); }
+.nm-lb { font-size: var(--fs-body); font-weight: 700; color: var(--ink); white-space: nowrap; }
+.nm-in { min-height: 52px; font-size: 20px; letter-spacing: .04em; text-transform: none; text-align: left; min-width: 0; }
+.nm-in.en { font-size: 17px; font-weight: 700; }
+.nm-in:disabled { opacity: .5; }
+.nm-row .ticket { min-width: 0; padding: 0 16px; }
+.nm-where { grid-column: 1 / -1; font-size: var(--fs-caption); font-weight: 600; color: var(--ink-2); }
+.nm-bar { flex: 1 1 160px; height: 10px; border-radius: 5px; background: var(--paper-dn); box-shadow: var(--cut); overflow: hidden; }
+.nm-bar i { display: block; height: 100%; background: var(--act); border-radius: 5px; transition: width 300ms var(--ease); }
+.nm-n { font-size: var(--fs-caption); font-weight: 600; color: var(--ink-2); }
+@media (max-width: 600px) { .nm-row { grid-template-columns: max-content minmax(0, 1fr); } .nm-row .nm-in.en { grid-column: 2; } .nm-row .ticket { grid-column: 1 / -1; } }
 
 /* ═════════ 탭 껍데기 (APP_SCREENS_PLAN §2): 가로 = 왼쪽 레일, 세로 = 아래 막대. 톱니는 늘 오른쪽 위 ═════════ */
 :root { --rail: 92px; --hole-w: 56px; --hole-h: 38px; --tab-ic: 30px; --bar-h: 0px; }   /* 레일 폭 128 → 92(2026-10-30 사용자: 아이패드 왼쪽이 너무 넓다) */

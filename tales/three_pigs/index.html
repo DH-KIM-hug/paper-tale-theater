@@ -14,9 +14,9 @@
 <script>try { if (localStorage.getItem('lang') === 'en') document.write('<script src="narration_en.js"><\/script>'); } catch (e) { /* 영어 자료 없이 한국어로 */ }</script>
 <script>try { const q = new URLSearchParams(location.search).get('voice'); if (q === 'tc') localStorage.setItem('voice', 'tc'); else if (q === 'el') localStorage.removeItem('voice'); if (localStorage.getItem('voice') !== 'tc') document.write('<script src="narration_el.js?v=20261102vx"><\/script><script src="read_narration_el.js?v=20261102vx"><\/script>' + (localStorage.getItem('lang') === 'en' ? '<script src="narration_el_en.js?v=20261102vx"><\/script><script src="read_narration_el_en.js?v=20261102vx"><\/script>' : '')); } catch (e) { /* ElevenLabs 없이 Typecast 로 */ }</script>
 <!-- 읽어 주기 녹음 맵(read_narration_el*.js)도 놀이에서 읽는다: 읽어 주기에 더한 인물 대사·장면 잇기 대사를 놀이에도 쓴다(2026-11-01) -->
-<script src="../../entitlements.js?v=20261031sh1"></script>
-<script src="../../audio.js?v=20261104cr"></script>
-<script src="../../engine/tale.js?v=20261104cr"></script>
+<script src="../../entitlements.js?v=20261106nm1"></script>
+<script src="../../audio.js?v=20261106nm1"></script>
+<script src="../../engine/tale.js?v=20261106nm1"></script>
 <script src="three_pigs.js?v=20261102sync"></script>
 </body>
 </html>

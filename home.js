@@ -218,7 +218,9 @@
   /* 화면 언어: 영어 자료(t.en)가 있는 동화만 영어로 보인다 */
   let lang = 'ko';
   try { if (localStorage.getItem('lang') === 'en') lang = 'en'; } catch (e) { /* 저장소를 못 쓰면 한국어 */ }
-  const shown = t => (lang === 'en' && t.en) ? { ...t, ...t.en } : t;
+  /* 이름 바꾸기(engine/names.js): 창작 동화 제목·소개 글의 아이·강아지 이름. 꺼져 있으면 그대로 */
+  const nameView = (x, id) => { try { return typeof Names !== 'undefined' && x ? Names.view(x, id) : x; } catch (e) { return x; } };
+  const shown = t => { const s = (lang === 'en' && t.en) ? { ...t, ...t.en } : t; return s.origin === 'original' ? { ...s, title: nameView(s.title, t.id), line: nameView(s.line, t.id) } : s; };
 
   /* ── 앱 모드 이용권: 공개 웹에서는 st 가 늘 'free' 라 아무것도 달라지지 않는다 ── */
   const L = (ko, en) => lang === 'en' ? en : ko;
@@ -674,7 +676,8 @@
     link: ['기기를 연결하려면 아래 문제를 풀어 주세요.', 'To link devices, please answer this question.'],
     open: ['이용권 화면으로 가려면 아래 문제를 풀어 주세요.', 'To open the access screen, please answer this question.'],
     doc: ['문서를 보려면 아래 문제를 풀어 주세요.', 'To read the document, please answer this question.'],
-    reset: ['기록을 지우려면 아래 문제를 풀어 주세요.', 'To erase records, please answer this question.']
+    reset: ['기록을 지우려면 아래 문제를 풀어 주세요.', 'To erase records, please answer this question.'],
+    names: ['이름 바꾸기를 열려면 아래 문제를 풀어 주세요.', 'To open name settings, please answer this question.']
   };
   function newGate() {
     const a = 6 + Math.floor(Math.random() * 4), b = 6 + Math.floor(Math.random() * 4);
@@ -751,7 +754,8 @@
     find: '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/>',
     link: '<circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/>',
     about: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.5"/>',
-    records: '<path d="M6 7h12M9 7V4.5h6V7M7.5 7l.8 12.5h7.4L16.5 7"/>'
+    records: '<path d="M6 7h12M9 7V4.5h6V7M7.5 7l.8 12.5h7.4L16.5 7"/>',
+    names: '<circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/>'
   };
   const guardItems = () => [
     { k: 'sound', t: L('소리와 글', 'Sound & text') },
@@ -759,6 +763,7 @@
     { k: 'lang', t: L('언어', 'Language') },
     { k: 'find', t: L('동화 찾기', 'Find tales') },
     ...(isApp ? [{ k: 'pass', t: L('이용권', 'Access') }, { k: 'link', t: L('기기 연결', 'Link devices') }] : []),
+    ...(namesOn() ? [{ k: 'names', t: L('우리 아이 이름', 'Child\'s name') }] : []),   // 앱 모드 + 서버가 켜져 있을 때만(웹 공개판은 숨김)
     { k: 'about', t: L('정보', 'About') },
     { k: 'records', t: L('기록', 'Records') }
   ];
@@ -771,7 +776,7 @@
   }
   function openGuard() {
     hint.hidden = true;
-    curGuard = guardItems().some(i => i.k === curGuard) ? curGuard : 'sound';
+    curGuard = guardItems().some(i => i.k === curGuard) && curGuard !== 'names' ? curGuard : 'sound';   // 이름 바꾸기는 열 때마다 어른 확인
     delete guardBody.dataset.open;           // 1열일 때는 목록부터
     recAsk = ''; docShown = '';
     drawGuardList(); drawGuardPane();
@@ -781,15 +786,19 @@
     clearInterval(linkTick);
     hideModal(guardEl, guardSheet, sheetClosed);
   }
-  const refreshGuard = () => { if (!guardEl.hidden && curGuard !== 'link') drawGuardPane(); };
+  const refreshGuard = () => { if (!guardEl.hidden && curGuard !== 'link' && curGuard !== 'names') drawGuardPane(); };
   $('#guardClose').addEventListener('click', closeGuard);
   guardList.addEventListener('click', e => {
     const b = e.target.closest('.g-item'); if (!b) return;
     paper('tap');
-    curGuard = b.dataset.k; recAsk = ''; docShown = '';
-    guardBody.dataset.open = '1';
-    drawGuardList(); drawGuardPane();
-    guardPane.scrollTop = 0;
+    const go = () => {
+      curGuard = b.dataset.k; recAsk = ''; docShown = '';
+      guardBody.dataset.open = '1';
+      drawGuardList(); drawGuardPane();
+      guardPane.scrollTop = 0;
+      if (curGuard === 'names') nmLoad();
+    };
+    if (b.dataset.k === 'names') parentCheck('names', go); else go();
   });
 
   /* 설정 줄 72: 글자 왼쪽, 스위치 72×40 오른쪽(§7-8). 체크박스는 보이지 않게 두고 같은 change 처리 */
@@ -817,6 +826,180 @@
       </div>
       <p class="how">${L('고르기·결제·복원 앞에서는 어른 확인을 한 번 더 해요.', 'A grown-up check comes before picking, buying or restoring.')}</p>`;
   }
+  /* ── 우리 아이 이름(이름 바꾸기, docs/NAME_CHANGE_PLAN.md 확정 사항): 앱 모드 + 서버가 켜져 있을 때만. 보호자 화면 글은 소리로 읽지 않는다 ──
+     4.99 전체 구매에 한 번 포함, 다시 바꾸려면 0.99 이용권(4.99 산 기기에서만 버튼이 보인다). 이름은 이 기기에만 두고 서버에 남기지 않는다 */
+  const namesOn = () => { try { return isApp && typeof Names !== 'undefined' && Names.supported(); } catch (e) { return false; } };
+  const nm = { q: null, loading: false, err: '', msg: '', agree: false, ask: false, edit: false, form: null, prevBusy: '' };
+  const NM_KID = ['A', 'B', 'C'], NM_DOG = ['D'];
+  const NM_ERR = {
+    offline: ['서버에 닿지 않아요. 인터넷을 확인하고 다시 해 주세요.', 'Cannot reach the server. Check your connection and try again.'],
+    not_owned: ['전체 이용권을 사면 쓸 수 있어요.', 'Available after buying full access.'],
+    no_credit: ['이름을 정할 횟수가 없어요. 이용권이 필요해요.', 'No name changes left. A pass is needed.'],
+    name_invalid: ['이름을 다시 확인해 주세요. 한글 1~4글자, 영어는 영문자만 써요.', 'Please check the names: 1–4 Korean letters; English letters only.'],
+    name_banned: ['다른 이름을 적어 주세요.', 'Please choose a different name.'],
+    name_same: ['자리마다 다른 이름을 적어 주세요.', 'Please use a different name for each one.'],
+    empty: ['바꿀 이름을 하나 이상 적어 주세요.', 'Please enter at least one name.'],
+    run_invalid: ['만들던 녹음의 시간이 지났어요. 지원 이메일(hello@ddoystory.com)로 알려 주세요.', 'This recording session has expired. Please email hello@ddoystory.com.'],
+    quota_exceeded: ['오늘은 더 만들 수 없어요. 내일 다시 해 주세요.', 'The daily limit is reached. Please try again tomorrow.'],
+    tts_failed: ['녹음을 만들지 못했어요. 잠시 뒤 \'이어 받기\'를 눌러 주세요.', 'Recording failed. Please tap Continue a little later.'],
+    busy: ['지금은 만들 수 없어요. 나중에 다시 눌러 주세요.', 'Not available right now. Please try again later.'],
+    save_failed: ['기기에 저장하지 못했어요. 저장 공간을 확인해 주세요.', 'Could not save on this device. Please check free space.'],
+    stopped: ['멈췄어요. \'이어 받기\'로 이어서 받아요.', 'Paused. Tap Continue to go on.'],
+    cancelled: ['결제가 끝나지 않았어요.', 'The purchase did not go through.'],
+    receipt_pending: ['결제는 됐지만 서버에 아직 닿지 않았어요. 잠시 뒤 다시 열어 주세요.', 'Purchased, but the server has not confirmed yet. Please reopen in a moment.']
+  };
+  const nmErr = e => L(...(NM_ERR[e] || ['잘 되지 않았어요. 다시 해 주세요.', 'Something went wrong. Please try again.']));
+  const nmEsc = x => String(x == null ? '' : x).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const nmOrig = s => { const o = NameForm.ORIGINAL[s]; return { ko: o.ko + (NameForm.hasBatchim(o.ko) ? '이' : ''), en: o.en }; };
+  const nmTaleName = id => (id === 'home' ? L('스티커 이름', 'Sticker names') : TALES.find(x => x.id === id) ? title(id) : id);
+  /* 자리가 나오는 동화(작게 보여 준다) */
+  const nmWhere = slot => { const c = Names.catalog(); if (!c) return ''; return Object.keys(c.tales).filter(t => t !== 'home' && (c.tales[t].lines || []).some(l => l.tpl && NameForm.slotsIn(l.tpl).includes(slot))).map(nmTaleName).join(' · '); };
+  async function nmLoad() {
+    if (nm.loading) return;
+    nm.loading = true; nm.err = ''; if (curGuard === 'names') drawGuardPane();
+    const [c, q] = await Promise.all([Names.fetchCatalog(), Names.quota()]);
+    nm.loading = false;
+    if (!c.ok || !q.ok) nm.err = (!q.ok ? q.error : c.error) || 'offline';
+    else nm.q = q.data;
+    if (!nm.form) { const st = Names.settings(); nm.form = Object.assign({}, st.names); }
+    if (curGuard === 'names' && !guardEl.hidden) drawGuardPane();
+    if (nm.q && !Names.busy()) Names.backfill(nm.q).then(any => { if (any) nmLoadQuiet(); });   // 새 창작 동화 무료 보충(조용히)
+  }
+  const nmLoadQuiet = async () => { const q = await Names.quota(); if (q.ok) nm.q = q.data; if (curGuard === 'names' && !guardEl.hidden) drawGuardPane(); };
+  /* 동화별 진행 막대(줄 수 기준) */
+  function nmBars(tales) {
+    return `<dl class="g-dl nm-prog">` + Names.progress(tales).filter(p => p.total).map(p => {
+      const pc = Math.round(100 * p.got / p.total);
+      return `<dt>${nmEsc(nmTaleName(p.tale))}</dt><dd><span class="nm-bar" role="progressbar" aria-valuemin="0" aria-valuemax="${p.total}" aria-valuenow="${p.got}"><i style="width:${pc}%"></i></span><span class="nm-n">${p.got} / ${p.total}${p.done ? ' · ' + L('완료', 'Done') : ''}</span></dd>`;
+    }).join('') + `</dl>`;
+  }
+  function nmField(s, dis) {
+    const o = nmOrig(s), f = nm.form || {}, where = nmWhere(s);
+    return `<div class="nm-row">
+        <label class="nm-lb" for="nm_${s}">${nmEsc(o.ko)} →</label>
+        <input id="nm_${s}" class="link-input nm-in" data-slot="${s}" type="text" maxlength="4" autocomplete="off" spellcheck="false" placeholder="${L('한글 이름', 'Korean name')}" value="${nmEsc(f[s])}"${dis ? ' disabled' : ''}>
+        <input class="link-input nm-in en" data-slot="${s}_en" type="text" maxlength="12" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="${nmEsc(o.en)} (${L('영어, 선택', 'English, optional')})" aria-label="${L('영어 이름', 'English name')} ${nmEsc(o.en)}" value="${nmEsc(f[s + '_en'])}"${dis ? ' disabled' : ''}>
+        <button type="button" class="ticket alt" data-act="nm-prev" data-slot="${s}"${dis || !nm.agree || !(f[s] || f[s + '_en']) || nm.prevBusy ? ' disabled' : ''}>${nm.prevBusy === s ? L('들려주는 중…', 'Playing…') : L('들어 보기', 'Listen')}</button>
+        ${where ? `<small class="nm-where">${nmEsc(where)}</small>` : ''}
+      </div>`;
+  }
+  /* 이름 칸이 맞는지(앱 쪽 검사). 서버도 /name/check 로 다시 본다 */
+  function nmValidate(f) {
+    const ko = [];
+    for (const s of [...NM_KID, ...NM_DOG]) {
+      const k = (f[s] || '').trim(), e = (f[s + '_en'] || '').trim();
+      if (k && !NameForm.valid(k, 'ko')) return 'name_invalid';
+      if (e && !NameForm.valid(e, 'en')) return 'name_invalid';
+      if (k) { if (ko.includes(k)) return 'name_same'; ko.push(k); }
+    }
+    return ko.length || [...NM_KID, ...NM_DOG].some(s => (f[s + '_en'] || '').trim()) ? '' : 'empty';
+  }
+  function namesHTML(name) {
+    const st = Names.settings(), q = nm.q, credits = q ? +q.credits || 0 : 0, mine = Entitlements.owned && Entitlements.owned();
+    const intro = `<p class="how">${L('창작 동화 4편 속 아이·강아지 이름을 우리 아이 이름으로 바꿔 새로 녹음해요. 목소리는 그대로이고, 그림 속 모습은 바뀌지 않아요. 이름은 녹음을 만드는 데만 쓰고 서버에 남기지 않아요.', 'Swap the child and dog names in the 4 original tales for your own, newly recorded in the same voices. The pictures stay the same. Names are used only to make the recordings and are not kept on the server.')}</p>`;
+    const msg = nm.msg ? `<p class="how buy-msg" id="nmMsg">${nmEsc(nm.msg)}</p>` : '';
+    let h = `<h3>${name}</h3>` + intro;
+    if (nm.loading && !q) return h + `<p class="how">${L('불러오는 중…', 'Loading…')}</p>`;
+    if (nm.err && !q) return h + `<p class="how buy-msg">${nmErr(nm.err)}</p><div class="g-btns"><button type="button" class="ticket alt" data-act="nm-reload">${L('다시 불러오기', 'Reload')}</button></div>`;
+    const buyBtn = mine && q && q.owned ? `<button type="button" class="ticket pri" data-act="nm-buy">${L(`이용권 사기 ${Entitlements.RENAME_PRICE}`, `Buy a pass ${Entitlements.RENAME_PRICE}`)}</button>` : '';
+    /* 미구매: 안내만, 입력 막음 */
+    if (!q || !q.owned || !mine) {
+      return h + `<p class="how buy-msg">${L('전체 이용권을 사면 쓸 수 있어요.', 'Available after buying full access.')}</p>
+        <h4 class="row-tab">${L('아이', 'Children')}</h4>${NM_KID.map(s => nmField(s, true)).join('')}<h4 class="row-tab">${L('강아지', 'Dog')}</h4>${NM_DOG.map(s => nmField(s, true)).join('')}`;
+    }
+    /* 받는 중 */
+    if (Names.busy()) {
+      return h + `<h4 class="row-tab">${L('녹음 받는 중', 'Recording')}</h4>${nmBars(st.run && st.run.tales)}
+        <p class="how">${L('앱을 켠 채로 기다려 주세요. 동화 한 편이 다 받아지면 그 동화부터 새 이름으로 나와요.', 'Keep the app open. Each tale switches to the new names once it is complete.')}</p>
+        <div class="g-btns"><button type="button" class="ticket alt" data-act="nm-stop">${L('멈추기', 'Pause')}</button></div>`;
+    }
+    /* 이미 정함: 지금 이름 · 진행 · 원래 이름으로 듣기 · 다시 바꾸기 */
+    if (st.on && !nm.edit) {
+      const rows = [...NM_KID, ...NM_DOG].filter(s => st.names[s] || st.names[s + '_en']).map(s => { const o = nmOrig(s); return `<dt>${nmEsc(o.ko)}</dt><dd>${nmEsc(st.names[s] || o.ko)}${st.names[s + '_en'] ? ` <small>${nmEsc(o.en)} → ${nmEsc(st.names[s + '_en'])}</small>` : ''}</dd>`; }).join('');
+      const prog = Names.progress(), unfinished = prog.some(p => p.total && !p.done);
+      return h + `<dl class="g-dl">${rows}</dl>${nmBars()}
+        ${unfinished ? `<p class="how buy-msg">${st.err ? nmErr(st.err) + ' ' : ''}${L('다 받지 못한 동화는 원래 이름으로 나와요.', 'Unfinished tales play with the original names.')}</p>${st.run ? `<div class="g-btns"><button type="button" class="ticket pri" data-act="nm-resume">${L('이어 받기', 'Continue')}</button></div>` : ''}` : ''}
+        ${switchHTML('nm-orig', st.original, L('원래 이름으로 듣기', 'Play with the original names'), L('받은 녹음은 지우지 않고, 원래 녹음으로 들려줘요.', 'Keeps the new recordings and plays the original ones.'))}
+        ${unfinished ? '' : msg}
+        <p class="how">${L(`남은 이름 정하기: ${credits}번`, `Name changes left: ${credits}`)}</p>
+        <div class="g-btns">${credits > 0 ? `<button type="button" class="ticket alt" data-act="nm-edit">${L('다른 이름으로 바꾸기', 'Change names')}</button>` : buyBtn}</div>
+        ${credits > 0 ? '' : `<p class="how">${L('다시 바꾸려면 이용권이 필요해요. 결제 앞에서는 어른 확인을 한 번 더 해요.', 'Changing again needs a pass. A grown-up check comes before paying.')}</p>`}`;
+    }
+    /* 처음(또는 다시 바꾸기): 동의 · 칸 · 미리 듣기 · 만들기 */
+    const noCredit = credits <= 0, dis = noCredit || !nm.agree;
+    const err = nmValidate(nm.form || {});
+    h += switchHTML('nm-agree', nm.agree, L('보호자인 제가 입력한 이름을 녹음을 만드는 데 쓰는 것에 동의합니다.', 'As the parent, I agree to the names I enter being used to make the recordings.'), L('이름은 저장되지 않아요. 별명도 괜찮아요. 성 없이 이름만 적어요.', 'Names are not stored. Nicknames are fine. First names only.'));
+    h += `<h4 class="row-tab">${L('아이', 'Children')}</h4>${NM_KID.map(s => nmField(s, noCredit)).join('')}<h4 class="row-tab">${L('강아지', 'Dog')}</h4>${NM_DOG.map(s => nmField(s, noCredit)).join('')}`;
+    h += `<p class="how">${L('빈 칸은 원래 이름 그대로예요. 영어 이름을 비우면 영어 동화는 원래 이름으로 나와요.', 'Empty boxes keep the original name. Without an English name, English tales keep the original.')}${q.previewsLeftToday != null ? ' ' + L(`오늘 들어 보기 ${q.previewsLeftToday}번 남았어요.`, `${q.previewsLeftToday} previews left today.`) : ''}</p>`;
+    h += msg;
+    if (noCredit) {
+      h += `<p class="how buy-msg">${L('이름을 정할 횟수를 다 썼어요. 다시 바꾸려면 이용권이 필요해요.', 'All name changes are used. Changing again needs a pass.')}</p><div class="g-btns">${buyBtn}${st.on ? `<button type="button" class="ticket alt" data-act="nm-cancel">${L('그만두기', 'Cancel')}</button>` : ''}</div>`;
+    } else if (nm.ask) {
+      h += `<div class="g-ask"><p class="how">${L('이 이름으로 녹음을 만들까요? 한 번 정하면 다시 바꾸려면 0.99달러 이용권이 필요해요.', 'Make the recordings with these names? Once set, changing again needs a $0.99 pass.')}</p><div class="g-btns"><button type="button" class="ticket alt" data-act="nm-no">${L('그만두기', 'Cancel')}</button><button type="button" class="ticket" data-act="nm-go">${L('만들기', 'Make')}</button></div></div>`;
+    } else {
+      h += `<div class="g-btns"><button type="button" class="ticket pri" data-act="nm-make"${dis || err ? ' disabled' : ''}>${L('이렇게 만들기', 'Make it so')}</button>${st.on ? `<button type="button" class="ticket alt" data-act="nm-cancel">${L('그만두기', 'Cancel')}</button>` : ''}</div>`;
+    }
+    return h;
+  }
+  /* 칸 입력: 그리지 않고 값만 기억(포커스 유지). 단추 활성만 고친다 */
+  guardPane.addEventListener('input', e => {
+    const s = e.target.dataset && e.target.dataset.slot; if (!s || !e.target.classList.contains('nm-in')) return;
+    nm.form = Object.assign({}, nm.form, { [s]: e.target.value.trim() });
+    const mk = guardPane.querySelector('[data-act="nm-make"]'); if (mk) mk.disabled = !nm.agree || !!nmValidate(nm.form) || !(nm.q && nm.q.credits > 0);
+    guardPane.querySelectorAll('[data-act="nm-prev"]').forEach(b => { const k = b.dataset.slot; b.disabled = !nm.agree || !(nm.form[k] || nm.form[k + '_en']) || !!nm.prevBusy; });
+  });
+  if (typeof Names !== 'undefined') Names.onChange(() => { if (curGuard === 'names' && !guardEl.hidden && !nm.ask && (Names.busy() || !guardPane.querySelector('.nm-in:focus'))) drawGuardPane(); });
+  async function nmAct(act, b) {
+    nm.msg = '';
+    if (act === 'nm-reload') { nmLoad(); return; }
+    if (act === 'nm-edit') { paper('tap'); nm.edit = true; nm.ask = false; drawGuardPane(); return; }
+    if (act === 'nm-cancel' || act === 'nm-no') { paper('down'); if (act === 'nm-cancel') nm.edit = false; nm.ask = false; drawGuardPane(); return; }
+    if (act === 'nm-stop') { Names.stop(); return; }
+    if (act === 'nm-make') { const e = nmValidate(nm.form || {}); if (e) { nm.msg = nmErr(e); drawGuardPane(); return; } paper('tap'); nm.ask = true; drawGuardPane(); return; }
+    if (act === 'nm-prev') {
+      const s = b.dataset.slot, f = nm.form || {}, lg = !f[s] && f[s + '_en'] ? 'en' : (lang === 'en' && f[s + '_en'] ? 'en' : 'ko');
+      const e = nmValidate(Object.assign({}, { [s]: f[s], [s + '_en']: f[s + '_en'] }));
+      if (e) { nm.msg = nmErr(e); drawGuardPane(); return; }
+      paper('tap'); nm.prevBusy = s; drawGuardPane();
+      const r = await Names.preview(s, f, lg);
+      nm.prevBusy = '';
+      if (!r.ok) nm.msg = nmErr(r.error);
+      nmLoadQuiet();
+      return;
+    }
+    if (act === 'nm-go') {
+      paper('tap'); nm.ask = false; nm.edit = false;
+      const p = Names.start(nm.form || {}, nm.q && nm.q.activeRun);
+      drawGuardPane();
+      const r = await p;
+      if (!r.ok) { nm.msg = nmErr(r.error); if (['name_invalid', 'name_banned', 'no_credit', 'not_owned', 'offline', 'busy', 'empty'].includes(r.error) && !Names.settings().run) nm.edit = Names.settings().on; }
+      else nm.msg = L('새 이름 녹음이 다 준비됐어요.', 'All recordings with the new names are ready.');
+      render({ anim: false });
+      nmLoadQuiet();
+      return;
+    }
+    if (act === 'nm-resume') {
+      paper('tap');
+      const p = Names.resume(); drawGuardPane();
+      const r = await p;
+      nm.msg = r.ok ? L('새 이름 녹음이 다 준비됐어요.', 'All recordings with the new names are ready.') : nmErr(r.error);
+      render({ anim: false }); nmLoadQuiet();
+      return;
+    }
+    if (act === 'nm-buy') {
+      parentCheck('buy', async () => {
+        paper('tap');
+        const r = await Entitlements.purchaseRename();
+        if (r.ok) { nm.msg = L('이용권을 샀어요. 새 이름을 정해 주세요.', 'Pass bought. Please choose the new names.'); nm.edit = true; await nmLoadQuiet(); }
+        else { nm.msg = nmErr(r.error); drawGuardPane(); }
+      });
+    }
+  }
+  /* 앱을 켤 때: 이미 이름을 정했고 전체 구매면, 새 창작 동화의 이름 녹음을 조용히 받는다(무료 보충) */
+  if (namesOn() && Entitlements.owned() && Names.settings().on) setTimeout(async () => {
+    const c = await Names.fetchCatalog(); if (!c.ok) return;
+    const q = await Names.quota(); if (q.ok) { nm.q = q.data; Names.backfill(q.data).then(any => { if (any) render({ anim: false }); }); }
+  }, 4000);
   function drawGuardPane() {
     clearInterval(linkTick);
     const k = curGuard, back = `<button type="button" class="g-pback" data-act="g-back">${backIc()}${L('보호자', 'Grown-ups')}</button>`;
@@ -846,6 +1029,8 @@
         <ul class="g-tales">${list.map(t0 => { const t = shown(t0); return `<li><b>${t.title}</b><span>${t.line}</span></li>`; }).join('')}</ul>`;
     } else if (k === 'pass') {
       h = passHTML();
+    } else if (k === 'names') {
+      h = namesHTML(name);
     } else if (k === 'link') {
       const off = navigator.onLine === false;
       h = `<h3>${name}</h3>
@@ -913,6 +1098,8 @@
 
   guardPane.addEventListener('change', e => {
     const o = e.target.dataset && e.target.dataset.opt;
+    if (o === 'nm-agree') { nm.agree = e.target.checked; drawGuardPane(); return; }
+    if (o === 'nm-orig') { Names.setOriginal(e.target.checked); paper('tap'); render({ anim: false }); return; }
     if (o === 'caption') setFlag('captions_off', !e.target.checked);
     else if (o === 'auto') setFlag('auto_play', e.target.checked);
     else if (o === 'titlevoice') setFlag('title_voice_off', !e.target.checked);
@@ -942,6 +1129,7 @@
     }
     const b = e.target.closest('[data-act]'); if (!b) return;
     const act = b.dataset.act;
+    if (act.startsWith('nm-')) { nmAct(act, b); return; }
     if (act === 'g-back') { delete guardBody.dataset.open; paper('tap'); }
     else if (act === 'g-clear') { paper('down'); resetFilters(); drawGuardPane(); }
     else if (act === 'g-wait') parentCheck('pick', () => { pickKind = 'wait'; openFlow('pick', { id: null, sel: null }); });
@@ -1362,7 +1550,7 @@
     const got = ready.filter(c => hasCast(id, c.k)).length, whole = !plan.length && got === ready.length && ready.length > 0;
     const cell = c => {
       if (!c.img) return `<span class="cs plan" aria-hidden="true"></span>`;
-      const nm = lang === 'en' ? c.en : c.ko;
+      const nm = nameView(lang === 'en' ? c.en : c.ko, 'home');   // 스티커 이름 녹음은 홈 맵(home_narration_el.js)이라 'home' 이 다 받아졌을 때만 바꾼다
       const sh = Entitlements.isShiny(id + '.' + c.k);
       /* 반짝 스티커: 무지갯빛 홀로그램 테두리 + 스티커 모양으로 스치는 빛줄기 + 깜빡이는 반짝이 셋 */
       const holo = sh ? `<i class="sweep" style="-webkit-mask-image:url('${c.img}');mask-image:url('${c.img}')"></i><i class="tw t1">✦</i><i class="tw t2">✦</i><i class="tw t3">✦</i>` : '';

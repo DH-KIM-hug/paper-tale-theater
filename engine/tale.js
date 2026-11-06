@@ -1470,10 +1470,12 @@ const Tale = (() => {
     '자동 재생': 'Auto play', '읽어 주기': 'Read to me', '오늘 동화 끝! 내일 또 만나요': 'The end! See you tomorrow', '한 번 더': 'Once more', '홈으로': 'Home',
     '오늘은 여기까지! 눈을 쉬어요': 'That is enough for today. Let our eyes rest.', '어른이 +10분': 'Grown-up: +10 min', '어른이 확인해 주세요': 'Grown-ups, please check', '닫기': 'Close',
     '놀이': 'Play', '스티커북': 'Sticker Book', '별 조각': 'Star pieces', '스티커를 받았어요!': 'You got a sticker!', '별 조각 하나 받았어요!': 'You got a star piece!', '별이 완성됐어요! 동화를 하나 열 수 있어요': 'Your star is complete! You can open a tale.', '동화 스티커를 받았어요!': 'You got a story sticker!', '퍼즐 조각을 받았어요!': 'You got a puzzle piece!', '그림이 완성됐어요!': 'The picture is complete!' };
+  /* 이름 바꾸기(engine/names.js): 번역한 글의 아이·강아지 이름을 바꾼다(부제·장면 카드·이름표). 꺼져 있으면 그대로 */
+  const nameView = t => { try { return typeof Names !== 'undefined' ? Names.view(t) : t; } catch (e) { return t; } };
   const tr = ko => {
-    if (!englishOn()) return ko;
+    if (!englishOn()) return nameView(ko);
     const t = typeof TEXT_EN !== 'undefined' && TEXT_EN[ko], c = NARRATION_CLIPS_EN[ko];
-    return t || (c && c.t) || ENGINE_EN[ko] || ko;
+    return nameView(t || (c && c.t) || ENGINE_EN[ko] || ko);
   };
 
 
@@ -1639,6 +1641,7 @@ const Tale = (() => {
       AudioFX.unlock();
       if (PT.due()) { PT.run(false); await restShow(); }
       PT.run(true);
+      if (typeof Names !== 'undefined') await Promise.race([Names.ready, sleep(1500)]).catch(() => {});   // 이름 바꾸기 녹음으로 맵을 덮은 뒤에 미리 받기(덮기는 페이지를 열 때 시작해 보통 이미 끝나 있다)
       AudioFX.prefetchClips && AudioFX.prefetchClips(); // 이 동화의 녹음을 미리 받아 둔다 (대사가 늦게 나오지 않게)
       if (!$('#startScreen').hidden && bookWanted()) bookArm();   // 시작 화면이 표지가 되어 첫 장면 위를 덮는다
       else $('#startScreen').hidden = true;
@@ -2081,6 +2084,7 @@ const Tale = (() => {
       sc.chosen = chosen; console.log('[read] 회전 결과:', chosen.join(', '));
     }
     await loadReadClips(en);
+    if (typeof Names !== 'undefined') { try { await Names.apply(); } catch (e) { /* 원래 녹음으로 */ } }   // 읽기 맵에도 이름 바꾸기 녹음을 덮는다
     try { AudioFX.prefetchClips && AudioFX.prefetchClips(); } catch (e) { /* 미리 받기 없이 */ }
     /* 클립 키 확인: 녹음이 없는 줄은 건너뛴다(브라우저 TTS 로 읽지 않는다, 2026-10-27 사용자 결정) → 콘솔과 window.__READ 에 남긴다 */
     const has = t => {
@@ -2196,7 +2200,7 @@ const Tale = (() => {
           if (sp) await guard(Promise.resolve(sp), '장면 마무리 ' + (s.card || i), () => VERB_MS);
         }
         if (i === 0) { setUp(); await gap(300); await guard(W.curtain(true), '막 열기', () => CARD_MS); }
-        else await guard(W.sceneCard(s.card || '', setUp), '장면 넘김 ' + (s.card || i), () => CARD_MS);
+        else await guard(W.sceneCard(nameView(s.card || ''), setUp), '장면 넘김 ' + (s.card || i), () => CARD_MS);
         setUp(); // 시간 제한으로 넘김이 끝나지 않았어도 장면은 차린다
         if (pend.length && !hidden()) await guard(Promise.all(pend), '장면 차리기 ' + (s.card || i), () => VERB_MS);
         const lines = s.lines || [];
