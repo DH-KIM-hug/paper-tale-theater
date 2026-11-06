@@ -32,9 +32,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "He runs off, following the smell.",
   "c": "audio/el/kkultteok/en/nar_fea46c332b.mp3"
  },
- "\"꿀떡아, 같이 가!\"": {
-  "t": "Kkulddeok, wait for us!",
-  "c": "audio/el/kkultteok/en/nuna_05273616a0.mp3"
+ "\"같이 가자!\"": {
+  "t": "Wait for us!",
+  "c": "audio/el/kkultteok/en/nuna_e7dcd269e1.mp3"
  },
  "삼남매는 영차, 영차 언덕을 올라요.": {
   "t": "Heave-ho, heave-ho! The three kids climb the hill.",

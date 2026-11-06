@@ -97,10 +97,10 @@ describe('받침 함수(서버·앱 같은 결과)', () => {
       expect(engine.fill(tpl, names, look), 'engine ' + tpl + JSON.stringify(look)).toBe(want);
     }
     expect(JSON.stringify(engine.ORIGINAL_LOOK)).toBe(JSON.stringify(ORIGINAL_LOOK));
-    expect(ORIGINAL_LOOK).toEqual({ A: 'g', B: 'b', C: 'g' });
+    expect(ORIGINAL_LOOK).toEqual({ A: 'g', B: 'b', C: 'b' });
   });
   it('look 검사·자리 목록', () => {
-    for (const v of [undefined, null, {}, { A: 'b' }, { A: 'g', B: 'b', C: 'g' }]) { expect(validLook(v)).toBe(true); expect(engine.validLook(v)).toBe(true); }
+    for (const v of [undefined, null, {}, { A: 'b' }, { A: 'g', B: 'b', C: 'b' }]) { expect(validLook(v)).toBe(true); expect(engine.validLook(v)).toBe(true); }
     for (const v of [{ A: 'boy' }, { A: 'x' }, { D: 'b' }, { E: 'b' }, 'b', ['b'], { A: null }, { A: 1 }]) { expect(validLook(v), JSON.stringify(v)).toBe(false); expect(engine.validLook(v)).toBe(false); }
     expect(slotsIn('{A_en} {A_g:his/her} {B:이는/는} {A>C:a/b/c/d}').sort()).toEqual(['A_en', 'A_g', 'B', 'C_g']);
     expect(engine.slotsIn('{A_en} {A_g:his/her} {B:이는/는} {A>C:a/b/c/d}').sort()).toEqual(['A_en', 'A_g', 'B', 'C_g']);
@@ -136,7 +136,7 @@ describe('받침 함수(서버·앱 같은 결과)', () => {
             const out = fill(t, s);
             expect(out, tale + l.id).toBe(engine.fill(t, s));
             expect(out).not.toMatch(/[{}]/);
-            for (const lk of [{ A: 'b', B: 'g', C: 'b' }, { A: 'g', B: 'b', C: 'g' }]) {
+            for (const lk of [{ A: 'b', B: 'g', C: 'b' }, { A: 'g', B: 'b', C: 'b' }]) {
               expect(fill(t, s, lk), tale + l.id).toBe(engine.fill(t, s, lk));
               expect(fill(t, s, lk)).not.toMatch(/[{}]/);
             }
@@ -172,7 +172,7 @@ describe('템플릿 파일: 모습(look) 줄', () => {
   });
   it('모습별 목소리 표: 구름 공장 아이 배역 줄은 look.slot·voices 를 갖고, 지금은 원래 목소리와 같다', () => {
     const parts = Object.values(NAME_LINES).flat().flatMap((l) => [l.ko, l.enRec]).filter((p) => p && p.look);
-    expect(parts.length).toBeGreaterThan(0);
+    // 2026-11-07: 아이 목소리 대사에서 이름을 뺐으므로 모습별 목소리 줄이 없을 수 있다(있으면 표 모양을 지킨다)
     for (const p of parts) {
       expect(['A', 'B', 'C']).toContain(p.look.slot);
       expect(Object.keys(p.look.voices).sort()).toEqual(['b', 'g']);
@@ -193,7 +193,7 @@ describe('템플릿 파일', () => {
   it('동화 4편 + home, 줄 수', () => {
     expect(Object.keys(NAME_LINES).sort()).toEqual(['home', 'kkultteok', 'red_car', 'unicorn', 'witch_candy']);
     const counts = Object.fromEntries(Object.entries(NAME_LINES).map(([t, l]) => [t, l.length]));
-    expect(counts).toEqual({ kkultteok: 46, red_car: 23, unicorn: 38, witch_candy: 34, home: 3 });
+    expect(counts).toEqual({ kkultteok: 45, red_car: 23, unicorn: 38, witch_candy: 34, home: 3 });
     expect(NAME_LINES_VERSION).toMatch(/^nl2-[0-9a-f]{10}$/);
     // 강아지를 뺀 아이 이름 한국어 녹음 줄 = 부록 A 95줄 + 홈 3줄
     const kids = Object.values(NAME_LINES).flat().filter((l) => l.ko && /\{[ABC][:}]/.test(l.ko.send)).length;
@@ -278,7 +278,7 @@ describe('GET /v1/name/catalog·quota', () => {
     expect(Object.keys(r.json.tales)).toContain('home');
     const l = r.json.tales.kkultteok.lines.find((x) => x.key.startsWith('"퐁!"'));
     expect(l).toMatchObject({ seg: 1, segEn: 1, langs: ['ko', 'en'], g: [] });
-    expect(r.json.originalLook).toEqual({ A: 'g', B: 'b', C: 'g' });
+    expect(r.json.originalLook).toEqual({ A: 'g', B: 'b', C: 'b' });
     const g = r.json.tales.witch_candy.lines.find((x) => x.tplEn.startsWith('{A_g:He/She} melted'));
     expect(g).toMatchObject({ langs: ['en'], g: ['A'], seg: null });
     const first = r.json.tales.unicorn.lines[0];
@@ -501,10 +501,10 @@ describe('POST /v1/name/line', () => {
     const a = await newAccount(env, deps);
     await own(env, a);
     const run = await firstRun(env, a, deps, 'kkultteok');
-    const l = NAME_LINES.kkultteok.find((x) => x.ko && x.ko.look);
+    const l = NAME_LINES.kkultteok.find((x) => x.ko && x.ko.look) || NAME_LINES.kkultteok.find((x) => x.ko); // 아이 목소리 줄이 없으면(2026-11-07) 아무 한국어 줄로 같은 규칙을 본다
     const send = (look) => raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, tale: 'kkultteok', id: l.id, lang: 'ko', names: NAMES, look }, deps });
     await send({ A: 'b', B: 'g', C: 'b' });
-    await send({ A: 'g', B: 'b', C: 'g' });
+    await send({ A: 'g', B: 'b', C: 'b' });
     expect(fetch.calls[0].body.text).toBe(fetch.calls[1].body.text);
     expect(fetch.calls[0].url).toBe(fetch.calls[1].url); // 같은 목소리
     expect(fetch.calls[0].url).toContain('/text-to-speech/' + l.ko.voice + '?');

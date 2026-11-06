@@ -19,7 +19,7 @@ export const ORIGINAL = Object.freeze({
 });
 
 // 주인공 모습: 'b' 남자아이 / 'g' 여자아이. 원래 그림 기준(A·C 여자아이, B 남자아이). D(강아지)는 모습이 없다.
-export const ORIGINAL_LOOK = Object.freeze({ A: 'g', B: 'b', C: 'g' });
+export const ORIGINAL_LOOK = Object.freeze({ A: 'g', B: 'b', C: 'b' });
 export const LOOKS = Object.freeze(['b', 'g']);
 export const LOOK_SLOTS = Object.freeze(['A', 'B', 'C']);
 

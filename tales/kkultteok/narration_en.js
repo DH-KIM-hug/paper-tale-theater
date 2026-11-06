@@ -24,8 +24,8 @@ const NARRATION_CLIPS_EN = {
  "냄새를 따라 쪼르르 달려가요.": {
   "t": "He runs off, following the smell."
  },
- "\"꿀떡아, 같이 가!\"": {
-  "t": "Kkulddeok, wait for us!"
+ "\"같이 가자!\"": {
+  "t": "Wait for us!"
  },
  "삼남매는 영차, 영차 언덕을 올라요.": {
   "t": "Heave-ho, heave-ho! The three kids climb the hill."

@@ -9,7 +9,7 @@ Object.assign(NARRATION_CLIPS, {
  "킁킁킁! 꿀떡이가 무슨 냄새를 맡았어요.": "audio/el/kkultteok/nar_2e7252b04b.mp3",
  "꿀떡이 꼬리가 살랑살랑, 귀가 쫑긋!": "audio/el/kkultteok/nar_04ce8c615e.mp3",
  "냄새를 따라 쪼르르 달려가요.": "audio/el/kkultteok/nar_63e2df2e8f.mp3",
- "\"꿀떡아, 같이 가!\"": "audio/el/kkultteok/nuna_af70540909.mp3",
+ "\"같이 가자!\"": "audio/el/kkultteok/nuna_fed762db19.mp3",
  "삼남매는 영차, 영차 언덕을 올라요.": "audio/el/kkultteok/nar_987bb6eca8.mp3",
  "다현이는 성큼성큼, 이현이는 씩씩하게, 은우는 아장아장 따라가요.": "audio/el/kkultteok/nar_0ff57ae7f5.mp3",
  "언덕 꼭대기에 오른 삼남매와 꿀떡이가 걸음을 멈췄어요.": "audio/el/kkultteok/nar_4b3d00c3aa.mp3",

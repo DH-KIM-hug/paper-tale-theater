@@ -2,7 +2,7 @@
 // 줄: id, key(녹음 맵 열쇠 = 한국어 원문), keyEn(영어 맵 열쇠, 홈만 영어 글), mode(play|read|both|home), tpl/tplEn(화면 글 템플릿), en(영어 원문),
 //     ko/enRec: 그 언어 녹음 조각 하나 {seg(여러 조각 줄의 몇 번째, 한 조각이면 null), segs, voice, model, settings, send(보낼 글 템플릿), orig(영어 발음 표기 원래 이름), url(지금 클립), chars, look?{slot, voices:{b,g}}(모습별 목소리)}
 //     g: 모습(look)에 따라 결과가 달라지는 자리(영어 대명사 {A_g:he/she}, 모습별 목소리). ko 가 null 이면 영어에만 있는 줄
-export const NAME_LINES_VERSION = "nl2-89f05cc415";
+export const NAME_LINES_VERSION = "nl2-b4f01e1de6";
 export const NAME_LINES = {
  "kkultteok": [
   {
@@ -202,60 +202,6 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_bb3e83e90d.mp3",
     "chars": 32
-   },
-   "g": []
-  },
-  {
-   "id": "kbc7b2389",
-   "key": "\"꿀떡아, 같이 가!\"",
-   "keyEn": "\"꿀떡아, 같이 가!\"",
-   "mode": "both",
-   "tpl": "\"{D:아/야}, 같이 가!\"",
-   "en": "Kkulddeok, wait for us!",
-   "tplEn": "{D_en}, wait for us!",
-   "ko": {
-    "seg": null,
-    "segs": 1,
-    "voice": "Lb7qkOn5hF8p7qfCDH8q",
-    "model": "eleven_v4",
-    "settings": {
-     "stability": 0.35,
-     "similarity_boost": 0.75,
-     "style": 0.45
-    },
-    "send": "[cheerful, calling out] {D:아/야}, 같이 가!",
-    "orig": {},
-    "url": "audio/el/kkultteok/nuna_af70540909.mp3",
-    "chars": 34,
-    "look": {
-     "slot": "A",
-     "voices": {
-      "b": "Lb7qkOn5hF8p7qfCDH8q",
-      "g": "Lb7qkOn5hF8p7qfCDH8q"
-     }
-    }
-   },
-   "enRec": {
-    "seg": null,
-    "segs": 1,
-    "voice": "Lb7qkOn5hF8p7qfCDH8q",
-    "model": "eleven_v4",
-    "settings": {
-     "stability": 0.35,
-     "similarity_boost": 0.75,
-     "style": 0.45
-    },
-    "send": "[cheerful, calling out] {D_en}, wait for us!",
-    "orig": {},
-    "url": "audio/el/kkultteok/en/nuna_05273616a0.mp3",
-    "chars": 47,
-    "look": {
-     "slot": "A",
-     "voices": {
-      "b": "Lb7qkOn5hF8p7qfCDH8q",
-      "g": "Lb7qkOn5hF8p7qfCDH8q"
-     }
-    }
    },
    "g": []
   },

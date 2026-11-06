@@ -84,7 +84,7 @@
 
 | 메서드·경로 | 조건 | 요청 | 응답 |
 |---|---|---|---|
-| `GET /v1/name/catalog` | 인증만(구매 불필요) | - | `{ version, slots: {A:{ko,en},B,C,D}, originalLook: {A:'g',B:'b',C:'g'}, tales: { <taleId>: { lines: [ { id, key, keyEn, tpl, en, tplEn, mode, seg, segEn, langs, g } ] } } }` |
+| `GET /v1/name/catalog` | 인증만(구매 불필요) | - | `{ version, slots: {A:{ko,en},B,C,D}, originalLook: {A:'g',B:'b',C:'b'}, tales: { <taleId>: { lines: [ { id, key, keyEn, tpl, en, tplEn, mode, seg, segEn, langs, g } ] } } }` |
 | `GET /v1/name/quota` | 인증 | - | `{ owned, first: [taleId], firstLeft: [taleId], tickets, activeRun: { runId, tales, kind, expiresAt } \| null, previewsLeftToday }` |
 | `POST /v1/name/run` | owned | `{ tale: "<taleId>" }` | `{ runId, tales: [taleId] (witch_candy 는 + 'home'), kind: 'first', expiresAt }` — 무료 첫 설정(동화마다 1번) |
 | `POST /v1/name/run` | owned + tickets ≥ 1 | `{ ticket: true }` | `{ runId, tales: [kkultteok, red_car, unicorn, witch_candy, home], kind: 'ticket', expiresAt }` — 이용권 1장 소모. 도는 중이면 `resumed: true` 로 같은 실행 |

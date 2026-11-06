@@ -663,7 +663,7 @@
       const run1 = dog.move(X(1180, 780), 330, 2600, 'ease-in').then(() => hide(dog)); // 언덕 너머로 달려 나가 보이지 않는다
       await say('냄새를 따라 쪼르르 달려가요.');
       await run1;
-      await say('"꿀떡아, 같이 가!"');
+      await say('"같이 가자!"');
       const climb = Promise.all(kids.map(k => k.move(k.x + 200, G - 40, 2600, 'linear')));
       await say('삼남매는 영차, 영차 언덕을 올라요.');
       await climb;
