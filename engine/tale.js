@@ -332,9 +332,9 @@ const Tale = (() => {
     });
   }
 
-  /* ---------- 자동 재생 (보호자 메뉴 'auto_play'=1): 톡·퀴즈 없이 이야기만 흘러간다 ----------
+  /* ---------- 자동 재생 (한 번만: sessionStorage 'auto_once'=1. 보호자 메뉴 auto_play 는 2026-11-06 없앰): 톡·퀴즈 없이 이야기만 흘러간다 ----------
      조작 함수(tap/mash/choose/swipe/hold/free)는 그대로 불리고, 엔진이 알맞은 때 대신 눌러 준다. */
-  const AUTO = () => { if (VERIFY) return false; try { return localStorage.getItem('auto_play') === '1' || sessionStorage.getItem('auto_once') === '1'; } catch (e) { return false; } };
+  const AUTO = () => { if (VERIFY) return false; try { return sessionStorage.getItem('auto_once') === '1'; } catch (e) { return false; } };
   /* 시작 화면 '자동 재생' 버튼: 이번 회차만 자동 재생 (sessionStorage 'auto_once'). 동화를 떠나면 지운다 */
   try { addEventListener('pagehide', () => { try { sessionStorage.removeItem('auto_once'); } catch (e) { /* 무시 */ } }); } catch (e) { /* 무시 */ }
   function firePtr(n, type = 'pointerdown', host = n) {

@@ -730,9 +730,10 @@
   const gear = $('#parentBtn');
   holdable(gear, 1000, () => openGuard(), () => toast(L('보호자 메뉴는 1초 동안 꾹 누르세요', 'Press and hold for 1 second for the grown-up menu')));
 
-  /* 보호자 쪽 기능 도우미: 대사 자막·자동 재생·놀이 시간(동화 엔진이 같은 키를 읽는다) */
+  /* 보호자 쪽 기능 도우미: 대사 자막·놀이 시간(동화 엔진이 같은 키를 읽는다) */
   const captionsOff = () => { try { return localStorage.getItem('captions_off') === '1'; } catch (e) { return false; } };
-  const autoOn = () => { try { return localStorage.getItem('auto_play') === '1'; } catch (e) { return false; } };
+  /* 자동 재생 설정은 없앴다(2026-11-06, '읽어 주기' 탭이 같은 일을 한다). 예전에 켜 둔 기기는 여기서 끈다 */
+  try { localStorage.removeItem('auto_play'); } catch (e) { /* 저장소 없음 */ }
   const setFlag = (k, on) => { try { if (on) localStorage.setItem(k, '1'); else localStorage.removeItem(k); } catch (err) { /* 저장 못 하면 이번만 */ } };
   const TIMES = [0, 10, 15, 20, 30];
   const limitNow = () => { try { return +JSON.parse(localStorage.getItem('play_limit_min')) || 0; } catch (e) { return 0; } };
@@ -1009,8 +1010,7 @@
       h = `<h3>${name}</h3>
         <p class="how">${L('탭 이름과 안내는 늘 소리로 읽어 줘요. 아이가 아직 글을 못 읽기 때문이에요.', 'Tab names and guidance are always read aloud, since young children cannot read yet.')}</p>
         ${switchHTML('titlevoice', !titleVoiceOff(), L('동화 그림을 누르면 제목과 테마 소리 들려주기', 'Play the title and theme sound when a tale picture is tapped'))}
-        ${switchHTML('caption', !captionsOff(), L('동화 속 글 상자(대사 자막) 보여 주기', 'Show story captions (speech text box)'))}
-        ${switchHTML('auto', autoOn(), L('자동 재생', 'Auto-play'), L('놀이 조작 없이 이야기만 흘러가요. 잠자리에 읽어 줄 때는 \'읽어 주기\' 탭을 써요.', 'The story plays on its own with no taps. For bedtime reading, use the Read to Me tab.'))}`;
+        ${switchHTML('caption', !captionsOff(), L('동화 속 글 상자(대사 자막) 보여 주기', 'Show story captions (speech text box)'))}`;
     } else if (k === 'time') {
       h = `<h3>${name}</h3>
         <div class="seg" id="timerOpts" role="group" aria-label="${name}">${TIMES.map(m => `<button type="button" class="${m === limitNow() ? 'on' : ''}" data-m="${m}" aria-pressed="${m === limitNow()}">${m ? m + L('분', ' min') : L('끄기', 'Off')}</button>`).join('')}</div>
@@ -1101,7 +1101,6 @@
     if (o === 'nm-agree') { nm.agree = e.target.checked; drawGuardPane(); return; }
     if (o === 'nm-orig') { Names.setOriginal(e.target.checked); paper('tap'); render({ anim: false }); return; }
     if (o === 'caption') setFlag('captions_off', !e.target.checked);
-    else if (o === 'auto') setFlag('auto_play', e.target.checked);
     else if (o === 'titlevoice') setFlag('title_voice_off', !e.target.checked);
   });
   guardPane.addEventListener('click', e => {
