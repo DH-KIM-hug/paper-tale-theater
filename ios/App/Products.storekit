@@ -1,21 +1,55 @@
 {
-  "identifier" : "B8D1F0A2",
-  "nonRenewingSubscriptions" : [],
-  "products" : [
+  "identifier": "B8D1F0A2",
+  "nonRenewingSubscriptions": [],
+  "products": [
     {
-      "displayPrice" : "4.99",
-      "familyShareable" : true,
-      "internalID" : "6740000001",
-      "localizations" : [
-        { "description" : "모든 동화를 한 번에 열어요", "displayName" : "모든 동화 열기", "locale" : "ko" },
-        { "description" : "Unlock every tale, once", "displayName" : "Unlock all tales", "locale" : "en_US" }
+      "displayPrice": "4.99",
+      "familyShareable": true,
+      "internalID": "6740000001",
+      "localizations": [
+        {
+          "description": "모든 동화를 한 번에 열어요",
+          "displayName": "모든 동화 열기",
+          "locale": "ko"
+        },
+        {
+          "description": "Unlock every tale, once",
+          "displayName": "Unlock all tales",
+          "locale": "en_US"
+        }
       ],
-      "productID" : "com.papertale.theater.unlockall",
-      "referenceName" : "Unlock all",
-      "type" : "NonConsumable"
+      "productID": "com.papertale.theater.unlockall",
+      "referenceName": "Unlock all",
+      "type": "NonConsumable"
+    },
+    {
+      "displayPrice": "0.99",
+      "familyShareable": false,
+      "internalID": "6740000002",
+      "localizations": [
+        {
+          "description": "우리 아이 이름을 한 번 더 바꿔요",
+          "displayName": "이름 바꾸기 1회",
+          "locale": "ko"
+        },
+        {
+          "description": "Change your child's name once more",
+          "displayName": "One name change",
+          "locale": "en_US"
+        }
+      ],
+      "productID": "com.papertale.theater.rename",
+      "referenceName": "Rename",
+      "type": "Consumable"
     }
   ],
-  "settings" : { "_failTransactionsEnabled" : false, "_storeKitErrors" : [] },
-  "subscriptionGroups" : [],
-  "version" : { "major" : 4, "minor" : 0 }
+  "settings": {
+    "_failTransactionsEnabled": false,
+    "_storeKitErrors": []
+  },
+  "subscriptionGroups": [],
+  "version": {
+    "major": 4,
+    "minor": 0
+  }
 }
