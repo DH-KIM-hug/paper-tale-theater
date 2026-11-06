@@ -39,11 +39,11 @@ iOS 앱 주소(`capacitor://localhost`)는 코드에 이미 허용되어 있어 
 | `ACCOUNTS` | KV 바인딩 | 필수 | 2단계 |
 | `APPLE_BUNDLE_ID` | 일반 변수(`[vars]`) | 필수(기본값 있음) | `com.papertale.theater` |
 | `WEB_ORIGINS` | 일반 변수 | 선택 | 3단계 |
-| `APPLE_ROOT_CA_G3_PEM` | 비밀값 | **필수** | `src/apple_root.js` 상수가 자리표시자라서 비밀값으로 넣거나 상수를 채워야 함. 안 하면 `/v1/receipt/apple` 이 500 |
+| `APPLE_ROOT_CA_G3_PEM` | 비밀값 | 선택 | `src/apple_root.js` 에 진짜 인증서가 이미 들어 있다(지문 63:34:3A…91:79, 2026-11-06 애플 사이트 파일과 대조). 인증서를 바꿀 때만 비밀값으로 덮어쓴다 |
 | `PLAY_PACKAGE_NAME` | 일반 변수 | 안드로이드용 | 기본값 있음 |
 | `GOOGLE_SERVICE_ACCOUNT_JSON` | 비밀값 | 안드로이드 때 | iOS 1.0 에는 불필요(구글 영수증 엔드포인트만 쓰므로) |
 
-애플 영수증은 비밀 키가 아니라 **애플 공개 루트 인증서**(Apple Root CA G3)로 검증합니다. 애플에서 받아 지문을 확인합니다.
+애플 영수증은 비밀 키가 아니라 **애플 공개 루트 인증서**(Apple Root CA G3)로 검증합니다. 코드에 이미 들어 있으므로 아래는 인증서를 바꿀 때만 합니다.
 ```sh
 curl -O https://www.apple.com/certificateauthority/AppleRootCA-G3.cer
 openssl x509 -inform der -in AppleRootCA-G3.cer -out AppleRootCA-G3.pem
@@ -98,3 +98,7 @@ npx cap copy ios
 ## 문제가 생기면
 - 앱이 서버 없이 동작해야 하므로, 서버가 죽어도 구매·읽기는 되고 동기화·연결 코드만 멈춥니다.
 - 주소를 바꿔야 하면 `server.env` 만 고쳐 다시 빌드합니다.
+
+
+## 배포 기록
+- 2026-11-06: workers.dev 하위 이름 `papertale`(API로 등록), KV ACCOUNTS 실제·미리보기 생성, 배포 주소 `https://paper-tale-sync.papertale.workers.dev`, tools/app/server.env 에 넣음.
