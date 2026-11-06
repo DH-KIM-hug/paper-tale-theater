@@ -34,3 +34,4 @@ tools/app/gen/restyle/status.json
 tools/app/gen/restyle/_prompt*.txt
 __pycache__/
 audio/el/polished.json.lock
+store/screenshots/
