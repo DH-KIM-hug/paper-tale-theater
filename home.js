@@ -1377,9 +1377,9 @@
       <section class="b-card b-pl" aria-label="${L('우리 재생목록', 'Our playlist')}">
         <span class="b-art" aria-hidden="true">${UIA.has('ic_playlist') ? uiImg('ic_playlist') : BT_LIST}</span>
         <h3 class="b-t">${L('우리 재생목록', 'Our playlist')}</h3>
-        <div class="b-thumbs">${pl.length ? thumbs : `<span class="b-empty">${L('어른이 1초 꾹 눌러 만들어요', 'A grown-up can hold 1 second to make one')}</span>`}</div>
+        <div class="b-thumbs">${pl.length ? thumbs : `<span class="b-empty">${L('만들기를 눌러 동화를 담아요', 'Tap Make to add tales')}</span>`}</div>
         ${pl.length ? `<button type="button" class="b-play sec" data-bt="list" aria-label="${L('재생목록 듣기', 'Play the playlist')}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg></button>` : ''}
-        <button type="button" class="b-hold" data-bt-hold><span class="b-hold-t">${pl.length ? L('편집 1초 꾹', 'Edit · hold 1 s') : L('만들기 1초 꾹', 'Make · hold 1 s')}</span><i class="hold-ring" aria-hidden="true"></i></button>
+        <button type="button" class="b-edit" data-bt-edit>${pl.length ? L('편집', 'Edit') : L('만들기', 'Make')}</button>
       </section></div>`;
   }
   function btGo(mode) {
@@ -1432,11 +1432,56 @@
   function btOpenEditor() {
     btDraft = btList().filter(t => TALES.some(x => x.id === t.id)).map(t => t.id);
     btPaintEditor(); showModal(btEditor());
-    btEditor()._refocus = () => document.querySelector('[data-bt-hold]');
+    btEditor()._refocus = () => document.querySelector('[data-bt-edit]');
   }
-  /* 1초 꾹(재생목록 만들기·편집): 톱니·'어른이 열기'와 같은 holdable — 손가락·마우스 꾹, 키보드 Enter·Space 꾹, 화면 읽기 '활성화'(바로 통과)가 모두 된다. 링 모양은 CSS .b-hold.holding */
-  const btHoldInit = root => root.querySelectorAll('[data-bt-hold]').forEach(b => holdable(b, 1000, () => { paper('tap'); btOpenEditor(); },
-    () => toast(L('1초 동안 꾹 누르세요', 'Press and hold for 1 second'))));
+  /* 재생목록 만들기·편집은 한 번 톡(2026-11-06 사용자 결정, 예전 '1초 꾹'을 없앰) — 아래 #nightBody 의 click 이 맡는다 */
+  /* 잠자리 탭 썸네일('최근 들은'·'모든 이야기') 1초 꾹 = 우리 재생목록에 담기(2026-11-06 사용자 요청). 짧은 톡은 그대로 읽어 주기로 들어간다.
+     저장은 편집 시트 '저장'과 같은 btSet({ playlist }). 이미 있으면·꽉 차면 담지 않고 안내 쪽지만. 손가락이 움직이면(스크롤) 꾹은 취소.
+     꾹이 끝난 뒤 손을 떼며 오는 click(진입)은 삼킨다. 담을 수 없는 동화(잠김·영어 녹음 없음)는 꾹을 걸지 않는다 */
+  function btAddHeld(id) {
+    const ids = btList().filter(btOk).map(t => t.id), t = TALES.find(x => x.id === id);
+    if (ids.includes(id)) { paper('down'); toast(L('이미 재생목록에 있어요', 'Already in the playlist')); return; }
+    if (ids.length >= BT_MAX) { paper('down'); toast(L(`재생목록이 꽉 찼어요 (최대 ${BT_MAX}편)`, `The playlist is full (up to ${BT_MAX})`)); return; }
+    ids.push(id); btSet({ playlist: ids }); paper('tap');
+    const box = document.querySelector('#nightBody .b-cards');
+    if (box) box.outerHTML = btHTML();   // 재생목록 카드만 다시 그린다(아래 목록은 그대로 두어 손가락 밑 카드가 바뀌지 않게)
+    toast(L(`재생목록에 담았어요: ${shown(t).title} (${ids.length}/${BT_MAX})`, `Added to the playlist: ${shown(t).title} (${ids.length}/${BT_MAX})`));
+  }
+  (() => {
+    const HOLD_MS = 1000, body = $('#nightBody');
+    let timer = 0, card = null, sx = 0, sy = 0, swallowUntil = 0;
+    const stop = () => {
+      clearTimeout(timer); timer = 0;
+      if (card) { const th = card.querySelector('.thumb'); if (th) th.classList.remove('holding'); card = null; }
+    };
+    body.addEventListener('pointerdown', e => {
+      stop();
+      if (e.button) return;
+      const c = e.target.closest('.n-grid .card'); if (!c || c.classList.contains('locked') || c.classList.contains('closed')) return;
+      const id = c.dataset.id; if (!btOk(TALES.find(x => x.id === id))) return;
+      const th = c.querySelector('.thumb');
+      if (th) {
+        if (!th.querySelector('.hold-ring')) { th.insertAdjacentHTML('beforeend', '<i class="hold-ring" aria-hidden="true"></i>'); void th.offsetWidth; }   // 링이 0 에서 시작해 차오르도록(같은 프레임에 붙이면 전환이 건너뛴다)
+        th.style.setProperty('--hold', HOLD_MS + 'ms'); th.classList.add('holding');
+      }
+      card = c; sx = e.clientX; sy = e.clientY;
+      timer = setTimeout(() => {
+        const done = card; stop();
+        swallowUntil = Infinity;   // 손을 뗄 때 오는 click 을 삼킨다(아래 pointerup 에서 짧은 유예로 바꾼다)
+        if (th) { th.classList.add('held'); setTimeout(() => th.classList.remove('held'), 60); }
+        btAddHeld(done.dataset.id);
+      }, HOLD_MS);
+    });
+    body.addEventListener('pointermove', e => { if (card && Math.hypot(e.clientX - sx, e.clientY - sy) > 8) stop(); });
+    ['pointercancel', 'pointerleave', 'dragstart'].forEach(ev => body.addEventListener(ev, stop));
+    addEventListener('pointerup', () => { stop(); if (swallowUntil === Infinity) swallowUntil = performance.now() + 400; }, true);
+    addEventListener('pointercancel', () => { if (swallowUntil === Infinity) swallowUntil = 0; }, true);   // 취소되면 click 이 오지 않으니 삼킬 것도 없다
+    addEventListener('scroll', stop, { capture: true, passive: true });
+    body.addEventListener('click', e => {
+      if (performance.now() < swallowUntil) { swallowUntil = 0; e.preventDefault(); e.stopImmediatePropagation(); }
+    }, true);
+    body.addEventListener('contextmenu', e => { if (e.target.closest('.n-grid .card')) e.preventDefault(); });   // 길게 누르기 메뉴(안드로이드·데스크톱) 막기
+  })();
   function renderNight() {
     const body = $('#nightBody'); if (!body) return;
     const list = nightList(), recent = readList(recentReadKey).map(id => list.find(t => t.id === id)).filter(Boolean);
@@ -1445,7 +1490,6 @@
     const sec = (k, ko, en, items) => items.length ? `<section class="n-sec" data-row="${k}" aria-label="${L(ko, en)}"><h3 class="row-h"><span class="row-ic">${rowIcon(k)}</span><span class="row-t">${L(ko, en)}</span></h3>
       <div class="n-grid">${items.map(t => `<div class="slot" data-id="${t.id}">${cardHTML(t, { night: true })}</div>`).join('')}</div></section>` : '';
     body.innerHTML = btHTML() + sec('recent', '최근 들은', 'Recently heard', recent) + sec('all', '모든 이야기', 'All tales', list);
-    btHoldInit(body);
   }
   function activateNight(e, c) {
     e.preventDefault();
@@ -1872,6 +1916,7 @@
     if (n) { paper('tap'); btSet({ count: Number(n.dataset.btCount) }); renderNight(); return; }
     const g = e.target.closest('[data-bt]');
     if (g && !g.disabled) { btGo(g.dataset.bt); return; }
+    if (e.target.closest('[data-bt-edit]')) { paper('tap'); btOpenEditor(); return; }
     const c = e.target.closest('.card'); if (c) activateNight(e, c);
   });
 
@@ -2088,7 +2133,7 @@
   requestAnimationFrame(() => requestAnimationFrame(() => $('#tabs').classList.add('ready')));   // 첫 그림 뒤부터 탭 구멍이 움직인다
 
   /* ── 누름 반응 (§5-3): pointerdown 에서 .is-pressed, pointerup·cancel 에서 뗀다. 모양은 CSS 가 정한다 ── */
-  const PRESS = '.star-open, .star-chip, .tab, .card, .pz-b, .pick, .pl-tile, .round, .pz-pb, .pz-open, .b-go, .b-play, .b-chip, .hero-play, .hd, .ticket, .pl-top, .pl-b, .g-item, .gate-opt';
+  const PRESS = '.star-open, .star-chip, .tab, .card, .pz-b, .pick, .pl-tile, .round, .pz-pb, .pz-open, .b-go, .b-play, .b-chip, .hero-play, .hd, .ticket, .pl-top, .pl-b, .g-item, .gate-opt, .b-edit';
   let pressed = null, pressX = 0, pressY = 0;
   const unpress = () => { if (pressed) { pressed.classList.remove('is-pressed'); pressed = null; } };
   addEventListener('pointermove', e => { if (pressed && Math.hypot(e.clientX - pressX, e.clientY - pressY) > 8) unpress(); }, true);   // 스크롤하려고 끈 손가락은 누름으로 치지 않는다

@@ -1362,7 +1362,7 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
 .b-play.sec { justify-self: end; background-color: var(--card); color: var(--night); box-shadow: none; }
 .b-play.sec svg { translate: 6% 0; width: 46%; height: 46%; }
 .b-play.sec.is-pressed { background-color: var(--paper-dn); }
-.b-play:focus-visible, .b-chip:focus-visible, .b-hold:focus-visible { outline: 3px solid var(--ink-on-night); outline-offset: 4px; }
+.b-play:focus-visible, .b-chip:focus-visible, .b-edit:focus-visible { outline: 3px solid var(--ink-on-night); outline-offset: 4px; }
 /* 편 수 1·2·3·5: 보호자용이라 카드 오른쪽 아래. 선택 = 흰 바탕 + 남색 숫자, 나머지 = 크림 테두리 + 크림 숫자 */
 .b-set { grid-area: set; justify-self: end; align-self: end; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; min-width: 0; }
 .b-lb { font-size: var(--fs-caption); font-weight: 600; letter-spacing: .06em; color: var(--ink-on-night-2); white-space: nowrap; }
@@ -1375,10 +1375,13 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
 .b-th { width: 56px; height: 42px; object-fit: cover; border-radius: var(--r-s); display: block; box-shadow: none; }
 .b-more { font-size: var(--fs-label); font-weight: 700; letter-spacing: .10em; color: var(--ink-on-night); }
 .b-empty { font-size: var(--fs-caption); line-height: 1.4; font-weight: 600; letter-spacing: .04em; color: var(--ink-on-night-2); }
-/* [편집 1초 꾹] 글자 단추(크림 70%) + 둘레 링 */
-.b-hold { grid-area: hold; justify-self: start; position: relative; min-height: 48px; padding: 0 20px; border: 1.5px solid rgba(245, 239, 233, .45); border-radius: var(--r-pill); background: none;
-  color: rgba(245, 239, 233, .78); font: 600 16px/1.2 var(--font); letter-spacing: .06em; cursor: pointer; touch-action: none; }
-.b-hold-t { position: relative; }
+/* [만들기]·[편집] 글자 단추(크림 70%), 한 번 톡(2026-11-06: 1초 꾹을 없앰) */
+.b-edit { grid-area: hold; justify-self: start; position: relative; min-height: 48px; padding: 0 20px; border: 1.5px solid rgba(245, 239, 233, .45); border-radius: var(--r-pill); background: none;
+  color: rgba(245, 239, 233, .78); font: 600 16px/1.2 var(--font); letter-spacing: .06em; cursor: pointer; transition: transform 180ms var(--ease); }
+.b-edit.is-pressed { transform: scale(.96); transition-duration: var(--t-0); }
+/* 잠자리 썸네일 1초 꾹 = 재생목록에 담기: 그림 둘레에 감빛 링이 찬다(.hold-ring 공용). iOS 길게 누르기 메뉴·글자 선택·끌기 막기 */
+.n-grid .card, .n-grid .card img { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
+.n-grid .thumb > .hold-ring { --ring-r: calc(var(--r-m) + 6px); z-index: 5; }
 @media (max-width: 760px), (max-aspect-ratio: 1/1) { .b-cards { grid-template-columns: minmax(0, 1fr); gap: var(--s-4); } }
 /* 아이폰(세로·가로): 이어 듣기 = 제목 한 줄(글자 크기를 맞춤) + 아래 왼쪽에 큰 감빛 ▶, 오른쪽에 편 수 */
 @media (orientation: portrait) and (max-width: 699px), (orientation: landscape) and (max-height: 520px) {
@@ -1392,7 +1395,7 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
   .b-set { justify-self: end; align-items: flex-end; }
   .b-chip { font-size: 16px; }
   .b-th { width: 48px; height: 36px; }
-  .b-hold { min-height: 44px; }
+  .b-edit { min-height: 44px; }
 }
 /* pL 아이폰 가로: 남색 카드 둘이 한 화면 높이(390) 안에 들어오게 줄인다 */
 @media (orientation: landscape) and (max-height: 520px) {
