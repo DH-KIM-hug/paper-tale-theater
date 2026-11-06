@@ -19,7 +19,7 @@
 <body>
 <main>
 <h1>톡톡 동화극장 개인정보 처리방침</h1>
-<p>시행일: 2026년 11월 ○일 (앱 1.0 공개일에 맞춰 적습니다)</p>
+<p>시행일: 2026년 11월 6일</p>
 
 <h2>수집하는 정보</h2>
 <p>톡톡 동화극장은 이름, 이메일, 위치, 연락처, 사진 등 사람을 알아볼 수 있는 정보를 수집하지 않습니다. 회원가입과 로그인이 없습니다. 어린이에게서 개인정보를 받지 않습니다.</p>
@@ -36,6 +36,9 @@
 <li>다른 기기와 잇는 연결 코드(10분 뒤 저절로 사라집니다)</li>
 </ul>
 <p>IP 주소와 기기 종류는 읽거나 저장하지 않습니다. 이 정보로는 누구인지 알 수 없고, 광고나 추적에 쓰지 않으며 다른 곳에 팔거나 넘기지 않습니다. 서버가 꺼져 있거나 인터넷이 없어도 앱은 계속 작동합니다.</p>
+
+<h2>아이 이름 바꾸기 (보호자가 고르는 기능)</h2>
+<p>보호자가 앱에 아이 이름(최대 3명)과 강아지 이름을 입력하면, 동화 속 이름 대사를 새로 녹음하기 위해 그 이름이 들어간 문장을 우리 서버(Cloudflare Workers)를 거쳐 음성 합성 업체 ElevenLabs로 보냅니다. 우리 서버는 이름을 저장하지 않으며, ElevenLabs에는 기록을 남기지 않는 옵션(enable_logging=false)으로 요청합니다. 만들어진 녹음과 입력한 이름은 그 기기 안에만 저장되고, 앱을 지우면 함께 지워집니다. 서버 계정에는 이름이 아닌 이용 기록만 남습니다: 구매한 이름 변경권 수, 사용 횟수, 거래번호의 해시, 녹음한 동화 표시, 하루 미리 듣기 횟수. 이 기능을 쓰지 않으면 어떤 이름도 보내지 않습니다.</p>
 
 <h2>보관과 삭제</h2>
 <p>서버의 기록은 앱을 쓰는 동안 보관합니다. 앱을 지우는 것만으로는 서버 기록이 지워지지 않을 수 있습니다. 삭제를 원하시면 아래 지원 이메일로 요청해 주세요. 메일에는 앱의 보호자 메뉴(톱니를 1초 누르기) → 정보에 있는 '기기 번호'를 적어 주세요. 요청을 받으면 그 무작위 ID와 연결된 모든 기록을 지웁니다.</p>
@@ -57,7 +60,7 @@
 
 <section class="en" lang="en">
 <h1>Toki Toki Tale — Privacy Policy</h1>
-<p>Effective: November __, 2026 (set to the 1.0 release date)</p>
+<p>Effective: November 6, 2026</p>
 <h2>What we collect</h2>
 <p>Nothing that identifies a person. The app does not collect names, emails, location, contacts or photos. There are no accounts or logins, and no personal information is collected from children.</p>
 <h2>Stored on your device only</h2>
@@ -71,6 +74,8 @@
 <li>a link code for connecting another device (it expires on its own after 10 minutes).</li>
 </ul>
 <p>We do not read or store IP addresses or device types. This data cannot identify you, is not used for ads or tracking, and is never sold or shared. The app keeps working offline or if the server is down.</p>
+<h2>Changing a child's name (optional, set by a parent)</h2>
+<p>When a parent enters child names (up to 3) and a dog's name in the app, the sentences containing those names are sent through our server (Cloudflare Workers) to the speech-synthesis provider ElevenLabs so the name lines in the tales can be re-recorded. Our server does not store the names, and requests to ElevenLabs use the no-logging option (enable_logging=false). The resulting recordings and the names you entered are stored only on that device and are removed when you delete the app. The account on our server keeps only usage records, never the names: the number of name-change passes bought, the number used, a hash of the transaction ID, which tales were recorded, and a daily preview count. If you do not use this feature, no name is sent.</p>
 <h2>Retention and deletion</h2>
 <p>Server records are kept while the app is in use. Deleting the app alone may not remove them. To have them erased, email us at the address below and include the ‘Device number’ shown in the app’s parent menu (press and hold the gear for 1 second) \u2192 Info. We will delete everything tied to that random ID.</p>
 <h2>No ads, no tracking</h2>
