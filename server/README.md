@@ -12,7 +12,7 @@
 | `src/apple.js` | 애플 StoreKit 2 JWS 검증(Web Crypto, x5c 체인 → Apple Root CA G3) |
 | `src/apple_root.js` | Apple Root CA G3 인증서 상수(자리표시자, 아래 참고) |
 | `src/google.js` | 구글 Play 검증(서비스 계정 JWT → `purchases.products.get` → `acknowledge`) |
-| `test/` | vitest 시험 44개 |
+| `test/` | vitest 시험 51개 |
 
 ## 로컬 실행과 시험
 ```sh

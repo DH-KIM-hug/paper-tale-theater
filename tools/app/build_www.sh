@@ -17,6 +17,16 @@ cp sounds/CREDITS.md www/sounds/CREDITS.txt   # 앱에는 *.md 를 넣지 않으
 mkdir -p www/audio && node tools/app/used_audio.mjs > www/.audio_list && rsync -a --files-from=www/.audio_list audio/ www/audio/ && rm www/.audio_list && python3 tools/app/shrink_audio.py www/audio   # 64kbps 모노로 다시 압축(원본 128~320k, ~/.paper-tale/cache/audio64 에 보관). 녹음은 실제로 쓰는 것만(2026-11-02): ElevenLabs 에 덮인 Typecast 클립·오디션·옛 곡은 빠진다. 목록 기준은 tools/app/used_audio.mjs
 # 영어 녹음은 위 shrink_audio 가 0.9배로 미리 늘려 두었다 → 앱의 audio.js 는 재생할 때 늘리지 않는다
 sed -i '' 's/const EN_PRESLOWED = false;/const EN_PRESLOWED = true;/' www/audio.js && grep -q 'const EN_PRESLOWED = true;' www/audio.js
+# 연결 서버 주소 넣기(2026-11-06): 환경 변수 PAPERTALE_API_BASE 가 있으면 그 값, 없으면 tools/app/server.env. 비어 있으면 동기화 꺼짐 그대로(웹 공개판은 이 스크립트를 쓰지 않으므로 항상 꺼짐). 최소화 전에 넣는다
+API_BASE_VAL="${PAPERTALE_API_BASE:-$(grep -E '^PAPERTALE_API_BASE=' tools/app/server.env 2>/dev/null | head -1 | cut -d= -f2- | tr -d ' \r"'"'"'')}"
+API_BASE_VAL="${API_BASE_VAL%/}"
+if [ -n "$API_BASE_VAL" ]; then
+  echo "$API_BASE_VAL" | grep -Eq '^https://[A-Za-z0-9._-]+(:[0-9]+)?(/[A-Za-z0-9._-]*)*$' || { echo "서버 주소 형식이 이상합니다(https://... 만 가능): $API_BASE_VAL"; exit 1; }
+  sed -i '' "s#window.PAPERTALE_API_BASE) || '';#window.PAPERTALE_API_BASE) || '$API_BASE_VAL';#" www/entitlements.js && grep -q "|| '$API_BASE_VAL';" www/entitlements.js
+  echo "서버 주소: $API_BASE_VAL"
+else
+  echo "서버 주소 없음: 동기화 꺼진 빌드"
+fi
 # 코드 줄이기(2026-11-02 출시 점검: 첫 화면·동화 시작 때 읽는 양). 맨 위 이름(전역)은 esbuild 가 그대로 둔다.
 # 녹음 맵·대본(narration*.js, read_narration*.js, chorus*.js, home_narration_el.js, story.js)은 다른 코드가 글자로 읽어 고쳐 쓰므로 그대로 둔다
 MIN=$(ls www/audio.js www/home.js www/stage.js www/bedtime.js www/entitlements.js www/tales/catalog.js www/tales/stickers.js www/engine/*.js www/engine/splash/*.js; for d in www/tales/*/; do t=$(basename "$d"); [ -f "$d$t.js" ] && echo "$d$t.js"; done)

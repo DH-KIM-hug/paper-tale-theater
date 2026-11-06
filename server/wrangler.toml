@@ -1,4 +1,5 @@
-# 종이 동화극장 연결 서버. 배포 절차는 README.md 참고.
+# 종이 동화극장 연결 서버. 배포 절차는 DEPLOY.md(사용자용 순서), 구성은 README.md 참고.
+# 배포 주소는 앱 쪽 tools/app/server.env 의 PAPERTALE_API_BASE 에 넣는다.
 name = "paper-tale-sync"
 main = "src/index.js"
 compatibility_date = "2024-09-23"
@@ -17,4 +18,4 @@ WEB_ORIGINS = "https://여기에_깃허브_아이디.github.io"
 
 # 비밀값은 wrangler.toml 에 쓰지 않는다:
 #   wrangler secret put GOOGLE_SERVICE_ACCOUNT_JSON
-#   wrangler secret put APPLE_ROOT_CA_G3_PEM   (코드 상수가 자리표시자일 때만)
+#   wrangler secret put APPLE_ROOT_CA_G3_PEM   (iOS 1.0 필수: src/apple_root.js 상수가 자리표시자)
