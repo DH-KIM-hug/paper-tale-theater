@@ -3,9 +3,10 @@
 사용: to_webp_s2.py name [name ...]"""
 import sys, os
 from PIL import Image
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 for n in sys.argv[1:]:
-    im = Image.open(f'{G}/assets/raw/v3/{n}.png').convert('RGB')
+    im = Image.open(raw_path(f'{G}/assets/raw/v3/{n}.png')).convert('RGB')
     if '_cut_' not in n and im.width > 1600:
         im = im.resize((1600, round(im.height * 1600 / im.width)), Image.LANCZOS)
     im.save(f'{G}/assets/v3w/{n}.webp', quality=80, method=6)

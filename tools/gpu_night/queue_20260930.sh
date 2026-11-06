@@ -14,7 +14,7 @@ Claude-Session: https://claude.ai/code/session_01TGgx6k6hUQMHacUcyCA6Jo" && git 
 echo "=== 1. 라이트 썸네일 시작 $(date '+%H:%M') ==="
 # 한 장씩 뽑고 바로 올린다 (홈에서 하나씩 바뀌어 보이게)
 for n in $(python3 -c "import json;print(' '.join(j['name'] for j in json.load(open('jobs_thumb3L.json'))))"); do
-  [ -f $G/assets/raw/v3/$n.png ] && continue
+  [ -f $G/assets/raw/v3/$n.png ] || [ -f $G/assets/raw/v3/$n.webp ] && continue
   python3 -c "import json;json.dump([j for j in json.load(open('jobs_thumb3L.json')) if j['name']=='$n'],open('/tmp/one_job.json','w'))"
   python3 run_night.py /tmp/one_job.json && publish "라이트 모드 썸네일: ${n#thumb3L_}"
 done

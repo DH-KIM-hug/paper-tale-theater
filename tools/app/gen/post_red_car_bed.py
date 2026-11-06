@@ -11,9 +11,10 @@ import os
 import numpy as np
 from PIL import Image
 from scipy import ndimage
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 src = os.path.join(G, 'assets', 'raw', 'restyle', 'red_car', 'rc_child_bed.png')
-im0 = Image.open(src).convert('RGB')
+im0 = Image.open(raw_path(src)).convert('RGB')
 a = np.asarray(im0).astype(int); r, g, b = a[..., 0], a[..., 1], a[..., 2]
 hsv = np.asarray(im0.convert('HSV')).astype(float)
 hue, sat, val = hsv[..., 0] * 360 / 255, hsv[..., 1] / 255, hsv[..., 2]

@@ -10,6 +10,7 @@ import os, sys
 import numpy as np
 from PIL import Image
 from scipy import ndimage
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 args = [a for a in sys.argv[1:] if not a.startswith('--')]
 SAT = float(next((a.split('=')[1] for a in sys.argv if a.startswith('--sat=')), .55))   # 보라 옷처럼 채도 높은 보라 조각이 있으면 --sat=.7
@@ -46,7 +47,7 @@ def key(src):
     return im.crop((max(0, x0 - p), max(0, y0 - p), min(w, x1 + p), min(h, y1 + p)))
 
 for i in ids:
-    src = os.path.join(G, 'assets', 'raw', 'restyle', tale, i + '.png'); dst = os.path.join(V3W, i + '.webp')
+    src = raw_path(os.path.join(G, 'assets', 'raw', 'restyle', tale, i + '.png')); dst = os.path.join(V3W, i + '.webp')
     if '_bg_' in i:
         im = Image.open(src).convert('RGB'); rr = 16 / 9
         if im.width / im.height > rr: nw = round(im.height * rr); im = im.crop(((im.width - nw) // 2, 0, (im.width - nw) // 2 + nw, im.height))

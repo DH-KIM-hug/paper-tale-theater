@@ -12,9 +12,10 @@ HEAD, rest = base.split('SUBJECT AND POSE:\n', 1)
 TAIL = rest[rest.index('\n\nThis is an OBJECT'):]
 TAIL_CHAR = rest[rest.index('\n\nIf a reference image'):]
 bgj = next(x for x in json.load(open(f'{G}/tools/app/gen/jobs_witch_candy.json')) if x['kind'] == 'bg')
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_exists  # 원본 png→webp(2026-11-06)
 def ref(name):
     src = f'{G}/assets/v3w/{name}.webp'; dst = f'{G}/{RAW}/refs/{name}.png'
-    if not os.path.exists(dst): Image.open(src).save(dst)
+    if not raw_exists(dst): Image.open(src).save(dst)
     return f'{RAW}/refs/{name}.png'
 jobs = []
 def add(id, subject, refs=(), face=False, size=(600, 600)):

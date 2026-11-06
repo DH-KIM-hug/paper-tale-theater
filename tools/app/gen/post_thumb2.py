@@ -6,21 +6,22 @@
   ~/.venvs/paper-tale/bin/python tools/app/gen/post_thumb2.py"""
 import glob, json, os
 from PIL import Image
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 cards, cards_en = [], []
-for p in sorted(glob.glob(f'{G}/assets/raw/thumb2/*_tile.png')):
+for p in sorted(raw_glob(f'{G}/assets/raw/thumb2/*_tile.png')):
     t = os.path.basename(p)[:-len('_tile.png')]
     lp = f'{G}/assets/raw/title2/{t}_title.png'
-    if not os.path.exists(lp): continue
-    im = Image.open(p).convert('RGB'); w, h = im.size; nw = round(h * 4 / 3)
+    if not raw_exists(lp): continue
+    im = Image.open(raw_path(p)).convert('RGB'); w, h = im.size; nw = round(h * 4 / 3)
     im.crop(((w - nw) // 2, 0, (w - nw) // 2 + nw, h)).resize((720, 540), Image.LANCZOS).save(f'{G}/assets/thumbs/{t}_card.webp', 'WEBP', quality=84, method=6)
-    L = Image.open(lp).convert('RGBA'); L = L.crop(L.getchannel('A').point(lambda a: 255 if a > 20 else 0).getbbox())
+    L = Image.open(raw_path(lp)).convert('RGBA'); L = L.crop(L.getchannel('A').point(lambda a: 255 if a > 20 else 0).getbbox())
     if L.width > 640: L = L.resize((640, round(L.height * 640 / L.width)), Image.LANCZOS)
     L.save(f'{G}/assets/thumbs/{t}_lt.webp', 'WEBP', quality=88, method=6)
     cards.append(t)
     ep = f'{G}/assets/raw/title2/{t}_title_en.png'            # 영어 레터링(있으면)
-    if os.path.exists(ep):
-        L = Image.open(ep).convert('RGBA'); L = L.crop(L.getchannel('A').point(lambda a: 255 if a > 20 else 0).getbbox())
+    if raw_exists(ep):
+        L = Image.open(raw_path(ep)).convert('RGBA'); L = L.crop(L.getchannel('A').point(lambda a: 255 if a > 20 else 0).getbbox())
         if L.width > 640: L = L.resize((640, round(L.height * 640 / L.width)), Image.LANCZOS)
         L.save(f'{G}/assets/thumbs/{t}_lt_en.webp', 'WEBP', quality=88, method=6)
         cards_en.append(t)

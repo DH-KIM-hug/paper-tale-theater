@@ -9,11 +9,12 @@
 from pathlib import Path
 from PIL import Image, ImageFilter, ImageDraw
 import numpy as np
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 ROOT = Path(__file__).resolve().parents[2]; RAW = ROOT / 'assets/raw/restyle/splash2'; V = ROOT / 'assets/v3w'
 stage = Image.open(V / 'sp2_stage_hd.webp').convert('RGB'); W, H = stage.size
 A = np.asarray(stage).astype(int); R, G, B = A[..., 0], A[..., 1], A[..., 2]
 def pad(path):   # 생성 그림(1254)을 무대 판(위 100·오른쪽 20 늘림)과 같게
-    im = Image.open(path).convert('RGB').resize((1254, 1254), Image.LANCZOS)
+    im = Image.open(raw_path(str(path))).convert('RGB').resize((1254, 1254), Image.LANCZOS)
     out = Image.new('RGB', (W, H)); out.paste(im, (0, 100))
     out.paste(im.crop((0, 0, 1254, 14)).resize((1254, 102), Image.BICUBIC), (0, 0))
     out.paste(out.crop((1249, 0, 1254, H)).resize((W - 1253, H), Image.BICUBIC), (1253, 0))

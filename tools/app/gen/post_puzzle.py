@@ -25,6 +25,7 @@ import cv2
 import numpy as np
 from PIL import Image, ImageFilter
 
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 RAW = os.path.join(G, 'assets/raw/puzzle_gpt')
 UI = os.path.join(G, 'assets/ui')
@@ -54,7 +55,7 @@ def fnv(t):
 
 def cutter(src, flip=False, R=600):
     """스프라이트 알파 → 아이 손에 맞는 둥근 틀(가는 다리·뿔 끝·털 결은 메우고 굴린다). 윤곽 점들(긴 변 1로 정규화), (가로, 세로) 비"""
-    a = np.asarray(Image.open(os.path.join(G, src)).convert('RGBA'))[:, :, 3]
+    a = np.asarray(Image.open(raw_path(os.path.join(G, src))).convert('RGBA'))[:, :, 3]
     ys, xs = np.nonzero(a > 40); a = a[ys.min():ys.max() + 1, xs.min():xs.max() + 1]
     if flip: a = a[:, ::-1]
     s = R / max(a.shape); a = cv2.resize(np.ascontiguousarray(a), (round(a.shape[1] * s), round(a.shape[0] * s)), interpolation=cv2.INTER_AREA)
@@ -211,7 +212,7 @@ def seam_mask(orig, sm):
     return cv2.GaussianBlur(m, (0, 0), 2)
 
 def load_pano(board, k):
-    p = os.path.join(RAW, f'pano_{board}_{k}.png')
+    p = raw_path(os.path.join(RAW, f'pano_{board}_{k}.png'))
     return Image.open(p).convert('RGB').resize((PW, PH), Image.LANCZOS) if os.path.exists(p) else None
 
 def run(board, preview_dir, make_images=True):
@@ -225,7 +226,7 @@ def run(board, preview_dir, make_images=True):
         if p is not None: big.paste(p, (k * PW, 0))
     big = np.asarray(big).astype(np.float32)
     for k in range(1, nb):                                               # 그림과 그림 사이 이음매: 이어 그린 그림(seam_<판>_<k>.png)의 가운데를 붙인다
-        sp = os.path.join(RAW, f'seam_{board}_{k}.png')
+        sp = raw_path(os.path.join(RAW, f'seam_{board}_{k}.png'))
         if not os.path.exists(sp) or panos[k - 1] is None or panos[k] is None: continue
         sm = np.asarray(Image.open(sp).convert('RGB').resize((PW, PH), Image.LANCZOS)).astype(np.float32)
         x0 = k * PW - PW // 2

@@ -6,11 +6,12 @@ import os
 import numpy as np
 from PIL import Image
 from scipy import ndimage
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 SRC = f'{G}/assets/raw/restyle/princess_pea/pp_mat2_sheet.png'
 ORDER = ['rose', 'mint', 'gold', 'lilac', 'persimmon', 'cream']   # 그림 위에서 아래 차례
 
-a = np.asarray(Image.open(SRC).convert('RGB')).astype(int)
+a = np.asarray(Image.open(raw_path(SRC)).convert('RGB')).astype(int)
 lo = np.minimum(a[..., 0], a[..., 2]).astype(float); g = a[..., 1]
 ratio = g / np.maximum(lo, 1)
 bg = (lo >= 40) & (ratio < 0.3)            # 마젠타와 그 그림자 (post_v2.key_edge 와 같은 기준)

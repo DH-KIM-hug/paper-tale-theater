@@ -53,14 +53,15 @@ COMP = ("A landscape 16:9 home-screen banner picture that fills the WHOLE canvas
 a, b = tpl.split('COMPOSITION (most important):\n', 1)
 b = b.split('\n\n', 1)[1]
 
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_exists  # 원본 png→webp(2026-11-06)
 os.makedirs(f'{G}/assets/raw/banner/refs', exist_ok=True)
 jobs = []
 for t, (scene, tod) in S.items():
     tile = f'assets/raw/banner/refs/{t}_tile.png'
-    if not os.path.exists(f'{G}/{tile}'):
+    if not raw_exists(f'{G}/{tile}'):
         subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', f'{G}/assets/thumbs/{t}_tile.webp', f'{G}/{tile}'], check=True)
     tall = f'assets/raw/banner/refs/{t}_key_tall.png'   # 지금 시작 화면 그림(옛 restyle 인물 그림은 머리색 등이 달라서 쓰지 않는다)
-    if not os.path.exists(f'{G}/{tall}'):
+    if not raw_exists(f'{G}/{tall}'):
         subprocess.run(['ffmpeg', '-loglevel', 'error', '-y', '-i', f'{G}/assets/thumbs/{t}_key_tall.webp', f'{G}/{tall}'], check=True)
     refs = [tile, tall] + (['assets/raw/restyle/red_hen/hen_dog_sit.png'] if t == 'red_hen' else [])
     pr = a + 'COMPOSITION (most important):\n' + COMP.format(scene=scene) + '\n\n' + b

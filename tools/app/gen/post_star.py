@@ -4,8 +4,9 @@
   ~/.venvs/paper-tale/bin/python tools/app/gen/post_star.py star_v3a"""
 import sys, os
 from PIL import Image
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
-im = Image.open(f'{G}/assets/raw/ui/{sys.argv[1]}.png').convert('RGBA')
+im = Image.open(raw_path(f'{G}/assets/raw/ui/{sys.argv[1]}.png')).convert('RGBA')
 x0, y0, x1, y1 = im.getchannel('A').point(lambda a: 255 if a > 40 else 0).getbbox()
 import numpy as np
 A = (np.asarray(im.getchannel('A')) > 40)

@@ -2,10 +2,11 @@
 """python back_to_webp.py <tale> : assets/raw/keyart_gpt/<tale>_back{w,t}_v5.png -> assets/thumbs/<tale>_back_{wide,tall}.webp"""
 import sys, os
 from PIL import Image
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 t = sys.argv[1]
 for s, n, size in (('w','wide',(1200,800)),('t','tall',(1000,1150))):
-    im = Image.open(f'{G}/assets/raw/keyart_gpt/{t}_back{s}_v5.png').convert('RGB')
+    im = Image.open(raw_path(f'{G}/assets/raw/keyart_gpt/{t}_back{s}_v5.png')).convert('RGB')
     W, H = im.size; tw, th = size; r = max(tw/W, th/H)
     im = im.resize((round(W*r)+1, round(H*r)+1), Image.LANCZOS)
     x, y = (im.width-tw)//2, (im.height-th)//2

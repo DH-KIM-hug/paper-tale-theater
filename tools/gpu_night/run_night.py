@@ -14,6 +14,7 @@ import json, os, random, shutil, subprocess, sys, time, urllib.parse, urllib.req
 API = 'http://127.0.0.1:8188'
 WF_PATH = '/Users/house_of_4k2b/orca/projects/qwen 2.1/workflows/qwen_image_2.1_t2i_gguf.api.json'
 GAME = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 RAW = os.path.join(GAME, 'assets', 'raw', 'v3')
 OUT = os.path.join(GAME, 'assets', 'v3')
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -107,11 +108,11 @@ def main():
     done = 0
     for j in jobs:
         raw = os.path.join(RAW, j['name'] + '.png')
-        if os.path.exists(raw):
+        if raw_exists(raw):
             if not redo:
                 print(f"[{j['name']}] 이미 있음 — 건너뜀", flush=True)
                 continue
-            os.replace(raw, raw.replace('.png', f"_old{int(time.time())}.png"))
+            _r = raw_path(raw); os.replace(_r, _r.replace('.png', f"_old{int(time.time())}.png").replace('.webp', f"_old{int(time.time())}.webp"))
         data = generate(base, j)
         if data:
             open(raw, 'wb').write(data)

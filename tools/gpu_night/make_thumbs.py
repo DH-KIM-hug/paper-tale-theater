@@ -7,6 +7,7 @@
 import glob, os, json
 import numpy as np
 from PIL import Image
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 RAW = os.path.join(ROOT, 'assets', 'raw', 'v3')
 OUT = os.path.join(ROOT, 'assets', 'thumbs'); os.makedirs(OUT, exist_ok=True)
@@ -24,7 +25,7 @@ def square_around(a, mask, margin):
     return int(cx - half), int(cy - half), int(cx + half), int(cy + half)
 
 def new_style(src, dst, target):
-    a = np.asarray(Image.open(src).convert('RGB')).astype(float)
+    a = np.asarray(Image.open(raw_path(src)).convert('RGB')).astype(float)
     bg = edge_color(a)
     dist = np.abs(a - bg).sum(axis=2)
     box = square_around(a, dist > 45, 1.18)
@@ -42,7 +43,7 @@ def new_style(src, dst, target):
     im.resize((520, 520), Image.LANCZOS).save(dst, quality=85, method=6)
 
 def old_style(src, dst):
-    im = Image.open(src).convert('RGB'); a = np.asarray(im).astype(int)
+    im = Image.open(raw_path(src)).convert('RGB'); a = np.asarray(im).astype(int)
     box = square_around(a, np.abs(a - edge_color(a)).sum(axis=2) > 60, 1.06)
     im.crop(box).resize((480, 480), Image.LANCZOS).save(dst, quality=84, method=6)
 
@@ -51,14 +52,14 @@ T1, T2, T2L = [], [], []
 def newest(prefixes):
     got = {}
     for pre in prefixes:  # 오래된 판부터 → 최신 판이 덮어씀
-        for src in sorted(glob.glob(os.path.join(RAW, pre + '*.png'))):
+        for src in sorted(raw_glob(os.path.join(RAW, pre + '*.png'))):
             got[os.path.basename(src)[len(pre):-4]] = src
     return got
 for tid, src in sorted(newest(['thumb2_', 'thumb3_', 'thumb4_']).items()):
     new_style(src, os.path.join(OUT, tid + '.webp'), SHEET['dark']); T2.append(tid)
 for tid, src in sorted(newest(['thumb2L_', 'thumb3L_', 'thumb4L_']).items()):
     new_style(src, os.path.join(OUT, tid + '_light.webp'), SHEET['light']); T2L.append(tid)
-for src in sorted(glob.glob(os.path.join(RAW, 'thumb_*.png'))):
+for src in sorted(raw_glob(os.path.join(RAW, 'thumb_*.png'))):
     tid = os.path.basename(src)[6:-4]
     if tid in T2: continue
     old_style(src, os.path.join(OUT, tid + '.webp')); T1.append(tid)

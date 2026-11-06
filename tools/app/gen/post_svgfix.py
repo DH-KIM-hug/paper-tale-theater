@@ -3,13 +3,14 @@
   ~/.venvs/paper-tale/bin/python tools/app/gen/post_svgfix.py [id ...]"""
 import json, os, sys, tempfile
 from PIL import Image
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 sys.path.insert(0, os.path.join(G, 'tools/gpu_night'))
 from chromakey import key_magenta
 only = set(sys.argv[1:])
 for j in json.load(open(os.path.join(G, f"tools/app/gen/jobs_{os.environ.get('JOBS', 'svgfix')}.json"))):
     if only and j['id'] not in only: continue
-    src = os.path.join(G, j['out']); dst = os.path.join(G, j['final']); W, H = j['size']
+    src = raw_path(os.path.join(G, j['out'])); dst = os.path.join(G, j['final']); W, H = j['size']
     if not os.path.exists(src): print('없음', j['id']); continue
     if j['kind'] == 'sprite':
         with tempfile.TemporaryDirectory() as td:

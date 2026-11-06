@@ -11,6 +11,8 @@
 상태 파일: tools/app/gen/restyle/status.json  (run 이 갱신: 동화별 done/total, 한도 대기 시각)
 원본 생성본: assets/raw/restyle/<tale>/<이름>.png"""
 import json, os, re, sys, time, subprocess, datetime, shutil
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+from rawpath import raw_path, raw_exists, raw_png  # 원본 png 가 webp 로 바뀐 것도 인정(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 HERE = os.path.join(G, 'tools', 'app', 'gen', 'restyle'); os.makedirs(HERE, exist_ok=True)
 V3W = os.path.join(G, 'assets', 'v3w'); RAW = os.path.join(G, 'assets', 'raw', 'restyle'); OLD = os.path.join(G, 'assets', 'raw', 'old_v3w')
@@ -265,14 +267,14 @@ def wait_until(text):
     return now + datetime.timedelta(minutes=30)
 
 def job_refs(job):
-    return [r for r in (job.get('refs') or ([job['ref']] if job.get('ref') else [])) if os.path.exists(os.path.join(G, r))]
+    return [r for r in (job.get('refs') or ([job['ref']] if job.get('ref') else [])) if raw_exists(os.path.join(G, r))]
 
 def gen_one(job, log):
     out = os.path.join(G, job['out']); os.makedirs(os.path.dirname(out), exist_ok=True)
     aspect = 'square 1:1' if job['kind'] == 'sprite' else ('landscape 16:9' if job['size'][0] >= job['size'][1] else 'portrait 3:4')
     pf = os.path.join(HERE, f"_prompt_{job['id']}.txt"); open(pf, 'w').write(job['prompt'])  # 작업마다 따로 (실행기 둘이 같은 파일을 덮어쓰던 것)
     inst = (f"Use your image generation tool (image_gen.imagegen) to create ONE image, {aspect}. Read the full prompt from the file {pf} and pass it VERBATIM. "
-            + (f"Pass these reference images in referenced_image_paths (read-only): {' '.join(os.path.join(G, r) for r in job_refs(job))} . " if job_refs(job) else '')
+            + (f"Pass these reference images in referenced_image_paths (read-only): {' '.join(raw_png(os.path.join(G, r)) for r in job_refs(job))} . " if job_refs(job) else '')
             + f"Save (copy) the generated image to {out} . "
             "Do not modify any other file, do not install anything, do not run git. Reply with only: SAVED <path> <width>x<height>, or FAILED <reason verbatim>.")
     try:
@@ -283,7 +285,7 @@ def gen_one(job, log):
     open(log, 'a').write(f"\n===== {datetime.datetime.now():%m-%d %H:%M} {job['id']}\n{txt[-1500:]}\n")
     try: os.remove(pf)
     except OSError: pass
-    if os.path.exists(out): return 'ok', txt
+    if raw_exists(out): return 'ok', txt
     if LIMIT_RE.search(txt): return 'limit', txt
     return 'fail', txt
 
@@ -294,9 +296,9 @@ def run(tales):
         if not os.path.exists(jp): build([t])
         jobs = json.load(open(jp)); fails = {}
         while True:
-            todo = [j for j in jobs if not os.path.exists(os.path.join(G, j['out'])) and fails.get(j['id'], 0) < 3]
+            todo = [j for j in jobs if not raw_exists(os.path.join(G, j['out'])) and fails.get(j['id'], 0) < 3]
             todo.sort(key=lambda j: j.get('pass', 1))  # 인물 기본 그림(1단계) 먼저, 그다음 그 그림을 참고하는 자세·컷
-            st = load_status(); st[t] = {'done': len(jobs) - len([j for j in jobs if not os.path.exists(os.path.join(G, j['out']))]), 'total': len(jobs), 'state': 'running'}; save_status(st)
+            st = load_status(); st[t] = {'done': len(jobs) - len([j for j in jobs if not raw_exists(os.path.join(G, j['out']))]), 'total': len(jobs), 'state': 'running'}; save_status(st)
             if not todo: break
             j = todo[0]
             res, txt = gen_one(j, log)
@@ -345,7 +347,7 @@ im.save(dst, quality=88 if kind == 'sprite' else 86, method=6)
 '''
     n = 0
     for j in jobs:
-        src = os.path.join(G, j['out'])
+        src = raw_path(os.path.join(G, j['out']))
         if not os.path.exists(src): continue
         name = j['id']; v = os.path.join(V3W, name + '.webp'); o = os.path.join(OLD, name + '.webp')
         if not os.path.exists(o) and os.path.exists(v): shutil.copy2(v, o)

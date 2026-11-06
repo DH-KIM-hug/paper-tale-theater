@@ -11,6 +11,7 @@ import json, os, sys
 import numpy as np
 from PIL import Image
 from scipy import ndimage
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 V3W = os.path.join(G, 'assets', 'v3w')
 tale, only = sys.argv[1], set(sys.argv[2:])
@@ -48,7 +49,7 @@ def crop(im, r):
 asp = []
 for j in jobs:
     if j['id'] not in only: continue
-    src = os.path.join(G, j['out']); dst = os.path.join(V3W, j['id'] + '.webp')
+    src = raw_path(os.path.join(G, j['out'])); dst = os.path.join(V3W, j['id'] + '.webp')
     if not os.path.exists(src): print('없음', j['id']); continue
     if j['kind'] == 'sprite':
         im = key_edge(src); s = min(900 / im.width, 600 / im.height)

@@ -4,6 +4,7 @@
 ui.js 등록과 ?v= 올리기는 손으로 한다(코드가 이름을 기다리는 그림만 등록)."""
 import json, os, sys, tempfile
 from PIL import Image
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 sys.path.insert(0, os.path.join(G, 'tools/gpu_night'))
 from chromakey import key_magenta
@@ -11,7 +12,7 @@ from chromakey import key_magenta
 jobs = {j['id']: j for j in json.load(open(os.path.join(G, 'tools/app/gen/jobs_ui.json')))}
 FILL = {'tab_': .72, 'empty_': .72, 'night_head': .96}   # 둥근 구멍에 들어가는 그림은 지름 80% 원 안(72%), night_head 는 둥근 밤 장면이라 마젠타 모서리만 지운다
 for i in sys.argv[1:]:
-    j = jobs[i]; src = os.path.join(G, j['out']); dst = os.path.join(G, j['final'])
+    j = jobs[i]; src = raw_path(os.path.join(G, j['out'])); dst = os.path.join(G, j['final'])
     W, H = j['size']
     with tempfile.TemporaryDirectory() as td:
         k = os.path.join(td, 'k.png'); key_magenta(src, k, 6)

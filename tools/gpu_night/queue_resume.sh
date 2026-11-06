@@ -7,7 +7,7 @@ python3 - <<'PY'
 import json, os, datetime
 cut = datetime.datetime(2026, 10, 1, 10, 0).timestamp()
 raw = '/Users/house_of_4k2b/projects/2026/patjuk-game/assets/raw/v3/'
-d = [j for j in json.load(open('jobs_sm_family.json')) if not (os.path.exists(raw + j['name'] + '.png') and os.path.getmtime(raw + j['name'] + '.png') > cut)]
+d = [j for j in json.load(open('jobs_sm_family.json')) if not (any(os.path.exists(raw + j['name'] + e) and os.path.getmtime(raw + j['name'] + e) > cut for e in ('.png', '.webp')))]
 json.dump(d, open('/tmp/sm_family_todo.json', 'w'), ensure_ascii=False)
 print('가족 남은 것:', [j['name'] for j in d])
 PY

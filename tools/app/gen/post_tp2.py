@@ -3,11 +3,12 @@
   ~/.venvs/paper-tale/bin/python tools/app/gen/post_tp2.py [id ...]"""
 import os, sys, subprocess, numpy as np
 from PIL import Image
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 RAW = os.path.join(G, 'assets/raw/restyle/three_pigs'); TMP = os.path.join(G, 'assets/raw/three_pigs_key'); os.makedirs(TMP, exist_ok=True)
 def keyed(name):
     k = os.path.join(TMP, name + '_full.png')
-    subprocess.run([sys.executable, os.path.join(G, 'tools/gpu_night/chromakey.py'), os.path.join(RAW, name + '.png'), k, '-1'], check=True, capture_output=True)
+    subprocess.run([sys.executable, os.path.join(G, 'tools/gpu_night/chromakey.py'), raw_path(os.path.join(RAW, name + '.png')), k, '-1'], check=True, capture_output=True)
     return Image.open(k).convert('RGBA')
 def bbox(im, th=40): return Image.fromarray((np.array(im)[..., 3] > th).astype(np.uint8) * 255).getbbox()
 ids = sys.argv[1:] or [f'tp2_{h}_s{i}' for h in ('straw', 'wood', 'brick') for i in (1, 2, 3)]

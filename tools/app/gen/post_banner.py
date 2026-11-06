@@ -7,30 +7,31 @@
   ~/.venvs/paper-tale/bin/python tools/app/gen/post_banner.py"""
 import glob, json, os
 from PIL import Image
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 OUT = f'{G}/assets/banner'
 os.makedirs(OUT, exist_ok=True)
 
-def newer(src, dst): return not os.path.exists(dst) or os.path.getmtime(src) > os.path.getmtime(dst)
+def newer(src, dst): src = raw_path(src); return not os.path.exists(dst) or os.path.getmtime(src) > os.path.getmtime(dst)
 
 banners, titles, titles_en = [], [], []
-for p in sorted(glob.glob(f'{G}/assets/raw/banner/*_banner.png')):
+for p in raw_glob(f'{G}/assets/raw/banner/*_banner.png'):
     t = os.path.basename(p)[:-len('_banner.png')]
     dst = f'{OUT}/{t}.webp'
     if newer(p, dst):
-        im = Image.open(p).convert('RGB')
+        im = Image.open(raw_path(p)).convert('RGB')
         W, H = im.size; tw, th = 1600, 900; r = max(tw / W, th / H)
         im = im.resize((round(W * r) + 1, round(H * r) + 1), Image.LANCZOS)
         x, y = (im.width - tw) // 2, (im.height - th) // 2
         im.crop((x, y, x + tw, y + th)).save(dst, quality=82)
         print('banner', t)
     banners.append(t)
-for p in sorted(glob.glob(f'{G}/assets/raw/title/*_title.png')) + sorted(glob.glob(f'{G}/assets/raw/title/*_title_en.png')):
+for p in raw_glob(f'{G}/assets/raw/title/*_title.png') + raw_glob(f'{G}/assets/raw/title/*_title_en.png'):
     en = p.endswith('_title_en.png')
     t = os.path.basename(p)[:-len('_title_en.png' if en else '_title.png')]
     dst = f'{OUT}/{t}_title{"_en" if en else ""}.webp'
     if newer(p, dst):
-        im = Image.open(p).convert('RGBA')
+        im = Image.open(raw_path(p)).convert('RGBA')
         box = im.getchannel('A').point(lambda a: 255 if a > 8 else 0).getbbox()
         im = im.crop(box)
         if im.height > 240: im = im.resize((round(im.width * 240 / im.height), 240), Image.LANCZOS)

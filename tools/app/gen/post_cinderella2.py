@@ -7,6 +7,7 @@
 - 끝에 그림 폭/높이 비율을 출력한다 (cinderella.js 의 ASP)"""
 import json, os, sys, subprocess
 from PIL import Image
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 V3W = os.path.join(G, 'assets', 'v3w'); TMP = os.path.join(G, 'assets', 'raw', 'restyle', 'cinderella2_key')
 jobs = json.load(open(os.path.join(G, 'tools/app/gen/jobs_cinderella2.json')))
@@ -14,11 +15,11 @@ only = set(sys.argv[1:]); os.makedirs(TMP, exist_ok=True)
 
 def keyed(j):
     k = os.path.join(TMP, j['id'] + '.png')
-    subprocess.run([sys.executable, os.path.join(G, 'tools/gpu_night/chromakey.py'), os.path.join(G, j['out']), k, '6'], check=True, capture_output=True)
+    subprocess.run([sys.executable, os.path.join(G, 'tools/gpu_night/chromakey.py'), raw_path(os.path.join(G, j['out'])), k, '6'], check=True, capture_output=True)
     return Image.open(k).convert('RGBA')
 
 for j in jobs:
-    src = os.path.join(G, j['out'])
+    src = raw_path(os.path.join(G, j['out']))
     if not os.path.exists(src) or (only and j['id'] not in only): continue
     dst = os.path.join(V3W, j['id'] + '.webp')
     if j['kind'] == 'sprite':

@@ -3,12 +3,13 @@
   ~/.venvs/paper-tale/bin/python tools/app/gen/post_cuts.py <tale> [id ...]   (id 생략 시 그 동화의 컷 전부, 있는 것만)"""
 import json, os, sys
 from PIL import Image
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.abspath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', '..'))); from rawpath import raw_path, raw_exists, raw_glob  # 원본 png→webp(2026-11-06)
 G = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 tale, ids = sys.argv[1], sys.argv[2:]
 jobs = [j for j in json.load(open(os.path.join(G, f'tools/app/gen/jobs_{tale}.json'))) if j.get('kind') == 'cut']
 for j in jobs:
     if ids and j['id'] not in ids: continue
-    src = os.path.join(G, j['out'])
+    src = raw_path(os.path.join(G, j['out']))
     if not os.path.exists(src): print('없음', j['id']); continue
     im = Image.open(src).convert('RGB')
     w, h = im.size
