@@ -992,18 +992,124 @@ body.app .shelf::-webkit-scrollbar { display: none; }   /* 큰 그림과 목록�
 .g-dl dd.cp-row { flex-wrap: wrap; }
 .cp-in { flex: 1 1 200px; min-height: 52px; max-width: 420px; font-size: 18px; letter-spacing: .04em; text-transform: none; text-align: left; min-width: 0; -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }
 .cp-row .ticket { min-height: 52px; padding: 0 22px; }
-/* 우리 아이 이름(보호자, engine/names.js): 기기 연결 입력칸(.link-input)을 그대로 쓰고 글자 모양만 이름에 맞춘다 */
-.nm-row { display: grid; grid-template-columns: max-content minmax(0, 1fr) minmax(0, 1fr) max-content; gap: 10px 12px; align-items: center; padding: 10px 0; box-shadow: var(--rule); }
-.nm-lb { font-size: var(--fs-body); font-weight: 700; color: var(--ink); white-space: nowrap; }
-.nm-in { min-height: 52px; font-size: 20px; letter-spacing: .04em; text-transform: none; text-align: left; min-width: 0; }
-.nm-in.en { font-size: 17px; font-weight: 700; }
-.nm-in:disabled { opacity: .5; }
-.nm-row .ticket { min-width: 0; padding: 0 16px; }
-.nm-where { grid-column: 1 / -1; font-size: var(--fs-caption); font-weight: 600; color: var(--ink-2); }
-.nm-bar { flex: 1 1 160px; height: 10px; border-radius: 5px; background: var(--paper-dn); box-shadow: var(--cut); overflow: hidden; }
-.nm-bar i { display: block; height: 100%; background: var(--act); border-radius: 5px; transition: width 300ms var(--ease); }
-.nm-n { font-size: var(--fs-caption); font-weight: 600; color: var(--ink-2); }
-@media (max-width: 600px) { .nm-row { grid-template-columns: max-content minmax(0, 1fr); } .nm-row .nm-in.en { grid-column: 2; } .nm-row .ticket { grid-column: 1 / -1; } }
+/* 우리 아이 이름 2판(보호자, engine/names.js · docs/NAME_SETUP_V2_PLAN.md §2): 흰 카드 + 옅은 회색 그림자, 입력 칸 흰 바탕 + 1px 테두리, 1차 행동 감빛 화면당 하나 */
+.g-pane > .nm { max-width: 880px; }
+.nm h3 { margin-bottom: 6px; }
+.nm-lead { margin-bottom: 0; }
+.nm-tales { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); margin: 18px 0 0; }
+.nm-card { display: grid; grid-template-columns: 132px minmax(0, 1fr) auto; align-items: center; gap: var(--s-4); min-height: 116px; padding: 12px; border: 0; border-radius: var(--r-m); background: var(--card); box-shadow: var(--sh-1); text-align: left; color: var(--ink); font: inherit; cursor: pointer; }
+.nm-card img { width: 132px; height: 88px; object-fit: cover; border-radius: var(--r-s); background: var(--paper-deep); }
+.nm-card:disabled { cursor: default; }
+.nm-card:disabled img { opacity: .55; }
+.nm-card:focus-visible { outline: 2px solid var(--act); outline-offset: 3px; }
+.nm-ct { min-width: 0; }
+.nm-t { display: block; font-size: 19px; font-weight: 800; letter-spacing: .01em; }
+.nm-s { display: block; margin-top: 6px; font-size: 15px; line-height: 1.4; color: var(--ink-2); word-break: keep-all; }
+.nm-s b { color: var(--ink); font-weight: 700; }
+.nm-chev { width: 22px; height: 22px; fill: none; stroke: var(--ink-3); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.nm-tag { display: inline-block; margin-right: 6px; padding: 3px 10px; border-radius: var(--r-pill); background: var(--paper-dn); font-size: 13px; font-weight: 700; color: var(--ink-2); vertical-align: 1px; white-space: nowrap; }
+.nm-tag.done { background: #E8F1E8; color: #2E6B3A; }
+.nm-tag.todo { background: #FBE9DF; color: var(--act-dn); }
+.nm-tag.big { padding: 8px 16px; font-size: 16px; }
+.nm-foot { margin: 16px 0 0; font-size: var(--fs-caption); line-height: 1.6; color: var(--ink-2); word-break: keep-all; }
+.nm-foot b { color: var(--ink); font-weight: 700; }
+.nm-again { margin: 16px 0 0; }
+.nm .g-ask { margin-top: 12px; }
+.nm-back { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 0 8px 0 0; border: 0; background: none; color: var(--ink-2); font: 700 16px/1.2 var(--font); cursor: pointer; }
+.nm-back svg { width: 18px; height: 18px; }
+/* 한 편 설정: 왼쪽 모습 카드 300 + 오른쪽 칸 */
+.nm-set { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 28px; margin-top: 14px; align-items: start; }
+.nm-look { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 16px; border-radius: var(--r-m); background: var(--card); box-shadow: var(--sh-1); }
+.nm-lb, .nm-lbl { display: block; font-size: var(--fs-caption); font-weight: 700; color: var(--ink-2); }
+.nm-lb { align-self: flex-start; }
+.nm-lbl { margin-bottom: 6px; }
+.nm-pv { position: relative; width: 100%; height: 230px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; border-radius: var(--r-s); background: var(--paper); }
+.nm-pv img { height: 210px; max-width: 100%; object-fit: contain; }
+.nm-seg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; width: 100%; padding: 4px; border-radius: var(--r-pill); background: var(--paper-dn); }
+.nm-seg button { min-height: 48px; border: 0; border-radius: var(--r-pill); background: none; font: 700 16px/1.2 var(--font); color: var(--ink-2); cursor: pointer; }
+.nm-seg button.on { background: var(--card); color: var(--ink); box-shadow: inset 0 0 0 2px var(--act); }
+.nm-seg button:disabled { cursor: default; }
+.nm-seg button:disabled:not(.on) { opacity: .6; }
+.nm-seg button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.nm-form { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.nm-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.nm-row2.one { grid-template-columns: 1fr; }
+.nm-in { width: 100%; min-width: 0; height: 60px; padding: 0 18px; border: 0; border-radius: var(--r-s); background: var(--card); box-shadow: var(--cut); font: 700 21px/1 var(--font); letter-spacing: .02em; color: var(--ink); -webkit-user-select: text; user-select: text; }
+.nm-in.en { font-size: 17px; }
+.nm-in::placeholder { color: var(--ink-3); font-weight: 600; }
+.nm-in:disabled { background: var(--paper-dn); color: var(--ink); -webkit-text-fill-color: var(--ink); opacity: 1; }
+.nm-in:focus-visible { outline: 2px solid var(--act); outline-offset: 1px; }
+.nm-pbtn { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; background-color: var(--card); }
+.nm-pbtn svg { flex: none; width: 20px; height: 20px; fill: currentColor; }
+.nm-pbtn span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nm-agree { position: relative; display: flex; align-items: center; gap: 12px; min-height: 44px; font-size: 15px; line-height: 1.4; color: var(--ink-2); cursor: pointer; word-break: keep-all; }
+.nm-agree input { position: absolute; opacity: 0; width: 26px; height: 26px; margin: 0; }
+.nm-agree i { flex: none; width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; background: var(--card); box-shadow: inset 0 0 0 2px var(--ink-3); }
+.nm-agree input:checked + i { background: var(--act); box-shadow: none; }
+.nm-agree input:checked + i::after { content: ''; width: 8px; height: 14px; border: solid #fff; border-width: 0 3px 3px 0; transform: translateY(-2px) rotate(45deg); }
+.nm-agree input:focus-visible + i { outline: 2px solid var(--act); outline-offset: 2px; }
+.nm-link { padding: 0; border: 0; background: none; font: inherit; color: var(--ink); text-decoration: underline; cursor: pointer; }
+.nm-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 18px; }
+.nm-actions .ticket.pri { min-height: 62px; padding: 0 36px; font-size: 19px; font-weight: 800; box-shadow: var(--sh-2); }
+.nm-actions small { flex: 1 1 180px; font-size: var(--fs-caption); line-height: 1.45; color: var(--ink-3); word-break: keep-all; }
+.nm-note { margin: 8px 0 0; font-size: 15px; }
+.nm-prog { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--r-s); background: var(--card); box-shadow: var(--sh-1); }
+.nm-pv .nm-prog { position: absolute; left: 8px; right: 8px; bottom: 8px; }
+.nm-one.fam > .nm-prog { margin-top: 14px; }
+.nm-bar { flex: 1 1 120px; height: 10px; border-radius: 5px; background: var(--paper-dn); box-shadow: var(--cut); overflow: hidden; }
+.nm-bar i { display: block; height: 100%; border-radius: 5px; background: var(--act); transition: width 300ms var(--ease); }
+.nm-n { font-size: var(--fs-caption); font-weight: 700; color: var(--ink-2); white-space: nowrap; }
+.nm .toggle { margin-top: 18px; }
+/* 구름 공장: 아이 카드 셋 한 줄 + 강아지 한 줄 + 아래 줄(동의 · 1차 행동) */
+.nm-kids { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+.nm-kid { display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: var(--r-m); background: var(--card); box-shadow: var(--sh-1); min-width: 0; }
+.nm-hd { display: flex; align-items: center; gap: 12px; }
+.nm-av { flex: none; width: 64px; height: 64px; display: flex; align-items: flex-end; justify-content: center; overflow: hidden; border-radius: 50%; background: var(--paper); }
+.nm-av img { height: 60px; object-fit: contain; }
+.nm-dog .nm-av img { height: 52px; }
+.nm-who { font-size: 16px; font-weight: 800; color: var(--ink); }
+.nm-who small { display: block; margin-top: 2px; font-size: 13px; font-weight: 600; color: var(--ink-3); }
+.nm-kid .nm-seg button { min-height: 44px; font-size: 15px; }
+.nm-dog { display: grid; grid-template-columns: 64px auto minmax(0, 1fr) auto; align-items: center; gap: 14px; margin-top: 14px; padding: 12px 14px; border-radius: var(--r-m); background: var(--card); box-shadow: var(--sh-1); }
+.nm-dogin { display: flex; gap: 10px; min-width: 0; }
+.nm-barrow { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 16px; margin-top: 16px; }
+.nm-barrow .nm-agree { flex: 1 1 320px; }
+.nm-barrow .nm-actions { flex: none; }
+.nm-barrow .nm-actions small { display: none; }
+/* 아이패드 세로(본문이 좁다): 한 편 설정은 위아래로 */
+@media (orientation: portrait) and (min-width: 700px) { .nm-set { grid-template-columns: 260px minmax(0, 1fr); gap: 20px; } .nm-tales { grid-template-columns: 1fr; } .nm-kids { grid-template-columns: 1fr 1fr 1fr; } }
+/* 아이폰 세로: 1열, 1차 행동은 아래 고정 막대 */
+@media (max-width: 699px) {
+  .nm-tales { grid-template-columns: 1fr; gap: 12px; }
+  .nm-card { grid-template-columns: 104px minmax(0, 1fr) auto; min-height: 96px; gap: 12px; }
+  .nm-card img { width: 104px; height: 70px; }
+  .nm-t { font-size: 17px; } .nm-s { font-size: 14px; }
+  .nm-set { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .nm-look { flex-direction: row; flex-wrap: wrap; align-items: center; }
+  .nm-lb { display: none; }
+  .nm-pv { width: 110px; height: 120px; flex: none; } .nm-pv img { height: 108px; }
+  .nm-pv .nm-prog { left: 4px; right: 4px; bottom: 4px; padding: 6px; flex-direction: column; gap: 4px; }
+  .nm-pv .nm-bar { flex: none; width: 100%; height: 8px; }
+  .nm-look .nm-seg { flex: 1; width: auto; }
+  .nm-row2 { grid-template-columns: minmax(0, 1fr); }
+  .nm-in { height: 56px; font-size: 19px; }
+  .nm-actions { position: sticky; bottom: 0; z-index: 2; flex-direction: column; align-items: stretch; gap: 8px; margin: 0 calc(-1 * var(--pad)); padding: 12px var(--pad) calc(12px + env(safe-area-inset-bottom)); background: var(--paper); box-shadow: 0 -1px 0 var(--hairline); }
+  .nm-actions .ticket { width: 100%; }
+  .nm-actions small { text-align: center; flex: none; }
+  .nm-actions .nm-tag.big { align-self: flex-start; }
+  .nm-kids { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .nm-kid { flex-direction: row; flex-wrap: wrap; align-items: center; padding: 12px; }
+  .nm-kid .nm-hd { width: 100%; }
+  .nm-kid .nm-seg { flex: 1 1 150px; width: auto; }
+  .nm-kid .nm-in { flex: 1 1 140px; width: auto; }
+  .nm-dog { grid-template-columns: 52px auto minmax(0, 1fr); gap: 10px; }
+  .nm-dog .nm-av { width: 52px; height: 52px; }
+  .nm-dog .nm-pbtn { grid-column: 1 / -1; justify-content: center; }
+  .nm-dogin { flex-direction: column; }
+  .nm-barrow { position: sticky; bottom: 0; z-index: 2; flex-direction: column; align-items: stretch; gap: 8px; margin: 16px calc(-1 * var(--pad)) 0; padding: 10px var(--pad) calc(12px + env(safe-area-inset-bottom)); background: var(--paper); box-shadow: 0 -1px 0 var(--hairline); }
+  .nm-barrow .nm-agree { flex: none; }
+  .nm-barrow .nm-actions { position: static; margin: 0; padding: 0; background: none; box-shadow: none; }
+}
 
 /* ═════════ 탭 껍데기 (APP_SCREENS_PLAN §2): 가로 = 왼쪽 레일, 세로 = 아래 막대. 톱니는 늘 오른쪽 위 ═════════ */
 :root { --rail: 92px; --hole-w: 56px; --hole-h: 38px; --tab-ic: 30px; --bar-h: 0px; }   /* 레일 폭 128 → 92(2026-10-30 사용자: 아이패드 왼쪽이 너무 넓다) */

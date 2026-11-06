@@ -364,7 +364,7 @@ done
 **1. 카탈로그** `GET /v1/name/catalog`
 ```json
 { "version": "nl2-89f05cc415", "slots": {"A":{"ko":"다현","en":"Dahyun"},"B":{...},"C":{...},"D":{...}},
-  "originalLook": {"A":"g","B":"b","C":"g"},
+  "originalLook": {"A":"g","B":"b","C":"b"},
   "tales": { "witch_candy": { "lines": [
     { "id":"k549d833e", "key":"…한국어 원문(열쇠)…", "keyEn":"…", "tpl":"…", "en":"She melted!",
       "tplEn":"{A_g:He/She} melted!", "mode":"both", "seg":null, "segEn":null, "langs":["en"], "g":["A"] } ] } } }
@@ -404,6 +404,16 @@ done
 **6. 이용권 영수증** `POST /v1/receipt/apple|google` — 그대로. 응답 `quota` 는 위 2번 모양(`tickets` +1).
 **7. 옛 기록**: 서버가 읽을 때 옮긴다(생성한 적 있으면 `first = covered`). 앱은 신경 쓸 것 없음. 쿠폰(`/v1/coupon`, `ownedVia`)은 구매자와 같다(`firstLeft` 4편).
 **8. 앱에서 바꿔야 할 곳**(engine/names.js·home.js, 이번 일 밖): `quota.credits`·`covered`·`backfill`·`{}` 실행 사용처 → 위 모양으로. 줄 요청에 `look` 추가. `NameForm.slotsIn` 은 `_g` 를 `A_g` 로 내므로 `engine/names.js` 의 `slotsIn(...).filter(_en)` 한국어 쪽 필터에 `_g` 가 한국어 자리로 잡히지 않게 `/_en$|_g$/` 로 거른다.
+
+### 앱 A1·A2 구현 (2026-11-07, 커밋 전)
+
+- **설정 저장**(`engine/names.js`): `paperTheater.names` = `{ v:2, agree, run:{runId,tales,kind,expiresAt}, tales:{ <동화>:{ names, look, en, on, original, dir, done:{ko,en}, got:{'<lang>/<id>':ext}, err } } }`. 홈 스티커 줄 `home` 은 받은 녹음만 따로 두고 이름·모습은 `witch_candy` 것을 쓴다. 옛 1판(공통 이름)은 처음 읽을 때 네 편 + home 에 나눠 옮긴다(모습 = 원래 모습, 받은 녹음 경로 `<version>/<동화>` 그대로).
+- **녹음 경로**: `names/<dir>/<lang>/<id>.(wav|mp3)`, `dir = <catalog version>/<동화>/<모습 글자들><시각>` — 설정할 때마다 새 폴더(모습이 바뀌면 다른 녹음), 다시 설정하면 그 동화의 옛 폴더를 지운다.
+- **받을 줄**: 이름을 적은 자리가 든 줄 + 모습을 원래와 다르게 고른 자리가 `g` 에 든 줄. 영어는 영어 이름을 적었거나 설정할 때 영어 모드였을 때만 받는다. 줄 요청에는 `names` 와 함께 그 동화 아이 자리의 `look` 을 보낸다.
+- **실행**: 첫 설정 = `run {tale}`, 이용권 실행이 살아 있으면 `run {ticket:true}`(서버가 resumed). '다시 바꾸기'(목록에 하나, 완료된 동화 화면에도 보조 단추) → 이용권이 있으면 확인 쪽지 뒤 `{ticket:true}`, 0장이면 어른 확인 → 0.99 결제 → 바로 `{ticket:true}`. 받기는 실행 하나에서 켜진 동화를 모두 두 줄씩 받고, 받는 중 다른 동화를 설정하면 다음 바퀴에 함께 받는다.
+- **모습 조회**: `Names.look(동화, 자리)` → `'b'|'g'`(설정이 켜져 있고 '원래로 듣기'가 꺼져 있을 때만 바꾼 모습), `Names.lookTag()`, `Names.sprite(동화, 자리, id)` → `…_자세` 를 `…b_자세`/`…g_자세` 로(예: `cf4_agi_wave` → `cf4_agig_wave`). 반대 모습 그림이 앱에 들어온 동화만 `Names.LOOK_ART` 에 넣는다(지금은 비어 있음 — 설정 화면 미리보기는 원래 그림을 쓴다. TODO G3).
+- **아이 본인 대사 반대 모습 녹음 훅**(확정 사항 7-4, 녹음은 아직 없음): 녹음이 앱 묶음에 들어오면 동화 폴더에 `narration_el_look_<자리><모습>.js`(예: `tales/unicorn/narration_el_look_Ab.js`, 구름 공장 `…_Ab.js`·`…_Bg.js`·`…_Cg.js`)를 두고, 그 파일은 `window.NARRATION_LOOK_CLIPS = Object.assign(window.NARRATION_LOOK_CLIPS || {}, { Ab: { ko: { <한국어 열쇠>: <값> }, en: { <영어 열쇠>: <값> } } })` 를 둔다. 그리고 `engine/names.js` 의 `LOOK_CLIPS` 에 `{ unicorn: ['Ab'] }` 처럼 적는다(적힌 것만 읽어 없는 파일을 부르지 않는다). `Names.apply()` 가 모습이 원래와 다른 자리의 맵을 읽어 녹음 맵 값을 덮고, 그 위에 서버에서 받은 이름 줄을 덮는다.
+- **화면 글**: `Names.view()` 가 이름을 바꾸고, 영어 대명사 줄(`tplEn` 에 `_g`)은 카탈로그 줄을 찾아 `NameForm.fill(tplEn, names, look)` 로 채운다(영어 녹음이 다 받아졌을 때만).
 
 ## 7. 판단이 필요한 부분
 
