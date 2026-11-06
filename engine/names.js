@@ -32,7 +32,7 @@ const Names = (() => {
      TODO(G3): 그림이 들어오면 여기에 동화 id 를 넣고, 동화 코드가 Names.sprite 로 그림 id 를 고르게 한다 */
   const LOOK_ART = new Set([]);
   /* 아이 본인 대사 반대 모습 녹음이 들어온 동화와 자리·모습(예: { unicorn: ['Ab'], kkultteok: ['Ab', 'Bg', 'Cb'] }). 지금은 없음 */
-  const LOOK_CLIPS = {};
+  const LOOK_CLIPS = { red_car: ['Bg'], unicorn: ['Ab'], witch_candy: ['Ab'], kkultteok: ['Ab', 'Bg', 'Cg'] };
   /* 설정 화면 미리보기 그림(원래 모습 id). 반대 모습은 sprite() 규칙(…_stand → …b_stand / …g_stand) */
   const PREVIEW_ART = { unicorn: { A: 'uc_kid2_stand' }, witch_candy: { A: 'wc_kid_stand' }, red_car: { B: 'rc_child_stand' }, kkultteok: { A: 'cf4_nuna_wave', B: 'cf4_oppa_walk', C: 'cf4_agi_wave', D: 'cf4_dog_wag' } };
 
