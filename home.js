@@ -856,7 +856,8 @@
     } else if (k === 'about') {
       h = `<h3>${name}</h3>
         <dl class="g-dl"><dt>${L('버전', 'Version')}</dt><dd>${APP_VERSION}</dd>
-        <dt>${L('문의', 'Contact')}</dt><dd>github.com/DH-KIM-hug/paper-tale-theater/issues</dd></dl>
+        ${deviceNoRow()}
+        <dt>${L('문의', 'Contact')}</dt><dd style="user-select:text;-webkit-user-select:text">hello@ddoystory.com</dd></dl>
         <div class="g-btns"><button type="button" class="ticket alt" data-act="doc-privacy">${L('개인정보 처리방침', 'Privacy policy')}</button><button type="button" class="ticket alt" data-act="doc-credits">${L('그림·소리 출처', 'Credits')}</button></div>
         <div id="docView"></div>`;
     } else if (k === 'records') {
@@ -867,6 +868,13 @@
     }
     guardPane.innerHTML = back + h;
     if (k === 'find') paintChips();
+  }
+  /* 기기 번호(서버 계정 앞 8자리). 서버를 안 쓰거나 계정이 없으면 줄을 숨긴다. 글자로만 보이고 읽지 않는다 */
+  function deviceNoRow() {
+    let n = null;
+    try { n = typeof Entitlements !== 'undefined' && Entitlements.syncEnabled() && Entitlements.deviceNo ? Entitlements.deviceNo() : null; } catch (e) { n = null; }
+    if (!n) return '';
+    return `<dt>${L('기기 번호', 'Device number')}</dt><dd style="user-select:text;-webkit-user-select:text">${n}</dd>`;
   }
   /* 기록 지우기 (동화 쪽 키·Entitlements 의 저장 키) */
   function eraseRecords(all) {

@@ -451,6 +451,7 @@ const Entitlements = (() => {
     waitAvailable, waitDaysLeft, waitUnlock, daysSinceFirstRun,
     syncEnabled: enabled, sync, createLinkCode, redeemLinkCode, sendReceipt, cleanCode,
     isLinked: () => !!account(),
+    deviceNo: () => { const a = account(); return a ? String(a.accountId).slice(0, 8) : null; },   /* 보호자 '정보'에 보이는 기기 번호(accountId 앞 8자리만, 토큰은 내보내지 않음) */
     onChange: f => { listeners.add(f); return () => listeners.delete(f); },
     _reset
   };

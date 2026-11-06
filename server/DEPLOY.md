@@ -100,5 +100,14 @@ npx cap copy ios
 - 주소를 바꿔야 하면 `server.env` 만 고쳐 다시 빌드합니다.
 
 
+## 삭제 요청 처리 (운영자)
+사용자가 메일로 '기기 번호'(앱 보호자 영역 > 정보, 계정 ID 앞 8자리)를 보내오면:
+```sh
+cd server
+node tools/delete_by_prefix.mjs 1a2b3c4d          # 찾은 키 목록만 보여 줌(dry-run, 기본)
+node tools/delete_by_prefix.mjs 1a2b3c4d --yes    # 확인한 뒤 실제로 지움
+```
+계정, 그 계정의 영수증 기록(다른 계정과 공유하면 이 계정만 뺌), 연결 코드, 속도 제한 카운터를 지웁니다. 8자리가 여러 계정에 걸리면 아무것도 지우지 않고 알려 줍니다. 원격 KV 기준이며(기본, `--local` 로 로컬), 지운 뒤 사용자에게 처리했다고 회신합니다.
+
 ## 배포 기록
 - 2026-11-06: workers.dev 하위 이름 `papertale`(API로 등록), KV ACCOUNTS 실제·미리보기 생성, 배포 주소 `https://paper-tale-sync.papertale.workers.dev`, tools/app/server.env 에 넣음.
