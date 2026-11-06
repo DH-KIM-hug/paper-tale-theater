@@ -41,10 +41,12 @@
 | `POST /v1/link/redeem` | 필요(요청 기기의 현재 계정) | `{ code }` | `{ accountId, token, state }` — 코드를 만든 계정의 새 token. 요청 기기의 기존 계정 state 는 대상 계정에 합쳐지고 기존 계정은 삭제된다 |
 | `POST /v1/receipt/apple` | 필요 | `{ signedTransaction }` (StoreKit 2 JWS) | `{ owned, state }` |
 | `POST /v1/receipt/google` | 필요 | `{ purchaseToken, productId }` | `{ owned, state }` |
+| `POST /v1/coupon` | 필요 | `{ code }` | `{ owned, state }` — 개발 실험용 쿠폰. 맞으면 4.99 구매와 같은 `state.owned:true`(이름 바꾸기 `owned`·크레딧도 구매자와 같음), 계정 기록에 `ownedVia:'coupon'`. 비밀값 `COUPON_SHA256` 이 없으면 404 `not_found`(꺼짐), 틀리면 400 `bad_coupon` |
 | `DELETE /v1/account` | 필요 | - | 204 — 계정과 연결된 모든 기록 삭제 |
 
 오류 코드: `unauthorized`(401), `bad_request`(400), `code_invalid`(404, 없음·만료·이미 씀), `code_self`(409, 자기 계정의 코드), `rate_limited`(429), `receipt_invalid`(422), `server_error`(500).
 - 코드 입력은 계정당 분당 5회, 코드 생성은 시간당 10회로 제한한다.
+- 쿠폰: 입력을 앞뒤 공백 제거·소문자로 바꾼 뒤 SHA-256 hex 를 `COUPON_SHA256`(소문자 hex, 쉼표로 여러 개)과 상수 시간 비교한다. 쿠폰 원문은 저장·로그하지 않는다. 계정당 10분에 5회(맞든 틀리든 센다). 심사 제출 전 `wrangler secret delete COUPON_SHA256` 로 끈다(App Store 지침 3.1.1).
 - 상품 ID: `com.papertale.theater.unlockall` (애플·구글 동일).
 
 ## 영수증 검증

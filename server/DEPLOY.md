@@ -44,6 +44,7 @@ iOS 앱 주소(`capacitor://localhost`)는 코드에 이미 허용되어 있어 
 | `GOOGLE_SERVICE_ACCOUNT_JSON` | 비밀값 | 안드로이드 때 | iOS 1.0 에는 불필요(구글 영수증 엔드포인트만 쓰므로) |
 | `ELEVENLABS_API_KEY` | 비밀값 | 이름 바꾸기 | 이름 바꾸기 녹음(`/v1/name/line`). 없으면 그 요청만 502 `tts_failed` |
 | `NAME_DAILY_LINE_CAP` | 일반 변수 | 선택 | 이름 바꾸기 서버 전체 하루 줄 상한(기본 30000). 넘으면 503 `busy` |
+| `COUPON_SHA256` | 비밀값 | **심사 전 삭제** | 개발 실험용 쿠폰(`/v1/coupon`)의 SHA-256 소문자 hex, 쉼표로 여러 개. 없으면 쿠폰 기능이 꺼진다(404). 아래 '쿠폰' 참고 |
 
 애플 영수증은 비밀 키가 아니라 **애플 공개 루트 인증서**(Apple Root CA G3)로 검증합니다. 코드에 이미 들어 있으므로 아래는 인증서를 바꿀 때만 합니다.
 ```sh
@@ -60,6 +61,13 @@ npx wrangler secret put ELEVENLABS_API_KEY < ~/.config/elevenlabs/key   # 화면
 ```
 가능하면 서버 전용 키를 새로 만들어(권한: Text to Speech 만) 넣습니다. 요금제가 zero retention(`enable_logging=false`)을 지원하지 않으면 서버가 그 옵션을 빼고 보냅니다(`wrangler tail` 에 `enable_logging=false 미지원` 한 줄).
 App Store Connect 에 소모성 상품 `com.papertale.theater.rename`(0.99달러)을 따로 만듭니다. 서버는 기존 `/v1/receipt/apple` 로 이 상품도 받습니다.
+
+개발 실험용 쿠폰(넣으면 4.99 '모든 동화 열기'와 똑같이 열림). 쿠폰 원문은 어디에도 적지 않고 해시만 넣는다:
+```sh
+printf '%s' '<쿠폰>' | shasum -a 256          # 소문자로 적은 쿠폰(서버는 입력을 trim·소문자로 바꿔 비교). 출력 앞 64자리만 쓴다
+npx wrangler secret put COUPON_SHA256          # 위 64자리 hex 붙여 넣기(여러 개면 쉼표로)
+npx wrangler secret delete COUPON_SHA256       # 끄기 — App Store 심사 제출 전에 반드시(지침 3.1.1)
+```
 
 안드로이드를 낼 때 추가:
 ```sh

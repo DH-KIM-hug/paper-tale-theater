@@ -768,7 +768,7 @@
     { k: 'about', t: L('정보', 'About') },
     { k: 'records', t: L('기록', 'Records') }
   ];
-  let curGuard = 'sound', recAsk = '', linkTick = 0, docShown = '';
+  let curGuard = 'sound', recAsk = '', linkTick = 0, docShown = '', couponMsg = '';
   function drawGuardList() {
     $('#guardTitle').textContent = L('보호자', 'Grown-ups');
     $('#guardCloseT').textContent = L('닫기', 'Close');
@@ -779,7 +779,7 @@
     hint.hidden = true;
     curGuard = guardItems().some(i => i.k === curGuard) && curGuard !== 'names' ? curGuard : 'sound';   // 이름 바꾸기는 열 때마다 어른 확인
     delete guardBody.dataset.open;           // 1열일 때는 목록부터
-    recAsk = ''; docShown = '';
+    recAsk = ''; docShown = ''; couponMsg = '';
     drawGuardList(); drawGuardPane();
     showModal(guardEl, guardSheet, { gentle: true, focus: '#guardClose' });
   }
@@ -793,7 +793,7 @@
     const b = e.target.closest('.g-item'); if (!b) return;
     paper('tap');
     const go = () => {
-      curGuard = b.dataset.k; recAsk = ''; docShown = '';
+      curGuard = b.dataset.k; recAsk = ''; docShown = ''; couponMsg = '';
       guardBody.dataset.open = '1';
       drawGuardList(); drawGuardPane();
       guardPane.scrollTop = 0;
@@ -1042,7 +1042,8 @@
       h = `<h3>${name}</h3>
         <dl class="g-dl"><dt>${L('버전', 'Version')}</dt><dd>${APP_VERSION}</dd>
         ${deviceNoRow()}
-        <dt>${L('문의', 'Contact')}</dt><dd style="user-select:text;-webkit-user-select:text">hello@ddoystory.com</dd></dl>
+        <dt>${L('문의', 'Contact')}</dt><dd style="user-select:text;-webkit-user-select:text">hello@ddoystory.com</dd>
+        ${couponRow()}</dl>
         <div class="g-btns"><button type="button" class="ticket alt" data-act="doc-privacy">${L('개인정보 처리방침', 'Privacy policy')}</button><button type="button" class="ticket alt" data-act="doc-credits">${L('그림·소리 출처', 'Credits')}</button></div>
         <div id="docView"></div>`;
     } else if (k === 'records') {
@@ -1060,6 +1061,42 @@
     try { n = typeof Entitlements !== 'undefined' && Entitlements.syncEnabled() && Entitlements.deviceNo ? Entitlements.deviceNo() : null; } catch (e) { n = null; }
     if (!n) return '';
     return `<dt>${L('기기 번호', 'Device number')}</dt><dd style="user-select:text;-webkit-user-select:text">${n}</dd>`;
+  }
+  /* 개발 실험용 쿠폰(서버에 COUPON_SHA256 이 있을 때만 맞음). 기기 번호와 같은 조건에서만 보인다. 글자로만 보이고 읽지 않는다.
+     심사 제출 전 제거 — docs/APP_LAUNCH_CHECKLIST.md */
+  const MSG_COUPON = {
+    ok: ['쿠폰이 적용됐어요', 'Coupon applied'],
+    bad_coupon: ['쿠폰이 맞지 않아요', 'That coupon is not valid'],
+    bad_request: ['쿠폰이 맞지 않아요', 'That coupon is not valid'],
+    rate_limited: ['잠시 뒤 다시 해 보세요', 'Please try again in a little while'],
+    off: ['지금은 쓸 수 없어요', 'Not available right now']
+  };
+  const couponText = k => L(...(MSG_COUPON[k] || MSG_COUPON.off));
+  function couponRow() {
+    let on = false;
+    try { on = typeof Entitlements !== 'undefined' && Entitlements.syncEnabled() && !!Entitlements.deviceNo && !!Entitlements.deviceNo() && !!Entitlements.redeemCoupon; } catch (e) { on = false; }
+    if (!on) return '';
+    const prev = $('#cpInput'), val = prev ? prev.value : '';   // 다시 그려도 쓰던 글자는 남긴다
+    const esc = x => String(x).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    return `<dt><label for="cpInput">${L('쿠폰', 'Coupon')}</label></dt><dd class="cp-row">
+      <input id="cpInput" class="link-input cp-in" type="text" maxlength="100" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="text" value="${esc(val)}">
+      <button type="button" class="ticket alt" data-act="cp-go">${L('적용', 'Apply')}</button>${couponMsg ? `<small id="cpMsg">${couponMsg}</small>` : ''}</dd>`;
+  }
+  let busyCoupon = false;
+  async function couponApply() {
+    const inp = $('#cpInput'); if (!inp || busyCoupon) return;
+    const code = inp.value.trim();
+    if (!code) { inp.focus(); return; }
+    busyCoupon = true; paper('tap');
+    const btn = guardPane.querySelector('[data-act="cp-go"]'); if (btn) btn.disabled = true;
+    let r;
+    try { r = await Entitlements.redeemCoupon(code); } catch (e) { r = { ok: false, error: 'offline' }; }
+    busyCoupon = false;
+    const k = r.ok ? 'ok' : MSG_COUPON[r.error] ? r.error : 'off';   // not_found(꺼짐)·offline·server_error 는 모두 '지금은 쓸 수 없어요'
+    couponMsg = couponText(k);
+    if (r.ok) { const i = $('#cpInput'); if (i) i.value = ''; render({ anim: false }); paintTabBadge(); }
+    if (curGuard === 'about' && !guardEl.hidden) drawGuardPane();
+    toast(couponMsg);
   }
   /* 기록 지우기 (동화 쪽 키·Entitlements 의 저장 키) */
   function eraseRecords(all) {
@@ -1139,6 +1176,7 @@
     else if (act === 'lk-in') parentCheck('link', () => linkEnter());
     else if (act === 'doc-privacy') parentCheck('doc', () => showDoc('privacy'));
     else if (act === 'doc-credits') showDoc('credits');
+    else if (act === 'cp-go') couponApply();
     else if (act === 'rec-progress') parentCheck('reset', () => { recAsk = 'progress'; drawGuardPane(); });
     else if (act === 'rec-all') parentCheck('reset', () => { recAsk = 'all1'; drawGuardPane(); });
     else if (act === 'rec-no') { recAsk = ''; drawGuardPane(); }
@@ -1337,6 +1375,7 @@
     const top = modalTop(); if (!top) return;
     if (top === gateEl) closeGate(); else if (top === flowEl) closeFlow(); else if (top === guardEl) closeGuard(); else if (top.id === 'plEdit') hideModal(top);
   });
+  guardPane.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.id === 'cpInput') { e.preventDefault(); couponApply(); } });
   Entitlements.onChange(() => { if (!flowEl.hidden && flowCtx.step === 'pick') return; refreshGuard(); });
   addEventListener('online', refreshGuard); addEventListener('offline', refreshGuard);
 

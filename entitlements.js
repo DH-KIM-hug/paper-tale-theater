@@ -390,6 +390,21 @@ const Entitlements = (() => {
     return { ok: true };
   }
 
+  /* 개발 실험용 쿠폰(보호자 '정보' 칸, 서버 비밀값 COUPON_SHA256 이 있을 때만 동작. 심사 제출 전 제거 — docs/APP_LAUNCH_CHECKLIST.md)
+     맞으면 4.99 구매와 똑같이 owned. → { ok:true } | { ok:false, error: 'bad_coupon'|'rate_limited'|'not_found'|'offline'|... } */
+  async function redeemCoupon(raw) {
+    const code = String(raw || '').trim();
+    if (!code || code.length > 200) return { ok: false, error: 'bad_coupon' };
+    if (!enabled()) return { ok: false, error: 'offline' };
+    const acc = await ensureAccount();
+    if (!acc) return { ok: false, error: 'offline' };
+    const r = await call('POST', '/coupon', { code }, acc);
+    if (!r.ok) return { ok: false, error: r.error };
+    if (r.data.state) adopt(r.data.state);
+    if (r.data.owned) markOwnedQuiet();
+    return { ok: !!r.data.owned };
+  }
+
   /* 영수증: 네이티브 플러그인이 준 signedTransaction(애플) · purchaseToken(구글)을 서버로. 못 보내면 보관했다가 다음 동기화 때 */
   const pendingReceipts = () => { const a = readJson(K_RECEIPT); return Array.isArray(a) ? a : []; };
   async function postReceipt(acc, rc) {
@@ -487,7 +502,7 @@ const Entitlements = (() => {
     state: () => load(), merge, normalize, balanceOf,
     earnStar, addSticker, finishPlay, addCast, hasCast, castCount, castOf, hasSticker: id => load().stickers.includes(id), addSticker2, hasSticker2: id => load().stickers2.includes(id), stickerCount: () => load().stickers.length, sticker2Count: () => load().stickers2.length, starBalance, earnedToday, starUnlock, isShiny, shineChoices, starShine,
     waitAvailable, waitDaysLeft, waitUnlock, daysSinceFirstRun,
-    syncEnabled: enabled, sync, createLinkCode, redeemLinkCode, sendReceipt, cleanCode,
+    syncEnabled: enabled, sync, createLinkCode, redeemLinkCode, redeemCoupon, sendReceipt, cleanCode,
     isLinked: () => !!account(),
     deviceNo: () => { const a = account(); return a ? String(a.accountId).slice(0, 8) : null; },   /* 보호자 '정보'에 보이는 기기 번호(accountId 앞 8자리만, 토큰은 내보내지 않음) */
     onChange: f => { listeners.add(f); return () => listeners.delete(f); },

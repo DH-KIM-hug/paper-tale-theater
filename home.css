@@ -987,6 +987,11 @@ body.app .shelf::-webkit-scrollbar { display: none; }   /* 큰 그림과 목록�
 .link-input:focus-visible { outline: 2px solid var(--reward); outline-offset: 2px; }
 .link-in .how { margin: 0; }
 @media (max-width: 420px) { .link-code { font-size: 32px; } }
+/* 개발 실험용 쿠폰(보호자 '정보', 심사 제출 전 제거): 기기 연결 입력칸을 쓰되 대소문자를 그대로 보이고 글자 선택·붙여 넣기가 되게 */
+.g-dl dt label { font: inherit; color: inherit; }
+.g-dl dd.cp-row { flex-wrap: wrap; }
+.cp-in { flex: 1 1 200px; min-height: 52px; max-width: 420px; font-size: 18px; letter-spacing: .04em; text-transform: none; text-align: left; min-width: 0; -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }
+.cp-row .ticket { min-height: 52px; padding: 0 22px; }
 /* 우리 아이 이름(보호자, engine/names.js): 기기 연결 입력칸(.link-input)을 그대로 쓰고 글자 모양만 이름에 맞춘다 */
 .nm-row { display: grid; grid-template-columns: max-content minmax(0, 1fr) minmax(0, 1fr) max-content; gap: 10px 12px; align-items: center; padding: 10px 0; box-shadow: var(--rule); }
 .nm-lb { font-size: var(--fs-body); font-weight: 700; color: var(--ink); white-space: nowrap; }

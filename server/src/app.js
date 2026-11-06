@@ -136,7 +136,8 @@ async function linkRedeem(env, me, body, now) {
     r.accounts = [...new Set(r.accounts.map((a) => (a === me.id ? rec.accountId : a)))];
     await env.ACCOUNTS.put('receipt:' + h, JSON.stringify(r));
   }
-  await putAccount(env, rec.accountId, { tokenHashes, state: merged, receipts, name });
+  const ownedVia = target.ownedVia || me.rec.ownedVia; // 쿠폰으로 연 계정 표시도 옮긴다
+  await putAccount(env, rec.accountId, { tokenHashes, state: merged, receipts, name, ...(ownedVia ? { ownedVia } : {}) });
   await env.ACCOUNTS.delete('acct:' + me.id);
   return { accountId: rec.accountId, token, state: merged };
 }
@@ -213,6 +214,27 @@ async function receiptGoogle(env, me, body, now, deps) {
   return applyReceipt(env, me, result.receiptKey);
 }
 
+// ---------- 쿠폰 (개발 실험용, 심사 제출 전 COUPON_SHA256 삭제) ----------
+// 비밀값 COUPON_SHA256: 쿠폰(trim·소문자)의 sha256 소문자 hex, 쉼표로 여러 개. 없으면 기능이 꺼져 404.
+// 쿠폰 원문은 저장하지도 로그에 쓰지도 않는다. 맞으면 4.99 구매와 같은 state.owned 를 켠다.
+export const COUPON_LIMIT = 5;
+export const COUPON_WINDOW_SEC = 600;
+async function couponRedeem(env, me, body, now) {
+  const hashes = String(env.COUPON_SHA256 || '').split(',').map((s) => s.trim().toLowerCase()).filter(Boolean);
+  if (!hashes.length) throw new ApiError(404, 'not_found');
+  if (typeof body.code !== 'string' || body.code.length > 200) throw E.badRequest();
+  await rateLimit(env, 'coupon:' + me.id, COUPON_LIMIT, COUPON_WINDOW_SEC, now);
+  const h = await sha256Hex(body.code.trim().toLowerCase());
+  let ok = false;
+  for (const stored of hashes) if (timingSafeEqual(stored, h)) ok = true; // 전부 끝까지 비교
+  if (!ok) throw new ApiError(400, 'bad_coupon');
+  const rec = me.rec;
+  if (!rec.state.owned) rec.ownedVia = 'coupon'; // 영수증으로 이미 산 계정은 출처를 덮지 않는다
+  rec.state = { ...rec.state, owned: true };
+  await putAccount(env, me.id, rec);
+  return { owned: true, state: rec.state };
+}
+
 // 로그에는 오류 종류와 메시지만 남긴다(요청 본문·token 은 쓰지 않는다).
 function logged(e) {
   console.error('server_error:', e.name, e.message);
@@ -235,7 +257,7 @@ export async function handle(request, env, deps = {}) {
       return respond(await newAccount(env, today), 201);
     }
     if (!path.startsWith('/v1/')) throw new ApiError(404, 'not_found');
-    const known = ['GET /v1/state', 'PUT /v1/state', 'POST /v1/link/create', 'POST /v1/link/redeem', 'POST /v1/receipt/apple', 'POST /v1/receipt/google', 'DELETE /v1/account',
+    const known = ['GET /v1/state', 'PUT /v1/state', 'POST /v1/link/create', 'POST /v1/link/redeem', 'POST /v1/receipt/apple', 'POST /v1/receipt/google', 'POST /v1/coupon', 'DELETE /v1/account',
       'GET /v1/name/catalog', 'GET /v1/name/quota', 'POST /v1/name/run', 'POST /v1/name/line', 'POST /v1/name/check'];
     if (!known.includes(route)) throw new ApiError(404, 'not_found');
 
@@ -260,6 +282,8 @@ export async function handle(request, env, deps = {}) {
         return respond(await receiptApple(env, me, await readJson(request), now));
       case 'POST /v1/receipt/google':
         return respond(await receiptGoogle(env, me, await readJson(request), now, deps));
+      case 'POST /v1/coupon':
+        return respond(await couponRedeem(env, me, await readJson(request, 1024), now));
       case 'GET /v1/name/catalog':
         return respond(catalog());
       case 'GET /v1/name/quota':
