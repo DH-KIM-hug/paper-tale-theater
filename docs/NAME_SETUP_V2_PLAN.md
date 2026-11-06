@@ -233,6 +233,55 @@
 | 보호자 화면 | home.js `namesHTML()` 를 셋으로 나눈다: `nmListHTML()`, `nmTaleHTML(tale)`, `nmFamilyHTML()`. `curGuard==='names'` 안에 `nm.tale` 상태 추가. 부모 확인은 목록 들어갈 때 한 번 |
 | 휴대폰 | 동화 화면의 1차 행동을 아래 고정(sticky) 막대로. '닫기'와 '보호자' 단추 겹침은 목록 화면에서 '보호자' 뒤로 가기를 없애고 '닫기'만 |
 
+### 서버 API 2판 (R1·S1 구현 완료 2026-11-07, 배포 전 — 앱 담당 에이전트용)
+
+규칙 전체는 docs/SYNC_API.md '이름 바꾸기'. 코드: server/src/name.js·name_form.js·name_lines.js(version `nl2-…`), engine/name_form.js(서버판과 같은 함수).
+모습 값은 `'b'`(남자아이) / `'g'`(여자아이). §4-3 제안의 `boy`/`girl` 글자가 아니다.
+
+**1. 카탈로그** `GET /v1/name/catalog`
+```json
+{ "version": "nl2-89f05cc415", "slots": {"A":{"ko":"다현","en":"Dahyun"},"B":{...},"C":{...},"D":{...}},
+  "originalLook": {"A":"g","B":"b","C":"g"},
+  "tales": { "witch_candy": { "lines": [
+    { "id":"k549d833e", "key":"…한국어 원문(열쇠)…", "keyEn":"…", "tpl":"…", "en":"She melted!",
+      "tplEn":"{A_g:He/She} melted!", "mode":"both", "seg":null, "segEn":null, "langs":["en"], "g":["A"] } ] } } }
+```
+- `g`: 모습에 따라 결과가 달라지는 자리. 영어 대명사 줄(10줄은 `langs:['en']` 만) 또는 모습별 목소리가 다른 줄. `g` 가 비면 모습과 무관.
+- 영어 대명사가 있는 줄은 29줄 중 주인공 줄이 모두 `_g` 템플릿(`tplEn`)이 되었다(놀이·읽기를 줄 단위로 센 개수는 witch_candy 9·red_car 3·unicorn 16·kkultteok 1줄(합 29줄)). 강아지 꿀떡이의 his/he 는 그대로.
+- 화면 글: `NameForm.fill(line.tplEn, names, look)`(한국어 `tpl` 은 `fill(tpl, names)` 그대로, 성별 단어 없음).
+
+**2. 남은 횟수** `GET /v1/name/quota`
+```json
+{ "owned": true, "first": ["unicorn"], "firstLeft": ["kkultteok","red_car","witch_candy"], "tickets": 1,
+  "activeRun": { "runId": "…", "tales": ["unicorn"], "kind": "first", "expiresAt": "2026-11-09T03:00:00.000Z" }, "previewsLeftToday": 10 }
+```
+- `credits`·`covered` 는 없어졌다. 미구매면 `first:[]`, `firstLeft:[]`. `tickets` 는 **남은 이용권 장수**.
+- 화면 대응(§5-2): `firstLeft` 에 그 동화가 있으면 '이렇게 완성'(첫 설정) / 없고 `tickets ≥ 1` 이면 '다시 바꾸기(이용권 1장 씀)' / 둘 다 없으면 '다시 바꾸기 (이용권 0.99달러)'. `activeRun.kind === 'ticket'` 이고 만료 전이면 모든 동화 화면에서 '이렇게 완성'이 다시 활성(실행이 네 편 + home 을 덮음).
+
+**3. 실행 만들기** `POST /v1/name/run`
+| 요청 | 응답 | 오류 |
+|---|---|---|
+| `{ "tale": "unicorn" }` | `{ "runId", "tales": ["unicorn"], "kind": "first", "expiresAt" }` (witch_candy 는 `["witch_candy","home"]`) | 이미 첫 설정을 쓴 동화이고 살아 있는 실행도 없으면 402 `no_credit` |
+| `{ "ticket": true }` | `{ "runId", "tales": ["kkultteok","red_car","unicorn","witch_candy","home"], "kind": "ticket", "expiresAt" }` — 이용권 1장 소모 | `tickets` 0장이면 402 `no_credit` |
+- 둘 중 하나만 보낸다. `{}`·`{backfill}`·`{tale,ticket}`·모르는 동화·`tale:'home'` 은 400 `bad_request`. 미구매 403 `not_owned`, 서버 하루 상한 503 `busy`(아무것도 소모하지 않음).
+- 이어 주기: 이용권 실행이 도는 중에 `{ticket:true}` 나 그 실행에 든 동화의 `{tale}` 을 다시 부르면 **같은 `runId` 에 `"resumed": true`** 로 돌려주고 아무것도 소모하지 않는다. 첫 설정 실행이 도는 중에 다른 동화의 `{tale}` 을 부르면 **같은 `runId` 에 그 동화가 `tales` 에 보태진다**(앞 동화의 줄 받기가 끊기지 않음).
+- 첫 설정은 **실행을 만들 때** `first` 에 들어간다(줄 받기가 실패해도 안 돌아온다. 같은 실행을 `resumed` 로 다시 받을 수 있는 48시간 안에 마저 받는다).
+
+**4. 줄 받기·미리 듣기** `POST /v1/name/line`
+```json
+{ "runId": "…", "tale": "unicorn", "id": "k1234abcd", "lang": "en",
+  "names": { "A": "서아", "A_en": "Seoa" }, "look": { "A": "b" } }
+```
+미리 듣기는 `runId` 대신 `"preview": true`. `look` 은 선택(빠진 자리·없으면 원래 모습). 이 줄의 `g` 에 든 자리의 모습만 결과에 영향을 준다. 잘못된 값(`'boy'`, `D` 자리 등)은 400 `look_invalid`. 응답은 mp3 + `X-Name-Version`. 서버는 `look` 도 저장·로그하지 않는다.
+- 아이 대사 목소리는 `look` 으로 고른다(구름 공장 nuna=A·oppa=B·agi=C 배역 줄, 표는 build_name_lines.py `LOOK_VOICE` — 지금은 모습과 무관하게 원래 목소리). 앱은 목소리를 신경 쓰지 않고 `look` 만 보내면 된다.
+- 모습만 바뀐 동화는 `g` 가 있는 줄을 **실행 안에서** 다시 받는다(실행 밖에서 영어 `g` 줄은 원래 녹음 재생, 기획 §5-1 4 는 7-7 결정으로 '첫 설정/이용권 안에서'로 대체).
+
+**5. 검사** `POST /v1/name/check { "names": {…}, "look": {…}? }` → `{ "ok": false, "errors": { "A": "banned", "look": "invalid" } }`.
+
+**6. 이용권 영수증** `POST /v1/receipt/apple|google` — 그대로. 응답 `quota` 는 위 2번 모양(`tickets` +1).
+**7. 옛 기록**: 서버가 읽을 때 옮긴다(생성한 적 있으면 `first = covered`). 앱은 신경 쓸 것 없음. 쿠폰(`/v1/coupon`, `ownedVia`)은 구매자와 같다(`firstLeft` 4편).
+**8. 앱에서 바꿔야 할 곳**(engine/names.js·home.js, 이번 일 밖): `quota.credits`·`covered`·`backfill`·`{}` 실행 사용처 → 위 모양으로. 줄 요청에 `look` 추가. `NameForm.slotsIn` 은 `_g` 를 `A_g` 로 내므로 `engine/names.js` 의 `slotsIn(...).filter(_en)` 한국어 쪽 필터에 `_g` 가 한국어 자리로 잡히지 않게 `/_en$|_g$/` 로 거른다.
+
 ## 7. 판단이 필요한 부분
 
 | # | 질문 | 추천 |

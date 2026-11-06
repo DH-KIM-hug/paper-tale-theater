@@ -25,6 +25,44 @@ HOME = {  # gen_home.py 값(스티커 이름 줄은 커밋되지 않은 스크�
              '[excited, giggly, delighted] ', '[cheerful, warm] ', '[warm, clear] ', '[cheerful] ', ''],
 }
 
+# ---- 주인공 모습(look) 문법 (docs/NAME_SETUP_V2_PLAN.md §4-3) ----
+# 영어 대명사를 {A_g:he/she}(앞=남자아이 b, 뒤=여자아이 g)로 바꾼다. 한국어에는 성별 단어가 없어 손댈 것이 없다.
+# 동화마다 '주인공 자리'를 정하고, 그 줄의 he/she/his/her 가 모두 주인공을 가리키면 자동으로 바꾼다.
+HERO = {'red_car': 'B', 'unicorn': 'A', 'witch_candy': 'A'}
+# 자동으로 안 되는 동화(구름 공장: 대명사 대부분이 강아지·'아이 셋'을 가리킴)는 줄마다 손으로 정한다. 영어 원문 → 자리
+PRON_MANUAL = {'kkultteok': {'Ihyun pushes the shape press down with all his might. Clunk!': 'B'}}
+# 대명사가 주인공이 아닌 줄(자동 동화에서 빼기). 영어 원문 목록. 지금은 없다
+PRON_EXCLUDE = {'red_car': set(), 'unicorn': set(), 'witch_candy': set()}
+# 원래 모습(ORIGINAL_LOOK): 'b' 남자아이 / 'g' 여자아이
+ORIGINAL_LOOK = {'A': 'g', 'B': 'b', 'C': 'g'}
+PRON = {  # 단어 → (남자아이 b, 여자아이 g). 'her' 는 이 대본에서 모두 소유격(her basket)이라 his/her 로 본다
+    'he': ('he', 'she'), 'she': ('he', 'she'), 'his': ('his', 'her'), 'her': ('his', 'her'), 'him': ('him', 'her'),
+    'himself': ('himself', 'herself'), 'herself': ('himself', 'herself'),
+}
+PRON_RE = re.compile(r'\b(he|she|his|her|him|himself|herself)\b', re.I)
+# 배역 × 모습 → 목소리 id. 이름이 든 아이 대사(구름 공장 첫째 nuna=A·둘째 oppa=B·막내 agi=C)를 서버가 모습에 맞는 목소리로 만든다.
+# 값 None = 원래 배역 목소리 그대로. 목소리 id 가 정해지면 이 표의 값만 바꾸고 다시 돌린다(다른 곳은 손대지 않는다).
+LOOK_VOICE = {
+    ('kkultteok', 'nuna'): ('A', {'b': None, 'g': None}),
+    ('kkultteok', 'oppa'): ('B', {'b': None, 'g': None}),
+    ('kkultteok', 'agi'): ('C', {'b': None, 'g': None}),
+}
+
+def pron_slot(tale, text):
+    """이 영어 줄의 대명사가 가리키는 주인공 자리(없으면 None)."""
+    if text in PRON_MANUAL.get(tale, {}): return PRON_MANUAL[tale][text]
+    if tale in HERO and text not in PRON_EXCLUDE.get(tale, set()): return HERO[tale]
+    return None
+
+def pron_tpl(text, slot):
+    def rep(m):
+        w = m.group(1); b, g = PRON[w.lower()]
+        if w[0].isupper(): b, g = b.capitalize(), g.capitalize()
+        return '{%s_g:%s/%s}' % (slot, b, g)
+    parts = re.split(r'(\[[^\]]*\])', text)  # 연기 지시 [..] 안은 건드리지 않는다
+    out = ''.join(p if p.startswith('[') else PRON_RE.sub(rep, p) for p in parts)
+    return out, out != text
+
 def md5(s): return hashlib.md5(s.encode()).hexdigest()[:10]
 
 def ko_tpl(text):
@@ -51,14 +89,18 @@ def ko_tpl(text):
         out.append('{%s:이%s/%s}' % (slot, p, p)); i = j + len(p); found.append(slot)
     return ''.join(out), found
 
-def en_tpl(text):
+def en_tpl(text, tale=None):
     orig, found = {}, []
+    gs = pron_slot(tale, re.sub(r'^(?:\[[^\]]*\]\s*)+', '', text)) if tale else None
     for slot, _, spells in SLOTS:
         for sp in sorted(spells, key=len, reverse=True):
             if sp in text:
                 text = text.replace(sp, '{%s_en}' % slot); found.append(slot)
                 if sp != EN_ORIG[slot]: orig[slot + '_en'] = sp
     if re.search(r'hyun|eunwoo|eun-woo|ddeok|kkul|dduk', re.sub(r'\{[A-D]_en\}', '', text), re.I): raise SystemExit(f'영어 이름 철자가 남음: {text!r}')
+    if gs:
+        text, changed = pron_tpl(text, gs)
+        if changed: found.append(gs)
     return text, sorted(set(found)), orig
 
 def has_name_ko(t): return any(b in t for _, b, _ in SLOTS)
@@ -127,7 +169,7 @@ def lang_part(tale, key, mode, lang, info, mapped):
     hits = []
     for si, s in enumerate(segs):
         if s.get('tc'): continue
-        if (lang == 'ko' and has_name_ko(s['text'])) or (lang == 'en' and en_tpl(s['text'])[1]): hits.append(si)
+        if (lang == 'ko' and has_name_ko(s['text'])) or (lang == 'en' and en_tpl(s['text'], tale)[1]): hits.append(si)
     if not hits: return None
     if len(hits) > 1: raise SystemExit(f'이름이 든 조각이 둘 이상: {tale} {key!r}')
     si = hits[0]; s = segs[si]
@@ -136,9 +178,21 @@ def lang_part(tale, key, mode, lang, info, mapped):
     if lang == 'ko':
         send, _ = ko_tpl(s['sent']); orig = {}
     else:
-        send, _, orig = en_tpl(s['sent'])
-    return {'seg': si if len(segs) > 1 else None, 'segs': len(segs), 'voice': s['voice'], 'model': s['model'],
+        send, _, orig = en_tpl(s['sent'], tale)
+    part = {'seg': si if len(segs) > 1 else None, 'segs': len(segs), 'voice': s['voice'], 'model': s['model'],
             'settings': s['settings'], 'send': send, 'orig': orig, 'url': s['url'], 'chars': len(s['sent'])}
+    lv = LOOK_VOICE.get((tale, s['role']))
+    if lv:  # 모습별 목소리(없으면 원래 목소리). look.slot 의 모습으로 고른다
+        part['look'] = {'slot': lv[0], 'voices': {lk: (vid or s['voice']) for lk, vid in lv[1].items()}}
+    return part
+
+def g_slots(ko, en, tpl_en):
+    """모습(look)에 따라 결과가 달라지는 자리 목록: 영어 글의 _g 자리 + 모습별 목소리가 실제로 다른 자리."""
+    out = set(re.findall(r'\{([A-D])_g:', ' '.join(p['send'] for p in (ko, en) if p) + ' ' + tpl_en))
+    for p in (ko, en):
+        lk = p and p.get('look')
+        if lk and len(set(lk['voices'].values())) > 1: out.add(lk['slot'])
+    return sorted(out)
 
 def home_lines():
     ko_map = read_map(os.path.join(ROOT, 'home_narration_el.js'), 'NARRATION_CLIPS')
@@ -162,7 +216,7 @@ def home_lines():
             parts[lang] = {'seg': None, 'segs': 1, 'voice': HOME['voice'], 'model': HOME['model'], 'settings': {**BASE, **HOME['set']},
                            'send': send, 'orig': orig, 'url': url, 'chars': len(sent), **({} if verified else {'verified': False})}
         lines.append({'id': 'h' + md5('home|' + ko)[:8], 'key': ko, 'keyEn': en, 'mode': 'home', 'tpl': ko_tpl(ko)[0], 'en': en,
-                      'tplEn': en_tpl(en)[0], 'ko': parts['ko'], 'enRec': parts['en']})
+                      'tplEn': en_tpl(en)[0], 'ko': parts['ko'], 'enRec': parts['en'], 'g': []})
     return lines
 
 def main():
@@ -176,7 +230,7 @@ def main():
             ko, en = replay(tale, mode, 'ko'), replay(tale, mode, 'en')
             for key, info in ko.items():
                 ei = en.get(key)
-                if not (has_name_ko(key) or (ei and en_tpl(ei['shown'])[1])): continue
+                if not (has_name_ko(key) or (ei and en_tpl(ei['shown'], tale)[1])): continue
                 kp = lang_part(tale, key, mode, 'ko', info, maps[(mode, 'ko')])
                 ep = lang_part(tale, key, mode, 'en', ei, maps[(mode, 'en')]) if ei else None
                 per.setdefault(key, {})[mode] = {'ko': kp, 'en': ep, 'shownEn': ei['shown'] if ei else None}
@@ -188,7 +242,8 @@ def main():
             for mode, v in groups:
                 en_shown = v['shownEn'] or ''
                 lines.append({'id': ('k' if mode == 'both' else mode[0]) + md5(tale + '|' + key)[:8], 'key': key, 'keyEn': key, 'mode': mode,
-                              'tpl': ko_tpl(key)[0], 'en': en_shown, 'tplEn': en_tpl(en_shown)[0], 'ko': v['ko'], 'enRec': v['en']})
+                              'tpl': ko_tpl(key)[0], 'en': en_shown, 'tplEn': en_tpl(en_shown, tale)[0], 'ko': v['ko'], 'enRec': v['en'],
+                              'g': g_slots(v['ko'], v['en'], en_tpl(en_shown, tale)[0])})
         tales[tale] = lines
     tales['home'] = home_lines()
     # 요약
@@ -211,11 +266,12 @@ def main():
             for l in lines: print(tale, l['id'], l['mode'], l['tpl'], '|', l['ko']['send'] if l['ko'] else '-', '|', l['enRec']['send'] if l['enRec'] else '-')
     if '--check' in sys.argv: return
     body = json.dumps(tales, ensure_ascii=False, sort_keys=True)
-    version = 'nl1-' + hashlib.sha256(body.encode()).hexdigest()[:10]
+    version = 'nl2-' + hashlib.sha256(body.encode()).hexdigest()[:10]
     with open(OUT, 'w') as f:
         f.write('// 이름 바꾸기 녹음 템플릿 — tools/elevenlabs/build_name_lines.py 가 생성(손으로 고치지 말 것).\n')
         f.write('// 줄: id, key(녹음 맵 열쇠 = 한국어 원문), keyEn(영어 맵 열쇠, 홈만 영어 글), mode(play|read|both|home), tpl/tplEn(화면 글 템플릿), en(영어 원문),\n')
-        f.write('//     ko/enRec: 그 언어 녹음 조각 하나 {seg(여러 조각 줄의 몇 번째, 한 조각이면 null), segs, voice, model, settings, send(보낼 글 템플릿), orig(영어 발음 표기 원래 이름), url(지금 클립), chars}\n')
+        f.write('//     ko/enRec: 그 언어 녹음 조각 하나 {seg(여러 조각 줄의 몇 번째, 한 조각이면 null), segs, voice, model, settings, send(보낼 글 템플릿), orig(영어 발음 표기 원래 이름), url(지금 클립), chars, look?{slot, voices:{b,g}}(모습별 목소리)}\n')
+        f.write('//     g: 모습(look)에 따라 결과가 달라지는 자리(영어 대명사 {A_g:he/she}, 모습별 목소리). ko 가 null 이면 영어에만 있는 줄\n')
         f.write(f'export const NAME_LINES_VERSION = {json.dumps(version)};\n')
         f.write('export const NAME_LINES = ' + json.dumps(tales, ensure_ascii=False, indent=1) + ';\n')
     print('저장', os.path.relpath(OUT, ROOT), version)

@@ -6,6 +6,9 @@
      {A:X/Y}   이름 끝 글자에 받침이 있으면 이름+X, 없으면 이름+Y. 예: {A:이가/가} → 다현이가 / 서아가
                'ㄹ' 받침 + X 가 '으로' 로 시작하면 Y 를 쓴다(예: {A:으로/로} → 하늘로).
      {A_en}    영어 이름 그대로
+     {A_g:X/Y} 자리 A 의 주인공 모습(look)으로 고른다. 앞이 남자아이('b'), 뒤가 여자아이('g'). 영어 대명사용: {A_g:he/she} {A_g:his/her} {A_g:himself/herself}
+     {A>B:W/X/Y/Z} 호칭: A 가 B 를 부를 때. 네 값 = (A남·B남)/(A여·B남)/(A남·B여)/(A여·B여). 예: {A>B:형/오빠/누나/언니}
+     모습(look) = { A: 'b'|'g', B, C } (D 강아지는 모습 없음). 빠진 자리는 ORIGINAL_LOOK. NameForm.fill(tpl, names, look), NameForm.validLook(look)
    빠진 자리(이름이 없거나 빈 글)는 원래 이름(ORIGINAL)을 쓴다. 한글이 아닌 끝 글자는 받침 없음으로 본다.
    NameForm.fill(tpl, names), NameForm.hasBatchim(name), NameForm.valid(name, lang), NameForm.slotsIn(tpl)
    names 예: { A: '서아', A_en: 'Seoa', B: '..', B_en: '..', C: '..', C_en: '..', D: '..', D_en: '..' } */
@@ -17,8 +20,12 @@
     C: Object.freeze({ ko: '은우', en: 'Eunwoo' }),     // 막내 아기(구름 공장)
     D: Object.freeze({ ko: '꿀떡', en: 'Kkulddeok' })   // 강아지(구름 공장). 원문 '꿀떡이' = 꿀떡 + 이
   });
+  // 주인공 모습: 'b' 남자아이 / 'g' 여자아이. 원래 그림 기준(A·C 여자아이, B 남자아이). D(강아지)는 모습이 없다.
+  var ORIGINAL_LOOK = Object.freeze({ A: 'g', B: 'b', C: 'g' });
+  var LOOKS = Object.freeze(['b', 'g']);
+  var LOOK_SLOTS = Object.freeze(['A', 'B', 'C']);
   var SLOTS = Object.freeze(['A', 'B', 'C', 'D']);
-  var TOKEN = /\{([A-D])(_en)?(?::([^/{}]*)\/([^{}]*))?\}/g;
+  var TOKEN = /\{([A-D])(?:>([A-D]))?(_en|_g)?(?::([^{}]*))?\}/g;
 
   function lastCode(name) {
     var s = String(name || '');
@@ -42,10 +49,31 @@
     if (typeof v === 'string' && v.trim()) return v.trim();
     return ORIGINAL[slot][en ? 'en' : 'ko'];
   }
-  function fill(tpl, names) {
-    return String(tpl).replace(TOKEN, function (_, slot, en, x, y) {
-      var n = pick(names, slot, !!en);
-      if (x === undefined) return n;
+  function validLook(look) {
+    if (look == null) return true;
+    if (typeof look !== 'object' || Array.isArray(look)) return false;
+    return Object.keys(look).every(function (k) { return LOOK_SLOTS.indexOf(k) >= 0 && LOOKS.indexOf(look[k]) >= 0; });
+  }
+  function lookOf(look, slot) {
+    var v = look && look[slot];
+    return v === 'b' || v === 'g' ? v : ORIGINAL_LOOK[slot] || 'g';
+  }
+  function fill(tpl, names, look) {
+    return String(tpl).replace(TOKEN, function (all, slot, to, suf, spec) {
+      var v;
+      if (to) {
+        v = (spec || '').split('/');
+        return v[(lookOf(look, to) === 'g' ? 2 : 0) + (lookOf(look, slot) === 'g' ? 1 : 0)] || '';
+      }
+      if (suf === '_g') {
+        v = (spec || '').split('/');
+        return (lookOf(look, slot) === 'b' ? v[0] : v[1]) || '';
+      }
+      var n = pick(names, slot, suf === '_en');
+      if (spec === undefined) return n;
+      var i = spec.indexOf('/');
+      if (i < 0) return all;
+      var x = spec.slice(0, i), y = spec.slice(i + 1);
       if (!hasBatchim(n)) return n + y;
       if (endsWithRieul(n) && x.indexOf('으로') === 0) return n + y;
       return n + x;
@@ -54,10 +82,10 @@
   function slotsIn(tpl) {
     var out = [], m, re = new RegExp(TOKEN.source, 'g');
     while ((m = re.exec(String(tpl)))) {
-      var k = m[1] + (m[2] || '');
-      if (out.indexOf(k) < 0) out.push(k);
+      var ks = m[2] ? [m[1] + '_g', m[2] + '_g'] : [m[1] + (m[3] || '')];
+      ks.forEach(function (k) { if (out.indexOf(k) < 0) out.push(k); });
     }
     return out;
   }
-  root.NameForm = { ORIGINAL: ORIGINAL, SLOTS: SLOTS, hasBatchim: hasBatchim, valid: valid, fill: fill, slotsIn: slotsIn };
+  root.NameForm = { ORIGINAL: ORIGINAL, ORIGINAL_LOOK: ORIGINAL_LOOK, LOOKS: LOOKS, SLOTS: SLOTS, hasBatchim: hasBatchim, valid: valid, validLook: validLook, fill: fill, slotsIn: slotsIn };
 })(typeof window !== 'undefined' ? window : globalThis);

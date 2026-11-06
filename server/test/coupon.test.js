@@ -40,7 +40,7 @@ describe('쿠폰', () => {
     const a = await newAccount(env);
     const before = (await call(env, 'GET', '/v1/name/quota', { auth: a })).json;
     expect(before.owned).toBe(false);
-    expect(before.credits).toBe(0);
+    expect(before.firstLeft).toEqual([]);
     const r = await call(env, 'POST', '/v1/coupon', { auth: a, body: { code: '  TEST-Coupon \n' } });
     expect(r.status).toBe(200);
     expect(r.json.owned).toBe(true);
@@ -48,7 +48,7 @@ describe('쿠폰', () => {
     expect((await call(env, 'GET', '/v1/state', { auth: a })).json.state.owned).toBe(true);
     const q = (await call(env, 'GET', '/v1/name/quota', { auth: a })).json;
     expect(q.owned).toBe(true);
-    expect(q.credits).toBe(1);
+    expect(q.firstLeft).toEqual(['kkultteok', 'red_car', 'unicorn', 'witch_candy']); // 쿠폰으로 열어도 구매자와 같다(동화마다 첫 설정)
     const rec = JSON.parse(env.ACCOUNTS.map.get('acct:' + a.accountId));
     expect(rec.ownedVia).toBe('coupon');
     // 쿠폰 원문은 KV 어디에도 없다

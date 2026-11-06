@@ -1,7 +1,8 @@
 // 이름 바꾸기 녹음 템플릿 — tools/elevenlabs/build_name_lines.py 가 생성(손으로 고치지 말 것).
 // 줄: id, key(녹음 맵 열쇠 = 한국어 원문), keyEn(영어 맵 열쇠, 홈만 영어 글), mode(play|read|both|home), tpl/tplEn(화면 글 템플릿), en(영어 원문),
-//     ko/enRec: 그 언어 녹음 조각 하나 {seg(여러 조각 줄의 몇 번째, 한 조각이면 null), segs, voice, model, settings, send(보낼 글 템플릿), orig(영어 발음 표기 원래 이름), url(지금 클립), chars}
-export const NAME_LINES_VERSION = "nl1-f7941b40b9";
+//     ko/enRec: 그 언어 녹음 조각 하나 {seg(여러 조각 줄의 몇 번째, 한 조각이면 null), segs, voice, model, settings, send(보낼 글 템플릿), orig(영어 발음 표기 원래 이름), url(지금 클립), chars, look?{slot, voices:{b,g}}(모습별 목소리)}
+//     g: 모습(look)에 따라 결과가 달라지는 자리(영어 대명사 {A_g:he/she}, 모습별 목소리). ko 가 null 이면 영어에만 있는 줄
+export const NAME_LINES_VERSION = "nl2-89f05cc415";
 export const NAME_LINES = {
  "kkultteok": [
   {
@@ -41,7 +42,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_c704802da6.mp3",
     "chars": 71
-   }
+   },
+   "g": []
   },
   {
    "id": "p5ae8bd88",
@@ -80,7 +82,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_c3f025f882.mp3",
     "chars": 36
-   }
+   },
+   "g": []
   },
   {
    "id": "k476c7859",
@@ -119,7 +122,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_11835e33e6.mp3",
     "chars": 52
-   }
+   },
+   "g": []
   },
   {
    "id": "k1d8dc499",
@@ -158,7 +162,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_2e6654626e.mp3",
     "chars": 46
-   }
+   },
+   "g": []
   },
   {
    "id": "pe9b90278",
@@ -197,7 +202,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_bb3e83e90d.mp3",
     "chars": 32
-   }
+   },
+   "g": []
   },
   {
    "id": "kbc7b2389",
@@ -220,7 +226,14 @@ export const NAME_LINES = {
     "send": "[cheerful, calling out] {D:아/야}, 같이 가!",
     "orig": {},
     "url": "audio/el/kkultteok/nuna_af70540909.mp3",
-    "chars": 34
+    "chars": 34,
+    "look": {
+     "slot": "A",
+     "voices": {
+      "b": "Lb7qkOn5hF8p7qfCDH8q",
+      "g": "Lb7qkOn5hF8p7qfCDH8q"
+     }
+    }
    },
    "enRec": {
     "seg": null,
@@ -235,8 +248,16 @@ export const NAME_LINES = {
     "send": "[cheerful, calling out] {D_en}, wait for us!",
     "orig": {},
     "url": "audio/el/kkultteok/en/nuna_05273616a0.mp3",
-    "chars": 47
-   }
+    "chars": 47,
+    "look": {
+     "slot": "A",
+     "voices": {
+      "b": "Lb7qkOn5hF8p7qfCDH8q",
+      "g": "Lb7qkOn5hF8p7qfCDH8q"
+     }
+    }
+   },
+   "g": []
   },
   {
    "id": "k387dc465",
@@ -275,7 +296,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_7975e0fb27.mp3",
     "chars": 19
-   }
+   },
+   "g": []
   },
   {
    "id": "k5d5204db",
@@ -314,7 +336,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_23d16d3219.mp3",
     "chars": 50
-   }
+   },
+   "g": []
   },
   {
    "id": "k95baa84e",
@@ -353,7 +376,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_ec09279a1e.mp3",
     "chars": 34
-   }
+   },
+   "g": []
   },
   {
    "id": "k4282a73d",
@@ -392,7 +416,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_5ea8a3e5c9.mp3",
     "chars": 34
-   }
+   },
+   "g": []
   },
   {
    "id": "p3c15513d",
@@ -431,7 +456,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_2ad775f73f.mp3",
     "chars": 35
-   }
+   },
+   "g": []
   },
   {
    "id": "k6850ee5c",
@@ -470,7 +496,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_7f47d3f83f.mp3",
     "chars": 45
-   }
+   },
+   "g": []
   },
   {
    "id": "kc1faaff4",
@@ -509,7 +536,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_090171ad1a.mp3",
     "chars": 24
-   }
+   },
+   "g": []
   },
   {
    "id": "ke1a25ae0",
@@ -548,7 +576,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_c597e18330.mp3",
     "chars": 31
-   }
+   },
+   "g": []
   },
   {
    "id": "kda18c0b3",
@@ -587,7 +616,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_9f6f39067c.mp3",
     "chars": 25
-   }
+   },
+   "g": []
   },
   {
    "id": "k17eb1234",
@@ -626,7 +656,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_4734e6bc8b.mp3",
     "chars": 39
-   }
+   },
+   "g": []
   },
   {
    "id": "k5a32dff2",
@@ -665,7 +696,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_18fc001aab.mp3",
     "chars": 16
-   }
+   },
+   "g": []
   },
   {
    "id": "k1e48132d",
@@ -704,7 +736,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_932239228f.mp3",
     "chars": 45
-   }
+   },
+   "g": []
   },
   {
    "id": "ka75345f3",
@@ -743,7 +776,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_8420e41afa.mp3",
     "chars": 42
-   }
+   },
+   "g": []
   },
   {
    "id": "k2b613a6c",
@@ -782,7 +816,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_17dda6a748.mp3",
     "chars": 39
-   }
+   },
+   "g": []
   },
   {
    "id": "k2a71084c",
@@ -821,7 +856,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_6e9acd0948.mp3",
     "chars": 51
-   }
+   },
+   "g": []
   },
   {
    "id": "k37b69725",
@@ -860,7 +896,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_883fdea03e.mp3",
     "chars": 25
-   }
+   },
+   "g": []
   },
   {
    "id": "kd134be13",
@@ -899,7 +936,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_02028ea811.mp3",
     "chars": 32
-   }
+   },
+   "g": []
   },
   {
    "id": "kdf2307bf",
@@ -938,7 +976,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_5385756cc9.mp3",
     "chars": 54
-   }
+   },
+   "g": []
   },
   {
    "id": "kc14a53e3",
@@ -977,7 +1016,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_32754b979d.mp3",
     "chars": 57
-   }
+   },
+   "g": []
   },
   {
    "id": "k06efa475",
@@ -1016,7 +1056,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_416ffbea21.mp3",
     "chars": 28
-   }
+   },
+   "g": []
   },
   {
    "id": "k5ed40e7f",
@@ -1055,7 +1096,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_389af75978.mp3",
     "chars": 60
-   }
+   },
+   "g": []
   },
   {
    "id": "kee47f982",
@@ -1094,7 +1136,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_183098b121.mp3",
     "chars": 27
-   }
+   },
+   "g": []
   },
   {
    "id": "k0eab4118",
@@ -1133,7 +1176,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_0b8bfe9a4e.mp3",
     "chars": 69
-   }
+   },
+   "g": []
   },
   {
    "id": "red1f4e5e",
@@ -1172,7 +1216,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_4fb321e297.mp3",
     "chars": 55
-   }
+   },
+   "g": []
   },
   {
    "id": "r4c5bf9d1",
@@ -1211,7 +1256,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_4822641ad7.mp3",
     "chars": 63
-   }
+   },
+   "g": []
   },
   {
    "id": "r928f11a6",
@@ -1250,7 +1296,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_60d95bafde.mp3",
     "chars": 81
-   }
+   },
+   "g": []
   },
   {
    "id": "r321f8c20",
@@ -1289,7 +1336,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_24d8385deb.mp3",
     "chars": 59
-   }
+   },
+   "g": []
   },
   {
    "id": "r4b9473d3",
@@ -1328,7 +1376,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_7c6597580f.mp3",
     "chars": 52
-   }
+   },
+   "g": []
   },
   {
    "id": "r7599f685",
@@ -1367,7 +1416,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_c0e8fdc716.mp3",
     "chars": 64
-   }
+   },
+   "g": []
   },
   {
    "id": "rbf3eea06",
@@ -1406,7 +1456,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_874a131104.mp3",
     "chars": 80
-   }
+   },
+   "g": []
   },
   {
    "id": "ra016473e",
@@ -1445,7 +1496,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_8837ca6128.mp3",
     "chars": 68
-   }
+   },
+   "g": []
   },
   {
    "id": "r9f1f74a3",
@@ -1484,7 +1536,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_7a1552b49b.mp3",
     "chars": 68
-   }
+   },
+   "g": []
   },
   {
    "id": "r3bd02796",
@@ -1493,7 +1546,7 @@ export const NAME_LINES = {
    "mode": "read",
    "tpl": "{B:이가/가} 모양 틀을 힘껏, 쿵! 내리찍어요.",
    "en": "Ihyun pushes the shape press down with all his might. Clunk!",
-   "tplEn": "{B_en} pushes the shape press down with all his might. Clunk!",
+   "tplEn": "{B_en} pushes the shape press down with all {B_g:his/her} might. Clunk!",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -1519,11 +1572,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.35
     },
-    "send": "{B_en} pushes the shape press down with all his might. Clunk!",
+    "send": "{B_en} pushes the shape press down with all {B_g:his/her} might. Clunk!",
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_110695ae84.mp3",
     "chars": 60
-   }
+   },
+   "g": [
+    "B"
+   ]
   },
   {
    "id": "rba28fe1e",
@@ -1562,7 +1618,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_18bd522cf6.mp3",
     "chars": 64
-   }
+   },
+   "g": []
   },
   {
    "id": "r96cc336f",
@@ -1601,7 +1658,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_b0aa75a392.mp3",
     "chars": 38
-   }
+   },
+   "g": []
   },
   {
    "id": "r230299f0",
@@ -1640,7 +1698,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_b52a4fbc58.mp3",
     "chars": 60
-   }
+   },
+   "g": []
   },
   {
    "id": "r96f0a178",
@@ -1679,7 +1738,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_af1f024af0.mp3",
     "chars": 73
-   }
+   },
+   "g": []
   },
   {
    "id": "r79a1ec1c",
@@ -1718,7 +1778,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_aa86b3e3b3.mp3",
     "chars": 52
-   }
+   },
+   "g": []
   },
   {
    "id": "r05a33a6d",
@@ -1757,7 +1818,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_841162f3ad.mp3",
     "chars": 65
-   }
+   },
+   "g": []
   },
   {
    "id": "r847fbef7",
@@ -1796,7 +1858,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/kkultteok/en/nar_38ddbc659d.mp3",
     "chars": 60
-   }
+   },
+   "g": []
   }
  ],
  "red_car": [
@@ -1839,7 +1902,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/nar_954a8d991a.mp3",
     "chars": 86
-   }
+   },
+   "g": []
   },
   {
    "id": "k755fc2b4",
@@ -1866,7 +1930,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/nar_0c114c002a.mp3",
     "chars": 147
-   }
+   },
+   "g": []
   },
   {
    "id": "kd460a014",
@@ -1893,7 +1958,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/nar_842987a275.mp3",
     "chars": 62
-   }
+   },
+   "g": []
   },
   {
    "id": "k8b89e377",
@@ -1920,7 +1986,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/nar_e723680257.mp3",
     "chars": 111
-   }
+   },
+   "g": []
   },
   {
    "id": "k08c659ad",
@@ -1961,7 +2028,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/nar_cba73b0775.mp3",
     "chars": 140
-   }
+   },
+   "g": []
   },
   {
    "id": "k9e8e4806",
@@ -2002,7 +2070,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/red_b30198d051.mp3",
     "chars": 100
-   }
+   },
+   "g": []
   },
   {
    "id": "k3bb27b13",
@@ -2043,7 +2112,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/red_02587094a1.mp3",
     "chars": 100
-   }
+   },
+   "g": []
   },
   {
    "id": "ka2f78f43",
@@ -2084,7 +2154,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/red_1d638a4c56.mp3",
     "chars": 62
-   }
+   },
+   "g": []
   },
   {
    "id": "kffca6c68",
@@ -2125,7 +2196,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/red_9b1b26d50a.mp3",
     "chars": 83
-   }
+   },
+   "g": []
   },
   {
    "id": "k98144e91",
@@ -2166,7 +2238,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/red_e68e78eec3.mp3",
     "chars": 75
-   }
+   },
+   "g": []
   },
   {
    "id": "ka8caa4ad",
@@ -2207,7 +2280,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/amb_79edf458a3.mp3",
     "chars": 144
-   }
+   },
+   "g": []
   },
   {
    "id": "ke956173e",
@@ -2248,7 +2322,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/red_17543c977a.mp3",
     "chars": 72
-   }
+   },
+   "g": []
   },
   {
    "id": "k6bdd5b58",
@@ -2289,7 +2364,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/nar_c17b8cb974.mp3",
     "chars": 76
-   }
+   },
+   "g": []
   },
   {
    "id": "k10d05f45",
@@ -2330,7 +2406,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/nar_d1fe4064aa.mp3",
     "chars": 73
-   }
+   },
+   "g": []
   },
   {
    "id": "kd64ce087",
@@ -2371,7 +2448,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/nar_29fc505a43.mp3",
     "chars": 98
-   }
+   },
+   "g": []
   },
   {
    "id": "kd5bd884c",
@@ -2412,7 +2490,8 @@ export const NAME_LINES = {
     },
     "url": "audio/el/red_car/en/nar_9cdaa4340b.mp3",
     "chars": 109
-   }
+   },
+   "g": []
   },
   {
    "id": "re5c8fbc1",
@@ -2451,7 +2530,36 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/red_car/en/nar_21167bc27c.mp3",
     "chars": 82
-   }
+   },
+   "g": []
+  },
+  {
+   "id": "r3fef6de4",
+   "key": "방 안에는 파란 블록, 노란 오리, 그리고 반짝반짝 빨간 자동차가 있었지요.",
+   "keyEn": "방 안에는 파란 블록, 노란 오리, 그리고 반짝반짝 빨간 자동차가 있었지요.",
+   "mode": "read",
+   "tpl": "방 안에는 파란 블록, 노란 오리, 그리고 반짝반짝 빨간 자동차가 있었지요.",
+   "en": "In his room were a blue block, a yellow duck, and a shiny, sparkly little red car.",
+   "tplEn": "In {B_g:his/her} room were a blue block, a yellow duck, and a shiny, sparkly little red car.",
+   "ko": null,
+   "enRec": {
+    "seg": null,
+    "segs": 1,
+    "voice": "pFZP5JQG7iQjIQuC4Bku",
+    "model": "eleven_v4",
+    "settings": {
+     "stability": 0.5,
+     "similarity_boost": 0.75,
+     "style": 0.35
+    },
+    "send": "[calm, warm storytelling, slow, unhurried] In {B_g:his/her} room were a blue block, a yellow duck, and a shiny, sparkly little red car.",
+    "orig": {},
+    "url": "audio/el/red_car/en/nar_332916f959.mp3",
+    "chars": 125
+   },
+   "g": [
+    "B"
+   ]
   },
   {
    "id": "r30cf92bf",
@@ -2490,7 +2598,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/red_car/en/nar_d151500ce3.mp3",
     "chars": 116
-   }
+   },
+   "g": []
   },
   {
    "id": "r04d40fa7",
@@ -2499,7 +2608,7 @@ export const NAME_LINES = {
    "mode": "read",
    "tpl": "{B:이는/는} 빨간 자동차를 손에 들고 나비를 보았어요.",
    "en": "Ihyun held the red car in his hand and saw a butterfly. Look!",
-   "tplEn": "{B_en} held the red car in his hand and saw a butterfly. Look!",
+   "tplEn": "{B_en} held the red car in {B_g:his/her} hand and saw a butterfly. Look!",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -2525,11 +2634,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.35
     },
-    "send": "[calm, warm, gentle storytelling] {B_en} held the red car in his hand and saw a butterfly. Look!",
+    "send": "[calm, warm, gentle storytelling] {B_en} held the red car in {B_g:his/her} hand and saw a butterfly. Look!",
     "orig": {},
     "url": "audio/el/red_car/en/nar_80fc4a3f4e.mp3",
     "chars": 95
-   }
+   },
+   "g": [
+    "B"
+   ]
   },
   {
    "id": "r1e89a18d",
@@ -2568,7 +2680,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/red_car/en/nar_b4e463098c.mp3",
     "chars": 133
-   }
+   },
+   "g": []
   },
   {
    "id": "ra72567eb",
@@ -2577,7 +2690,7 @@ export const NAME_LINES = {
    "mode": "read",
    "tpl": "{B:이는/는} 자동차를 찾으며 눈물을 뚝뚝 흘렸어요.",
    "en": "Ihyun looked and looked for his car, and his tears fell, drip, drop.",
-   "tplEn": "{B_en} looked and looked for his car, and his tears fell, drip, drop.",
+   "tplEn": "{B_en} looked and looked for {B_g:his/her} car, and {B_g:his/her} tears fell, drip, drop.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -2603,11 +2716,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.35
     },
-    "send": "[calm, warm, gentle storytelling] {B_en} looked and looked for his car, and his tears fell, drip, drop.",
+    "send": "[calm, warm, gentle storytelling] {B_en} looked and looked for {B_g:his/her} car, and {B_g:his/her} tears fell, drip, drop.",
     "orig": {},
     "url": "audio/el/red_car/en/nar_a1727a8ebe.mp3",
     "chars": 102
-   }
+   },
+   "g": [
+    "B"
+   ]
   },
   {
    "id": "rf90a66b5",
@@ -2646,7 +2762,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/red_car/en/nar_32ed6782b8.mp3",
     "chars": 99
-   }
+   },
+   "g": []
   }
  ],
  "unicorn": [
@@ -2687,7 +2804,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_4cf8bbc119.mp3",
     "chars": 90
-   }
+   },
+   "g": []
   },
   {
    "id": "k0c3dfe62",
@@ -2696,7 +2814,7 @@ export const NAME_LINES = {
    "mode": "both",
    "tpl": "{A:이는/는} 바람에 떨어진 꽃 한 송이를 살며시 주워 바구니에 쏙 넣었어요.",
    "en": "Dahyun gently picked up a flower the wind had dropped and popped it into her basket.",
-   "tplEn": "{A_en} gently picked up a flower the wind had dropped and popped it into her basket.",
+   "tplEn": "{A_en} gently picked up a flower the wind had dropped and popped it into {A_g:his/her} basket.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -2722,11 +2840,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[warm, playful, light, storybook tone] {A_en} gently picked up a flower the wind had dropped and popped it into her basket.",
+    "send": "[warm, playful, light, storybook tone] {A_en} gently picked up a flower the wind had dropped and popped it into {A_g:his/her} basket.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_460bb92e32.mp3",
     "chars": 123
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "k9a00b22e",
@@ -2765,7 +2886,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_6bd104d5cb.mp3",
     "chars": 77
-   }
+   },
+   "g": []
   },
   {
    "id": "ke08e9d64",
@@ -2804,7 +2926,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_0bc0eecf28.mp3",
     "chars": 93
-   }
+   },
+   "g": []
   },
   {
    "id": "kdbf57149",
@@ -2843,7 +2966,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_5b107dfeba.mp3",
     "chars": 99
-   }
+   },
+   "g": []
   },
   {
    "id": "ka19f9732",
@@ -2882,7 +3006,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_b6525af233.mp3",
     "chars": 84
-   }
+   },
+   "g": []
   },
   {
    "id": "k73064f13",
@@ -2921,7 +3046,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_5b6a16052a.mp3",
     "chars": 80
-   }
+   },
+   "g": []
   },
   {
    "id": "kd68c8bd6",
@@ -2960,7 +3086,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_812765a19f.mp3",
     "chars": 79
-   }
+   },
+   "g": []
   },
   {
    "id": "k136ce4b7",
@@ -2999,7 +3126,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_8aea402ab6.mp3",
     "chars": 87
-   }
+   },
+   "g": []
   },
   {
    "id": "kfdb673a2",
@@ -3038,7 +3166,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_042efac988.mp3",
     "chars": 76
-   }
+   },
+   "g": []
   },
   {
    "id": "k0d228986",
@@ -3047,7 +3176,7 @@ export const NAME_LINES = {
    "mode": "both",
    "tpl": "다음 날 아침, {A:이는/는} 유니콘과 함께 집 앞 언덕으로 돌아왔어요.",
    "en": "The next morning, Dahyun came back to the hill by her home with the unicorn.",
-   "tplEn": "The next morning, {A_en} came back to the hill by her home with the unicorn.",
+   "tplEn": "The next morning, {A_en} came back to the hill by {A_g:his/her} home with the unicorn.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -3073,11 +3202,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[warm, calm, gentle storybook ending tone, slow] The next morning, {A_en} came back to the hill by her home with the unicorn.",
+    "send": "[warm, calm, gentle storybook ending tone, slow] The next morning, {A_en} came back to the hill by {A_g:his/her} home with the unicorn.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_ff0d8ed59c.mp3",
     "chars": 125
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "k90854856",
@@ -3086,7 +3218,7 @@ export const NAME_LINES = {
    "mode": "both",
    "tpl": "{A:이는/는} 바구니 속 빨간 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
    "en": "Dahyun gently tucked the red flower from her basket into the unicorn's mane.",
-   "tplEn": "{A_en} gently tucked the red flower from her basket into the unicorn's mane.",
+   "tplEn": "{A_en} gently tucked the red flower from {A_g:his/her} basket into the unicorn's mane.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -3112,11 +3244,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the red flower from her basket into the unicorn's mane.",
+    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the red flower from {A_g:his/her} basket into the unicorn's mane.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_0a5fc08422.mp3",
     "chars": 105
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "pc278f7f4",
@@ -3125,7 +3260,7 @@ export const NAME_LINES = {
    "mode": "play",
    "tpl": "{A:이는/는} 바구니 속 주황 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
    "en": "Dahyun gently tucked the orange flower from her basket into the unicorn's mane.",
-   "tplEn": "{A_en} gently tucked the orange flower from her basket into the unicorn's mane.",
+   "tplEn": "{A_en} gently tucked the orange flower from {A_g:his/her} basket into the unicorn's mane.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -3151,11 +3286,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the orange flower from her basket into the unicorn's mane.",
+    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the orange flower from {A_g:his/her} basket into the unicorn's mane.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_f6ceda9f5b.mp3",
     "chars": 108
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "p06c9de60",
@@ -3164,7 +3302,7 @@ export const NAME_LINES = {
    "mode": "play",
    "tpl": "{A:이는/는} 바구니 속 노란 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
    "en": "Dahyun gently tucked the yellow flower from her basket into the unicorn's mane.",
-   "tplEn": "{A_en} gently tucked the yellow flower from her basket into the unicorn's mane.",
+   "tplEn": "{A_en} gently tucked the yellow flower from {A_g:his/her} basket into the unicorn's mane.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -3190,11 +3328,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the yellow flower from her basket into the unicorn's mane.",
+    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the yellow flower from {A_g:his/her} basket into the unicorn's mane.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_a7d8d01aaa.mp3",
     "chars": 108
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "pcfabae92",
@@ -3203,7 +3344,7 @@ export const NAME_LINES = {
    "mode": "play",
    "tpl": "{A:이는/는} 바구니 속 분홍 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
    "en": "Dahyun gently tucked the pink flower from her basket into the unicorn's mane.",
-   "tplEn": "{A_en} gently tucked the pink flower from her basket into the unicorn's mane.",
+   "tplEn": "{A_en} gently tucked the pink flower from {A_g:his/her} basket into the unicorn's mane.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -3229,11 +3370,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the pink flower from her basket into the unicorn's mane.",
+    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the pink flower from {A_g:his/her} basket into the unicorn's mane.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_f89b66680d.mp3",
     "chars": 106
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "p65557bd5",
@@ -3242,7 +3386,7 @@ export const NAME_LINES = {
    "mode": "play",
    "tpl": "{A:이는/는} 바구니 속 보라 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
    "en": "Dahyun gently tucked the purple flower from her basket into the unicorn's mane.",
-   "tplEn": "{A_en} gently tucked the purple flower from her basket into the unicorn's mane.",
+   "tplEn": "{A_en} gently tucked the purple flower from {A_g:his/her} basket into the unicorn's mane.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -3268,11 +3412,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the purple flower from her basket into the unicorn's mane.",
+    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the purple flower from {A_g:his/her} basket into the unicorn's mane.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_846df812bb.mp3",
     "chars": 108
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "p37768c41",
@@ -3281,7 +3428,7 @@ export const NAME_LINES = {
    "mode": "play",
    "tpl": "{A:이는/는} 바구니 속 파란 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
    "en": "Dahyun gently tucked the blue flower from her basket into the unicorn's mane.",
-   "tplEn": "{A_en} gently tucked the blue flower from her basket into the unicorn's mane.",
+   "tplEn": "{A_en} gently tucked the blue flower from {A_g:his/her} basket into the unicorn's mane.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -3307,11 +3454,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the blue flower from her basket into the unicorn's mane.",
+    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the blue flower from {A_g:his/her} basket into the unicorn's mane.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_117739689a.mp3",
     "chars": 106
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "p4ffa7f71",
@@ -3320,7 +3470,7 @@ export const NAME_LINES = {
    "mode": "play",
    "tpl": "{A:이는/는} 바구니 속 하얀 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
    "en": "Dahyun gently tucked the white flower from her basket into the unicorn's mane.",
-   "tplEn": "{A_en} gently tucked the white flower from her basket into the unicorn's mane.",
+   "tplEn": "{A_en} gently tucked the white flower from {A_g:his/her} basket into the unicorn's mane.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -3346,11 +3496,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the white flower from her basket into the unicorn's mane.",
+    "send": "[warm, tender, joyful, slow] {A_en} gently tucked the white flower from {A_g:his/her} basket into the unicorn's mane.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_2e441e8afe.mp3",
     "chars": 107
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "ka32c8b90",
@@ -3359,7 +3512,7 @@ export const NAME_LINES = {
    "mode": "both",
    "tpl": "그날 밤, {A:이는/는} 포근한 이불 속에 누웠어요.",
    "en": "That night, Dahyun lay down under her cozy blanket.",
-   "tplEn": "That night, {A_en} lay down under her cozy blanket.",
+   "tplEn": "That night, {A_en} lay down under {A_g:his/her} cozy blanket.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -3385,11 +3538,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[calm, warm storytelling, slow, unhurried, sleepy, soft] That night, {A_en} lay down under her cozy blanket.",
+    "send": "[calm, warm storytelling, slow, unhurried, sleepy, soft] That night, {A_en} lay down under {A_g:his/her} cozy blanket.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_2217a15a7c.mp3",
     "chars": 108
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "kd4768a58",
@@ -3398,7 +3554,7 @@ export const NAME_LINES = {
    "mode": "both",
    "tpl": "{A:이는/는} 친절한 마음을 꼭 안고 스르르 잠이 들었어요.",
    "en": "Holding her kind heart close, Dahyun drifted off to sleep.",
-   "tplEn": "Holding her kind heart close, {A_en} drifted off to sleep.",
+   "tplEn": "Holding {A_g:his/her} kind heart close, {A_en} drifted off to sleep.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -3424,11 +3580,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[calm, warm storytelling, slow, unhurried, sleepy, soft] Holding her kind heart close, {A_en} drifted off to sleep.",
+    "send": "[calm, warm storytelling, slow, unhurried, sleepy, soft] Holding {A_g:his/her} kind heart close, {A_en} drifted off to sleep.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_213896438f.mp3",
     "chars": 115
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "r6b7d6c1e",
@@ -3437,7 +3596,7 @@ export const NAME_LINES = {
    "mode": "read",
    "tpl": "{A:이가/가} 혼잣말을 했어요.",
    "en": "Dahyun said to herself.",
-   "tplEn": "{A_en} said to herself.",
+   "tplEn": "{A_en} said to {A_g:himself/herself}.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -3463,11 +3622,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[calm, warm storytelling] {A_en} said to herself.",
+    "send": "[calm, warm storytelling] {A_en} said to {A_g:himself/herself}.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_817b81df5b.mp3",
     "chars": 49
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "r99d7a7f0",
@@ -3476,7 +3638,7 @@ export const NAME_LINES = {
    "mode": "read",
    "tpl": "{A:이는/는} 간식 바구니를 들고 사뿐사뿐 언덕을 올라갔어요.",
    "en": "Dahyun picked up her snack basket and tiptoed lightly, step, step, up the hill.",
-   "tplEn": "{A_en} picked up her snack basket and tiptoed lightly, step, step, up the hill.",
+   "tplEn": "{A_en} picked up {A_g:his/her} snack basket and tiptoed lightly, step, step, up the hill.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -3502,11 +3664,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[calm, warm storytelling, slow, unhurried] {A_en} picked up her snack basket and tiptoed lightly, step, step, up the hill.",
+    "send": "[calm, warm storytelling, slow, unhurried] {A_en} picked up {A_g:his/her} snack basket and tiptoed lightly, step, step, up the hill.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_c62876a0ec.mp3",
     "chars": 122
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "r5b7a1cfd",
@@ -3545,7 +3710,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_70e0172e35.mp3",
     "chars": 72
-   }
+   },
+   "g": []
   },
   {
    "id": "rbc6e78d6",
@@ -3554,7 +3720,7 @@ export const NAME_LINES = {
    "mode": "read",
    "tpl": "{A:이가/가} 양 아래에서 두 팔을 벌렸어요.",
    "en": "Dahyun opened her arms below the sheep.",
-   "tplEn": "{A_en} opened her arms below the sheep.",
+   "tplEn": "{A_en} opened {A_g:his/her} arms below the sheep.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -3580,11 +3746,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[calm, warm storytelling] {A_en} opened her arms below the sheep.",
+    "send": "[calm, warm storytelling] {A_en} opened {A_g:his/her} arms below the sheep.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_8a73b90725.mp3",
     "chars": 65
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "r32812145",
@@ -3623,7 +3792,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_21bf3538d1.mp3",
     "chars": 127
-   }
+   },
+   "g": []
   },
   {
    "id": "ra61a10a3",
@@ -3662,7 +3832,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_b7d17e0be8.mp3",
     "chars": 72
-   }
+   },
+   "g": []
   },
   {
    "id": "r090c8d23",
@@ -3701,7 +3872,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_a35bf3912c.mp3",
     "chars": 125
-   }
+   },
+   "g": []
   },
   {
    "id": "r3bb067f7",
@@ -3740,7 +3912,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_38bfb02831.mp3",
     "chars": 100
-   }
+   },
+   "g": []
   },
   {
    "id": "re7a13ee4",
@@ -3765,7 +3938,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_bef7abeef3.mp3",
     "chars": 107
-   }
+   },
+   "g": []
   },
   {
    "id": "r525e4764",
@@ -3804,7 +3978,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_99afabf39a.mp3",
     "chars": 75
-   }
+   },
+   "g": []
   },
   {
    "id": "r6fea637a",
@@ -3843,7 +4018,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_68ab05a942.mp3",
     "chars": 77
-   }
+   },
+   "g": []
   },
   {
    "id": "ra8bc2272",
@@ -3882,7 +4058,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_b9f0799db7.mp3",
     "chars": 109
-   }
+   },
+   "g": []
   },
   {
    "id": "r3d9e7402",
@@ -3921,7 +4098,36 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_9054f6d563.mp3",
     "chars": 97
-   }
+   },
+   "g": []
+  },
+  {
+   "id": "re5d05d07",
+   "key": "다리는 무겁고, 눈은 자꾸 깜빡깜빡 감겼어요.",
+   "keyEn": "다리는 무겁고, 눈은 자꾸 깜빡깜빡 감겼어요.",
+   "mode": "read",
+   "tpl": "다리는 무겁고, 눈은 자꾸 깜빡깜빡 감겼어요.",
+   "en": "Her legs felt heavy, and her eyes kept drooping, blink, blink.",
+   "tplEn": "{A_g:His/Her} legs felt heavy, and {A_g:his/her} eyes kept drooping, blink, blink.",
+   "ko": null,
+   "enRec": {
+    "seg": null,
+    "segs": 1,
+    "voice": "gnWujHp24oqX3I03lRbU",
+    "model": "eleven_v4",
+    "settings": {
+     "stability": 0.45,
+     "similarity_boost": 0.75,
+     "style": 0.4
+    },
+    "send": "[calm, warm storytelling, slow, unhurried] {A_g:His/Her} legs felt heavy, and {A_g:his/her} eyes kept drooping, blink, blink.",
+    "orig": {},
+    "url": "audio/el/unicorn/en/nar_31b937762d.mp3",
+    "chars": 105
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "rd29aa47b",
@@ -3960,7 +4166,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_1c6123bcb7.mp3",
     "chars": 66
-   }
+   },
+   "g": []
   },
   {
    "id": "r8ad0ee46",
@@ -3999,7 +4206,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_06374ad635.mp3",
     "chars": 61
-   }
+   },
+   "g": []
   },
   {
    "id": "rec9bd047",
@@ -4008,7 +4216,7 @@ export const NAME_LINES = {
    "mode": "read",
    "tpl": "{A:이의/의} 눈이 반짝반짝 빛났어요. 가슴이 콩닥콩닥 뛰었지요.",
    "en": "Dahyun's eyes shone, sparkle, sparkle. Her heart went thump, thump, thump.",
-   "tplEn": "{A_en}'s eyes shone, sparkle, sparkle. Her heart went thump, thump, thump.",
+   "tplEn": "{A_en}'s eyes shone, sparkle, sparkle. {A_g:His/Her} heart went thump, thump, thump.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -4034,11 +4242,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[calm, warm storytelling, slow, unhurried] {A_en}'s eyes shone, sparkle, sparkle. Her heart went thump, thump, thump.",
+    "send": "[calm, warm storytelling, slow, unhurried] {A_en}'s eyes shone, sparkle, sparkle. {A_g:His/Her} heart went thump, thump, thump.",
     "orig": {},
     "url": "audio/el/unicorn/en/nar_a09c36971d.mp3",
     "chars": 117
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "r7136db4f",
@@ -4077,7 +4288,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/unicorn/en/nar_6a9ebaa7f0.mp3",
     "chars": 53
-   }
+   },
+   "g": []
   }
  ],
  "witch_candy": [
@@ -4088,7 +4300,7 @@ export const NAME_LINES = {
    "mode": "both",
    "tpl": "{A:이랑/랑} 친구들은 사탕 가게로 쪼르르 들어갔어요.",
    "en": "Dahyun and her friends scurried right into the candy shop.",
-   "tplEn": "{A_en} and her friends scurried right into the candy shop.",
+   "tplEn": "{A_en} and {A_g:his/her} friends scurried right into the candy shop.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -4114,11 +4326,14 @@ export const NAME_LINES = {
      "similarity_boost": 0.75,
      "style": 0.4
     },
-    "send": "[warm, playful storytelling, slow, clear, cosy Halloween night, never scary] {A_en} and her friends scurried right into the candy shop.",
+    "send": "[warm, playful storytelling, slow, clear, cosy Halloween night, never scary] {A_en} and {A_g:his/her} friends scurried right into the candy shop.",
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_550c001a02.mp3",
     "chars": 135
-   }
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "kf6cda826",
@@ -4157,7 +4372,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/witch_0c45cd1a0c.mp3",
     "chars": 115
-   }
+   },
+   "g": []
   },
   {
    "id": "k22539efe",
@@ -4196,7 +4412,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_bd936aecbe.mp3",
     "chars": 94
-   }
+   },
+   "g": []
   },
   {
    "id": "k85132cf3",
@@ -4235,7 +4452,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_c590beeee7.mp3",
     "chars": 94
-   }
+   },
+   "g": []
   },
   {
    "id": "k65062049",
@@ -4274,7 +4492,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_bf1937dcfc.mp3",
     "chars": 82
-   }
+   },
+   "g": []
   },
   {
    "id": "k376bdc7f",
@@ -4313,7 +4532,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_759159f0b4.mp3",
     "chars": 106
-   }
+   },
+   "g": []
   },
   {
    "id": "k1dc13ac1",
@@ -4352,7 +4572,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_f5a3f9bd29.mp3",
     "chars": 94
-   }
+   },
+   "g": []
   },
   {
    "id": "k0d201841",
@@ -4391,7 +4612,92 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_70ee01461a.mp3",
     "chars": 92
-   }
+   },
+   "g": []
+  },
+  {
+   "id": "k44fb737c",
+   "key": "길을 데굴데굴 굴러가다 호박 등에 통!",
+   "keyEn": "길을 데굴데굴 굴러가다 호박 등에 통!",
+   "mode": "both",
+   "tpl": "길을 데굴데굴 굴러가다 호박 등에 통!",
+   "en": "She rolled and rolled down the street and bonked into a pumpkin lantern!",
+   "tplEn": "{A_g:He/She} rolled and rolled down the street and bonked into a pumpkin lantern!",
+   "ko": null,
+   "enRec": {
+    "seg": null,
+    "segs": 1,
+    "voice": "pFZP5JQG7iQjIQuC4Bku",
+    "model": "eleven_v4",
+    "settings": {
+     "stability": 0.45,
+     "similarity_boost": 0.75,
+     "style": 0.4
+    },
+    "send": "[playful storytelling, rhythmic on the sound words, smiling] {A_g:He/She} rolled and rolled down the street and bonked into a pumpkin lantern!",
+    "orig": {},
+    "url": "audio/el/witch_candy/en/nar_8e35e93283.mp3",
+    "chars": 133
+   },
+   "g": [
+    "A"
+   ]
+  },
+  {
+   "id": "kb039c3ca",
+   "key": "보름달 둘레를 보글보글 헤엄쳤어요.",
+   "keyEn": "보름달 둘레를 보글보글 헤엄쳤어요.",
+   "mode": "both",
+   "tpl": "보름달 둘레를 보글보글 헤엄쳤어요.",
+   "en": "She swam, bubble bubble, all around the full moon.",
+   "tplEn": "{A_g:He/She} swam, bubble bubble, all around the full moon.",
+   "ko": null,
+   "enRec": {
+    "seg": null,
+    "segs": 1,
+    "voice": "pFZP5JQG7iQjIQuC4Bku",
+    "model": "eleven_v4",
+    "settings": {
+     "stability": 0.45,
+     "similarity_boost": 0.75,
+     "style": 0.4
+    },
+    "send": "[playful storytelling, rhythmic on the sound words, smiling] {A_g:He/She} swam, bubble bubble, all around the full moon.",
+    "orig": {},
+    "url": "audio/el/witch_candy/en/nar_ca882dc844.mp3",
+    "chars": 111
+   },
+   "g": [
+    "A"
+   ]
+  },
+  {
+   "id": "k9ec48e1f",
+   "key": "폴짝, 폴짝, 폴짝! 지붕 위에서 손을 흔들었어요.",
+   "keyEn": "폴짝, 폴짝, 폴짝! 지붕 위에서 손을 흔들었어요.",
+   "mode": "both",
+   "tpl": "폴짝, 폴짝, 폴짝! 지붕 위에서 손을 흔들었어요.",
+   "en": "Hop, hop, hop! She waved from up on the roof.",
+   "tplEn": "Hop, hop, hop! {A_g:He/She} waved from up on the roof.",
+   "ko": null,
+   "enRec": {
+    "seg": null,
+    "segs": 1,
+    "voice": "pFZP5JQG7iQjIQuC4Bku",
+    "model": "eleven_v4",
+    "settings": {
+     "stability": 0.45,
+     "similarity_boost": 0.75,
+     "style": 0.4
+    },
+    "send": "[playful storytelling, rhythmic on the sound words, smiling] Hop, hop, hop! {A_g:He/She} waved from up on the roof.",
+    "orig": {},
+    "url": "audio/el/witch_candy/en/nar_5e596d6d47.mp3",
+    "chars": 106
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "kaff19f4d",
@@ -4430,7 +4736,92 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_3829a53a63.mp3",
     "chars": 111
-   }
+   },
+   "g": []
+  },
+  {
+   "id": "k2aee09ff",
+   "key": "박쥐 친구들이랑 달 앞을 빙글 돌았어요.",
+   "keyEn": "박쥐 친구들이랑 달 앞을 빙글 돌았어요.",
+   "mode": "both",
+   "tpl": "박쥐 친구들이랑 달 앞을 빙글 돌았어요.",
+   "en": "She circled in front of the moon with her bat friends.",
+   "tplEn": "{A_g:He/She} circled in front of the moon with {A_g:his/her} bat friends.",
+   "ko": null,
+   "enRec": {
+    "seg": null,
+    "segs": 1,
+    "voice": "pFZP5JQG7iQjIQuC4Bku",
+    "model": "eleven_v4",
+    "settings": {
+     "stability": 0.45,
+     "similarity_boost": 0.75,
+     "style": 0.4
+    },
+    "send": "[playful storytelling, rhythmic on the sound words, smiling] {A_g:He/She} circled in front of the moon with {A_g:his/her} bat friends.",
+    "orig": {},
+    "url": "audio/el/witch_candy/en/nar_b72a57c69c.mp3",
+    "chars": 115
+   },
+   "g": [
+    "A"
+   ]
+  },
+  {
+   "id": "k971204af",
+   "key": "납작해졌다가… 뿅!",
+   "keyEn": "납작해졌다가… 뿅!",
+   "mode": "both",
+   "tpl": "납작해졌다가… 뿅!",
+   "en": "She went flat as a pancake... then poof!",
+   "tplEn": "{A_g:He/She} went flat as a pancake... then poof!",
+   "ko": null,
+   "enRec": {
+    "seg": null,
+    "segs": 1,
+    "voice": "pFZP5JQG7iQjIQuC4Bku",
+    "model": "eleven_v4",
+    "settings": {
+     "stability": 0.45,
+     "similarity_boost": 0.75,
+     "style": 0.4
+    },
+    "send": "[playful storytelling, rhythmic on the sound words, smiling] {A_g:He/She} went flat as a pancake... then poof!",
+    "orig": {},
+    "url": "audio/el/witch_candy/en/nar_e80f5d8fe5.mp3",
+    "chars": 101
+   },
+   "g": [
+    "A"
+   ]
+  },
+  {
+   "id": "k549d833e",
+   "key": "녹았다!",
+   "keyEn": "녹았다!",
+   "mode": "both",
+   "tpl": "녹았다!",
+   "en": "She melted!",
+   "tplEn": "{A_g:He/She} melted!",
+   "ko": null,
+   "enRec": {
+    "seg": null,
+    "segs": 1,
+    "voice": "TC0Zp7WVFzhA8zpTlRqV",
+    "model": "eleven_v4",
+    "settings": {
+     "stability": 0.35,
+     "similarity_boost": 0.75,
+     "style": 0.55
+    },
+    "send": "[kind quirky witch, surprised, giggling] {A_g:He/She} melted!",
+    "orig": {},
+    "url": "audio/el/witch_candy/en/witch_a5a604f74b.mp3",
+    "chars": 52
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "kff44df00",
@@ -4469,7 +4860,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_ece78c5ebf.mp3",
     "chars": 69
-   }
+   },
+   "g": []
   },
   {
    "id": "kff462a0a",
@@ -4508,7 +4900,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/witch_0aadf8cec7.mp3",
     "chars": 111
-   }
+   },
+   "g": []
   },
   {
    "id": "k34902036",
@@ -4547,7 +4940,36 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_009fa039bc.mp3",
     "chars": 101
-   }
+   },
+   "g": []
+  },
+  {
+   "id": "keac8207a",
+   "key": "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.",
+   "keyEn": "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.",
+   "mode": "both",
+   "tpl": "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.",
+   "en": "Boing, boing, boing! She bounced down the street like a kiwi ball.",
+   "tplEn": "Boing, boing, boing! {A_g:He/She} bounced down the street like a kiwi ball.",
+   "ko": null,
+   "enRec": {
+    "seg": null,
+    "segs": 1,
+    "voice": "pFZP5JQG7iQjIQuC4Bku",
+    "model": "eleven_v4",
+    "settings": {
+     "stability": 0.45,
+     "similarity_boost": 0.75,
+     "style": 0.4
+    },
+    "send": "[playful storytelling, rhythmic on the sound words, smiling] Boing, boing, boing! {A_g:He/She} bounced down the street like a kiwi ball.",
+    "orig": {},
+    "url": "audio/el/witch_candy/en/nar_53cb401b69.mp3",
+    "chars": 127
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "k4fe7ec05",
@@ -4586,7 +5008,36 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_fc940a2f28.mp3",
     "chars": 93
-   }
+   },
+   "g": []
+  },
+  {
+   "id": "k6f868357",
+   "key": "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.",
+   "keyEn": "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.",
+   "mode": "both",
+   "tpl": "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.",
+   "en": "She crawled along, creep, creep... then SNAP! Pumpkin the cat jumped in surprise.",
+   "tplEn": "{A_g:He/She} crawled along, creep, creep... then SNAP! Pumpkin the cat jumped in surprise.",
+   "ko": null,
+   "enRec": {
+    "seg": null,
+    "segs": 1,
+    "voice": "pFZP5JQG7iQjIQuC4Bku",
+    "model": "eleven_v4",
+    "settings": {
+     "stability": 0.45,
+     "similarity_boost": 0.75,
+     "style": 0.4
+    },
+    "send": "[playful storytelling, slow creeping then a sudden snap, smiling] {A_g:He/She} crawled along, creep, creep... then SNAP! Pumpkin the cat jumped in surprise.",
+    "orig": {},
+    "url": "audio/el/witch_candy/en/nar_5318e8a8c6.mp3",
+    "chars": 147
+   },
+   "g": [
+    "A"
+   ]
   },
   {
    "id": "kba636464",
@@ -4625,7 +5076,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_3b5f99df21.mp3",
     "chars": 89
-   }
+   },
+   "g": []
   },
   {
    "id": "r05af912b",
@@ -4664,7 +5116,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_e33596b800.mp3",
     "chars": 122
-   }
+   },
+   "g": []
   },
   {
    "id": "raed434aa",
@@ -4703,7 +5156,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_a2022d59bf.mp3",
     "chars": 152
-   }
+   },
+   "g": []
   },
   {
    "id": "r988c008c",
@@ -4742,7 +5196,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_3dd6044755.mp3",
     "chars": 138
-   }
+   },
+   "g": []
   },
   {
    "id": "rcd1e4c72",
@@ -4781,7 +5236,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_a60dd53a13.mp3",
     "chars": 137
-   }
+   },
+   "g": []
   },
   {
    "id": "r2935dfa7",
@@ -4820,7 +5276,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_88cce59910.mp3",
     "chars": 138
-   }
+   },
+   "g": []
   },
   {
    "id": "r9046a481",
@@ -4859,7 +5316,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_ebf7bf02cb.mp3",
     "chars": 149
-   }
+   },
+   "g": []
   },
   {
    "id": "ra2575446",
@@ -4898,7 +5356,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_b12bc81ced.mp3",
     "chars": 133
-   }
+   },
+   "g": []
   },
   {
    "id": "r093e2b90",
@@ -4937,7 +5396,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_a473bbf350.mp3",
     "chars": 154
-   }
+   },
+   "g": []
   },
   {
    "id": "r2cfcb1be",
@@ -4976,7 +5436,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_19552dab08.mp3",
     "chars": 133
-   }
+   },
+   "g": []
   },
   {
    "id": "r4e23d0e6",
@@ -5015,7 +5476,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_ae127ea82d.mp3",
     "chars": 141
-   }
+   },
+   "g": []
   },
   {
    "id": "r63317f61",
@@ -5054,7 +5516,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_3166f3e34c.mp3",
     "chars": 95
-   }
+   },
+   "g": []
   },
   {
    "id": "rd6e8a61b",
@@ -5093,7 +5556,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/witch_candy/en/nar_a30ec5f445.mp3",
     "chars": 91
-   }
+   },
+   "g": []
   }
  ],
  "home": [
@@ -5134,7 +5598,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/home/en/nar_157ea4f85c.mp3",
     "chars": 45
-   }
+   },
+   "g": []
   },
   {
    "id": "h92ce5f9e",
@@ -5174,7 +5639,8 @@ export const NAME_LINES = {
     "url": "audio/el/home/en/nar_0f5cacfd25.mp3",
     "chars": 41,
     "verified": false
-   }
+   },
+   "g": []
   },
   {
    "id": "h37e3fdac",
@@ -5213,7 +5679,8 @@ export const NAME_LINES = {
     "orig": {},
     "url": "audio/el/home/en/nar_caaaf2d84d.mp3",
     "chars": 38
-   }
+   },
+   "g": []
   }
  ]
 };
