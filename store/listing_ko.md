@@ -68,5 +68,5 @@
 
 ## 이름 후보 메모
 - 한국어: 톡톡 동화극장 (후보, 7자)
-- 영어 후보: **Tok Tok Tale Theater**(처리방침·COPYRIGHT 에 이미 쓰는 표기, 20자) / **Paper Tale Theater**(저장소·번들 이름과 같음, 18자) / **Tap Tap Storybook Theater**(영어권이 뜻을 바로 아는 이름, 25자)
+- 영어 이름: **Toki Toki Tale** (2026-11-06 사용자 확정, 앱 화면 머리글과 같음)
 - 세 이름 모두 App Store 검색·키프리스·USPTO 중복 확인 전. 한국어 이름을 확정해야 영어 이름을 정할 수 있습니다.

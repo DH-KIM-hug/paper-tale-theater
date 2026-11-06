@@ -4,7 +4,7 @@
 
 ## English (paste this)
 ```
-Tok Tok Tale Theater (working title) is an interactive storybook app for ages 2-5 (Kids Category, ages 5 and under). There is no account, sign-up or login. The app works fully offline; all tales, art and voices are bundled in the app.
+Toki Toki Tale (working title) is an interactive storybook app for ages 2-5 (Kids Category, ages 5 and under). There is no account, sign-up or login. The app works fully offline; all tales, art and voices are bundled in the app.
 
 HOW TO REVIEW
 1. Launch the app. The Home screen lists the tales. Four tales are always free (The Rabbit and the Turtle, The Giant Turnip, Cinderella, The Tiger and the Red Bean Porridge); original tales are free; four more tales are free each week. Other tales show a lock.

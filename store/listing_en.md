@@ -4,7 +4,7 @@
 
 | 칸 | 내용 | 글자 수 / 한도 |
 |---|---|---|
-| 이름 (후보) | Tok Tok Tale Theater | 20 / 30 |
+| 이름 (후보) | Toki Toki Tale | 14 / 30 |
 | 부제 | Interactive tales for ages 2-5 | 30 / 30 |
 | 홍보 문구 | Paper-cut fairy tales to tap and play by day, and read-aloud bedtime stories by night. No ads. Some tales are always free, and four more are free each week. | 156 / 170 |
 | 키워드 (쉼표, 공백 없이) | `toddler,preschool,kids,bedtime,read aloud,storybook,learning,folktale,aesop,princess,sticker,korean` | 99 / 100 |
@@ -15,7 +15,7 @@ Words already in the name and subtitle (Tok, Tale, Theater, Interactive, ages) a
 ## 설명 본문 (그대로 붙여 넣기)
 
 ```
-Tok Tok Tale Theater is a storybook app for ages 2 to 5. Children step into fairy tales cut from paper and help tell the story.
+Toki Toki Tale is a storybook app for ages 2 to 5. Children step into fairy tales cut from paper and help tell the story.
 
 DAYTIME: TAP AND PLAY
 Children tap, choose and put things in order to keep the story going. A wrong answer is never punished. Taps appear only where the story has a reason for them.
@@ -47,7 +47,7 @@ Artwork was made with OpenAI image generation tools. Voices were recorded with E
 
 ## What's New
 Leave empty for 1.0 (Apple does not require it for a first release). If you want a line:
-- Tok Tok Tale Theater opens its doors for the first time.
+- Toki Toki Tale opens its doors for the first time.
 
 ## Category
 - Primary: **Education**. Secondary: optional (Books is the closest fit).
@@ -64,4 +64,4 @@ Leave empty for 1.0 (Apple does not require it for a first release). If you want
 `© 2026 DH-KIM-hug` (same as COPYRIGHT.md; change to a legal name if you prefer)
 
 ## English name candidates (all unverified)
-Tok Tok Tale Theater (20) / Paper Tale Theater (18) / Tap Tap Storybook Theater (25)
+Toki Toki Tale (확정 2026-11-06, 14)
