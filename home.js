@@ -1265,27 +1265,14 @@
   async function showDoc(which) {
     const box = $('#docView'); if (!box) return;
     if (which === 'privacy') { box.innerHTML = '<iframe class="g-doc" src="privacy.html" title="privacy"></iframe>'; return; }
-    box.innerHTML = '<div class="g-doc credits" tabindex="0"></div>';
-    /* 앱에는 .md 가 들어가지 않는다(build_www.sh 가 sounds/CREDITS.md 를 CREDITS.txt 로 복사). 웹에서는 .md 도 읽는다 */
-    let txt = '';
-    for (const f of window.Capacitor ? ['sounds/CREDITS.txt', 'sounds/CREDITS.md'] : ['sounds/CREDITS.md', 'sounds/CREDITS.txt']) {   // 앱은 .txt, 웹은 .md 먼저 (없는 파일을 요청해 404 가 남지 않게)
-      try { const r = await fetch(f); if (r.ok) { txt = await r.text(); break; } } catch (e) { /* 다음 후보 */ }
-    }
-    const view = box.firstChild;
-    if (!txt) { view.textContent = L('출처 문서를 열 수 없어요.', 'Cannot open the credits document.'); return; }
-    /* 표·제목만 읽기 좋게 옮긴다: '# 제목' → 제목, '| a | b |' → 한 줄 항목, 나머지는 문단 */
-    const esc = x => x.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
-    view.innerHTML = txt.split('\n').map(line => {
-      const l = line.trim();
-      if (!l || /^\|[\s|:-]+\|$/.test(l)) return '';
-      if (/^#{1,3} /.test(l)) return `<h5>${esc(l.replace(/^#+ /, ''))}</h5>`;
-      if (l.startsWith('|')) {
-        const cells = l.split('|').slice(1, -1).map(c => esc(c.trim().replace(/`/g, '')));
-        if (cells[0] === '파일') return '';
-        return `<p class="cr-row"><b>${cells[0]}</b> ${cells.slice(1).join(' · ')}</p>`;
-      }
-      return `<p>${esc(l)}</p>`;
-    }).join('');
+    /* 출처는 짧게(사용자 결정 2026-11-07). 자세한 표는 저장소의 sounds/CREDITS.md 에 기록으로 남긴다 */
+    const lines = [
+      ['그림: 이 앱을 위해 새로 만든 그림이에요(OpenAI 이미지 생성).', 'Art: made for this app (OpenAI image generation).'],
+      ['목소리: ElevenLabs·Typecast 로 녹음했어요.', 'Voices: recorded with ElevenLabs and Typecast.'],
+      ['소리·음악: Pixabay, Kenney(CC0), Wikimedia Commons(퍼블릭 도메인) 녹음을 다듬어 썼어요.', 'Sounds and music: edited from Pixabay, Kenney (CC0) and Wikimedia Commons (public domain) recordings.'],
+      ['클래식 곡은 작곡이 퍼블릭 도메인이에요.', 'Classical pieces are public-domain compositions.']
+    ];
+    box.innerHTML = '<div class="g-doc credits" tabindex="0">' + lines.map(l => `<p>${L(l[0], l[1])}</p>`).join('') + '</div>';
   }
 
   /* ── S11-2 기기 연결 (부품): 코드 만들기(8자리 크게 + 남은 시간) · 코드 넣기 ── */
