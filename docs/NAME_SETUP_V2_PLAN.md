@@ -130,6 +130,127 @@
 | 나의 빨간 자동차 | 노란 티셔츠·파란 반바지(중립). 대사 '경찰차 형아'는 **자동차**를 부르는 말이라 아이 모습과 무관 | 여자아이판은 **옷 그대로, 머리만**(짧은 단발 + 머리핀 조각 1). 침대 그림(`rc_child_bed`·`rc_bed_*`)도 같은 규칙 |
 | 구름 공장 | 삼남매 잠옷(줄무늬·별무늬·노랑). 대사는 '삼남매'·'첫째/둘째' 없이 이름만. 배역 이름 `nuna`·`oppa` 는 파일 접두어일 뿐 대사에 없음 | 첫째 남자아이판·둘째 여자아이판은 **잠옷 그대로, 머리만**. 막내는 §3-3 |
 
+### 3-6. G1 그림 작업표 — 파일 이름·옷·머리 처리·원본↔새 파일 대응 (2026-11-07, Fable 초안)
+
+작업표 4개: `tools/app/gen/jobs_look_red_car.json`(11) · `jobs_look_unicorn.json`(15) · `jobs_look_witch_candy.json`(33) · `jobs_look_kkultteok.json`(55 = 자세 45 + 누운 자세 6 + 배경판 4) = **114장**. 만드는 스크립트 `tools/app/gen/mk_jobs_look.py`(원본 jobs_<tale>.json 의 프롬프트에서 인물 설명·참고 문장만 바꾸고 자세·방향·구도 글은 그대로 둔다). refs 는 기존 생성 그림만(사진 금지 — 스크립트가 `.jpg`·`refs/family` 가 들어오면 멈춘다). 모든 장에 "머리·몸 크기를 기준 그림과 똑같이, 2.5등신" 과 종이 규칙(1조각 1색·광택·그라데이션 금지·어두운 웜 그림자만)을 넣었다.
+
+| 동화 | 새 파일 이름(§6 규칙) | 옷 | 머리 | 참고 순서 |
+|---|---|---|---|---|
+| 나의 빨간 자동차 → 여자아이판 | `rc_child_X` → `rc_childg_X`, `rc_bed_X` → `rc_bedg_X` | 그대로(노란 티셔츠·파란 반바지) | 턱 길이 검은 단발 + 앞머리, 왼쪽에 분홍 `#F3A9BE` 리본 머리핀 조각 1. 얼굴은 다른 아이와 다르게 | pass 1 `rc_childg_stand`(refs 원본 stand) → pass 2 자세 7(refs 새 stand + 원본 같은 자세) → 침대 1장 → 끝 장면 wide → tall |
+| 유니콘을 찾아서 → 남자아이판 | `uc_kid2_X` → `uc_kid2b_X`, `uc_cut2_X` → `uc_cut2b_X`, `uc_bed_X` → `uc_bedb_X` | **꼬마 왕자**(7-5 확정): 흰 셔츠 `#F4F6FA` + 하늘색 반바지 `#A9D6F5` + 짧은 코발트 망토 `#3A6FD8`(레몬 별 2) + 같은 금색 왕관 + 팥색 신발. 분홍 없음. 침대 장면은 하늘색 잠옷 | 짧은 진갈색 머리(앞머리 짧게, 귀 위). 사탕 마녀 남자아이와 **같은 얼굴** | pass 1 stand → pass 2 walk·sad·tired·turn·hug·wave → pass 3 turn3·turn4 → pass 4 컷 4 → 침대 wide → tall |
+| 사탕 마녀의 핼러윈 → 남자아이판 | `wc_kid_X` → `wc_kidb_X`, `wc_kid_tf_X` → `wc_kidb_tf_X`, `wc_cut_tf_X` → `wc_cutb_tf_X`, `wc_cut_gather/parade/all_transform` → `wc_cutb_*` | 그대로(꼬마 마법사: 별 모자·남보라 망토·모래색 튜닉·줄무늬 양말) | 짧은 진갈색 머리. 유니콘 남자아이판 `uc_kid2b_stand` 를 refs 로 넣어 같은 얼굴 | **유니콘 남자아이판을 먼저 만들어야 한다.** pass 1 stand(refs uc_kid2b_stand + 원본 wc_kid_stand) → pass 2 자세 6·변신 12 → pass 3 bat_down·변신 컷 10·큰 컷 3. `wc_cut_tf_frame`(틀)은 아이가 없어 그대로 쓴다(확인) |
+| 구름 공장 → 첫째 남·둘째 여·막내 여 | `nuna_X` → `nunab_X`, `oppa_X` → `oppag_X`, `agi_X` → `agig_X`(webp 는 `cf4_` 접두어) | 삼남매 잠옷 그대로 | 첫째 남: 짧은 크롭(귀 보임, 둘째의 바가지 머리와 다르게). 둘째 여: 턱 길이 단발 + 하늘색 `#3E7CB1` 머리핀 1(첫째의 어깨 길이 머리보다 짧게). 막내 여: 둥근 단발 + 잔머리 + 분홍 리본 핀 1(§3-3) | 인물마다 pass 1 `*_lookup`(원본 lookup 을 refs) → pass 2 나머지(새 lookup + 원본 같은 자세) |
+
+구름 공장 함께 그림의 층 분리(§3-2 (가), 7-3 확정) — 새 10장:
+- 배경판 4장(아이 없음): `cf4_cut_hug_bg`·`cf4_cut_rainbow_bg`(16:9, 원본 컷과 같은 구도, 강아지·아기 구름은 그대로, 아이 자리는 빈 땅) · `cf4_bed_wide_bg`·`cf4_bed_tall_bg`(빈 침대: 베개 3·누비이불·곧은 크림 시트 단, 달·창·강아지는 원본과 같은 자리 — 코드의 `BED.moon` 좌표가 그대로 맞게).
+- 누운 자세 6장: `nuna_lie`·`oppa_lie`·`agi_lie`(원래 모습) + `nunab_lie`·`oppag_lie`·`agig_lie`(반대 모습). 마젠타 배경에 머리·어깨·두 손 + 가슴을 가로지르는 크림 시트 띠(아래 단은 곧게 자름, 그 아래는 없음). 코드가 침대 배경판의 베개 자리에 얹고, 띠 아래 단을 이불 위 단에 맞춘다. 컷은 `*_hug`(안기)·`*_back`(뒷모습) 자세를 얹는다.
+
+생성 명령(중심 세션이 돌림 — `restyle.py run` 은 `tools/app/gen/restyle/jobs_<tale>.json` 을 읽고 `aspect`·`size: null` 을 모르므로 쓰지 않는다):
+```
+# 순서: unicorn → witch_candy(유니콘 남자아이판을 참고) → red_car → kkultteok. 작업표 안 순서(pass 순)대로 id 를 넘긴다. 이미 있는 그림은 건너뛰고, 한도에 걸리면 1시간마다 다시 시도한다.
+for t in unicorn witch_candy red_car kkultteok; do
+  python3 tools/app/gen/run_simple.py look_$t $(python3 -c "import json;print(' '.join(j['id'] for j in json.load(open('tools/app/gen/jobs_look_$t.json'))))") >> tools/app/gen/restyle/look_queue.log 2>&1
+done
+```
+후처리(G3): 스프라이트는 `tools/gpu_night/chromakey.py` 로 마젠타를 빼고 기존 자세와 같은 높이 규칙으로 webp(머리카락 폭으로 HT 재기, ASP 표를 모습별로 두 벌); 4:3 컷(유니콘 4·사탕 마녀 13)은 `post_cuts.py look_<tale>`; 침대 장면·구름 공장 16:9 배경판은 `post_bed.py` 방식(16:9 1600×900 / 2:3 1024×1536)인데 post_bed.py 는 원본 작업표 3개만 돌고 id 끝이 `bed_wide/tall` 인 것만 잡으므로 `jobs_look_*` 와 `*_bg`·`rc_bedg_*`·`uc_bedb_*` 를 넣게 한 줄 고쳐야 한다.
+
+판단이 필요한 부분(G1):
+- **막내 원래 모습 표기 불일치**: §4-3·§6 카탈로그는 막내 원래 모습을 `C:'girl'` 로 적었는데 §8 G1 과 이번 지시는 "막내 **여자아이판** 16" 이다. 작업표는 지시대로 여자아이판(`agig_*`: 단발 + 리본 핀)으로 만들었다. 원래 모습을 여로 치면 반대 모습은 남자아이판(`agib_*`: 더 짧은 머리, 핀 없음)이어야 하므로, 어느 쪽인지 확정하면 `mk_jobs_look.py` 의 `KK['agi']` 한 줄만 바꿔 다시 만든다.
+- `rc_bedg_wide/tall` 은 refs 가 6장(원본 5 + 원본 그림)이다. image_gen 이 참고 그림 수를 제한하면 마지막 원본 그림을 빼고 돌린다.
+- 유니콘 `uc_kid2b_turn3/turn4`(뒤돌아보기)는 원본 자세 글의 드레스·리본·단발 묘사를 망토·반바지·짧은 머리로 바꿔 두었지만, 원본도 두 번 다시 그린 자세라 결과를 먼저 보고 판단한다.
+
+**red_car (여자아이판)** (11장)
+
+| 원본 | 새 파일(id = assets/v3w/<id>.webp) | pass | kind | refs |
+|---|---|---|---|---|
+| `rc_child_stand` | `rc_childg_stand` | 1 | sprite | rc_child_stand |
+| `rc_child_eat` | `rc_childg_eat` | 2 | sprite | rc_childg_stand, rc_child_eat |
+| `rc_child_sleep` | `rc_childg_sleep` | 2 | sprite | rc_childg_stand, rc_child_sleep |
+| `rc_child_point` | `rc_childg_point` | 2 | sprite | rc_childg_stand, rc_child_point |
+| `rc_child_run` | `rc_childg_run` | 2 | sprite | rc_childg_stand, rc_child_run |
+| `rc_child_cry` | `rc_childg_cry` | 2 | sprite | rc_childg_stand, rc_child_cry |
+| `rc_child_turn` | `rc_childg_turn` | 2 | sprite | rc_childg_stand, rc_child_turn |
+| `rc_child_hug` | `rc_childg_hug` | 2 | sprite | rc_childg_stand, rc_child_hug |
+| `rc_child_bed` | `rc_childg_bed` | 3 | sprite | rc_ref_bed_crop, rc_childg_stand, rc_childg_sleep, rc_red_run, rc_child_bed |
+| `rc_bed_wide` | `rc_bedg_wide` | 4 | scene | rc_childg_bed, rc_tow_joy, rc_police_run, rc_fire_run, rc_amb_run, rc_bed_wide |
+| `rc_bed_tall` | `rc_bedg_tall` | 5 | scene | rc_childg_bed, rc_tow_joy, rc_police_run, rc_fire_run, rc_bedg_wide, rc_bed_tall |
+
+**unicorn (남자아이판)** (15장)
+
+| 원본 | 새 파일(id = assets/v3w/<id>.webp) | pass | kind | refs |
+|---|---|---|---|---|
+| `uc_kid2_stand` | `uc_kid2b_stand` | 1 | sprite | uc_kid2_stand |
+| `uc_kid2_walk` | `uc_kid2b_walk` | 2 | sprite | uc_kid2b_stand, uc_kid2_walk |
+| `uc_kid2_sad` | `uc_kid2b_sad` | 2 | sprite | uc_kid2b_stand, uc_kid2_sad |
+| `uc_kid2_tired` | `uc_kid2b_tired` | 2 | sprite | uc_kid2b_stand, uc_kid2_tired |
+| `uc_kid2_turn` | `uc_kid2b_turn` | 2 | sprite | uc_kid2b_stand, uc_kid2_turn |
+| `uc_kid2_hug` | `uc_kid2b_hug` | 2 | sprite | uc_kid2b_stand, uc_kid2_hug |
+| `uc_kid2_wave` | `uc_kid2b_wave` | 2 | sprite | uc_kid2b_stand, uc_kid2_wave |
+| `uc_kid2_turn3` | `uc_kid2b_turn3` | 3 | sprite | uc_kid2b_stand, uc_kid2b_walk, uc_kid2_turn3 |
+| `uc_kid2_turn4` | `uc_kid2b_turn4` | 3 | sprite | uc_kid2b_stand, uc_kid2b_walk, uc_kid2b_tired, uc_kid2_turn4 |
+| `uc_cut2_sheep_jump` | `uc_cut2b_sheep_jump` | 4 | cut | uc_sheep_jump, uc_kid2b_stand, uc_prop_cloud, uc_cut2_sheep_jump |
+| `uc_cut2_thorns` | `uc_cut2b_thorns` | 4 | cut | uc_deer_hurt, uc_kid2b_stand, uc_prop_thorn, uc_cut2_thorns |
+| `uc_cut2_turn` | `uc_cut2b_turn` | 4 | cut | uc_kid2b_turn, uc_unicorn_stand, uc_cut2_turn |
+| `uc_cut2_hug` | `uc_cut2b_hug` | 4 | cut | uc_kid2b_hug, uc_unicorn_stand, uc_cut2_hug |
+| `uc_bed_wide` | `uc_bedb_wide` | 5 | scene | uc_kid2b_stand, uc_unicorn_stand, uc_bg2_moon_night, uc_bed_wide |
+| `uc_bed_tall` | `uc_bedb_tall` | 6 | scene | uc_kid2b_stand, uc_unicorn_stand, uc_bedb_wide, uc_bed_tall |
+
+**witch_candy (남자아이판)** (33장)
+
+| 원본 | 새 파일(id = assets/v3w/<id>.webp) | pass | kind | refs |
+|---|---|---|---|---|
+| `wc_kid_stand` | `wc_kidb_stand` | 1 | sprite | uc_kid2b_stand, wc_kid_stand |
+| `wc_kid_walk` | `wc_kidb_walk` | 2 | sprite | wc_kidb_stand, wc_kid_walk |
+| `wc_kid_yuck` | `wc_kidb_yuck` | 2 | sprite | wc_kidb_stand, wc_kid_yuck |
+| `wc_kid_reach` | `wc_kidb_reach` | 2 | sprite | wc_kidb_stand, wc_kid_reach |
+| `wc_kid_point` | `wc_kidb_point` | 2 | sprite | wc_kidb_stand, wc_kid_point |
+| `wc_kid_yum` | `wc_kidb_yum` | 2 | sprite | wc_kidb_stand, wc_kid_yum |
+| `wc_kid_ghost` | `wc_kidb_ghost` | 2 | sprite | wc_kidb_stand, wc_kid_ghost |
+| `wc_kid_tf_strawberry` | `wc_kidb_tf_strawberry` | 2 | sprite | wc_kidb_stand, wc_kid_tf_strawberry |
+| `wc_kid_tf_strawberry_ball` | `wc_kidb_tf_strawberry_ball` | 2 | sprite | wc_kidb_stand, wc_kid_tf_strawberry_ball |
+| `wc_kid_tf_duck` | `wc_kidb_tf_duck` | 2 | sprite | wc_kidb_stand, wc_kid_tf_duck |
+| `wc_kid_tf_fish` | `wc_kidb_tf_fish` | 2 | sprite | wc_kidb_stand, wc_kid_tf_fish |
+| `wc_kid_tf_frog_jump` | `wc_kidb_tf_frog_jump` | 2 | sprite | wc_kidb_stand, wc_kid_tf_frog_jump |
+| `wc_kid_tf_frog_sit` | `wc_kidb_tf_frog_sit` | 2 | sprite | wc_kidb_stand, wc_kid_tf_frog_sit |
+| `wc_kid_tf_pumpkin` | `wc_kidb_tf_pumpkin` | 2 | sprite | wc_kidb_stand, wc_kid_tf_pumpkin |
+| `wc_kid_tf_bat_up` | `wc_kidb_tf_bat_up` | 2 | sprite | wc_kidb_stand, wc_kid_tf_bat_up |
+| `wc_kid_tf_bat_down` | `wc_kidb_tf_bat_down` | 3 | sprite | wc_kidb_stand, wc_kidb_tf_bat_up, wc_kid_tf_bat_down |
+| `wc_kid_tf_choco` | `wc_kidb_tf_choco` | 2 | sprite | wc_kidb_stand, wc_kid_tf_choco |
+| `wc_kid_tf_choco_flat` | `wc_kidb_tf_choco_flat` | 2 | sprite | wc_kidb_stand, wc_kid_tf_choco_flat |
+| `wc_kid_tf_kiwi` | `wc_kidb_tf_kiwi` | 2 | sprite | wc_kidb_stand, wc_kid_tf_kiwi |
+| `wc_kid_tf_croc` | `wc_kidb_tf_croc` | 2 | sprite | wc_kidb_stand, wc_kid_tf_croc |
+| `wc_cut_tf_strawberry` | `wc_cutb_tf_strawberry` | 3 | cut | wc_kidb_stand, wc_cut_tf_frame, wc_cut_tf_strawberry |
+| `wc_cut_tf_duck` | `wc_cutb_tf_duck` | 3 | cut | wc_kidb_stand, wc_cut_tf_frame, wc_cut_tf_duck |
+| `wc_cut_tf_fish` | `wc_cutb_tf_fish` | 3 | cut | wc_kidb_stand, wc_cut_tf_frame, wc_cut_tf_fish |
+| `wc_cut_tf_frog` | `wc_cutb_tf_frog` | 3 | cut | wc_kidb_stand, wc_cut_tf_frame, wc_cut_tf_frog |
+| `wc_cut_tf_pumpkin` | `wc_cutb_tf_pumpkin` | 3 | cut | wc_kidb_stand, wc_cut_tf_frame, wc_cut_tf_pumpkin |
+| `wc_cut_tf_bat` | `wc_cutb_tf_bat` | 3 | cut | wc_kidb_stand, wc_cut_tf_frame, wc_cut_tf_bat |
+| `wc_cut_tf_choco` | `wc_cutb_tf_choco` | 3 | cut | wc_kidb_stand, wc_cut_tf_frame, wc_cut_tf_choco |
+| `wc_cut_tf_ghost` | `wc_cutb_tf_ghost` | 3 | cut | wc_kidb_stand, wc_cut_tf_frame, wc_cut_tf_ghost |
+| `wc_cut_tf_kiwi` | `wc_cutb_tf_kiwi` | 3 | cut | wc_kidb_stand, wc_cut_tf_frame, wc_cut_tf_kiwi |
+| `wc_cut_tf_croc` | `wc_cutb_tf_croc` | 3 | cut | wc_kidb_stand, wc_cut_tf_frame, wc_cut_tf_croc |
+| `wc_cut_gather` | `wc_cutb_gather` | 3 | cut | wc_kidb_stand, wc_witch_stand, _ref_friends_sheet, wc_cut_gather |
+| `wc_cut_parade` | `wc_cutb_parade` | 3 | cut | wc_kidb_stand, wc_witch_stand, _ref_friends_sheet, wc_cut_parade |
+| `wc_cut_all_transform` | `wc_cutb_all_transform` | 3 | cut | wc_kidb_stand, wc_witch_stand, _ref_friends_sheet, wc_cut_all_transform |
+
+**kkultteok** (55장 = 자세 45 + 누운 자세 6 + 배경판 4)
+
+- 자세 45장은 접두어만 바뀐 1:1 대응: `nuna_<pose>` → `nunab_<pose>`(15: lookup·back·blow·clap·crouch·eek·hug·jump·point·run·splash·tiptoe·walk·wave·whisper), `oppa_<pose>` → `oppag_<pose>`(14: lookup·back·clap·crouch·eek·hug·jump·point·press·reach·run·splash·tiptoe·walk), `agi_<pose>` → `agig_<pose>`(16: lookup·back·clap·crouch·eek·hug·jump·lookback·pet·point·press·run·splash·tiptoe·walk·wave). 원본 id 는 작업표(jobs_kkultteok.json)대로 `cf4_` 없이 쓰고, webp 는 `assets/v3w/cf4_<id>.webp`. `*_lookup` 이 기준 자세(pass 1, refs = 원본 `*_lookup`), 나머지는 pass 2(refs = 새 기준 + 원본 같은 자세).
+- 함께 그림 10장:
+
+| 원본 | 새 파일 | pass | kind | refs |
+|---|---|---|---|---|
+| `cf4_bed_wide(원래 모습 아이)` | `nuna_lie` | 1 | sprite | nuna_lookup_v2, cf4_bed_wide |
+| `cf4_bed_wide(반대 모습 아이)` | `nunab_lie` | 2 | sprite | nunab_lookup, cf4_bed_wide |
+| `cf4_bed_wide(원래 모습 아이)` | `oppa_lie` | 1 | sprite | oppa_lookup, cf4_bed_wide |
+| `cf4_bed_wide(반대 모습 아이)` | `oppag_lie` | 2 | sprite | oppag_lookup, cf4_bed_wide |
+| `cf4_bed_wide(원래 모습 아이)` | `agi_lie` | 1 | sprite | agi_lookup, cf4_bed_wide |
+| `cf4_bed_wide(반대 모습 아이)` | `agig_lie` | 2 | sprite | agig_lookup, cf4_bed_wide |
+| `cf4_cut_hug` | `cf4_cut_hug_bg` | 1 | cut | dog_lookup, cut_hug |
+| `cf4_cut_rainbow` | `cf4_cut_rainbow_bg` | 1 | cut | dog_lookup, baby_white, cut_rainbow |
+| `cf4_bed_wide` | `cf4_bed_wide_bg` | 1 | scene | dog_lookup, cf4_bed_wide |
+| `cf4_bed_tall` | `cf4_bed_tall_bg` | 2 | scene | dog_lookup, cf4_bed_wide_bg, cf4_bed_tall |
+
 ## 4. 대사 — 모습을 바꾸면 새로 녹음할 줄
 
 ### 4-1. 실측 (놀이 `narration_el*.js` + 읽어 주기 `read_narration_el*.js`, 2026-11-07)
@@ -172,6 +293,8 @@
 - `build_name_lines.py` 는 영어 원문에서 he/she/his/her/him/himself/herself 를 찾아 해당 자리의 `_g` 로 바꾼다. 강아지·유니콘·양 같은 다른 인물의 대명사는 **손으로 제외 목록**을 둔다(구름 공장 꿀떡이 7줄, 유니콘 "the unicorn's mane" 등).
 
 ### 4-4. 아이 목소리(배역 `kid`/`child`/`nuna`/`oppa`/`agi`)는 바꾸지 않는다 (추천)
+
+**아이 대사에는 이름이 없다(2026-11-07 구름 공장 한 줄 수정):** 첫째의 "꿀떡아, 같이 가!" / "Kkulddeok, wait for us!" 를 "같이 가자!" / "Wait for us!" 로 바꿔 다시 녹음했다. 이제 아이 목소리 대사 중 이름이 든 줄이 없어 이름 바꾸기 서버가 아이 목소리를 만들 필요가 없다.
 
 | 동화 | 아이 본인 대사(이름 없음) | 한국어 글자 |
 |---|---|---|
