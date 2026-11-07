@@ -25,7 +25,7 @@
 | `review_notes.md` | 심사 노트(영어 본문 3842자 + 한국어 확인용) |
 | `screenshots/raw/` | 원본 캡처 38장(1차 세트, 2026-11-06) |
 | `screenshots/ko/`, `screenshots/en/` | 문구 띠를 붙인 업로드용 32장(1차 세트, 기기마다 8장씩) |
-| `screenshots/v2/` | **다른 에이전트가 새 세트를 만드는 중**(2026-11-07). 최종 선택은 미정(아래 스크린샷 절) |
+| `screenshots/v2/` | 2판 세트(2026-11-07, 기기마다 9장: 장면·배우는 조작 → 읽어 주기 → 영어 공부 → 잠자리 → 목록). `node tools/app/store_shots.mjs` 로 다시 만듦 |
 
 ## App Store Connect 칸별로 쓸 파일
 | 위치 | 칸 | 쓸 파일 |

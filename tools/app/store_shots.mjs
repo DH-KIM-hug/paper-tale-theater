@@ -57,17 +57,21 @@ const SHOTS = [
   /* 6. 읽어 주기 — 해와 달이 된 오누이, 동아줄 타고 하늘로(읽어 주기 모드). 인어공주 불꽃놀이는 영어에서 카메라가 확대 중에 찍혀 바꿈 */
   { id: 'read', kind: 'tale', read: true, tale: 'sunmoon', skipto: '구름을 여섯 겹이나 뚫고, 오누이는 하늘 나라에 닿았어요!', wait: 3200,
     cap: { ko: ['읽어 주는 동화', '한 줄 한 줄 목소리로 읽어 줘요'], en: ['Read-aloud stories', 'Every line is read aloud'] } },
-  /* 7. 잠자리 이어 듣기 플레이어 */
+  /* 7. 영어 공부 — 화면 언어를 세트 언어와 반대로(ko 세트=영어 화면, en 세트=한국어 화면). 아기 돼지 삼 형제 */
+  { id: 'english', kind: 'tale', flip: true, tale: 'three_pigs', skipto: '엄마 돼지가 말했어요. "이제 너희도 다 컸구나. 세상에 나가서 각자 집을 지어 보렴."', wait: 2800,
+    cap: { ko: ['영어 공부도 해요', '같은 동화를 영어로 듣고 읽어요'], en: ['Hear it in Korean, too', 'Every tale in Korean and English'] } },
+  /* 8. 잠자리 이어 듣기 플레이어 */
   { id: 'bedtime', kind: 'page', url: '/bedtime.html?mode=random&ids=little_mermaid,sunmoon&count=2&auto=1', wait: 9000,
     cap: { ko: ['잠자리 읽어 주기', '화면을 꺼도 이어서 들려줘요'], en: ['Bedtime listening', 'Keeps reading with the screen off'] } },
-  /* 8. 동화 목록 — 창작 동화 줄(아이 캐릭터)이 안 보이게 '공주' 줄부터 */
+  /* 9. 동화 목록 — 창작 동화 줄(아이 캐릭터)이 안 보이게 '공주' 줄부터 */
   { id: 'library', kind: 'page', url: '/index.html?splash=0', wait: 2500, eval: HOME_SCROLL('/공주/'), en: { eval: HOME_SCROLL('/Princess/') },
     cap: { ko: ['명작 동화 30편', '이솝 우화, 우리 옛이야기, 세계 명작'], en: ['30 classic tales', "Aesop's fables, Korean and world folktales"] } },
 ];
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-async function newPage(browser, dev, lang) {
+async function newPage(browser, dev, lang, flip) {
+  if (flip) lang = lang === 'ko' ? 'en' : 'ko'; // flip: 화면 언어를 세트 언어와 반대로
   const d = DEVICES[dev];
   const ctx = await browser.newContext({ viewport: { width: d.vw, height: d.vh }, deviceScaleFactor: d.dpr, hasTouch: true });
   await ctx.addInitScript(lang => {
@@ -85,7 +89,7 @@ async function newPage(browser, dev, lang) {
 /* 동화 장면: 검증 모드 iframe 으로 skipto 대사까지 간 뒤 go n번 */
 async function shootTale(browser, dev, lang, s) {
   if (BANNED.includes(s.tale)) throw new Error('banned tale ' + s.tale);
-  const { ctx, page, d } = await newPage(browser, dev, lang);
+  const { ctx, page, d } = await newPage(browser, dev, lang, s.flip);
   const q = new URLSearchParams({ verify: '1' });
   if (s.skipto) q.set('skipto', s.skipto);
   if (s.read) q.set('read', '1');

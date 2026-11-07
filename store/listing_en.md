@@ -8,7 +8,7 @@
 | 부제 | Interactive tales for ages 2-5 | 30 / 30 |
 | 홍보 문구 | Paper-cut fairy tales to tap and play by day, and read-aloud bedtime stories by night. No ads. Some tales are always free, and four more are free each week. | 156 / 170 |
 | 키워드 (쉼표, 공백 없이) | `toddler,preschool,kids,bedtime,read aloud,storybook,learning,folktale,aesop,princess,sticker,korean` | 99 / 100 |
-| 설명 | 아래 본문 | 2528 / 4000 (2026-11-07 다시 센 값) |
+| 설명 | 아래 본문 | 2728 / 4000 (2026-11-07 다시 센 값) |
 
 Words already in the name and subtitle (Tok, Tale, Theater, Interactive, ages) are left out of the keywords on purpose. Keywords are comma-separated with no spaces.
 
@@ -24,7 +24,10 @@ Children tap, choose and put things in order to keep the story going. A wrong an
 - Every line is read aloud in a warm voice, with the words shown on screen
 
 NIGHTTIME: BEDTIME STORIES
-Choose Read Aloud and the app reads a tale from start to finish. It keeps playing with the screen off and moves on to the next tale. Tales can be heard in Korean or English (change it in the grown-up menu).
+Choose Read Aloud and the app reads a tale from start to finish. It keeps playing with the screen off and moves on to the next tale.
+
+LISTEN IN TWO LANGUAGES
+Every tale can be heard in English and in Korean, read slowly by the same voice, with the words shown on screen. Hearing a familiar story again in another language is a gentle way to get used to its sounds. Change the language in the grown-up menu.
 
 STICKER BOOK AND MY STAGE
 Finish a tale by playing it and collect a sticker. Use your stickers to decorate your own little stage.
