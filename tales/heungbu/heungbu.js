@@ -8,7 +8,7 @@
     heung_hello: .6212, heung_rice: .581, heung_catch: .4806, heung_wrap: .7073, heung_plant: .8343, heung_saw: .9954, heung_glad: .8316,
     hwife: .4429, hwife_joy: .4573, nol_proud: .5551, nol_shake: .8046, nol_wrap: .9382, nol_saw: 1.0143, nol_ouch: .6929, nol_mud: .961,
     nol_shy: .6321, nwife: .7027, nwife_smile: .7335, swallow_fly: 1.1971, swallow_hurt: 1.136, swallow_band: 1.2842, swallow_seed: 1.2057,
-    chicks: 1.2811, chicks2: 1.2811, chick_fall: 1.2373, gourd: .5963, gourd_open: 1.0704, rice: .9294, treasure: 1.2652, seed: .9284, vine: .5342,
+    chicks: 1.2811, chicks2: 1.2667, chick_fall: 1.2373, gourd: .5963, gourd_open: 1.0704, rice: .9294, treasure: 1.2652, seed: .9284, vine: .5342,
     /* 층 소품(VISUAL_PLAN §3~§6, 2026-10-23) */
     layer_blossom_branch: 1.0133, layer_petal: .7417, layer_grass_front: 1.1683, layer_rapeseed: .8683, layer_pine_branch: 1.0967, layer_jars: 1.5929,
     layer_persimmon_branch: 1.0367, layer_leaf_sil: .9583, layer_tree_sil: .98, layer_reeds_sil: 1.2517, layer_grass_sil: 1.085, layer_vine_sil: 2.2785,
@@ -98,7 +98,7 @@
       if (key === 'nolkitchen') { if (!P) layer('jars', 880, 520, 150, { front: false }); layer('pine_branch', P ? 715 : 930, P ? -40 : -24, 200, { top: true, name: 'pine' }); layer('grass_front', 40, 600, 90); }
       if (key === 'yard') { layer('persimmon_branch', 940, -24, 170, { top: true, name: 'persimmon' }); layer('grass_front', 40, 600, 90, { name: 'grassF' }); }
       if (key === 'nol_eaves') { layer('pine_branch', P ? 290 : 60, P ? -40 : -24, 200, { top: true, flip: true, name: 'pine' }); if (!P) layer('jars', 120, 520, 150, { front: false }); }
-      if (key === 'nolyard') { layer('pine_branch', P ? 710 : 930, P ? -40 : -24, 200, { top: true, name: 'pine' }); layer('grass_front', 40, 600, 90, { name: 'grassN' }); }
+      if (key === 'nolyard') { layer('pine_branch', P ? 710 : 930, P ? -40 : -24, 200, { top: true, name: 'pine' }); layer('grass_front', 40, 600, 90); }
       if (key === 'giwa') {
         layer('blossom_branch', P ? 290 : 80, -24, 180, { top: true });
         if (!P) layer('blossom_branch', 920, -24, 180, { top: true, flip: true });
@@ -114,16 +114,10 @@
     }
     /* 2026-11-07 사용자 제보 '박타는데 낮에서 갑자기 노을진 오후가 돼': 첫 박을 탈 때 금빛 라이트박스 마당(yard_lb2b, 노을빛)으로 바꾸던 것을 없앤다.
        박 타기는 처음부터 끝까지 낮 마당 그대로. (읽어 주기에서는 놀부네 마당까지 흥부네 노을 마당으로 바뀌던 문제도 같이 없어진다) */
-    /* 7장 놀부네 집이 무너진 뒤(2026-11-07 사용자 제보 '놀부집 무너졌는데 놀부집 그대로야'): 무너진 집 배경 그림이 아직 없어서,
-       무너짐 컷이 떠 있는 동안 무대 배경을 같은 컷 그림으로 바꾸고 놀부·박·앞 층을 걷는다. 컷이 걷혀도, 다음 장면으로 넘길 때도 무너진 집이 보인다.
-       무너진 놀부네 마당 배경(hb_bg_nolyard_ruin)이 생기면 href 만 그 그림으로 바꾸고 놀부·박은 남긴다 */
-    function ruin(actors) {
-      if (!L.bg || !L.bg.isConnected) return;
-      L.bg.setAttribute('href', U('cut_collapse')); L.bg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-      actors.forEach(a => a && a.pos && a.pos.remove());
-      ['pine', 'grassN'].forEach(k => { const g = L[k]; if (g && g.parentNode) g.parentNode.remove(); L[k] = null; });
-    }
-    /* 처마 둥지: 배경에 그려진 둥지에 딱 겹친다(NEST). 한 마리가 떨어지면 두 마리 둥지(chicks2)로 바꾼다 */
+    /* 7장 놀부네 집이 무너진 뒤(2026-11-07 사용자 제보 '놀부집 무너졌는데 놀부집 그대로야'): 무너짐 컷이 떠 있는 동안 무대 배경을
+       같은 구도의 무너진 놀부네 마당(hb_bg_nolyard_ruin)으로 바꾼다. 놀부·박·앞 층은 그대로. 컷이 걷혀도, 다음 장면으로 넘길 때도 무너진 집이 보인다 */
+    function ruin() { if (L.bg && L.bg.isConnected) L.bg.setAttribute('href', U('bg_nolyard_ruin')); }
+    /* 처마 둥지: 배경에 그려진 둥지에 딱 겹친다(NEST). 한 마리가 떨어지면 두 마리 둥지(chicks2: 같은 둥지·같은 아기 제비 크기, 왼쪽 자리가 빔. 둥지 그릇 폭·높이 차이 1% 안이라 같은 높이)로 바꾼다 */
     function nest() { const a = spr('chicks', 500, NEST.h / K, NEST.y); a.place(NEST.x, NEST.y); return a; }
     const nestDrop = a => { if (a) a.set('chicks2', a.h0); };
     const NEST_FALL = { x: NEST.x - 52, y: NEST.y - 18 }; // 왼쪽 아기 제비 자리(그림 가로 18%)에서 굴러떨어진다
@@ -149,7 +143,7 @@
       return a;
     }
 
-    await Promise.race([Promise.all(['sky_spring', 'nolkitchen', 'eaves', 'yard', 'sky_autumn', 'nol_eaves', 'nolyard', 'giwa']
+    await Promise.race([Promise.all(['sky_spring', 'nolkitchen', 'eaves', 'yard', 'sky_autumn', 'nol_eaves', 'nolyard', 'nolyard_ruin', 'giwa']
       .map(k => T.preload(U('bg_' + (BGS[k] || k)))).concat(['rice', 'fall', 'bandage2', 'south', 'seedback', 'rice_pour2', 'house2', 'mud2', 'dokkaebi', 'collapse']
       .map(k => T.preload(U('cut_' + k))))), new Promise(r => setTimeout(r, 4000))]);
 
@@ -256,7 +250,7 @@
           if (g) t.place(g.x, 490);
           t.hop(18, 300); sfx('ding');
         },
-        house(op) { if (op === 'new') T.confetti(); else if (op === 'collapse') { sfx('crash'); } },
+        house(op) { if (op === 'new') T.confetti(); else if (op === 'collapse') { sfx('crash'); ruin(); } }, // 장면을 순식간에 놓을 때(컷을 건너뛸 때)도 무너진 집
         mud(op) { const s = S.nol_saw; if (s) s.set('nol_mud'); sfx('splash', .35); },
         shake() {
           const n = S.nol_proud;
@@ -268,7 +262,7 @@
           if (k === 'treasure') return; // 컷 그림이 없어 금은보화 그림(treasure:show)만 보인다
           const c = CUT[k]; if (!c) return;
           const shown = cut(c[0], c[1], c[2]);
-          if (k === 'collapse') ruin([S.nol_saw, ...gourds]); // 컷 뒤 무대도 무너진 집으로
+          if (k === 'collapse') ruin(); // 컷 뒤 무대도 무너진 집으로
           return shown;
         },
         fx(n) { sfx(FX[n] || 'pop'); },
@@ -450,7 +444,7 @@
     await cutSay('dokkaebi', 'surprise_sting', '이번에는 방망이를 든 도깨비가 쑥 나왔어요. "이 욕심쟁이야!" 도깨비는 놀부를 놀라게 하고 사라졌어요.');
     await autoOpen(ng[2]);
     wig('pine', 6, 600); // 와르르: 만화 소리
-    { const c = cut('collapse', 'fall_crash'); ruin([ns, ...ng]); await say('와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.'); await c; }
+    { const c = cut('collapse', 'fall_crash'); ruin(); await say('와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.'); await c; }
 
     /* 8. 화해와 나눔 */
     await T.sceneCard('흥부네 집', () => { scene('giwa', 500); }); /* 부자가 된 흥부네는 기와집 */
