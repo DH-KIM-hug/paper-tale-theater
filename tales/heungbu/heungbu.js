@@ -8,16 +8,19 @@
     heung_hello: .6212, heung_rice: .581, heung_catch: .4806, heung_wrap: .7073, heung_plant: .8343, heung_saw: .9954, heung_glad: .8316,
     hwife: .4429, hwife_joy: .4573, nol_proud: .5551, nol_shake: .8046, nol_wrap: .9382, nol_saw: 1.0143, nol_ouch: .6929, nol_mud: .961,
     nol_shy: .6321, nwife: .7027, nwife_smile: .7335, swallow_fly: 1.1971, swallow_hurt: 1.136, swallow_band: 1.2842, swallow_seed: 1.2057,
-    chicks: 1.2811, chick_fall: 1.2373, gourd: .5963, gourd_open: 1.0704, rice: .9294, treasure: 1.2652, seed: .9284, vine: .5342,
+    chicks: 1.2811, chicks2: 1.2811, chick_fall: 1.2373, gourd: .5963, gourd_open: 1.0704, rice: .9294, treasure: 1.2652, seed: .9284, vine: .5342,
     /* 층 소품(VISUAL_PLAN §3~§6, 2026-10-23) */
     layer_blossom_branch: 1.0133, layer_petal: .7417, layer_grass_front: 1.1683, layer_rapeseed: .8683, layer_pine_branch: 1.0967, layer_jars: 1.5929,
     layer_persimmon_branch: 1.0367, layer_leaf_sil: .9583, layer_tree_sil: .98, layer_reeds_sil: 1.2517, layer_grass_sil: 1.085, layer_vine_sil: 2.2785,
   };
   /* 2026-10-23 화려한 재기획(VISUAL_PLAN.md): 장면 키(읽어 주기 set:<키> 포함)는 그대로, 그림만 v2·라이트박스. 둥지·부엌문·초가·대문·기와집 자리는 원본과 같다(겹쳐 확인) */
   /* 2026-10-23 사용자 결정: 처마(eaves)·가을 하늘(sky_autumn 라이트박스)은 옛 그림으로 되돌림(유채·실루엣·빛 점·어둠 막·단풍잎 낙하도 뺌) */
-  const BGS = { sky_spring: 'sky_spring_v2', nolkitchen: 'nolkitchen_v3', yard: 'yard_v3b', yard_lb: 'yard_lb2b', nol_eaves: 'nol_eaves_v2', nolyard: 'nolyard_v2', giwa: 'giwa_v2' };
+  const BGS = { sky_spring: 'sky_spring_v2', nolkitchen: 'nolkitchen_v3', yard: 'yard_v3b', nol_eaves: 'nol_eaves_v2', nolyard: 'nolyard_v2', giwa: 'giwa_v2' };
   const BG = { x: -40, y: -24, w: 1080, h: 1080 * 992 / 1760 };
   const GROUND = 500;
+  /* 처마 둥지(2026-11-07 iPad 제보: 둥지가 배경 둥지 왼쪽에 하나 더 떠 보였다): 배경 hb_bg_eaves 에 그려진 둥지(가로 56~68%, 세로 8~21% → 무대 x 568~696, y 27~104)
+     위에 그대로 덮는다. 배경은 세로 화면에서도 좁혀지지 않으므로 둥지는 fx·K 를 쓰지 않는 고정 무대 좌표다 */
+  const NEST = { x: 632, y: 138, h: 128 }; // 아래로 조금 내려 아기 제비 머리가 화면 위 끝에 잘리지 않게(둥지 그릇이 배경 둥지 아래쪽을 덮는다)
   const NUM = ['하나!', '둘!', '셋!'];
 
   async function run(T) {
@@ -83,21 +86,6 @@
         if (!loop) a.onfinish = () => g.remove();
       }
     }
-    /* 빛 점(라이트박스 하늘): 작은 크림 원이 깜빡 */
-    function lightDots(n, [x0, x1, y0, y1]) {
-      for (let i = 0; i < n; i++) {
-        const x = x0 + Math.random() * (x1 - x0), y = y0 + Math.random() * (y1 - y0), r = 3 + Math.random() * 2;
-        const g = T.el('g', { style: 'pointer-events:none' }, T.fx);
-        T.el('circle', { cx: x, cy: y, r: r + 3, fill: '#FBE8A6', opacity: .5 }, g); T.el('circle', { cx: x, cy: y, r, fill: '#FFF4CC' }, g);
-        if (!still()) g.animate([{ opacity: .2 }, { opacity: 1 }, { opacity: .2 }], { duration: 1400 + Math.random() * 1200, delay: Math.random() * 1000, iterations: Infinity });
-      }
-    }
-    /* 어두운 막을 깔았다가 걷는다(종이 뒤 불이 켜지는 느낌) */
-    function tint(o, ms) {
-      if (still()) return;
-      const r = T.el('rect', { x: -1400, y: -1400, width: 3800, height: 3800, fill: '#2E241C', opacity: o, style: 'pointer-events:none' }, T.fx);
-      r.animate([{ opacity: o }, { opacity: 0 }], { duration: ms, fill: 'forwards' }).onfinish = () => r.remove();
-    }
     let spring2 = false;   // 6장(이듬해 봄): 제비가 지나가므로 벚꽃 가지를 더 위로
     function dress(key) {
       if (key === 'sky_spring') {
@@ -110,7 +98,7 @@
       if (key === 'nolkitchen') { if (!P) layer('jars', 880, 520, 150, { front: false }); layer('pine_branch', P ? 715 : 930, P ? -40 : -24, 200, { top: true, name: 'pine' }); layer('grass_front', 40, 600, 90); }
       if (key === 'yard') { layer('persimmon_branch', 940, -24, 170, { top: true, name: 'persimmon' }); layer('grass_front', 40, 600, 90, { name: 'grassF' }); }
       if (key === 'nol_eaves') { layer('pine_branch', P ? 290 : 60, P ? -40 : -24, 200, { top: true, flip: true, name: 'pine' }); if (!P) layer('jars', 120, 520, 150, { front: false }); }
-      if (key === 'nolyard') { layer('pine_branch', P ? 710 : 930, P ? -40 : -24, 200, { top: true, name: 'pine' }); layer('grass_front', 40, 600, 90); }
+      if (key === 'nolyard') { layer('pine_branch', P ? 710 : 930, P ? -40 : -24, 200, { top: true, name: 'pine' }); layer('grass_front', 40, 600, 90, { name: 'grassN' }); }
       if (key === 'giwa') {
         layer('blossom_branch', P ? 290 : 80, -24, 180, { top: true });
         if (!P) layer('blossom_branch', 920, -24, 180, { top: true, flip: true });
@@ -124,22 +112,21 @@
       dress(key);
       pan(cx);
     }
-    /* 7장 첫 박을 타는 순간: 낮 마당 → 금빛 라이트박스(같은 구도). 감 가지·풀 포기는 걷고 넝쿨·풀 실루엣을 건다 */
-    function toLightbox() {
-      if (!L.bg || !L.bg.isConnected || L.lb) return;
-      const old = L.bg, lb = T.el('image', { href: U('bg_' + BGS.yard_lb), x: BG.x, y: BG.y, width: BG.w, height: BG.h, preserveAspectRatio: 'none', opacity: 0 }, T.bg);
-      old.after(lb); L.lb = lb;
-      const quick = still();
-      tint(.3, 900);
-      if (quick) { lb.setAttribute('opacity', 1); old.remove(); }
-      else lb.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 900, fill: 'forwards' }).onfinish = () => { lb.setAttribute('opacity', 1); old.remove(); };
-      [L.persimmon, L.grassF].forEach(g => { if (g) { if (quick) g.remove(); else g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 600, fill: 'forwards' }); } });
-      const add = [sway(layer('vine_sil', 500, -24, 150, { top: true }), .5, 9000)];
-      if (!P) add.push(layer('grass_sil', 25, 600, 80), layer('grass_sil', 975, 600, 80, { flip: true }));
-      if (!quick) add.forEach(g => g.animate([{ opacity: 0 }, { opacity: 1 }], 600));
-      lightDots(8, [460, 1000, 30, 200]);
-      if (!P && !quick) T.camTo(560, 300, 1.06, 900).then(() => T.camTo(500, 280, 1, 1400));
+    /* 2026-11-07 사용자 제보 '박타는데 낮에서 갑자기 노을진 오후가 돼': 첫 박을 탈 때 금빛 라이트박스 마당(yard_lb2b, 노을빛)으로 바꾸던 것을 없앤다.
+       박 타기는 처음부터 끝까지 낮 마당 그대로. (읽어 주기에서는 놀부네 마당까지 흥부네 노을 마당으로 바뀌던 문제도 같이 없어진다) */
+    /* 7장 놀부네 집이 무너진 뒤(2026-11-07 사용자 제보 '놀부집 무너졌는데 놀부집 그대로야'): 무너진 집 배경 그림이 아직 없어서,
+       무너짐 컷이 떠 있는 동안 무대 배경을 같은 컷 그림으로 바꾸고 놀부·박·앞 층을 걷는다. 컷이 걷혀도, 다음 장면으로 넘길 때도 무너진 집이 보인다.
+       무너진 놀부네 마당 배경(hb_bg_nolyard_ruin)이 생기면 href 만 그 그림으로 바꾸고 놀부·박은 남긴다 */
+    function ruin(actors) {
+      if (!L.bg || !L.bg.isConnected) return;
+      L.bg.setAttribute('href', U('cut_collapse')); L.bg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+      actors.forEach(a => a && a.pos && a.pos.remove());
+      ['pine', 'grassN'].forEach(k => { const g = L[k]; if (g && g.parentNode) g.parentNode.remove(); L[k] = null; });
     }
+    /* 처마 둥지: 배경에 그려진 둥지에 딱 겹친다(NEST). 한 마리가 떨어지면 두 마리 둥지(chicks2)로 바꾼다 */
+    function nest() { const a = spr('chicks', 500, NEST.h / K, NEST.y); a.place(NEST.x, NEST.y); return a; }
+    const nestDrop = a => { if (a) a.set('chicks2', a.h0); };
+    const NEST_FALL = { x: NEST.x - 52, y: NEST.y - 18 }; // 왼쪽 아기 제비 자리(그림 가로 18%)에서 굴러떨어진다
     /* 누르는 대상이 아닌 그림은 누름을 받지 않고(옆 그림이 가리지 않게), 대상은 live() 로 열며 짧은 변 90단위(휴대폰 세로에서도 80px 이상)로 넓힌다 (2026-10-22) */
     const live = (a, w = 90) => {
       if (!a._hit) { a._hit = T.el('rect', { x: -w / 2, y: -Math.max(a.h || 0, 90), width: w, height: Math.max(a.h || 0, 90), fill: '#000', 'fill-opacity': 0 }, a.pos); a.pos.insertBefore(a._hit, a.pos.firstChild); }
@@ -162,7 +149,7 @@
       return a;
     }
 
-    await Promise.race([Promise.all(['sky_spring', 'nolkitchen', 'eaves', 'yard', 'sky_autumn', 'nol_eaves', 'nolyard', 'giwa', 'yard_lb']
+    await Promise.race([Promise.all(['sky_spring', 'nolkitchen', 'eaves', 'yard', 'sky_autumn', 'nol_eaves', 'nolyard', 'giwa']
       .map(k => T.preload(U('bg_' + (BGS[k] || k)))).concat(['rice', 'fall', 'bandage2', 'south', 'seedback', 'rice_pour2', 'house2', 'mud2', 'dokkaebi', 'collapse']
       .map(k => T.preload(U('cut_' + k))))), new Promise(r => setTimeout(r, 4000))]);
 
@@ -189,7 +176,7 @@
           if (op === 'at') {
             const [x, y = GROUND, h] = nums(spec);
             if (a) a.pos.remove();
-            const n = spr(name, x, h, y === 505 ? GROUND : y);
+            const n = name === 'chicks' ? nest() : spr(name, x, h, y === 505 ? GROUND : y);
             if (name === 'swallow_seed') n.face('right'); // 왼쪽이 기본인 그림 → 오른쪽으로 날아가므로 뒤집는다
             S[name] = n; return;
           }
@@ -206,7 +193,8 @@
         chick(op) {
           if (op === 'fall') { // 말과 동시에 굴러떨어진다 (기다리지 않는다)
             const eaves = !!S.chicks;
-            const t = spr('chick_fall', eaves ? 493 : 720, eaves ? 90 : 120, eaves ? 120 : -30); S.chick_fall = t;
+            const t = spr('chick_fall', 720, eaves ? 90 : 120, eaves ? 120 : -30); S.chick_fall = t;
+            if (eaves) { t.place(NEST_FALL.x, NEST_FALL.y); nestDrop(S.chicks); } // 둥지에는 두 마리가 남는다
             sfx('thud', .4);
             (async () => { await t.move(fx(eaves ? 560 : 720), 480, eaves ? 800 : 650, 'ease-in'); t.hop(10, 300); T.pop(t.x, t.y - 140, '아야!'); })();
             return;
@@ -246,7 +234,6 @@
         },
         gourd(op, i) {
           const g = gourds[+i]; if (!g) return;
-          if (+i === 0) toLightbox();
           g.hop(18, 300); const s = sawer(); if (s) s.hop(14, 300); sfx('pop');
           if (+i === 1) sacks.forEach(k => k.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 600, fill: 'forwards' }));
         },
@@ -269,7 +256,7 @@
           if (g) t.place(g.x, 490);
           t.hop(18, 300); sfx('ding');
         },
-        house(op) { if (op === 'new') T.confetti(); else if (op === 'collapse') { sfx('crash'); const s = S.nol_saw; if (s) s.hop(14, 300); } },
+        house(op) { if (op === 'new') T.confetti(); else if (op === 'collapse') { sfx('crash'); } },
         mud(op) { const s = S.nol_saw; if (s) s.set('nol_mud'); sfx('splash', .35); },
         shake() {
           const n = S.nol_proud;
@@ -280,7 +267,9 @@
           if (k === 'hug') { T.confetti(); ['heung_glad', 'hwife_joy', 'nol_shy'].forEach(m => S[m] && S[m].hop(30, 500)); return; } // 컷 그림이 없어 함께 뛰는 장면으로 대신
           if (k === 'treasure') return; // 컷 그림이 없어 금은보화 그림(treasure:show)만 보인다
           const c = CUT[k]; if (!c) return;
-          return cut(c[0], c[1], c[2]);
+          const shown = cut(c[0], c[1], c[2]);
+          if (k === 'collapse') ruin([S.nol_saw, ...gourds]); // 컷 뒤 무대도 무너진 집으로
+          return shown;
         },
         fx(n) { sfx(FX[n] || 'pop'); },
         pop(spec) {
@@ -335,7 +324,7 @@
 
     /* 3. 제비집 */
     await T.sceneCard('흥부네 집', () => { scene('eaves', 500); });
-    const chicks = spr('chicks', 493, 112, 128); /* 배경에 그려진 작은 둥지 위에 딱 겹쳐서 둥지가 하나로 보이게 */
+    const chicks = nest(); /* 배경에 그려진 둥지 위에 딱 겹쳐서 둥지가 하나로 보이게(NEST) */
     const hw = spr('hwife', 300, 300), h3 = spr('heung_hello', 700, 310);
     amb('birds_chirp_2', { vol: .25, dur: 4 }); // 아기 제비 짹짹
     await say('흥부네 초가집 처마에는 제비 가족이 살았어요.');
@@ -344,7 +333,8 @@
     } }));
     await say('아기 제비가 하나, 둘, 셋! 세 마리예요.');
     /* 강제로 떨어진다: 아이가 아무것도 안 눌러도 둥지에서 굴러떨어져 땅에 아프게 눕는다 */
-    const tumble = spr('chick_fall', 493, 90, 120);
+    const tumble = spr('chick_fall', 500, 90, 120); tumble.place(NEST_FALL.x, NEST_FALL.y);
+    nestDrop(chicks); /* 떨어진 한 마리만큼 둥지에는 두 마리 */
     const fell = say('앗! 아기 제비 한 마리가 둥지에서 떨어졌어요!'); /* 말과 동시에 굴러떨어진다 */
     sfx('whistle_down', .5); setTimeout(() => sfx('thud', .4), 750); // 떨어진다: 휘익, 톡
     await tumble.move(fx(560), 470, 800, 'ease-in'); tumble.hop(10, 300);
@@ -403,7 +393,6 @@
       g.hop(18, 300); hs.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, word);
     };
     await open(gourds[0], '슬근슬근!', '흥부 부부는 톱으로 박을 탔어요. 박을 톡! 눌러서 슬근슬근 타 봐요.');
-    toLightbox();
     const autoOpen1 = async g => { await sleep(500); g.hop(18, 300); hs.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, '슬근슬근!'); };
     await cutSay('rice_pour2', 'pop', '첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.');
     const sacks = [];
@@ -461,7 +450,7 @@
     await cutSay('dokkaebi', 'surprise_sting', '이번에는 방망이를 든 도깨비가 쑥 나왔어요. "이 욕심쟁이야!" 도깨비는 놀부를 놀라게 하고 사라졌어요.');
     await autoOpen(ng[2]);
     wig('pine', 6, 600); // 와르르: 만화 소리
-    await cutSay('collapse', 'fall_crash', '와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.');
+    { const c = cut('collapse', 'fall_crash'); ruin([ns, ...ng]); await say('와르르! 놀부의 집이 무너졌어요. 다행히 아무도 다치지 않았어요.'); await c; }
 
     /* 8. 화해와 나눔 */
     await T.sceneCard('흥부네 집', () => { scene('giwa', 500); }); /* 부자가 된 흥부네는 기와집 */
