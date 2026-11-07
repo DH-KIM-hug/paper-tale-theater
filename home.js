@@ -855,7 +855,7 @@
   };
   const nmErr = e => L(...(NM_ERR[e] || ['잘 되지 않았어요. 다시 해 주세요.', 'Something went wrong. Please try again.']));
   const nmEsc = x => String(x == null ? '' : x).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const nmOrig = s => { const o = NameForm.ORIGINAL[s]; return { ko: o.ko + (NameForm.hasBatchim(o.ko) ? '이' : ''), en: o.en }; };
+  const nmOrig = s => { const o = NameForm.ORIGINAL[s]; return { ko: o.ko, en: o.en }; };   // 이름 칸·'지금은'에는 맨 이름(다현), 부르는 꼴(다현이)은 쓰지 않는다
   const nmLookName = l => (l === 'b' ? L('남자아이', 'Boy') : L('여자아이', 'Girl'));
   const nmRole = s => ({ A: L('첫째', 'Eldest'), B: L('둘째', 'Middle'), C: L('막내(아기)', 'Youngest (baby)'), D: L('강아지', 'Dog') }[s]);
   const nmKids = t => (Names.TALE_SLOTS[t] || []).filter(s => Names.KIDS.includes(s));
