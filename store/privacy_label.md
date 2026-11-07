@@ -1,6 +1,6 @@
 # App Privacy (개인정보 라벨) 답안
 
-작성일 2026-11-06. 기준: 연결 서버 켜는 1.0(결정 2026-11-06), 이름 바꾸기 기능 포함. 근거 코드는 `server/src/*.js`, `entitlements.js`, `package.json`(의존성 Capacitor 뿐), `privacy.html`.
+작성일 2026-11-06, 2026-11-07 갱신(이름 설정 2판·privacy.html 갱신 반영). 기준: 연결 서버 켜는 1.0(결정 2026-11-06, 서버 배포 완료 `https://paper-tale-sync.papertale.workers.dev`), 이름 설정 기능 포함. 근거 코드는 `server/src/*.js`, `entitlements.js`, `package.json`(의존성 Capacitor 뿐), `privacy.html`.
 
 ## 결론 (한 줄)
 **"데이터를 수집함" + 추적 안 함.** 수집 항목 3개(식별자-사용자 ID, 사용 데이터-제품 상호작용, 구매-구매 내역), 모두 **사용자와 연결됨**, 목적은 **앱 기능** 하나뿐, **추적에 쓰지 않음**. 이름 기능의 '이름'은 아래 §3 판단(추천: 조건부 '수집 아님', 확인 못 하면 보수적으로 신고).
@@ -10,9 +10,9 @@
 |---|---|
 | 앱이 만든 무작위 계정 ID(UUID)와 비밀 토큰(서버에는 해시만 저장) | `server/src/app.js` `getAccount`·`Bearer <uuid>.<token>`, `putAccount` (`acct:<id>`, `tokenHashes`) |
 | 진행 기록: 첫 실행 날짜, 날짜별 열린 동화, 완주한 동화, 스티커·캐릭터 스티커·반짝 스티커, 열어 둔 동화 | `server/src/state.js` `sanitizeClientState`(`firstRun, earned, starUnlocked, stickers, stickers2, cast, shiny, waitUnlocked`). 이름·이메일 칸 없음 |
-| 구매 확인: 영수증 검증 결과(`owned`)와 영수증의 해시, 이용권 거래 ID 해시 | `app.js` `receipt:<hash>`, `rename:<hash>`; `state.js` 의 `owned` 는 서버 검증 값만 |
+| 구매 확인: 영수증 검증 결과(`owned`)와 영수증의 해시, 이용권 거래 ID 해시. 이름 설정 사용 기록은 `name.first[]`(첫 설정을 쓴 동화 표시)와 `tickets`(남은 이용권 장수)뿐 이름·모습은 없음 | `app.js` `receipt:<hash>`, `rename:<hash>`; `state.js` 의 `owned` 는 서버 검증 값만 |
 | 연결 코드(8자리, 10분 뒤 자동 삭제, 1회용) | `app.js:102~123` `link:<code>` TTL 600 |
-| 이름 기능을 쓸 때만: 보호자가 입력한 이름(글) | `POST /v1/name/line`·`/v1/name/run` → 서버가 ElevenLabs TTS 호출(`name.js:15, 150`). §3 |
+| 이름 기능을 쓸 때만: 보호자가 입력한 이름(글)과 주인공 모습 선택('남자아이/여자아이', 이름 대사의 영어 대명사·목소리를 고르는 데만 씀) | `POST /v1/name/line`·`/v1/name/run` → 서버가 ElevenLabs TTS 호출(`name.js`). 모습(`look`)은 요청에 실리지만 저장하지 않음(`checkLook`, name.js 주석). §3 |
 | 보내지 않는 것 | 이름·이메일·전화·위치·사진·연락처·광고 ID·IDFA. IP·기기 종류는 읽거나 저장하지 않음(속도 제한도 IP 안 씀: `app.js:64` 주석). 분석·광고 SDK 없음 |
 
 ## 2. 질문별 답
@@ -45,14 +45,17 @@ privacy.html '보관과 삭제': 앱을 지워도 서버 기록이 남을 수 �
 - 이름은 요청 한 번 안에서 서버 → ElevenLabs TTS → 소리 파일로 돌아오고, 소리 파일은 기기에만 저장됩니다. 서버는 이름을 KV에 저장하지 않고 로그에 쓰지 않습니다(`docs/NAME_CHANGE_PLAN.md` §4-4~4-5·확정, `name.js`는 `console.error` 에 이름 금지).
 - 요청에는 계정·기기 식별자를 넣지 않습니다.
 - **구멍:** ElevenLabs가 요청 글을 자기 기록에 남길 수 있습니다. 코드는 `enable_logging=false`(zero retention)를 먼저 시도하고, 요금제가 받지 않으면 **옵션을 빼고 다시 보냅니다**(`name.js:136, 150, 169`). 현재 요금제(Creator)가 zero-retention 을 지원하는지는 문서에 '확인 필요'로 남아 있습니다(NAME_CHANGE_PLAN §6). zero-retention 은 보통 Enterprise 전용이라, 이 확인 전에는 '제3자가 실시간보다 오래 접근할 수 없다'고 단정하지 못합니다.
-- 보호자가 직접 입력하는 선택 기능이고, 어린이에게서 받는 것이 아닙니다(부모 확인 뒤 입력).
+- 보호자가 직접 입력하는 선택 기능이고, 어린이에게서 받는 것이 아닙니다(부모 확인 뒤 입력, 2판에서도 이름 목록을 열 때마다 어른 확인 `parentCheck('names')`).
+- 2판(동화별 이름 + 주인공 모습)에서도 흐름은 같습니다: 서버는 이름·모습을 저장하지 않고, 기기에 두는 것은 앱 안(localStorage `paperTheater.names`)뿐입니다(home.js 이름 절 머리 주석, name.js 주석 근거).
 
 **판단**
 | 경우 | 라벨 | 비고 |
 |---|---|---|
 | ElevenLabs 쪽 zero-retention 이 실제로 적용됨을 확인(요금제·계약 문서 보관) | 이름은 **수집 아님**(신고 안 함). 위 3개 항목만 | 가장 깔끔. 근거 문서를 남길 것 |
 | 확인 못 하거나 폴백(옵션 빼기)이 일어날 수 있음 | **보수적 답: 연락처 정보 > 이름 추가**, 사용자와 **연결 안 됨**, 추적 안 함, 목적 앱 기능 | 신고해도 손해가 거의 없습니다. 미신고가 나중에 발견되면 심사 거절·정정 사유 |
-| (참고) 위 보수적 답에 더해 | 'ElevenLabs(제3자 처리자)에 보냄'을 처리방침에 쓰기 | NAME_CHANGE_PLAN §7 의 처리방침 새 절 문구를 privacy.html 에 아직 안 넣었음 → **제출 전 반영 필요** |
+| (참고) 위 보수적 답에 더해 | 'ElevenLabs(제3자 처리자)에 보냄'을 처리방침에 쓰기 | **반영됨(2026-11-07 확인)**: privacy.html 한·영 '아이 이름 바꾸기' 절(시행일 2026년 11월 6일)이 서버 경유 ElevenLabs 전송, 서버 비저장, `enable_logging=false` 요청, 기기 저장, 서버 기록은 이용 기록만(변경권 수·사용 횟수·거래번호 해시·녹음한 동화·하루 미리 듣기 횟수)이라고 적음. 단 '주인공 모습'을 보낸다는 말은 없음(이름이 아닌 선택값이라 필수는 아니나 한 줄 보태면 더 정확, 선택) |
+
+**아직 확인 안 된 것(2026-11-07 기준):** ElevenLabs 요금제가 zero-retention 을 실제로 받는지 확인한 기록이 없습니다. 서버는 거절당하면 옵션을 빼고 다시 보내므로(`name.js` `zeroRetention` 폴백) privacy.html 의 "기록을 남기지 않는 옵션으로 요청합니다"는 '요청한다'까지만 참이고 '항상 적용된다'는 아닙니다. 심사 노트도 'where the plan allows it' 로 같게 적었습니다.
 
 **추천:** 1.0 제출 때는 **보수적 답(이름 신고, 연결 안 됨)**. zero-retention 을 문서로 확인하면 다음 업데이트에서 신고를 빼기. (라벨은 앱 업데이트 없이도 언제든 고칠 수 있음.)
 

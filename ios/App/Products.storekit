@@ -8,12 +8,12 @@
       "internalID": "6740000001",
       "localizations": [
         {
-          "description": "모든 동화를 한 번에 열어요",
+          "description": "모든 동화와 동화마다 이름·모습 첫 설정",
           "displayName": "모든 동화 열기",
           "locale": "ko"
         },
         {
-          "description": "Unlock every tale, once",
+          "description": "All tales + first name setup for each tale",
           "displayName": "Unlock all tales",
           "locale": "en_US"
         }
@@ -28,13 +28,13 @@
       "internalID": "6740000002",
       "localizations": [
         {
-          "description": "우리 아이 이름을 한 번 더 바꿔요",
-          "displayName": "이름 바꾸기 1회",
+          "description": "창작 동화 4편의 이름·모습을 한 번에 다시 바꿔요",
+          "displayName": "이름 다시 바꾸기 이용권",
           "locale": "ko"
         },
         {
-          "description": "Change your child's name once more",
-          "displayName": "One name change",
+          "description": "Names & looks in all 4 original tales, again",
+          "displayName": "Change Names Again Pass",
           "locale": "en_US"
         }
       ],
