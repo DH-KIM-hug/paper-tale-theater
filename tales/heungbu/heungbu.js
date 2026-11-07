@@ -120,7 +120,13 @@
     /* 처마 둥지: 배경에 그려진 둥지에 딱 겹친다(NEST). 한 마리가 떨어지면 두 마리 둥지(chicks2: 같은 둥지·같은 아기 제비 크기, 왼쪽 자리가 빔. 둥지 그릇 폭·높이 차이 1% 안이라 같은 높이)로 바꾼다 */
     function nest() { const a = spr('chicks', 500, NEST.h / K, NEST.y); a.place(NEST.x, NEST.y); return a; }
     const nestDrop = a => { if (a) a.set('chicks2', a.h0); };
-    const NEST_FALL = { x: NEST.x - 52, y: NEST.y - 18 }; // 왼쪽 아기 제비 자리(그림 가로 18%)에서 굴러떨어진다
+    const NEST_FALL = { x: NEST.x - 52, y: NEST.y - 18 };
+    /* 놀부네 처마 둥지(2026-11-07 사용자 승인: 세로 화면에서 둥지가 화면 밖이라 아기 제비가 허공에서 떨어지던 것): 배경 hb_bg_nol_eaves_v2 에 그려진
+       작은 빈 둥지(그림 x 1337~1417, y 337~390 → 무대 x 889, 아래 y 239). 배경은 세로에서도 좁혀지지 않으므로 놀부·아기 제비는 이 둥지 기준 고정 무대 좌표로
+       움직이고(fx 안 씀), 세로 화면은 놀부가 둥지로 가는 동안 카메라를 오른쪽으로 옮겨 둥지·놀부·떨어진 제비가 함께 보이게 한다(가로는 그대로).
+       아기 제비는 한 마리: 흔들기 전에는 둥지 안에 숨어 있다가 흔들면 나와 떨어지고, 둥지는 그림 그대로 비어 있다 */
+    const NOL_NEST = { x: 889, shakeX: 781, chickX: 886, chickY: 250, landX: 880, landY: 480, wrapX: 861, wrapY: 430 };
+    const nolNestCam = (ms = 700) => (P ? T.camTo(760, 280, 1, ms) : Promise.resolve()); // 세로: 카메라가 허용하는 만큼 오른쪽(둥지가 보이게) // 왼쪽 아기 제비 자리(그림 가로 18%)에서 굴러떨어진다
     /* 누르는 대상이 아닌 그림은 누름을 받지 않고(옆 그림이 가리지 않게), 대상은 live() 로 열며 짧은 변 90단위(휴대폰 세로에서도 80px 이상)로 넓힌다 (2026-10-22) */
     const live = (a, w = 90) => {
       if (!a._hit) { a._hit = T.el('rect', { x: -w / 2, y: -Math.max(a.h || 0, 90), width: w, height: Math.max(a.h || 0, 90), fill: '#000', 'fill-opacity': 0 }, a.pos); a.pos.insertBefore(a._hit, a.pos.firstChild); }
@@ -189,8 +195,10 @@
             const eaves = !!S.chicks;
             const t = spr('chick_fall', 720, eaves ? 90 : 120, eaves ? 120 : -30); S.chick_fall = t;
             if (eaves) { t.place(NEST_FALL.x, NEST_FALL.y); nestDrop(S.chicks); } // 둥지에는 두 마리가 남는다
+            else t.place(NOL_NEST.chickX, NOL_NEST.chickY); // 놀부네: 처마 둥지에서 떨어진다
             sfx('thud', .4);
-            (async () => { await t.move(fx(eaves ? 560 : 720), 480, eaves ? 800 : 650, 'ease-in'); t.hop(10, 300); T.pop(t.x, t.y - 140, '아야!'); })();
+            if (!eaves && rI()) { t.place(NOL_NEST.landX, NOL_NEST.landY); return; }
+            (async () => { await t.move(eaves ? fx(560) : NOL_NEST.landX, eaves ? 480 : NOL_NEST.landY, eaves ? 800 : 650, 'ease-in'); t.hop(10, 300); T.pop(t.x, t.y - 140, '아야!'); })();
             return;
           }
           if (op === 'catch') {
@@ -208,8 +216,8 @@
           if (S.swallow_fly) return S.swallow_fly.move(sx, 240, 1400, 'ease-in'); // 가을: 남쪽으로
           const c = S.chick_fall; // 놀부네: 천을 감아 주면 다친 데 없이 날아간다
           if (c) {
-            const n = S.nol_proud; if (n) n.set('nol_wrap');
-            await c.move(fx(480), 430, 500, 'ease-out'); sfx('ding'); c.hop(12, 260);
+            const n = S.nol_proud; if (n) { n.face('left'); n.set('nol_wrap'); }
+            await c.move(NOL_NEST.wrapX, NOL_NEST.wrapY, 500, 'ease-out'); sfx('ding'); c.hop(12, 260);
             await sleep(900);
             c.set('swallow_fly', 100);
             return c.move(sx, 150, 1400, 'ease-in');
@@ -252,9 +260,13 @@
         },
         house(op) { if (op === 'new') T.confetti(); else if (op === 'collapse') { sfx('crash'); ruin(); } }, // 장면을 순식간에 놓을 때(컷을 건너뛸 때)도 무너진 집
         mud(op) { const s = S.nol_saw; if (s) s.set('nol_mud'); sfx('splash', .35); },
-        shake() {
+        async shake() {
           const n = S.nol_proud;
-          if (n) { n.set('nol_shake'); n.hop(18, 300); return; }
+          if (n) { // 놀부네 처마: 둥지 밑으로 가서 흔든다(놀이판과 같은 자리)
+            if (rI()) { n.place(NOL_NEST.shakeX, GROUND); if (P) T.camSnap(760, 280, 1); }
+            else await Promise.all([n.move(NOL_NEST.shakeX, GROUND, 700), nolNestCam(700)]);
+            n.face('right'); n.set('nol_shake'); n.hop(18, 300); return;
+          }
           T.shake();
         },
         cut(k) {
@@ -411,17 +423,17 @@
     sfx('comic_brass', .6); // 욕심쟁이 놀부
     await say('소문을 들은 놀부는 배가 아팠어요. "나도 부자가 될 거야!"');
     /* 대사와 함께: 처마 끝 제비집(배경 x≈890, y≈225) 밑으로 가서 흔들고, 아기 제비가 거기서 떨어진다(대사 뒤에 흔들던 것, 2026-11-02 싱크 점검) */
-    const chick2 = spr('chick_fall', 880, 120, 250); chick2.show(false);
+    const chick2 = spr('chick_fall', 880, 120, 250); chick2.place(NOL_NEST.chickX, NOL_NEST.chickY); chick2.show(false);
     await Promise.all([say('놀부는 제비집을 마구 흔들었어요. 아기 제비가 떨어졌어요!'), (async () => {
-      await nol.move(fx(781), GROUND, 700);
+      await Promise.all([nol.move(NOL_NEST.shakeX, GROUND, 700), nolNestCam(700)]);
       nol.face('right'); nol.set('nol_shake'); nol.hop(18, 300); wig('pine', 4, 500); /* 손이 오른쪽 위 제비집에 닿게 뒤집는다 */
       await sleep(900);
       chick2.show(true); sfx('whistle_down', .5);
-      await chick2.move(fx(880), 480, 650, 'ease-in'); chick2.hop(10, 300); sfx('thud', .4);
+      await chick2.move(NOL_NEST.landX, NOL_NEST.landY, 650, 'ease-in'); chick2.hop(10, 300); sfx('thud', .4);
     })()]);
     await sleep(300); /* 저절로 받아 줘요 */
     nol.face('left'); nol.set('nol_wrap');
-    await chick2.move(fx(861), 430, 500, 'ease-out'); sfx('ding'); chick2.hop(12, 260);
+    await chick2.move(NOL_NEST.wrapX, NOL_NEST.wrapY, 500, 'ease-out'); sfx('ding'); chick2.hop(12, 260);
     setTimeout(() => { chick2.set('swallow_fly', 100); chick2.move(1150, 150, 1400, 'ease-in'); }, 3600);
     await say('놀부는 서둘러 천을 칭칭 감아 주었어요. "자, 이제 박씨를 가져와라!" 제비는 다치지 않고 날아갔어요.');
     await T.sceneCard('놀부네 마당', () => { scene('nolyard', 560); });
