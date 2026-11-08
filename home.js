@@ -2199,7 +2199,7 @@
     const gl = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } })();
     if (!gl) { pending = setTimeout(complete, 1600); return; }   // WebGL 이 없으면 3D 장면을 받지 않고 정적 로고만 잠깐 보이다 넘어간다
     pending = setTimeout(complete, 5000);   // 3D 장면을 못 받으면 정적 첫 화면만 보이다 넘어간다
-    import('./engine/splash/start.js?v=20261030sp5')
+    import('./engine/splash/start.js?v=20261108jg3')
       .then(({ startSplash }) => {
         if (finished) return;
         clearTimeout(pending);

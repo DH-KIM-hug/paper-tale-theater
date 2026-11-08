@@ -22,18 +22,21 @@ const back = x => { x = clamp(x); const c = 1.6; return 1 + (c + 1) * Math.pow(x
 const mix = THREE.MathUtils.lerp;
 const url = path => new URL(`../../${path}`, import.meta.url).href;
 
-/** 효과음 [시각(초), sounds/sfx 이름, 음량, 앞부분만 쓸 길이(초)?]. 재생은 start.js 가 맡는다 */
+/** 효과음 [시각(초), sounds/sfx 이름, 음량, 앞부분만 쓸 길이(초)?]. 재생은 start.js 가 맡는다.
+   2026-11-08 징글(sounds/splash/jingle.mp3, tools/dev/render_splash_jingle.py)·이름 외치기를 더하며: 친구 들어올 때 pop 넷은 징글 실로폰 음이,
+   인사 shimmer·sparkle 은 징글 파 화음·별 글로켄이, 마지막 chime_up 은 마무리 도 화음이 맡아 뺐고, 나머지는 징글·목소리 밑으로 조금씩 줄였다 */
 export const CUES = [
-  [.36, 'whoosh', .32], [.4, 'paper_down', .35],
-  [1.0, 'slide_up', .35], [1.08, 'slide_down', .3], [1.15, 'birds_chirp_1', .25, 1.8],
-  [1.35, 'paper_up', .4], [1.42, 'paper_up', .3],
-  [1.55, 'step_grass', .35], [1.85, 'step_grass', .35], [2.15, 'hop', .35], [2.43, 'hop', .35], [2.55, 'hop', .25],   // 친구들이 차례로 들어옴
-  [2.0, 'pop', .3], [2.3, 'pop', .3], [2.6, 'pop', .3], [2.9, 'pop', .3],
-  [2.95, 'shimmer', .4], [3.05, 'cheer', .22, 1.1], [3.15, 'sparkle', .45],   // 다 같이 인사
-  [3.3, 'slide_up', .35], [3.42, 'slide_down', .35], [3.9, 'sparkle', .35],
-  [3.97, 'paper_down', .4], [4.47, 'whoosh', .28],
-  [5.1, 'paper_tap', .7], [5.25, 'paper_tap', .7], [5.43, 'paper_up', .45], [5.62, 'chime_up', .4]
+  [.36, 'whoosh', .25], [.4, 'paper_down', .3],
+  [1.0, 'slide_up', .28], [1.08, 'slide_down', .24], [1.15, 'birds_chirp_1', .2, 1.8],
+  [1.35, 'paper_up', .32], [1.42, 'paper_up', .24],
+  [1.55, 'step_grass', .3], [1.85, 'step_grass', .3], [2.15, 'hop', .3], [2.43, 'hop', .3], [2.55, 'hop', .2],   // 친구들이 차례로 들어옴
+  [3.05, 'cheer', .18, 1.1],   // 다 같이 인사
+  [3.3, 'slide_up', .28], [3.42, 'slide_down', .28], [3.9, 'sparkle', .25],
+  [3.97, 'paper_down', .32], [4.47, 'whoosh', .22],
+  [5.1, 'paper_tap', .45], [5.25, 'paper_tap', .45], [5.43, 'paper_up', .3]
 ];
+/** 로고 글자 '톡'·'톡'·'동화극장'(영어 'Toki'·'Toki'·'Tale')이 일어서는 시각. 이름 외치기 목소리는 LANDS[0] 에 시작한다 */
+export const LANDS = [5, 5.15, 5.33];
 
 /** 홈이 쓰는 로고 너비(CSS px). home.css 의 .splash-wordmark 와 같은 식 */
 export function logoWidth(W, H) { return Math.min(LAUNCH_LOGO * Math.max(W, H), .84 * W, .7 * H); }
@@ -220,7 +223,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       const [x0, y0] = toMark(l, t), [x1, y1] = toMark(r, b);
       const p = paper(name, y1 - y0, { order: 50, shadow: false, w: x1 - x0 });   // 바닥선이 접는 축
       words.add(p);
-      return { p, x: (x0 + x1) / 2, y: y1, fall: .36 + i * .06, land: [5, 5.15, 5.33][i] };
+      return { p, x: (x0 + x1) / 2, y: y1, fall: .36 + i * .06, land: LANDS[i] };
     });
     const logoC = toMark(L.size[0] / 2, L.size[1] / 2);
 
@@ -350,7 +353,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     observer = new ResizeObserver(() => resize()); observer.observe(host);
     /** 날아갈 자리(홈 로고 마크 img 의 화면 상자). 없으면 제자리에서 녹아든다 */
     const flyTo = rect => { flyRect = rect; };
-    return { renderAt, destroy, duration: DURATION, renderer, cues: CUES, flyAt: FLY_AT, flyTo };
+    return { renderAt, destroy, duration: DURATION, renderer, cues: CUES, flyAt: FLY_AT, flyTo, lands: LANDS };
   } catch (error) {
     destroy();
     throw error;

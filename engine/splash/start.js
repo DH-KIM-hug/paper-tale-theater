@@ -1,9 +1,11 @@
 /** App lifecycle: skip immediately, never block the home on WebGL or artwork loading. */
 // 앱과 미리보기 모두 scene.duration 을 SLOW 배 늘려 재생한다(2026-10-30 사용자: 전환이 너무 빠름 → 1.3배, 효과음 시작 시각도 같이 늦춤)
 const SLOW = 1.3;
+// 징글·이름 부르기 파일(sounds/splash)은 다시 만들 때마다 아래 ?v= 를 올린다(같은 주소라 웹 캐시가 옛 녹음을 들려줌)
 // 스플래시(scene.js — 로고 안으로 들어갔다 나오기, 효과음, 홈 로고 자리로 날아가며 홈을 드러냄). onReveal = 홈이 드러나기 시작할 때 한 번
 export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = null } = {}) {
   const en = lang === 'en';
+  let keepVoice = null;   // 장면이 저절로 끝날 때 끝까지 들려줄 이름 부르기 목소리(차분한 읽기는 장면 끝을 조금 넘는다)
   let closed = false, raf = 0, timer = 0, loadTimer = 0, scene, revealed = false, sounds = [];
   const abort = new AbortController();
   const beforeFocus = document.activeElement;
@@ -26,12 +28,12 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
   const skip = host.querySelector('button');
   skip.setAttribute('aria-label', en ? 'Start' : '시작');   // 글자는 보이지 않는다(저절로 끝남). 보조기기·키보드용 이름만
   skip.focus({ preventScroll: true, focusVisible: false });   // 키보드 이름표용 단추라 초점 테두리는 그리지 않는다
-  function finish() {
+  function finish(natural) {
     if (closed) return;
     closed = true;
     clearTimeout(timer); clearTimeout(loadTimer); cancelAnimationFrame(raf);
     abort.abort(); scene?.destroy();
-    for (const a of sounds) { try { a.pause(); } catch (e) { /* 무시 */ } }
+    for (const a of sounds) { if (natural === true && a === keepVoice) continue; try { a.pause(); } catch (e) { /* 무시 */ } }   // 건너뛰면 모두 멈춤
     document.body.classList.remove('splash-flying');
     host.style.background = '';
     host.removeEventListener('pointerdown', finish);
@@ -66,7 +68,7 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
     timer = setTimeout(finish, 500);
     return { finish };
   }
-  import('./scene.js?v=20261030sp5').then(async ({ createSplashScene }) => {
+  import('./scene.js?v=20261108jg1').then(async ({ createSplashScene }) => {
     if (closed) return;
     const building = createSplashScene(host.querySelector('.splash-stage'), {
       lang, signal: abort.signal,
@@ -87,10 +89,15 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
     clearTimeout(loadTimer);
     clearTimeout(timer);
     const total = scene.duration;
+    // 징글과 이름 외치기(2026-11-08 사용자: '스플래시에도 싱크된 노래와 음성'). 징글은 장면 0초에 시작해 장면 전체(SLOW 를 반영한 실제 길이)를 덮고
+    // (tools/dev/render_splash_jingle.py — 장면 시각·SLOW 가 바뀌면 다시 렌더), 목소리는 첫 글자가 일어서는 순간(scene.lands[0])에 앱 이름을 외친다
+    // (tools/elevenlabs/gen_splash.py — 홈 내레이션과 같은 목소리, 녹음 파일만. 이름이 바뀌면 다시 녹음). '/' 가 든 이름은 sounds/ 아래 경로다
+    const extra = [[0, 'splash/jingle', .85], [scene.lands?.[0] ?? 5, `splash/title_${en ? 'en' : 'ko'}`, 1]];   // 목소리는 2026-11-08 차분한 다른 목소리로(gen_splash.py USE)
     // 효과음: 미리 받아 두고 시각이 지나면 한 번씩(웹은 첫 접속에 자동 재생이 막혀 소리 없이 지나갈 수 있다)
-    const cues = (scene.cues || []).map(([at, name, vol, dur]) => {
-      const a = new Audio(new URL(`../../sounds/sfx/${name}.mp3`, import.meta.url).href);
+    const cues = [...extra, ...(scene.cues || [])].map(([at, name, vol, dur]) => {
+      const a = new Audio(new URL(`../../sounds/${name.includes('/') ? `${name}.mp3?v=20261108jg3` : `sfx/${name}.mp3`}`, import.meta.url).href);
       a.preload = 'auto'; a.volume = vol; sounds.push(a);
+      if (name.startsWith('splash/title_')) keepVoice = a;
       return { at, a, vol, dur, done: false };
     });
     // 긴 소리(새소리 등)는 앞부분만: dur 초 뒤 0.3초 동안 줄이고 멈춘다
@@ -118,7 +125,7 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
       for (const c of cues) if (!c.done && t >= c.at) { c.done = true; if (t - c.at < .25) { c.a.play().catch(() => {}); if (c.dur) cut(c); } }
       if (t >= scene.flyAt) reveal();
       scene.renderAt(Math.min(t, scene.duration));
-      if (t >= total) { finish(); return; }
+      if (t >= total) { finish(true); return; }
       raf = requestAnimationFrame(frame);
     };
     raf = requestAnimationFrame(frame);

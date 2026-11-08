@@ -94,6 +94,7 @@
 | `sfx/gulp.mp3 · `sfx/gulp_2.mp3 · `sfx/gulp_3.mp3` | Pixabay "Gulp"(103200 앞부분) · "gulps"(91631 두 곳) — 꿀꺽 한 번씩 0.6~0.7초 | freesound_community | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/gulp-103200/ · https://pixabay.com/ko/sound-effects/gulps-91631/ |
 | `sfx/cymbal.mp3` | Pixabay "Crash Cymbal Hit" (처음 1.58초, 끝 페이드아웃) | Universfield | Pixabay Content License (출처 표기 불필요) | https://pixabay.com/ko/sound-effects/crash-cymbal-hit-140577/ |
 | `sfx/slide_up.mp3` · `sfx/slide_down.mp3` | 슬라이드 휘슬 — 이 프로젝트에서 직접 합성(사인파+숨소리+비브라토) | 팥죽 게임 | CC0 | — |
+| `splash/jingle.mp3` · `splash/title_ko.mp3` · `splash/title_en.mp3` | 스플래시 징글(8.3초, 글로켄·뮤직박스·실로폰·피치카토를 이 프로젝트에서 수식으로 직접 합성, tools/dev/render_splash_jingle.py)과 앱 이름 외치기("톡톡 동화극장!"/"Toki Toki Tale!", ElevenLabs 녹음 — 홈 내레이션과 같은 목소리, tools/elevenlabs/gen_splash.py). 64k 모노(2026-11-08) | 팥죽 게임 | 징글 CC0(직접 합성), 목소리 ElevenLabs 유료 요금제 녹음(상업 이용 가능) | — |
 
 ## 직접 만든 소리
 
