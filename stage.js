@@ -33,6 +33,13 @@
   /* 말은 녹음된 한국어 문구를 열쇠로 부른다(영어 모드면 audio.js 가 같은 열쇠의 영어 클립을 고른다). 녹음 없는 말은 하지 않는다 */
   const say = ko => { try { if (typeof Narrator !== 'undefined') Narrator.speak(ko, { bubble: false }); } catch (e) { /* 무시 */ } };
   const hush = () => { try { if (typeof Narrator !== 'undefined') Narrator.stop(); } catch (e) { /* 무시 */ } };
+  /* 동화 제목: 녹음 열쇠는 한국어 원제목(영어 모드면 audio.js 가 같은 열쇠의 영어 클립을 고른다). 녹음이 없으면 말하지 않는다 */
+  const sayTitle = id => {
+    try {
+      const t = typeof TALES !== 'undefined' && TALES.find(x => x.id === id), k = t && t.title;
+      if (k && typeof NARRATION_CLIPS !== 'undefined' && NARRATION_CLIPS[k]) say(k);
+    } catch (e) { /* 무시 */ }
+  };
   const sayName = c => { try { if (typeof Narrator !== 'undefined') Narrator.speak(L(c.ko, c.en), { bubble: false }); } catch (e) { /* 무시 */ } };
 
   /* ── 스티커 자료 ── */
@@ -95,7 +102,7 @@
   /* ── 칼선 + 그림자 굽기: 스티커당 한 번, 평소·들림 두 장 ── */
   /* AREA: 칠해진 면적의 제곱근이 무대 단위(unit)의 몇 배인가. 사람 서기 자세가 예전 크기(unit)쯤 되게 맞춘 값.
      sizes: 잰 결과를 기기에 적어 두고 스티커북 '내 무대' 장면 카드가 같은 비율로 그린다 */
-  const BAKE_H = 480, AREA = .58, SZ = 'paperTheater.stageSz', baked = new Map();
+  const BAKE_H = 480, AREA = .58, SZ = 'paperTheater.stageSz', baked = new Map(), ready = new Map();   // ready: 다 구운 것(들 때 기다리지 않고 바로)
   let sizes = {}; try { sizes = JSON.parse(localStorage.getItem(SZ) || '{}') || {}; } catch (e) { sizes = {}; }
   function loadImg(src) {
     return new Promise((res, rej) => { const im = new Image(); im.decoding = 'async'; im.onload = () => res(im); im.onerror = rej; im.src = src; });
@@ -149,7 +156,7 @@
         /* 굽기 못 함(예: file:// 로 연 페이지) → CSS 칼선으로 */
         return { flat: c.img, up: c.img, w: W0, h: H0, pad: 0, ar: W0 / H0, hf: 1, css: true };
       }
-    })().catch(() => null);
+    })().catch(() => null).then(b => { if (b) ready.set(key, b); return b; });
     baked.set(key, p);
     return p;
   }
@@ -261,7 +268,9 @@
   }
   function restack() { const box = root.querySelector('.sg-items'); scene.items.forEach(it => { const el = els.get(it.c); if (el) box.appendChild(el); }); }
 
-  /* ── 서랍: 모은 것만, 받은 순서. 동화가 바뀌는 자리에 그 동화 동그라미 ── */
+  /* ── 서랍: 모은 것만, 받은 순서. 동화가 바뀌는 자리에 칸막이(가는 세로줄 + 작은 제목 글자) ──
+     2026-11-12 사용자 불만('동화 표시도 스티커 같아서 별로'): 썸네일 동그라미+그림자는 스티커와 구분이 안 됐다 → 그림·그림자 없는 글자 라벨 */
+  const esc = t => String(t).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
   function paintDrawer() {
     const keys = castKeys().filter(info);
     let last = '', html = '';
@@ -269,8 +278,8 @@
       const c = info(key);
       if (c.tale !== last) {
         last = c.tale;
-        const src = H.tileSrc(c.tale);
-        html += `<button type="button" class="sg-tale" data-tale="${c.tale}" aria-label="${H.title(c.tale)}">${src ? `<img src="${src}" alt="" draggable="false" decoding="async">` : ''}</button>`;
+        const t = esc(H.title(c.tale));
+        html += `<button type="button" class="sg-tale" data-tale="${c.tale}" aria-label="${t}"><span>${t}</span></button>`;
       }
       const on = scene.items.some(i => i.c === key);
       html += `<button type="button" class="sg-cell${on ? ' used' : ''}${shiny(key) ? ' shiny' : ''}" role="listitem" data-k="${key}" aria-label="${nameL(c)}"><img src="${c.img}" alt="" draggable="false" decoding="async"></button>`;
@@ -357,7 +366,8 @@
     const b = e.target.closest('button'); if (!b || !root.contains(b)) return;
     if (b.dataset.act === 'close') { close(); return; }
     if (b.dataset.act === 'bg') { poke(); toggleStrip(strip.hidden); return; }
-    if (b.classList.contains('sg-tale')) { sfx('pop_appear', .5); try { if (typeof Narrator !== 'undefined') Narrator.speak(H.title(b.dataset.tale), { bubble: false }); } catch (er) { /* 무시 */ } return; }
+    if (b.closest('.sg-drawer') && performance.now() - panAt < 350) return;   // 서랍을 손으로 넘긴 끝의 톡은 무시
+    if (b.classList.contains('sg-tale')) { sfx('paper_tap', .5); sayTitle(b.dataset.tale); return; }
     if (b.classList.contains('sg-bgo')) { pickBg(b.dataset.bg); return; }
     if (b.classList.contains('sg-cell') && e.detail === 0) { tapPlace(b.dataset.k); }   // 키보드·VoiceOver 활성화 = 톡으로 붙이기
   }
@@ -405,16 +415,47 @@
     el.addEventListener('click', e => { if (e.detail === 0 && !e.pointerType) go(); });
   }
 
-  /* ── 끌기: 첫 손가락 하나만 ── */
-  let drag = null;
+  /* ── 끌기: 첫 손가락 하나만 ──
+     2026-11-12 사용자 불만('드래그 사용감이 이상하다') 손봄:
+     · 서랍은 브라우저 가로 스크롤(touch-action: pan-x) 대신 손으로 넘김을 직접 한다 — 든 뒤 옆으로 가도 브라우저가 손가락을 뺏지(pointercancel) 않는다.
+     · 들기: 위쪽으로 25° 이상이면 바로, 또는 200ms 꾹 누르면 방향과 상관없이. 그보다 눕힌 움직임 = 서랍 넘기기(놓으면 미끄러지듯 이어 감).
+     · 들자마자 손가락 밑에 스티커가 보인다(누를 때 미리 굽고, 아직이면 칸 그림을 임시로 들고 있다가 바꿔 낀다).
+     · 꾹 눌러 들고 그 자리에서 놓으면 톡처럼 빈 자리로 날아가 붙는다. */
+  const HOLD_MS = 200, SLOP = 8, LIFT_DEG = 25;   // 30° 비스듬히도 손떨림에 걸리지 않게 25°
+  let drag = null, panAt = 0, glideRaf = 0;
   const toBoard = (x, y) => ({ x: Math.max(.04, Math.min(.96, (x - boardR.left) / boardR.width)), y: Math.max(.06, Math.min(.97, (y - boardR.top) / boardR.height)) });
   const overDrawer = y => { const r = drawer.getBoundingClientRect(); return y >= r.top - 12; };
+  const unpress = d => { clearTimeout(d.holdT); if (d.cell) d.cell.classList.remove('press'); };
+  function stopGlide() { cancelAnimationFrame(glideRaf); glideRaf = 0; }
+  /* 손을 뗀 뒤 미끄러짐: 마지막 100ms 손가락 빠르기에서 시작해 서서히 멈춘다 */
+  function glide(v) {
+    stopGlide();
+    v = Math.max(-4, Math.min(4, v));
+    if (Math.abs(v) < .05 || !motion()) return;
+    let last = performance.now();
+    const step = now => {
+      const dt = Math.min(32, now - last); last = now;
+      const before = drawer.scrollLeft; drawer.scrollLeft -= v * dt; v *= Math.pow(.996, dt);
+      glideRaf = Math.abs(v) > .02 && drawer.scrollLeft !== before ? requestAnimationFrame(step) : 0;
+    };
+    glideRaf = requestAnimationFrame(step);
+  }
   function onDrawerDown(e) {
-    if (drag || e.button) { if (drag) e.preventDefault(); return; }
-    const cell = e.target.closest('.sg-cell'); if (!cell || cell.classList.contains('used')) return;
+    if (e.button) return;
+    if (drag) { e.preventDefault(); return; }
+    stopGlide();
+    const mouse = e.pointerType === 'mouse';
+    const cell = e.target.closest('.sg-cell'), ok = cell && !cell.classList.contains('used');
+    if (mouse && !ok) return;                                  // 마우스는 휠로 넘긴다
     poke();
-    drag = { id: e.pointerId, from: 'drawer', key: cell.dataset.k, cell, x0: e.clientX, y0: e.clientY, t0: performance.now(), lifted: false, mouse: e.pointerType === 'mouse' };
-    if (drag.mouse) e.preventDefault();
+    const d = drag = { id: e.pointerId, from: 'drawer', key: ok ? cell.dataset.k : null, cell: ok ? cell : null, x0: e.clientX, y0: e.clientY, lx: e.clientX, ly: e.clientY,
+      t0: performance.now(), lifted: false, pan: false, mouse, vs: [] };
+    if (ok) {
+      bake(d.key);                                             // 들기 전에 미리 굽기 시작
+      cell.classList.add('press');
+      if (!mouse) d.holdT = setTimeout(() => { if (drag === d && !d.lifted && !d.pan) lift(d.lx, d.ly); }, HOLD_MS);
+    }
+    if (mouse) e.preventDefault();
   }
   function onBoardDown(e) {
     if (e.button) return;
@@ -428,8 +469,8 @@
     lift(e.clientX, e.clientY);
   }
   /* 들기: 무대 위 요소를 맨 위 '날기 층'으로 옮겨 손가락을 따라오게 한다. 1.03배·깊은 그림자·기울기 */
-  async function lift(x, y) {
-    const d = drag; d.lifted = true; d.vx = 0; d.lx = x; d.lt = performance.now();
+  function lift(x, y) {
+    const d = drag; d.lifted = true; d.vx = 0; d.lx = x; d.ly = y; d.lt = performance.now();
     sfx('paper_up', .5);
     if (d.from === 'board') {
       boardR = board.getBoundingClientRect();
@@ -440,16 +481,44 @@
       return;
     }
     /* 서랍에서: 칸 자리에서 무대 크기로 커지며 손가락으로 */
+    unpress(d);
     const cr = d.cell.getBoundingClientRect();
     d.cell.classList.add('used');
-    const b = await bake(d.key); if (!b || drag !== d) { if (drag !== d) d.cell.classList.remove('used'); return; }
-    const el = stickerEl(d.key, b); sizeEl(el, d.key, b); el.classList.add('up');
+    d.it = { c: d.key, x: .5, y: .5, f: 0 };
     boardR = board.getBoundingClientRect();
+    const b = ready.get(d.key);
+    if (b) { mount(d, b, cr.width * .84, cr.height * .84); return; }
+    /* 아직 굽는 중: 칸 그림(흰 칼선 CSS)을 칸 크기 그대로 손가락 밑에 두었다가, 다 구우면 바꿔 낀다 */
+    const im = d.cell.querySelector('img'), ar = im && im.naturalHeight ? im.naturalWidth / im.naturalHeight : 1, c = info(d.key);
+    const ph = stickerEl(d.key, { flat: c.img, up: c.img, css: true });
+    let hh = cr.height * .84, ww = hh * ar; if (ww > cr.width * .84) { ww = cr.width * .84; hh = ww / ar; }
+    ph.style.width = ww + 'px'; ph.style.height = hh + 'px'; ph._w = ww; ph._h = hh;
+    ph.querySelectorAll('img').forEach(i => { i.style.left = i.style.top = '0px'; i.style.width = ww + 'px'; i.style.height = hh + 'px'; });
+    d.ph = true; attach(d, ph, null);
+    bake(d.key).then(b2 => {
+      if (d.el !== ph) return;
+      if (!b2) { ph.remove(); d.el = null; if (drag === d) drag = null; d.cell.classList.remove('used'); return; }
+      ph.remove(); d.ph = false;
+      mount(d, b2, ph._w * 1.03, ph._h * 1.03);
+      if (d.done) drop(d, d.done.x, d.done.y);               // 굽는 사이에 손을 뗐다
+    });
+  }
+  /* 구운 스티커를 날기 층에 올리고, fw×fh 상자에 맞는 크기에서 무대 크기로 키운다 */
+  function mount(d, b, fw, fh) {
+    const el = stickerEl(d.key, b); sizeEl(el, d.key, b);
+    attach(d, el, motion() ? { s0: Math.min(1.03, fw / el._w, fh / el._h), t0: performance.now() } : null);
+  }
+  function attach(d, el, grow) {
+    el.classList.add('up');
     el.style.left = boardR.left + 'px'; el.style.top = boardR.top + 'px';
     fly.appendChild(el); d.el = el; d.ox = 0; d.oy = el._h * .1;
-    d.it = { c: d.key, x: .5, y: .5, f: 0 };
-    d.grow = motion() ? { s0: Math.min(cr.width / el._w, cr.height / el._h), t0: performance.now() } : null;
-    follow(d.lx, d.ly || y);
+    d.grow = grow;
+    if (drag === d) follow(d.lx, d.ly); else place(d.el, d.lx, d.ly, 1.03, 0, d);
+  }
+  function place(el, x, y, s, rot, d) {
+    const oy = d.from === 'drawer' ? el._h * .1 * s : d.oy;   // 커지는 동안에도 손가락과 스티커 사이가 벌어지지 않게
+    const px = x - d.ox - boardR.left - el._w / 2, py = y - oy - boardR.top - el._h / 2;
+    el.style.transform = `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px) rotate(${rot.toFixed(2)}deg) scale(${s.toFixed(3)})`;
   }
   function follow(x, y) {
     const d = drag; if (!d || !d.el) return;
@@ -460,31 +529,55 @@
     if (d.grow) { const k = Math.min(1, (now - d.grow.t0) / 160); s = d.grow.s0 + (1.03 - d.grow.s0) * (1 - Math.pow(1 - k, 3)); if (k >= 1) d.grow = null; else requestAnimationFrame(() => drag === d && follow(d.lx, d.ly)); }
     const over = overDrawer(y); drawer.classList.toggle('drop', over && d.from === 'board');
     if (over && d.from === 'board') s = .9;
-    const px = x - d.ox - boardR.left - d.el._w / 2, py = y - d.oy - boardR.top - d.el._h / 2;
-    d.el.style.transform = `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px) rotate(${rot.toFixed(2)}deg) scale(${s.toFixed(3)})`;
+    place(d.el, x, y, s, rot, d);
   }
   function onMove(e) {
     const d = drag; if (!d || e.pointerId !== d.id) return;
-    const dx = e.clientX - d.x0, dy = e.clientY - d.y0;
+    const x = e.clientX, y = e.clientY, dx = x - d.x0, dy = y - d.y0;
     if (!d.lifted) {
-      if (Math.hypot(dx, dy) < 10) return;
-      if (!d.mouse && Math.abs(dx) > Math.abs(dy)) { drag = null; return; }   // 손가락 가로 움직임 = 서랍 넘기기
       e.preventDefault();
-      d.lx = e.clientX; d.ly = e.clientY;
-      lift(e.clientX, e.clientY); return;
+      d.lx = x; d.ly = y;
+      if (d.pan) { panTo(d, x); return; }
+      if (Math.hypot(dx, dy) < SLOP) return;
+      const deg = Math.atan2(-dy, Math.abs(dx)) * 180 / Math.PI;   // 위쪽으로 기운 각도(0 = 옆, 90 = 바로 위)
+      if (d.key && (d.mouse || deg >= LIFT_DEG)) { lift(x, y); return; }
+      unpress(d); d.pan = true; d.bx = x; d.bsl = drawer.scrollLeft;   // 눕힌 움직임 = 서랍 넘기기
+      panTo(d, x); return;
     }
     e.preventDefault();
-    follow(e.clientX, e.clientY);
+    follow(x, y);
+  }
+  function panTo(d, x) {
+    drawer.scrollLeft = d.bsl - (x - d.bx);
+    const t = performance.now(); d.vs.push([x, t]); while (d.vs.length > 2 && t - d.vs[0][1] > 100) d.vs.shift();
   }
   function onUp(e) {
     const d = drag; if (!d || e.pointerId !== d.id) return;
     drag = null; drawer.classList.remove('drop');
-    const quick = Math.hypot(e.clientX - d.x0, e.clientY - d.y0) < 10 && performance.now() - d.t0 < 300;
-    if (!d.lifted) { if (d.from === 'drawer' && quick) tapPlace(d.key); return; }
-    if (!d.el) { d.cell && d.cell.classList.remove('used'); if (d.from === 'drawer' && quick) tapPlace(d.key); return; }
-    if (d.from === 'board' && Math.hypot(e.clientX - d.x0, e.clientY - d.y0) < 10) { settle(d.el, d.it); flip(d.el, d.it); return; }   // 톡 = 이름 + 뒤집기
-    if (overDrawer(e.clientY)) { backToDrawer(d.el, d.key, d.it); return; }
-    const p = toBoard(e.clientX - d.ox, e.clientY - d.oy);
+    const moved = Math.hypot(e.clientX - d.x0, e.clientY - d.y0), quick = moved < 10 && performance.now() - d.t0 < 300;
+    if (!d.lifted) {
+      unpress(d);
+      if (d.pan) {
+        panAt = performance.now();
+        const a = d.vs[0], z = d.vs[d.vs.length - 1];
+        if (a && z && z[1] - a[1] > 10 && performance.now() - z[1] < 80) glide((z[0] - a[0]) / (z[1] - a[1]));
+        return;
+      }
+      if (d.from === 'drawer' && d.key && quick) tapPlace(d.key);
+      return;
+    }
+    if (!d.el) { d.cell && d.cell.classList.remove('used'); return; }
+    if (d.from === 'board' && moved < 10) { settle(d.el, d.it); flip(d.el, d.it); return; }   // 톡 = 이름 + 뒤집기
+    if (d.from === 'drawer' && moved < 24 && overDrawer(e.clientY)) {   // 꾹 눌러 들고 그 자리에서 놓음 = 톡처럼 빈 자리로
+      d.el.remove(); d.el = null; d.cell.classList.remove('used'); tapPlace(d.key); return;
+    }
+    if (d.ph) { d.done = { x: e.clientX, y: e.clientY }; return; }   // 다 구우면 lift 가 drop 을 부른다
+    drop(d, e.clientX, e.clientY);
+  }
+  function drop(d, x, y) {
+    if (overDrawer(y)) { backToDrawer(d.el, d.key, d.from === 'board' ? d.it : null); return; }
+    const oy = d.from === 'drawer' ? d.el._h * .1 * 1.03 : d.oy;
+    const p = toBoard(x - d.ox, y - oy);
     if (d.from === 'drawer') {
       if (scene.items.length >= MAX_ITEMS) { backToDrawer(d.el, d.key, null); return; }
       d.it.x = p.x; d.it.y = p.y; scene.items.push(d.it); els.set(d.key, d.el);
@@ -494,11 +587,14 @@
   }
   function onCancel(e) {
     const d = drag; if (!d || e.pointerId !== d.id) return;
-    if (!d.lifted) { drag = null; return; }   // 서랍을 넘기기 시작함
+    if (!d.lifted) { unpress(d); drag = null; return; }
     cancelDrag();
   }
   function cancelDrag() {
-    const d = drag; drag = null; drawer.classList.remove('drop'); if (!d || !d.el) { if (d && d.cell) d.cell.classList.remove('used'); return; }
+    const d = drag; drag = null; drawer.classList.remove('drop'); if (!d) return;
+    unpress(d);
+    if (!d.el) { if (d.cell && d.lifted) d.cell.classList.remove('used'); return; }
+    if (d.ph) { d.el.remove(); d.el = null; d.cell.classList.remove('used'); return; }
     if (d.from === 'drawer') backToDrawer(d.el, d.key, null); else settle(d.el, d.it);
   }
   /* 놓기: 무대 안으로 다시 넣고 납작하게 내려앉음(1.03 → .985 → 1) */
