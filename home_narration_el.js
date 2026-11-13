@@ -418,7 +418,8 @@ const NARRATION_CLIPS = {
  "새 배경이 열렸어요!": "audio/el/home/nar_ea2ce92f93.mp3",
  "무대가 가득 찼어요": "audio/el/home/nar_b3b0287876.mp3",
  "처음부터 해요": "audio/el/home/nar_a20d526698.mp3",
- "지웠어요": "audio/el/home/nar_62cddd6809.mp3"
+ "지웠어요": "audio/el/home/nar_62cddd6809.mp3",
+ "빨간 암탉": "audio/el/home/nar_4f86c1ac2d.mp3"
 };
 const NARRATION_CLIPS_EN = {
  "이솝 우화": {
@@ -2380,5 +2381,9 @@ const NARRATION_CLIPS_EN = {
  "지웠어요": {
   "t": "Deleted",
   "c": "audio/el/home/en/nar_267a40e1ce.mp3"
+ },
+ "빨간 암탉": {
+  "t": "The Little Red Hen",
+  "c": "audio/el/home/en/nar_a9daf4c060.mp3"
  }
 };
