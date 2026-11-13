@@ -677,7 +677,8 @@
     open: ['이용권 화면으로 가려면 아래 문제를 풀어 주세요.', 'To open the access screen, please answer this question.'],
     doc: ['문서를 보려면 아래 문제를 풀어 주세요.', 'To read the document, please answer this question.'],
     reset: ['기록을 지우려면 아래 문제를 풀어 주세요.', 'To erase records, please answer this question.'],
-    names: ['이름 바꾸기를 열려면 아래 문제를 풀어 주세요.', 'To open name settings, please answer this question.']
+    names: ['이름 바꾸기를 열려면 아래 문제를 풀어 주세요.', 'To open name settings, please answer this question.'],
+    mail: ['메일 앱을 열려면 아래 문제를 풀어 주세요.', 'To open the mail app, please answer this question.']
   };
   function newGate() {
     const a = 6 + Math.floor(Math.random() * 4), b = 6 + Math.floor(Math.random() * 4);
@@ -756,7 +757,8 @@
     link: '<circle cx="8" cy="12" r="4"/><circle cx="16" cy="12" r="4"/>',
     about: '<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.5"/>',
     records: '<path d="M6 7h12M9 7V4.5h6V7M7.5 7l.8 12.5h7.4L16.5 7"/>',
-    names: '<circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/>'
+    names: '<circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.8 3.6-6 7-6s6.2 2.2 7 6"/>',
+    notice: '<path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 2h-14z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>'
   };
   const guardItems = () => [
     { k: 'sound', t: L('소리와 글', 'Sound & text') },
@@ -765,6 +767,7 @@
     { k: 'find', t: L('동화 찾기', 'Find tales') },
     ...(isApp ? [{ k: 'pass', t: L('이용권', 'Access') }, { k: 'link', t: L('기기 연결', 'Link devices') }] : []),
     ...(namesOn() ? [{ k: 'names', t: L('우리 아이 이름', 'Child\'s name') }] : []),   // 앱 모드 + 서버가 켜져 있을 때만(웹 공개판은 숨김)
+    ...(noticeOn() ? [{ k: 'notice', t: L('공지사항', 'Notices') }] : []),   // 공지 서버 주소가 있을 때만(웹 공개판은 숨김)
     { k: 'about', t: L('정보', 'About') },
     { k: 'records', t: L('기록', 'Records') }
   ];
@@ -773,15 +776,17 @@
     $('#guardTitle').textContent = L('보호자', 'Grown-ups');
     $('#guardCloseT').textContent = L('닫기', 'Close');
     /* 항목 아이콘은 컬러 생성 그림(g_*) 대신 단색 선 기호(홈 UI 2판) */
-    guardList.innerHTML = guardItems().map(i => `<button type="button" class="g-item${i.k === curGuard ? ' on' : ''}" data-k="${i.k}" aria-current="${i.k === curGuard}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${i.k === 'pass' ? '<use href="#i-ticket"/>' : GI[i.k]}</svg><span>${i.t}</span></button>`).join('');
+    guardList.innerHTML = guardItems().map(i => `<button type="button" class="g-item${i.k === curGuard ? ' on' : ''}" data-k="${i.k}" aria-current="${i.k === curGuard}"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${i.k === 'pass' ? '<use href="#i-ticket"/>' : GI[i.k]}</svg><span>${i.t}</span>${i.k === 'notice' ? noticeDotHTML() : ''}</button>`).join('');
   }
   function openGuard() {
     hint.hidden = true;
     curGuard = guardItems().some(i => i.k === curGuard) && curGuard !== 'names' ? curGuard : 'sound';   // 이름 바꾸기는 열 때마다 어른 확인
     delete guardBody.dataset.open;           // 1열일 때는 목록부터
     recAsk = ''; docShown = '';
+    noticeOpen = ''; if (curGuard === 'notice' && notePaneShown()) noticeOpenFirst();
     drawGuardList(); drawGuardPane();
     showModal(guardEl, guardSheet, { gentle: true, focus: '#guardClose' });
+    fetchNotices();   // 열 때마다 조용히 새로 받는다(실패하면 지난번 목록 그대로)
   }
   function closeGuard() {
     clearInterval(linkTick);
@@ -794,6 +799,7 @@
     paper('tap');
     const go = () => {
       curGuard = b.dataset.k; recAsk = ''; docShown = '';
+      if (curGuard === 'notice') noticeOpenFirst();
       guardBody.dataset.open = '1';
       drawGuardList(); drawGuardPane();
       guardPane.scrollTop = 0;
@@ -1115,11 +1121,15 @@
         <div class="link-two"><button type="button" class="ticket alt" data-act="lk-make"${off ? ' disabled' : ''}>${L('이 기기에서 코드 만들기', 'Make a code here')}</button><button type="button" class="ticket alt" data-act="lk-in"${off ? ' disabled' : ''}>${L('다른 기기의 코드 넣기', 'Enter a code')}</button></div>
         ${off ? `<p class="how buy-msg">${L('인터넷이 있어야 해요.', 'An internet connection is needed.')}</p>` : ''}
         <div id="lkView"></div>`;
+    } else if (k === 'notice') {
+      h = noticeHTML(name);
     } else if (k === 'about') {
       h = `<h3>${name}</h3>
         <dl class="g-dl"><dt>${L('버전', 'Version')}</dt><dd>${APP_VERSION}</dd>
         ${deviceNoRow()}
-        <dt>${L('문의', 'Contact')}</dt><dd style="user-select:text;-webkit-user-select:text">hello@ddoystory.com</dd></dl>
+        <dt>${L('문의', 'Contact')}</dt><dd style="user-select:text;-webkit-user-select:text">${FEEDBACK_TO}</dd></dl>
+        <div class="g-btns"><button type="button" class="ticket alt" data-act="mail">${L('의견 보내기', 'Send feedback')}</button></div>
+        <p class="how g-note-how">${L('어른 확인 뒤 메일 앱이 열려요. 앱 버전과 기기 종류가 미리 적혀 있어요. 열리지 않으면 위 주소로 보내 주세요.', 'After a grown-up check, your mail app opens with the app version and device type filled in. If it does not open, write to the address above.')}</p>
         <div class="g-btns"><button type="button" class="ticket alt" data-act="intro-again">${L('처음 안내 다시 보기', 'See the welcome guide again')}</button><button type="button" class="ticket alt" data-act="doc-privacy">${L('개인정보 처리방침', 'Privacy policy')}</button><button type="button" class="ticket alt" data-act="doc-credits">${L('그림·소리 출처', 'Credits')}</button></div>
         <div id="docView"></div>`;
     } else if (k === 'records') {
@@ -1216,6 +1226,8 @@
     else if (act === 'lk-in') parentCheck('link', () => linkEnter());
     else if (act === 'doc-privacy') parentCheck('doc', () => showDoc('privacy'));
     else if (act === 'doc-credits') showDoc('credits');
+    else if (act === 'mail') parentCheck('mail', () => sendFeedback());
+    else if (act === 'nt-open') { paper('tap'); const id = b.dataset.id; noticeOpen = noticeOpen === id ? '' : id; if (noticeOpen) noticeMarkSeen(id); drawGuardPane(); const nb = guardPane.querySelector(`[data-act="nt-open"][data-id="${CSS.escape(id)}"]`); if (nb) nb.focus({ preventScroll: true }); }
     else if (act === 'intro-again') { paper('tap'); openIntro(); }   // 보호자 메뉴 위에 뜨고, 닫으면 보호자 메뉴로 돌아온다
     else if (act === 'rec-progress') parentCheck('reset', () => { recAsk = 'progress'; drawGuardPane(); });
     else if (act === 'rec-all') parentCheck('reset', () => { recAsk = 'all1'; drawGuardPane(); });
@@ -1236,6 +1248,117 @@
       ['클래식 곡은 작곡이 퍼블릭 도메인이에요.', 'Classical pieces are public-domain compositions.']
     ];
     box.innerHTML = '<div class="g-doc credits" tabindex="0">' + lines.map(l => `<p>${L(l[0], l[1])}</p>`).join('') + '</div>';
+  }
+
+  /* ── 공지사항(2026-11-13): 서버 GET /v1/notices 에서 받는다. 요청에는 기기 토큰·개인정보를 싣지 않고, 서버도 아무것도 저장하지 않는다.
+     마지막으로 받은 목록은 기기(localStorage)에 두어 인터넷이 없을 때 보인다. 새 공지 표시는 보호자 메뉴의 '공지사항' 줄 점 하나뿐(홈 톱니·아이 화면에는 없음).
+     글자로만 보이고 소리 내어 읽지 않는다(녹음 없는 말) ── */
+  const NOTICE_CACHE = 'notices_cache', NOTICE_SEEN = 'notices_seen';
+  const noticeBase = () => { try { return String((typeof Entitlements !== 'undefined' && Entitlements.API_BASE) || '').replace(/\/+$/, ''); } catch (e) { return ''; } };
+  const noticeOn = () => !!noticeBase();
+  const escHTML = v => String(v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  const NT_ID = /^[a-z0-9][a-z0-9_-]{0,63}$/, NT_DATE = /^\d{4}-\d{2}-\d{2}$/;
+  /* 서버가 준 것도 기기에 남은 것도 같은 모양 검사를 거친다(이상한 값이면 빈 목록) */
+  function noticeClean(list) {
+    if (!Array.isArray(list)) return [];
+    const s = v => (typeof v === 'string' && v.trim() ? v.slice(0, 2000) : '');
+    return list.filter(n => n && NT_ID.test(n.id) && NT_DATE.test(n.date) && n.title && (s(n.title.ko) || s(n.title.en)))
+      .map(n => ({ id: n.id, date: n.date, title: { ko: s(n.title.ko), en: s(n.title.en) }, body: { ko: s(n.body && n.body.ko), en: s(n.body && n.body.en) } }))
+      .slice(0, 20);
+  }
+  const readNoticeCache = () => { try { const j = JSON.parse(localStorage.getItem(NOTICE_CACHE) || 'null'); return noticeClean(j && j.notices); } catch (e) { return []; } };
+  let notices = readNoticeCache(), noticeNet = notices.length ? 'cache' : 'none', noticeBusy = null, noticeOpen = '';
+  const noticeSeen = () => new Set(readList(NOTICE_SEEN));
+  const noticeUnread = () => { const seen = noticeSeen(); return notices.some(n => !seen.has(n.id)); };
+  function noticeMarkSeen(id) {
+    const seen = noticeSeen(); if (seen.has(id)) return;
+    seen.add(id);
+    try { localStorage.setItem(NOTICE_SEEN, JSON.stringify([...seen].slice(-100))); } catch (e) { /* 저장 못 하면 다음에 점이 다시 보일 뿐 */ }
+    paintNoticeDot();
+  }
+  const noticeDotHTML = () => (noticeUnread() ? `<i class="g-dot" role="img" aria-label="${L('새 공지', 'New')}"></i>` : '');
+  function paintNoticeDot() {
+    const b = guardList.querySelector('.g-item[data-k="notice"]'); if (!b) return;
+    const d = b.querySelector('.g-dot'), want = noticeUnread();
+    if (want && !d) b.insertAdjacentHTML('beforeend', noticeDotHTML()); else if (!want && d) d.remove();
+  }
+  /* 휴대폰 세로(1열)는 목록이 먼저라 본문이 안 보인다. 본문이 보일 때만 '읽음'으로 친다 */
+  const notePaneShown = () => !!guardBody.dataset.open || !matchMedia('(orientation: portrait) and (max-width: 699px)').matches;
+  /* 공지 줄을 열 때 맨 위(최신) 공지는 펼쳐 둔다 = 읽음 */
+  function noticeOpenFirst() { noticeOpen = notices.length ? notices[0].id : ''; if (noticeOpen) noticeMarkSeen(noticeOpen); }
+  const ntText = o => (lang === 'en' ? o.en || o.ko : o.ko || o.en) || '';
+  const ntDate = d => d.replace(/-/g, '.');
+  function noticeHTML(name) {
+    const seen = noticeSeen();
+    let h = `<h3>${name}</h3>`;
+    if (!notices.length) {
+      h += `<p class="how g-empty">${noticeNet === 'loading' ? L('공지를 불러오고 있어요.', 'Loading notices.') : L('공지가 없어요.', 'No notices yet.')}</p>`;
+      return h;
+    }
+    h += `<ul class="g-notes">${notices.map(n => {
+      const open = n.id === noticeOpen, body = ntText(n.body);
+      return `<li class="${open ? 'open' : ''}"><button type="button" class="g-nt" data-act="nt-open" data-id="${escHTML(n.id)}" aria-expanded="${open}">
+          <span class="nt-t"><b>${escHTML(ntText(n.title))}</b><small>${ntDate(n.date)}</small></span>${seen.has(n.id) ? '' : `<i class="g-dot" role="img" aria-label="${L('새 공지', 'New')}"></i>`}
+          <svg class="nt-chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg></button>
+        ${open && body ? `<div class="nt-body">${body.split(/\n+/).map(p => `<p>${escHTML(p)}</p>`).join('')}</div>` : ''}</li>`;
+    }).join('')}</ul>`;
+    if (noticeNet === 'cache' || noticeNet === 'fail') h += `<p class="how g-note-how">${L('인터넷에 닿지 않아 지난번에 받은 공지를 보여 드려요.', 'Offline: showing the notices received last time.')}</p>`;
+    return h;
+  }
+  function fetchNotices() {
+    const base = noticeBase();
+    if (!base || noticeBusy) return noticeBusy;
+    if (!notices.length) noticeNet = 'loading';
+    noticeBusy = (async () => {
+      const ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+      const tm = ctl && setTimeout(() => ctl.abort(), 8000);
+      let got = null;
+      try {
+        const r = await fetch(base + '/v1/notices', { method: 'GET', credentials: 'omit', cache: 'no-cache', signal: ctl ? ctl.signal : undefined });   // 머리말·본문 없는 단순 요청
+        if (r.ok) { const j = await r.json(); if (j && Array.isArray(j.notices)) got = noticeClean(j.notices); }
+      } catch (e) { got = null; }
+      finally { if (tm) clearTimeout(tm); }
+      if (got) {
+        notices = got; noticeNet = 'ok';
+        try { localStorage.setItem(NOTICE_CACHE, JSON.stringify({ notices: got })); } catch (e) { /* 저장 못 해도 이번엔 보인다 */ }
+      } else noticeNet = notices.length ? 'cache' : 'none';
+      if (!notices.some(n => n.id === noticeOpen)) noticeOpen = '';
+      noticeBusy = null;
+      if (guardEl.hidden) return;
+      paintNoticeDot();
+      if (curGuard === 'notice') {
+        if (!noticeOpen && got && got.length && notePaneShown()) noticeOpenFirst();
+        const f = document.activeElement, fid = f && guardPane.contains(f) && f.dataset ? f.dataset.id : null;
+        drawGuardPane();
+        const nb = fid && guardPane.querySelector(`[data-act="nt-open"][data-id="${CSS.escape(fid)}"]`); if (nb) nb.focus({ preventScroll: true });
+      }
+    })();
+    return noticeBusy;
+  }
+
+  /* ── 의견 보내기(2026-11-13): 어른 확인 뒤 메일 앱(mailto). 앱 버전·기기 종류(대략)·언어만 미리 적고, 이름·기기 번호 같은 식별 정보는 넣지 않는다.
+     앱(WKWebView)에서는 맨 위 창의 mailto 이동을 Capacitor 가 막고 UIApplication.open 으로 메일 앱에 넘긴다(WebViewDelegationHandler). 브라우저는 기본 메일 앱 ── */
+  const FEEDBACK_TO = 'hello@ddoystory.com';
+  function deviceKind() {
+    const ua = navigator.userAgent || '', touch = (navigator.maxTouchPoints || 0) > 1;
+    const ios = /OS (\d+)[_.](\d+)/.exec(ua), ver = ios ? ` ${ios[1]}.${ios[2]}` : '';
+    let k;
+    if (/iPad/.test(ua) || (/Macintosh/.test(ua) && touch)) k = 'iPad' + (ios ? ' (iPadOS' + ver + ')' : '');
+    else if (/iPhone|iPod/.test(ua)) k = 'iPhone (iOS' + ver + ')';
+    else if (/Android/.test(ua)) { const a = /Android (\d+(\.\d+)?)/.exec(ua); k = 'Android' + (a ? ' ' + a[1] : '') + (/Mobile/.test(ua) ? ' phone' : ' tablet'); }
+    else if (/Macintosh/.test(ua)) k = 'Mac';
+    else if (/Windows/.test(ua)) k = 'Windows';
+    else k = 'other';
+    return k + (window.Capacitor ? ' · app' : ' · web');
+  }
+  function sendFeedback() {
+    const subj = L('[톡톡 동화극장] 의견', '[Toki Toki Tale] Feedback');
+    const body = L('여기에 하고 싶은 말씀을 적어 주세요.', 'Please write your message here.') + '\n\n\n\n----\n'
+      + `${L('앱 버전', 'App version')}: ${APP_VERSION}\n${L('기기', 'Device')}: ${deviceKind()}\n${L('언어', 'Language')}: ${lang === 'en' ? 'English' : '한국어'}\n`;
+    const a = document.createElement('a');
+    a.href = `mailto:${FEEDBACK_TO}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
+    a.style.display = 'none';
+    document.body.appendChild(a); a.click(); a.remove();
   }
 
   /* ── S11-2 기기 연결 (부품): 코드 만들기(8자리 크게 + 남은 시간) · 코드 넣기 ── */

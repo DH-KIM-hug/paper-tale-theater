@@ -43,11 +43,18 @@
 | `POST /v1/receipt/google` | 필요 | `{ purchaseToken, productId }` | `{ owned, state }` |
 | ~~`POST /v1/coupon`~~ | — | — | 개발 실험용 쿠폰. **앱·서버 코드에서 제거됨(2026-11-13)**, 이제 404 `not_found`. 남은 일: 배포 + `wrangler secret delete COUPON_SHA256` |
 | `DELETE /v1/account` | 필요 | - | 204 — 계정과 연결된 모든 기록 삭제 |
+| `GET /v1/notices` | **없음** | - (머리말·본문 없음) | `{ notices: [{ id, date, title:{ko,en}, body:{ko,en} }] }` — 공지사항(2026-11-13). 아래 '공지사항' 절 |
 
 오류 코드: `unauthorized`(401), `bad_request`(400), `code_invalid`(404, 없음·만료·이미 씀), `code_self`(409, 자기 계정의 코드), `rate_limited`(429), `receipt_invalid`(422), `server_error`(500).
 - 코드 입력은 계정당 분당 5회, 코드 생성은 시간당 10회로 제한한다.
 - 쿠폰: 앱·서버 코드에서 제거됨(2026-11-13, App Store 지침 3.1.1). 예전에 쿠폰으로 연 계정의 `ownedVia` 표시는 연결할 때 그대로 옮긴다.
 - 상품 ID: `com.papertale.theater.unlockall` (애플·구글 동일).
+
+## 공지사항 (2026-11-13)
+- 원본은 저장소의 `server/notices.json` 한 파일(`{ "notices": [...] }`). 공지를 바꾸려면 이 파일을 고치고 서버를 다시 배포한다. KV 를 쓰지 않는다.
+- 항목: `id`(`^[a-z0-9][a-z0-9_-]{0,63}$`, 읽음 표시의 열쇠라 한 번 정하면 바꾸지 않는다), `date`(`YYYY-MM-DD`), `title.ko/en`(120자 이하), `body.ko/en`(2000자 이하, 줄바꿈 `\n` = 문단). 한쪽 언어가 비면 앱은 다른 언어를 보인다.
+- 서버(`server/src/notices.js` `cleanNotices`)는 모양이 틀린 항목을 빼고 날짜 최신순으로 최대 20개만 돌려준다. 인증 없음, 요청에서 아무것도 읽지 않고 아무것도 저장하지 않는다. `cache-control: public, max-age=600`. CORS 는 다른 경로와 같다.
+- 앱(`home.js` 공지 절): 서버 주소(`Entitlements.API_BASE`)가 있을 때만 보호자 메뉴에 '공지사항' 줄을 보인다(웹 공개판은 없음). 보호자 메뉴를 열 때마다 머리말 없는 단순 GET 으로 받고(8초 제한), 받은 목록은 `localStorage notices_cache` 에 두어 인터넷이 없을 때 보인다. 읽은 공지 id 는 `notices_seen`. 안 읽은 공지가 있으면 보호자 메뉴의 '공지사항' 줄에만 작은 점(홈 톱니·아이 화면에는 없음). 공지 줄을 열면 맨 위 공지가 펼쳐져 읽음이 된다. 실패·빈 목록이면 '공지가 없어요'. 낭독하지 않는다.
 
 ## 영수증 검증
 - 애플: `signedTransaction` JWS 의 x5c 인증서 체인을 Apple Root CA G3 까지 검증하고, `bundleId == com.papertale.theater`, `productId`, `revocationDate` 없음, `environment`(Production/Sandbox)를 확인한다. 서버 API 호출은 필요 없다(JWS 자체 검증).

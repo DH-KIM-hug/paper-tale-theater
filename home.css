@@ -1299,6 +1299,23 @@ body.app .view[hidden] { display: none; }
 .g-tales li { display: flex; flex-direction: column; gap: 2px; padding: 10px 2px; box-shadow: var(--rule); }
 .g-tales b { font-size: var(--fs-body); }
 .g-tales span { font-size: var(--fs-caption); color: var(--ink-2); }
+/* 공지사항(2026-11-13): 흰 카드 줄 하나에 제목·날짜, 누르면 그 카드 안에서 본문이 펼쳐진다. 새 공지 = 구리 점 9px(보호자 메뉴 안에서만) */
+.g-dot { flex: none; display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--reward); box-shadow: 0 0 0 2px var(--card); }
+.g-item .g-dot { margin-left: auto; }
+.g-notes { list-style: none; margin: 0 0 var(--s-4); padding: 0; display: flex; flex-direction: column; gap: var(--s-3); }
+.g-notes li { border-radius: var(--r-m); background: var(--card); box-shadow: var(--sh-1); overflow: hidden; }
+.g-nt { display: flex; align-items: center; gap: var(--s-3); width: 100%; min-height: var(--hit-adult); padding: 14px 16px 14px 20px; border: 0; background: none; color: var(--ink); text-align: left; font: inherit; cursor: pointer; }
+.g-nt:focus-visible { outline: 2px solid var(--act); outline-offset: -2px; border-radius: var(--r-m); }
+.nt-t { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.nt-t b { font-size: var(--fs-body); font-weight: 700; line-height: 1.4; letter-spacing: .02em; word-break: keep-all; }
+.nt-t small { font-size: var(--fs-caption); font-weight: 600; letter-spacing: .06em; color: var(--ink-2); }
+.nt-chev { flex: none; width: 24px; height: 24px; color: var(--ink-3); transition: transform var(--t-1) var(--ease); }
+.g-notes li.open .nt-chev { transform: rotate(180deg); }
+.nt-body { padding: 0 20px 16px; box-shadow: inset 0 1px 0 var(--hairline); }
+.nt-body p + p { margin-top: 6px; }
+.nt-body p { margin: 14px 0 0; font-size: var(--fs-body); line-height: 1.65; color: var(--ink); word-break: keep-all; user-select: text; -webkit-user-select: text; }
+.g-pane .g-note-how { margin-top: calc(-1 * var(--s-2)); font-size: var(--fs-caption); }
+.g-pane .g-empty { padding: var(--s-5) 0; text-align: left; }
 .g-doc { display: block; width: 100%; height: 46vh; margin-top: 4px; border: 0; border-radius: var(--r-s); background: var(--paper); }
 div.credits { overflow: auto; padding: 12px 14px; font-size: var(--fs-caption); line-height: 1.6; color: var(--ink-2); background: var(--paper-dn); user-select: text; }
 .credits h5 { margin: 14px 0 4px; font-size: var(--fs-label); color: var(--ink); }

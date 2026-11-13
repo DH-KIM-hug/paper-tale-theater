@@ -19,7 +19,7 @@
 <body>
 <main>
 <h1>톡톡 동화극장 개인정보 처리방침</h1>
-<p>시행일: 2026년 11월 6일</p>
+<p>시행일: 2026년 11월 13일</p>
 
 <h2>수집하는 정보</h2>
 <p>톡톡 동화극장은 이름, 이메일, 위치, 연락처, 사진 등 사람을 알아볼 수 있는 정보를 수집하지 않습니다. 회원가입과 로그인이 없습니다. 어린이에게서 개인정보를 받지 않습니다.</p>
@@ -40,6 +40,12 @@
 <h2>아이 이름 바꾸기 (보호자가 고르는 기능)</h2>
 <p>보호자가 앱에 아이 이름(최대 3명)과 강아지 이름을 입력하면, 동화 속 이름 대사를 새로 녹음하기 위해 그 이름이 들어간 문장을 우리 서버(Cloudflare Workers)를 거쳐 음성 합성 업체 ElevenLabs로 보냅니다. 우리 서버는 이름을 저장하지 않으며, ElevenLabs에는 가능한 경우 기록을 남기지 않는 옵션(enable_logging=false)으로 요청합니다. 이 옵션을 요금제가 받지 않아 생성 기록이 남는 경우에는, 녹음을 만든 직후 제공자 계정의 생성 기록을 지웁니다(제공자 내부의 임시 보관까지 없어진다고 약속하지는 않습니다). 만들어진 녹음과 입력한 이름은 그 기기 안에만 저장되고, 앱을 지우면 함께 지워집니다. 서버 계정에는 이름이 아닌 이용 기록만 남습니다: 구매한 이름 변경권 수, 사용 횟수, 거래번호의 해시, 녹음한 동화 표시, 하루 미리 듣기 횟수. 이 기능을 쓰지 않으면 어떤 이름도 보내지 않습니다.</p>
 
+<h2>공지사항 받기</h2>
+<p>보호자 메뉴를 열면 앱이 연결 서버에서 공지사항 목록(제목·본문·날짜)을 받아 옵니다. 이 요청에는 무작위 ID, 기기 번호, 진행 기록을 포함해 아무것도 담지 않으며, 서버는 이 요청에 대해 아무것도 저장하지 않습니다. 받은 공지와 '읽음' 표시는 이 기기 안에만 저장되어 인터넷이 없을 때 지난번 공지를 보여 줍니다.</p>
+
+<h2>의견 보내기</h2>
+<p>보호자 메뉴 → 정보의 '의견 보내기'는 보호자 확인을 거친 뒤 기기의 메일 앱을 엽니다. 앱이 미리 적어 두는 것은 앱 버전, 기기 종류(예: iPad, iOS 버전), 언어뿐이고, 보내기 전에 보호자가 내용을 보고 고치거나 지울 수 있습니다. 앱은 메일을 직접 보내지 않습니다. 보내 주신 메일과 보낸 분의 이메일 주소는 그 문의에 답하는 데에만 씁니다.</p>
+
 <h2>보관과 삭제</h2>
 <p>서버의 기록은 앱을 쓰는 동안 보관합니다. 앱을 지우는 것만으로는 서버 기록이 지워지지 않을 수 있습니다. 삭제를 원하시면 아래 지원 이메일로 요청해 주세요. 메일에는 앱의 보호자 메뉴(톱니를 1초 누르기) → 정보에 있는 '기기 번호'를 적어 주세요. 요청을 받으면 그 무작위 ID와 연결된 모든 기록을 지웁니다.</p>
 
@@ -50,7 +56,7 @@
 <p>앱의 전체 동화 구매는 Apple의 앱 내 구입(App Store)으로 처리됩니다. 결제 정보는 Apple이 처리하며 개발자는 카드 정보 등을 받지 않습니다. 앱은 구매 확인(영수증)만 연결 서버로 보내 확인하고 구매 여부를 기록합니다. 이미 구매한 항목은 앱의 '구매 복원'으로 되살릴 수 있습니다.</p>
 
 <h2>인터넷 연결</h2>
-<p>앱은 동화, 그림, 목소리를 앱 안에 담고 있어 인터넷 없이도 작동하며, 인터넷은 위의 연결·구매 확인에만 쓰입니다. 웹 버전은 연결 서버를 쓰지 않고 기록을 그 브라우저 안에만 두며, 사이트를 불러오기 위한 일반적인 접속 기록이 호스팅 서비스(GitHub Pages)에 남을 수 있습니다.</p>
+<p>앱은 동화, 그림, 목소리를 앱 안에 담고 있어 인터넷 없이도 작동하며, 인터넷은 위의 기기 연결, 구매 확인, 이름 녹음, 공지사항 받기에만 쓰입니다. 웹 버전은 연결 서버를 쓰지 않고 기록을 그 브라우저 안에만 두며, 사이트를 불러오기 위한 일반적인 접속 기록이 호스팅 서비스(GitHub Pages)에 남을 수 있습니다.</p>
 
 <h2>어린이 보호</h2>
 <p>이 앱은 만 5세 이하 어린이를 위해 만들었습니다. 어린이에게서 개인정보를 받지 않으며, 구매 화면과 같은 부모용 기능은 보호자 확인(간단한 곱셈 문제)을 거친 뒤에만 열립니다.</p>
@@ -60,7 +66,7 @@
 
 <section class="en" lang="en">
 <h1>Toki Toki Tale — Privacy Policy</h1>
-<p>Effective: November 6, 2026</p>
+<p>Effective: November 13, 2026</p>
 <h2>What we collect</h2>
 <p>Nothing that identifies a person. The app does not collect names, emails, location, contacts or photos. There are no accounts or logins, and no personal information is collected from children.</p>
 <h2>Stored on your device only</h2>
@@ -76,6 +82,10 @@
 <p>We do not read or store IP addresses or device types. This data cannot identify you, is not used for ads or tracking, and is never sold or shared. The app keeps working offline or if the server is down.</p>
 <h2>Changing a child's name (optional, set by a parent)</h2>
 <p>When a parent enters child names (up to 3) and a dog's name in the app, the sentences containing those names are sent through our server (Cloudflare Workers) to the speech-synthesis provider ElevenLabs so the name lines in the tales can be re-recorded. Our server does not store the names, and requests to ElevenLabs use the no-logging option (enable_logging=false) where the provider supports it. Where the plan does not support it and a generation record is created, we delete that record from the provider account right after the clip is made (this does not guarantee removal of any temporary storage inside the provider's own systems). The resulting recordings and the names you entered are stored only on that device and are removed when you delete the app. The account on our server keeps only usage records, never the names: the number of name-change passes bought, the number used, a hash of the transaction ID, which tales were recorded, and a daily preview count. If you do not use this feature, no name is sent.</p>
+<h2>Notices</h2>
+<p>When the parent menu is opened, the app downloads the list of notices (title, text, date) from our server. The request carries nothing — no random ID, device number or progress — and the server stores nothing about it. The notices and which ones were read are kept only on the device, so the last notices can be shown offline.</p>
+<h2>Sending feedback</h2>
+<p>‘Send feedback’ in the parent menu → About opens the device’s mail app after the parental gate. The app pre-fills only the app version, the device type (for example, iPad and its iOS version) and the language, and the parent can review, change or delete this before sending. The app never sends email itself. Your message and email address are used only to reply to you.</p>
 <h2>Retention and deletion</h2>
 <p>Server records are kept while the app is in use. Deleting the app alone may not remove them. To have them erased, email us at the address below and include the ‘Device number’ shown in the app’s parent menu (press and hold the gear for 1 second) → Info. We will delete everything tied to that random ID.</p>
 <h2>No ads, no tracking</h2>
@@ -83,7 +93,7 @@
 <h2>Purchases</h2>
 <p>The one-time unlock is handled by Apple's In-App Purchase. Apple processes payment; we never receive card details. The app sends only the purchase receipt to our server to verify it and record that the unlock is owned. You can use Restore Purchases at any time.</p>
 <h2>Internet</h2>
-<p>All tales, art and voices are inside the app and work offline; the internet is used only for linking and purchase checks above. The web version does not use the server and keeps its data in that browser; it may leave ordinary access logs at the hosting provider (GitHub Pages).</p>
+<p>All tales, art and voices are inside the app and work offline; the internet is used only for linking devices, purchase checks, name recordings and downloading notices, as described above. The web version does not use the server and keeps its data in that browser; it may leave ordinary access logs at the hosting provider (GitHub Pages).</p>
 <h2>Children</h2>
 <p>The app is made for children aged 5 and under and collects no personal information from children. Parent-only features, including purchase, are behind a parental gate.</p>
 <h2>Contact</h2>

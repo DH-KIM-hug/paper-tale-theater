@@ -5,6 +5,7 @@ import { emptyState, mergeStates, sanitizeClientState } from './state.js';
 import { APPLE_ROOT_CA_G3_PEM } from './apple_root.js';
 import { DEFAULT_BUNDLE_ID, PRODUCT_ID, RENAME_PRODUCT_ID, ReceiptConfigError, ReceiptInvalid, verifyAppleTransaction } from './apple.js';
 import { MAX_NAME_BODY, applyRenameReceipt, catalog, mergeName, nameCheck, nameLine, nameRun, nameState, quota } from './name.js';
+import { notices } from './notices.js';
 import { GoogleConfigError, GoogleInvalid, GoogleUpstreamError, verifyGooglePurchase } from './google.js';
 
 export const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
@@ -234,6 +235,10 @@ export async function handle(request, env, deps = {}) {
       await readJson(request);
       const today = new Date(now).toISOString().slice(0, 10);
       return respond(await newAccount(env, today), 201);
+    }
+    if (route === 'GET /v1/notices') {
+      // 공지 읽기(공개): 인증·본문 없음, 아무것도 저장하지 않는다. 10분 동안 캐시해도 된다.
+      return jsonResponse(notices(deps.noticesSource), 200, { ...cors, 'cache-control': 'public, max-age=600' });
     }
     if (!path.startsWith('/v1/')) throw new ApiError(404, 'not_found');
     const known = ['GET /v1/state', 'PUT /v1/state', 'POST /v1/link/create', 'POST /v1/link/redeem', 'POST /v1/receipt/apple', 'POST /v1/receipt/google', 'DELETE /v1/account',

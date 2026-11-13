@@ -8,7 +8,7 @@
 | 부제 | Interactive tales for ages 2-5 | 30 / 30 |
 | 홍보 문구 | Paper-cut fairy tales to tap and play by day, and read-aloud bedtime stories by night. No ads. Some tales are always free, and four more are free each week. | 156 / 170 |
 | 키워드 (쉼표, 공백 없이) | `toddler,preschool,kids,bedtime,read aloud,storybook,learning,folktale,aesop,princess,sticker,korean` | 99 / 100 |
-| 설명 | 아래 본문 | 2728 / 4000 (2026-11-07 다시 센 값) |
+| 설명 | 아래 본문 | 2813 / 4000 (2026-11-13 notices·feedback 반영 후 다시 센 값) |
 
 Words already in the name and subtitle (Tok, Tale, Theater, Interactive, ages) are left out of the keywords on purpose. Keywords are comma-separated with no spaces.
 
@@ -41,11 +41,11 @@ HOW IT WORKS
 - Unlock All Tales (one-time purchase, $4.99) opens every tale and includes a first name-and-look setup for each original tale.
 - To change them again later, one Change Names Again Pass ($0.99) lets you redo all four original tales at once.
 - No ads. No sign-up or login.
-- Tales work offline. The internet is used only to link devices, confirm purchases and receive new name recordings.
+- Tales work offline. The internet is used only to link devices, confirm purchases, receive new name recordings and download notices.
 
 FOR PARENTS
-- Purchases, device linking, outside documents and name settings are behind a grown-up check (hold the right answer to a multiplication question for 1.5 seconds).
-- In the grown-up menu (hold the gear at the top right for 1 second) you can set sound and captions, play time and language, find tales, see your access, link devices, set your child's name and erase records.
+- Purchases, device linking, outside documents, name settings and feedback email are behind a grown-up check (hold the right answer to a multiplication question for 1.5 seconds).
+- In the grown-up menu (hold the gear at the top right for 1 second) you can set sound and captions, play time and language, find tales, see your access, link devices, set your child's name, read notices, send feedback (opens your mail app) and erase records.
 - Privacy policy: https://dh-kim-hug.github.io/paper-tale-theater/privacy.html
 - Contact: hello@ddoystory.com
 ```
