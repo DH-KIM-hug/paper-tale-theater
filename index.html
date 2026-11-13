@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=moon1">
 <meta name="copyright" content="Copyright © 2026 DH-KIM-hug. All rights reserved. Not open source.">
 <title>톡톡 동화극장</title>
-<link rel="stylesheet" href="home.css?v=20261113sub1">
+<link rel="stylesheet" href="home.css?v=20261113ob1">
 <link rel="stylesheet" href="stage.css?v=20261112sb1">
 </head>
 <body>
@@ -210,6 +210,11 @@
   <div class="sheet"></div>
 </div>
 
+<!-- 처음 안내(부모님께, 2026-11-13): 앱을 처음 열 때 한 번, 스플래시가 끝난 뒤 홈 위에 뜨는 넘기는 카드. JS 가 채운다. 소리 없음 -->
+<div id="intro" class="parent intro" hidden role="dialog" aria-modal="true" aria-labelledby="introTitle">
+  <div class="sheet ob"></div>
+</div>
+
 <!-- 앱 시작 화면: 실제 종이 풍경, 아무 곳이나 톡하면 홈으로 -->
 <div id="splash" class="splash" hidden aria-hidden="true"></div>
 
@@ -234,6 +239,6 @@
 <script src="engine/names.js?v=20261107bk3"></script>
 <script src="review.js?v=20261024lb2"></script>
 <script src="stage.js?v=20261112sb1"></script>
-<script src="home.js?v=20261113sub1"></script>
+<script src="home.js?v=20261113ob1"></script>
 </body>
 </html>

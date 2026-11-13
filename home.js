@@ -1120,7 +1120,7 @@
         <dl class="g-dl"><dt>${L('버전', 'Version')}</dt><dd>${APP_VERSION}</dd>
         ${deviceNoRow()}
         <dt>${L('문의', 'Contact')}</dt><dd style="user-select:text;-webkit-user-select:text">hello@ddoystory.com</dd></dl>
-        <div class="g-btns"><button type="button" class="ticket alt" data-act="doc-privacy">${L('개인정보 처리방침', 'Privacy policy')}</button><button type="button" class="ticket alt" data-act="doc-credits">${L('그림·소리 출처', 'Credits')}</button></div>
+        <div class="g-btns"><button type="button" class="ticket alt" data-act="intro-again">${L('처음 안내 다시 보기', 'See the welcome guide again')}</button><button type="button" class="ticket alt" data-act="doc-privacy">${L('개인정보 처리방침', 'Privacy policy')}</button><button type="button" class="ticket alt" data-act="doc-credits">${L('그림·소리 출처', 'Credits')}</button></div>
         <div id="docView"></div>`;
     } else if (k === 'records') {
       const ask = { progress: L('동화 진행 기록(마지막 본 동화, 오늘 놀이 시간)을 지울까요?', 'Erase play progress (last tale, today\'s play time)?'), all1: L('이 기기의 종이별·스티커·열어 둔 동화·기기 연결을 모두 초기화할까요?', 'Reset Paper Stars, stickers, opened tales and device link on this device?'), all2: L('마지막 확인이에요. 되돌릴 수 없어요. (구매는 \'구매 복원\'으로 다시 받을 수 있어요.)', 'Last check. This cannot be undone. (A purchase can be restored with Restore purchase.)') };
@@ -1216,6 +1216,7 @@
     else if (act === 'lk-in') parentCheck('link', () => linkEnter());
     else if (act === 'doc-privacy') parentCheck('doc', () => showDoc('privacy'));
     else if (act === 'doc-credits') showDoc('credits');
+    else if (act === 'intro-again') { paper('tap'); openIntro(); }   // 보호자 메뉴 위에 뜨고, 닫으면 보호자 메뉴로 돌아온다
     else if (act === 'rec-progress') parentCheck('reset', () => { recAsk = 'progress'; drawGuardPane(); });
     else if (act === 'rec-all') parentCheck('reset', () => { recAsk = 'all1'; drawGuardPane(); });
     else if (act === 'rec-no') { recAsk = ''; drawGuardPane(); }
@@ -1387,6 +1388,134 @@
   });
   flowEl.addEventListener('click', e => { if (e.target === flowEl) closeFlow(); });
 
+  /* ── 처음 안내 (2026-11-13 사용자 결정): 앱을 처음 열 때 한 번, 스플래시가 끝난 뒤 홈 위에 뜨는 부모님용 넘기는 카드.
+     글과 그림만(낭독 없음, 넘길 때 종이 넘김 효과음만). 가격·구매 단추 없음(Kids). 창작 동화 4편(아이 캐릭터) 그림은 쓰지 않는다.
+     뜨지 않는 경우: #parent 로 연 보호자 메뉴, ?verify=1, ?intro=0, 스플래시를 건너뛴 열기(?splash=0 — 스토어 스크린샷, 동화에서 돌아온 홈).
+     ?intro=1 이면 본 적이 있어도 스플래시 뒤에 다시 뜬다(확인용). 보호자 메뉴 '정보'의 '처음 안내 다시 보기'로도 연다 ── */
+  const introEl = $('#intro'), introSheet = introEl.querySelector('.sheet');
+  const INTRO_KEY = 'paperTheater.introSeen';
+  let introAt = 0, introN = 0, introRan = false;
+  const introSeen = () => {
+    try { if (localStorage.getItem(INTRO_KEY) === '1') return true; } catch (e) { /* 저장소 없음 */ }
+    try { return sessionStorage.getItem(INTRO_KEY) === '1'; } catch (e) { return false; }
+  };
+  const introMark = local => {
+    try { sessionStorage.setItem(INTRO_KEY, '1'); } catch (e) { /* 이번 실행은 introRan 이 막는다 */ }
+    if (local) try { localStorage.setItem(INTRO_KEY, '1'); } catch (e) { /* 기록 못 하면 다음에 또 뜬다 */ }
+  };
+  function introAuto() {
+    if (introRan) return;
+    const p = new URLSearchParams(location.search);
+    if (p.get('verify') === '1' || p.get('intro') === '0' || location.hash === '#parent') return;
+    if (p.get('intro') !== '1' && introSeen()) return;
+    if (anyOpen() || !introEl.hidden) return;              // 잠긴 동화 쪽지 같은 다른 팝업이 먼저 떠 있으면 이번엔 건너뛴다
+    openIntro();
+  }
+  const enNum = (n, cap) => { const w = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'][n] || String(n); return cap ? w[0].toUpperCase() + w.slice(1) : w; };   // 영어 문장 첫머리 숫자는 낱말로
+  const obImg = (src, cls = '') => `<img class="${cls}" src="${src}" alt="" aria-hidden="true" draggable="false" decoding="async">`;
+  function introCards() {
+    const E = Entitlements, nm = namesOn();
+    const orig = TALES.filter(t => t.origin === 'original' && t.ready).length;
+    const menu = isApp
+      ? (nm ? L('소리와 자막, 놀이 시간, 언어, 우리 아이 이름을 정하고 이용권도 볼 수 있어요.', 'Set sound and captions, play time, language and your child\'s name, and see your access.')
+            : L('소리와 자막, 놀이 시간, 언어를 정하고 이용권도 볼 수 있어요.', 'Set sound and captions, play time and language, and see your access.'))
+      : L('소리와 자막, 놀이 시간, 언어를 정할 수 있어요.', 'Set sound and captions, play time and language.');
+    return [
+      { pic: 'assets/banner/rabbit.webp', chip: 'assets/ui/hand.webp', t: L('낮에는 톡톡 놀이', 'Daytime: tap and play'),
+        d: [L('\'동화 놀이\'에서 톡 누르고, 고르고, 차례대로 놓으며 이야기를 이어 가요. 틀려도 혼나지 않아요.', 'In Tale Play, children tap, choose and put things in order to keep the story going. A wrong answer is never punished.')] },
+      { pic: 'assets/banner/sunmoon.webp', chip: 'assets/ui/tab_night.webp', t: L('밤에는 읽어 주기', 'Nighttime: Read to Me'),
+        d: [L('\'읽어 주기\'를 고르면 이야기를 처음부터 끝까지 읽어 줘요. 화면을 꺼도 멈추지 않아요.', 'Choose Read to Me and a tale is read from start to finish. It keeps playing with the screen off.')] },
+      { pic: 'assets/banner/three_pigs.webp', chip: 'assets/ui/g_lang.webp', t: L('영어로도 들어요', 'Listen in two languages'),
+        d: [L('동화를 영어로도 들을 수 있어요. 한국어와 같은 목소리가 천천히 읽어 줘요. 언어는 보호자 메뉴에서 바꿔요.', 'Tales can be heard in English and in Korean, read slowly by the same voice. Change the language in the grown-up menu.')] },
+      { panel: true, t: L('보호자 메뉴', 'Grown-up menu'),
+        d: [L('오른쪽 위 톱니를 1초 동안 꾹 누르면 열려요. ', 'Hold the gear at the top right for 1 second. ') + menu,
+          ...(isApp ? [L(`항상 무료인 동화 ${E.FREE_ALWAYS.length}편과 창작 동화 ${orig}편, 매주 바뀌는 무료 동화 ${E.PER_WEEK}편이 있어요. 별 조각 ${E.STAR_NEED}개를 모으면 잠긴 동화 한 편을 열 수 있어요.`,
+            `${enNum(E.FREE_ALWAYS.length, true)} tales are always free, the ${enNum(orig)} original tales are free, and ${enNum(E.PER_WEEK)} more are free each week. ${enNum(E.STAR_NEED, true)} star pieces open one locked tale.`)] : [])] }
+    ];
+  }
+  function introPanel() {   // 넷째 카드 그림: 톱니(1초 꾹 고리) · 소리·시간·언어 기호 · (앱) 별 조각 5개 = 잠긴 동화 한 편
+    const E = Entitlements;
+    return `<div class="ob-pic ob-panel" aria-hidden="true">
+      <div class="ob-gear"><span class="ob-gbtn">${obImg('assets/ui/ic_gear.webp')}<svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20.6"/></svg></span><b>${L('1초 꾹', 'Hold 1 s')}</b></div>
+      <div class="ob-side">
+        <div class="ob-icons">${['g_sound', 'g_time', 'g_lang'].map(k => obImg(`assets/ui/${k}.webp`)).join('')}</div>
+        ${isApp ? `<div class="ob-stars">${Array.from({ length: E.STAR_NEED }, () => obImg('assets/ui/star_one.webp?v=s4a')).join('')}<span class="ob-eq">=</span>${obImg('assets/ui/badge_lock.webp', 'ob-lock')}</div>` : ''}
+      </div></div>`;
+  }
+  function openIntro() {
+    introRan = true; introMark(false);
+    const cards = introCards();
+    introN = cards.length; introAt = 0;
+    introSheet.innerHTML = `
+      <div class="ob-top"><h2 id="introTitle" tabindex="-1">${L('부모님께', 'For parents')}</h2><button type="button" class="ticket txt ob-skip" data-ob="skip">${L('건너뛰기', 'Skip')}</button></div>
+      <div class="ob-view"><div class="ob-rail">${cards.map((c, i) => `
+        <section class="ob-slide" role="group" aria-roledescription="${L('카드', 'card')}" aria-label="${L(`${i + 1} / ${cards.length}`, `${i + 1} of ${cards.length}`)}">
+          ${c.panel ? introPanel() : `<div class="ob-pic">${obImg(c.pic, 'ob-art')}<span class="ob-chip">${obImg(c.chip)}</span></div>`}
+          <h3>${c.t}</h3>${c.d.map(p => `<p>${p}</p>`).join('')}
+        </section>`).join('')}</div></div>
+      <div class="ob-foot">
+        <div class="ob-dots" role="group" aria-label="${L('안내 카드', 'Guide cards')}">${cards.map((c, i) => `<button type="button" class="ob-dot" data-ob="${i}" aria-label="${L(`${i + 1}번째 카드: ${c.t}`, `Card ${i + 1}: ${c.t}`)}"></button>`).join('')}</div>
+        <button type="button" class="ticket pri ob-next" data-ob="next"></button>
+      </div>`;
+    introGo(0, true);
+    showModal(introEl, introSheet, { focus: '#introTitle' });   // 화면 읽기는 제목부터, 다음 Tab 은 건너뛰기·점·다음
+  }
+  function introGo(i, quiet) {
+    i = Math.max(0, Math.min(introN - 1, i));
+    const moved = i !== introAt; introAt = i;
+    const rail = introSheet.querySelector('.ob-rail'); if (!rail) return;
+    rail.style.transform = `translateX(${-100 * i}%)`;
+    introSheet.querySelectorAll('.ob-slide').forEach((s, k) => { s.inert = k !== i; s.setAttribute('aria-hidden', String(k !== i)); });
+    introSheet.querySelectorAll('.ob-dot').forEach((d, k) => { d.classList.toggle('on', k === i); if (k === i) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
+    const last = i === introN - 1, nx = introSheet.querySelector('.ob-next');
+    nx.textContent = last ? L('시작하기', 'Get started') : L('다음', 'Next');
+    if (moved && !quiet) try { AudioFX.sfx('page_turn', .35); } catch (e) { /* 소리 없이 */ }
+  }
+  function closeIntro() {
+    if (introEl.hidden || introEl.dataset.state === 'closing') return;
+    introMark(true);
+    hideModal(introEl, introSheet);
+  }
+  introSheet.addEventListener('click', e => {
+    const b = e.target.closest('[data-ob]'); if (!b) return;
+    const k = b.dataset.ob;
+    if (k === 'skip') { paper('down'); closeIntro(); }
+    else if (k === 'next') { if (introAt >= introN - 1) { paper('tap'); closeIntro(); } else introGo(introAt + 1); }
+    else introGo(+k);
+  });
+  /* 옆으로 쓸어 넘기기: 손가락을 따라 움직이다가 50px(또는 빠르게 쓸기)을 넘으면 넘긴다. 세로 스크롤은 그대로 */
+  (() => {
+    let sx = 0, sy = 0, st = 0, drag = false, id = null, w = 1;
+    const rail = () => introSheet.querySelector('.ob-rail');
+    introSheet.addEventListener('pointerdown', e => {
+      if (!e.target.closest('.ob-view') || e.button) return;
+      sx = e.clientX; sy = e.clientY; st = performance.now(); drag = false; id = e.pointerId;
+      w = introSheet.querySelector('.ob-view').clientWidth || 1;
+    });
+    introSheet.addEventListener('pointermove', e => {
+      if (e.pointerId !== id) return;
+      const dx = e.clientX - sx, dy = e.clientY - sy;
+      if (!drag) {
+        if (Math.abs(dx) < 8 || Math.abs(dx) < Math.abs(dy)) { if (Math.abs(dy) > 12) id = null; return; }
+        drag = true; try { introSheet.querySelector('.ob-view').setPointerCapture(id); } catch (er) { /* 무시 */ }
+        rail().classList.add('dragging');
+      }
+      const edge = (introAt === 0 && dx > 0) || (introAt === introN - 1 && dx < 0) ? .3 : 1;   // 끝에서는 덜 따라온다
+      rail().style.transform = `translateX(calc(${-100 * introAt}% + ${dx * edge}px))`;
+    });
+    const end = e => {
+      if (e.pointerId !== id) return;
+      id = null;
+      if (!drag) return;
+      drag = false; rail().classList.remove('dragging');
+      const dx = e.clientX - sx, fast = Math.abs(dx) / Math.max(1, performance.now() - st) > .5;
+      const go = (Math.abs(dx) > Math.min(80, w * .18) || (fast && Math.abs(dx) > 24)) ? (dx < 0 ? 1 : -1) : 0;
+      introGo(introAt + go);
+    };
+    introSheet.addEventListener('pointerup', end);
+    introSheet.addEventListener('pointercancel', end);
+  })();
+
   document.addEventListener('keydown', e => {
     if (e.key === 'Tab') {                                   // 팝업 안에서만 Tab 이 돈다
       const top = modalTop(); if (!top) return;
@@ -1397,9 +1526,10 @@
       else if (!e.shiftKey && a === fs[fs.length - 1]) { e.preventDefault(); fs[0].focus(); }
       return;
     }
+    if (modalTop() === introEl && (e.key === 'ArrowRight' || e.key === 'ArrowLeft') && !e.target.closest('input, textarea')) { e.preventDefault(); introGo(introAt + (e.key === 'ArrowRight' ? 1 : -1)); return; }
     if (e.key !== 'Escape') return;
     const top = modalTop(); if (!top) return;
-    if (top === gateEl) closeGate(); else if (top === flowEl) closeFlow(); else if (top === guardEl) closeGuard(); else if (top.id === 'plEdit') hideModal(top);
+    if (top === introEl) closeIntro(); else if (top === gateEl) closeGate(); else if (top === flowEl) closeFlow(); else if (top === guardEl) closeGuard(); else if (top.id === 'plEdit') hideModal(top);
   });
   Entitlements.onChange(() => { if (!flowEl.hidden && flowCtx.step === 'pick') return; refreshGuard(); });
   addEventListener('online', refreshGuard); addEventListener('offline', refreshGuard);
@@ -2133,7 +2263,7 @@
   Entitlements.onChange(() => { paintTabBadge(); requestRender(); });
 
   /* 첫 화면엔 늘 스플래시(로고 안으로 들어갔다 나오기, engine/splash) — 앱을 켤 때·웹 접속·새로고침마다. 동화에서 홈으로 돌아올 때만 나오지 않는다. ?splash=1 강제 재생, ?splash=0 끔 */
-  function splash(done) {
+  function splash(done, after) {
     const sp = $('#splash');
     let finished = false, shown = false, pending;
     const reveal = () => { if (!shown) { shown = true; done(); } };   // 로고가 날아가는 동안 홈을 먼저 드러낸다
@@ -2145,6 +2275,7 @@
       sp.hidden = true;
       sp.setAttribute('aria-hidden', 'true');
       reveal();
+      if (after) setTimeout(after, 300);   // 스플래시가 다 걷히고 홈이 보인 뒤(처음 안내)
     };
     // Branded static first paint while the optional 3D module loads.
     sp.hidden = false;
@@ -2185,7 +2316,7 @@
     let first = q === '0' ? false : !backFromApp();
     if (['1', '2'].includes(q)) first = true;
     update({ anim: false });
-    if (first && location.hash !== '#parent') splash(() => { update({ intro: true, delay: .04, step: .035 }); homeReveal(); });
+    if (first && location.hash !== '#parent') splash(() => { update({ intro: true, delay: .04, step: .035 }); homeReveal(); }, introAuto);   // 처음 안내는 스플래시가 끝난 뒤에만
     else { update({ intro: true, delay: .02, step: .03 }); homeReveal(); }
   }
 

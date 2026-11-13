@@ -1580,3 +1580,58 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
 .fly-pc .fly-ic { width: 100%; height: 100%; fill: currentColor; }
 .fly-pc img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .tab-ic, .star-chip { transform-origin: 50% 50%; }
+
+/* ───────── 처음 안내 (2026-11-13): 부모님용 넘기는 카드 한 장. 흰 카드 + 중립 회색 그림자(--sh-3), 1차 행동(감빛 알약)은 '다음/시작하기' 하나.
+   건너뛰기는 조용한 글자 단추. 그림은 앱에 있는 배너·UI 그림. 아이패드 가로·세로 → 휴대폰 세로 → 낮은 가로 순 ───────── */
+.intro { z-index: 40; padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+.intro > .sheet.ob { --ob-px: var(--s-6); width: min(640px, 100%); padding: var(--s-5) var(--ob-px) var(--s-5); background: var(--card); display: flex; flex-direction: column; gap: var(--s-3); text-align: center; overscroll-behavior: contain; }
+.ob-top { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); margin: -4px -8px 0 0; }
+.ob-top h2 { margin: 0; outline: none; font-size: var(--fs-label); font-weight: 750; letter-spacing: .06em; color: var(--ink-2); }
+.ob-skip { min-height: 48px; font-size: 16px; }
+.ob-view { flex: none; overflow: hidden; touch-action: pan-y; margin: 0 calc(var(--ob-px) * -1); }   /* 카드 좌우 끝까지 넘김 영역: 옆 카드는 카드 밖에서만 들어온다 */
+.ob-rail { display: flex; transition: transform var(--t-3) var(--ease); will-change: transform; }
+.ob-rail.dragging { transition: none; }
+.ob-slide { flex: 0 0 100%; min-width: 0; box-sizing: border-box; padding: 2px var(--ob-px) var(--s-1); }
+.ob-pic { position: relative; width: min(100%, calc(36svh * 16 / 9)); aspect-ratio: 16 / 9; margin: 0 auto var(--s-4); border-radius: var(--r-m); overflow: hidden; background: var(--paper-deep); box-shadow: var(--sh-0); }
+.ob-pic .ob-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; -webkit-user-drag: none; user-select: none; pointer-events: none; }
+.ob-chip { position: absolute; left: 12px; bottom: 12px; width: 64px; height: 64px; border-radius: 50%; background: var(--card); box-shadow: var(--sh-1); display: grid; place-items: center; }
+.ob-chip img { width: 44px; height: 44px; object-fit: contain; pointer-events: none; }
+.ob-slide h3 { margin: 0 0 var(--s-2); font-size: var(--fs-title-l); font-weight: 850; line-height: 1.2; letter-spacing: .02em; color: var(--ink); word-break: keep-all; }
+.ob-slide p { margin: 0 auto var(--s-2); max-width: 30em; font-size: var(--fs-body); line-height: 1.6; letter-spacing: .01em; color: var(--ink-2); word-break: keep-all; }
+.ob-slide p:last-child { margin-bottom: 0; }
+/* 넷째 카드 그림: 연회색 판 위에 톱니(1초 꾹 고리) · 설정 기호 · 별 조각 5개 = 자물쇠 */
+.ob-panel { container-type: inline-size; display: flex; align-items: center; justify-content: center; gap: clamp(16px, 6%, 40px); background: var(--paper); }
+.ob-panel img { display: block; object-fit: contain; pointer-events: none; }
+.ob-gear { display: flex; flex-direction: column; align-items: center; gap: var(--s-2); }
+.ob-gear b { font-size: clamp(14px, 2.8cqw, 18px); font-weight: 750; color: var(--ink-2); letter-spacing: .04em; }
+.ob-gbtn { position: relative; width: clamp(60px, 19cqw, 124px); aspect-ratio: 1; border-radius: 50%; background: var(--card); box-shadow: var(--sh-2); display: grid; place-items: center; }
+.ob-gbtn img { width: 62%; height: 62%; }
+.ob-gbtn svg { position: absolute; inset: -6px; width: calc(100% + 12px); height: calc(100% + 12px); transform: rotate(-90deg); }
+.ob-gbtn circle { fill: none; stroke: var(--act); stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: 97 130; }   /* 3/4 차오른 고리 = 꾹 누르는 중 */
+.ob-side { display: flex; flex-direction: column; align-items: center; gap: var(--s-3); }
+.ob-icons { display: flex; gap: var(--s-2); }
+.ob-icons img { width: clamp(38px, 11cqw, 76px); height: clamp(38px, 11cqw, 76px); padding: clamp(5px, 1.6cqw, 11px); box-sizing: border-box; border-radius: var(--r-s); background: var(--card); box-shadow: var(--sh-0); }
+.ob-stars { display: flex; align-items: center; gap: 2px; }
+.ob-stars img { width: clamp(20px, 6cqw, 40px); height: clamp(20px, 6cqw, 40px); }
+.ob-stars .ob-lock { width: clamp(28px, 8cqw, 56px); height: clamp(28px, 8cqw, 56px); margin-left: 2px; }
+.ob-eq { margin: 0 6px; font-size: clamp(18px, 4cqw, 28px); font-weight: 800; color: var(--ink-2); }
+.ob-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); margin-top: var(--s-1); }
+.ob-dots { display: flex; margin-left: -12px; }
+.ob-dot { position: relative; width: 44px; height: 48px; padding: 0; border: 0; background: none; cursor: pointer; }   /* 누름 영역 44×48, 보이는 점은 8px */
+.ob-dot::after { content: ''; position: absolute; left: 18px; right: 18px; top: 20px; height: 8px; border-radius: 4px; background: var(--paper-deep); transition: background-color var(--t-2) var(--ease), left var(--t-2) var(--ease), right var(--t-2) var(--ease); }
+.ob-dot.on::after { left: 12px; right: 12px; background: var(--ink); }
+.ob-dot:focus-visible, .ob-skip:focus-visible, .ob-next:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+.ob-next { min-width: 160px; min-height: 56px; font-size: 18px; }
+@media (prefers-reduced-motion: reduce) { .ob-rail, .ob-dot::after { transition: none; } }
+@media (orientation: portrait) and (max-width: 699px) {
+  .intro > .sheet.ob { --ob-px: var(--s-5); padding: var(--s-4) var(--ob-px) var(--s-4); --fs-title-l: 24px; --fs-body: 17px; }
+  .ob-chip { width: 52px; height: 52px; left: 10px; bottom: 10px; }
+  .ob-chip img { width: 36px; height: 36px; }
+  .ob-next { min-width: 128px; }
+}
+@media (orientation: landscape) and (max-height: 560px) {
+  .intro > .sheet.ob { --ob-px: var(--s-5); padding: var(--s-3) var(--ob-px); gap: var(--s-2); --fs-title-l: 21px; --fs-body: 15px; }
+  .ob-pic { width: min(100%, calc(30svh * 16 / 9)); margin-bottom: var(--s-2); }
+  .ob-chip { width: 44px; height: 44px; } .ob-chip img { width: 30px; height: 30px; }
+  .ob-panel { width: 100%; aspect-ratio: auto; padding: 16px; }   /* 낮은 가로: 넷째 카드 판은 내용 높이만큼 */
+}
