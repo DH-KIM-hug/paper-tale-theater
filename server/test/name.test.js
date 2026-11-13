@@ -216,7 +216,7 @@ describe('템플릿 파일', () => {
 function fakeEleven(over) {
   const calls = [];
   const fn = vi.fn(async (url, init) => {
-    calls.push({ url, body: JSON.parse(init.body), headers: init.headers });
+    calls.push({ url, method: init.method, body: init.body ? JSON.parse(init.body) : null, headers: init.headers });
     if (over) {
       const r = over(url, init, calls.length);
       if (r) return r;
@@ -574,6 +574,56 @@ describe('POST /v1/name/line', () => {
     const r = await raw(env, 'POST', '/v1/name/line', { auth: a, body: { preview: true, ...LINE, lang: 'ko', names: NAMES }, deps });
     expect(r.status).toBe(200);
     expect(deps.fetch.calls.map((c) => c.url.includes('enable_logging'))).toEqual([true, false]);
+  });
+  describe('생성 기록(History) 삭제', () => {
+    const withId = (id) => (url, init) => (init.method === 'POST' ? new Response(new Uint8Array(500).fill(7), { status: 200, headers: { 'content-type': 'audio/mpeg', ...(id ? { 'history-item-id': id } : {}) } }) : null);
+    async function go(deps, env) {
+      const a = await newAccount(env, deps);
+      await own(env, a);
+      return raw(env, 'POST', '/v1/name/line', { auth: a, body: { preview: true, ...LINE, lang: 'ko', names: NAMES }, deps });
+    }
+    it('헤더가 있으면 그 id 로 DELETE 를 부른다(waitUntil 로)', async () => {
+      const { env, deps } = setup();
+      const pending = [];
+      deps.waitUntil = (p) => pending.push(p);
+      deps.fetch = fakeEleven(withId('hist_abc-123'));
+      const r = await go(deps, env);
+      expect(r.status).toBe(200);
+      await Promise.all(pending);
+      expect(pending).toHaveLength(1);
+      const del = deps.fetch.calls.filter((c) => c.method === 'DELETE');
+      expect(del).toHaveLength(1);
+      expect(del[0].url).toBe('https://api.elevenlabs.io/v1/history/hist_abc-123');
+      expect(del[0].headers['xi-api-key']).toBe(KEY);
+      expect(deps.fetch.calls.find((c) => c.method === 'POST').url).toContain('enable_logging=false');
+    });
+    it('헤더가 없으면 DELETE 를 부르지 않는다', async () => {
+      const { env, deps } = setup();
+      deps.fetch = fakeEleven(withId(null));
+      const r = await go(deps, env);
+      expect(r.status).toBe(200);
+      expect(deps.fetch.calls.filter((c) => c.method === 'DELETE')).toHaveLength(0);
+    });
+    it('DELETE 가 실패(응답 오류·네트워크)해도 200 이고 이름·키를 로그에 쓰지 않는다', async () => {
+      for (const mode of ['500', 'throw']) {
+        const { env, deps } = setup();
+        const logs = [];
+        const spy = vi.spyOn(console, 'error').mockImplementation((...a) => logs.push(a.join(' ')));
+        deps.fetch = vi.fn(async (url, init) => {
+          if (init.method === 'DELETE') {
+            if (mode === 'throw') throw new Error('net ' + KEY);
+            return new Response('no', { status: 500 });
+          }
+          return withId('h1')(url, init);
+        });
+        const r = await go(deps, env);
+        spy.mockRestore();
+        expect(r.status).toBe(200);
+        expect(deps.fetch.mock.calls.filter((c) => c[1].method === 'DELETE')).toHaveLength(1);
+        expect(logs.join('\n')).not.toContain(KEY);
+        expect(logs.join('\n')).toMatch(/history delete/);
+      }
+    });
   });
   it('미리 듣기: 구매 필요, 하루 10회', async () => {
     const { env, deps, clock } = setup();

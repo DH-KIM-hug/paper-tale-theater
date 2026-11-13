@@ -13,6 +13,7 @@ export const DEFAULT_DAILY_LINE_CAP = 30000; // 서버 전체 하루 상한(줄)
 export const MAX_NAME_BODY = 1024;
 const NAME_KEYS = ['A', 'B', 'C', 'D', 'A_en', 'B_en', 'C_en', 'D_en'];
 const EL_URL = 'https://api.elevenlabs.io/v1/text-to-speech/';
+const EL_HISTORY_URL = 'https://api.elevenlabs.io/v1/history/';
 
 export const NE = {
   notOwned: () => new ApiError(403, 'not_owned'),
@@ -157,7 +158,18 @@ export function _resetZeroRetention() {
   zeroRetention = true;
 }
 
-async function elevenlabs(env, fetchFn, rec, text) {
+// 생성 기록 지우기: 요금제가 enable_logging=false 를 받지 않으면 ElevenLabs 가 기록(History)에 글을 남긴다.
+// 응답 헤더 history-item-id 가 있으면 음성을 받자마자 DELETE /v1/history/{id}. 실패해도 요청은 실패시키지 않는다(키·글은 로그에 쓰지 않음).
+async function deleteHistory(env, fetchFn, id) {
+  try {
+    const res = await fetchFn(EL_HISTORY_URL + encodeURIComponent(id), { method: 'DELETE', headers: { 'xi-api-key': env.ELEVENLABS_API_KEY } });
+    if (!res.ok) console.error('name_tts: history delete', res.status);
+  } catch {
+    console.error('name_tts: history delete network');
+  }
+}
+
+async function elevenlabs(env, fetchFn, rec, text, waitUntil) {
   const key = env.ELEVENLABS_API_KEY;
   if (!key) {
     console.error('name_tts: ELEVENLABS_API_KEY 없음');
@@ -175,6 +187,12 @@ async function elevenlabs(env, fetchFn, rec, text) {
     }
     if (res.ok) {
       const buf = await res.arrayBuffer();
+      const hid = res.headers && res.headers.get && res.headers.get('history-item-id');
+      if (hid && /^[A-Za-z0-9_-]{1,128}$/.test(hid)) {
+        const p = deleteHistory(env, fetchFn, hid);
+        if (waitUntil) waitUntil(p);
+        else await p;
+      }
       if (buf.byteLength < 100) throw NE.tts();
       return buf;
     }
@@ -291,7 +309,7 @@ export async function nameLine(env, me, body, now, deps, cors, getAccount, putAc
     const used = n.pv && n.pv.d === today ? n.pv.n : 0;
     if (used >= PREVIEWS_PER_DAY) throw NE.quota();
     await reserveGlobal(env, now, 1);
-    const buf = await elevenlabs(env, fetchFn, { ...part, voice: voiceFor(part, look) }, sendText(line, lang, names, look));
+    const buf = await elevenlabs(env, fetchFn, { ...part, voice: voiceFor(part, look) }, sendText(line, lang, names, look), deps.waitUntil);
     rec.name = { ...n, pv: { d: today, n: used + 1 } };
     await putAccount(env, me.id, rec);
     return audio(buf, cors);
@@ -304,7 +322,7 @@ export async function nameLine(env, me, body, now, deps, cors, getAccount, putAc
   const ck = `nl:${n.run.id}:${tale}:${id}:${lang}`;
   const count = Number(await env.ACCOUNTS.get(ck)) || 0;
   if (count >= PER_LINE_LIMIT) throw NE.quota();
-  const buf = await elevenlabs(env, fetchFn, { ...part, voice: voiceFor(part, look) }, sendText(line, lang, names, look));
+  const buf = await elevenlabs(env, fetchFn, { ...part, voice: voiceFor(part, look) }, sendText(line, lang, names, look), deps.waitUntil);
   await env.ACCOUNTS.put(ck, String(count + 1), { expirationTtl: Math.max(60, Math.ceil((n.run.exp - now) / 1000) + 3600) });
   return audio(buf, cors);
 }

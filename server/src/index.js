@@ -2,5 +2,5 @@
 import { handle } from './app.js';
 
 export default {
-  fetch: (request, env) => handle(request, env),
+  fetch: (request, env, ctx) => handle(request, env, { waitUntil: (p) => ctx.waitUntil(p) }),
 };

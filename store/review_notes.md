@@ -25,7 +25,7 @@ IN-APP PURCHASES (parent area, behind the gate; test with a Sandbox tester: grow
 
 CHILD'S NAME AND HERO LOOK (optional; grown-up menu > Child's name, after Unlock All)
 - Per original tale a parent sets the hero's name and look (girl/boy, prepared illustrations; no uploads). Cloud Factory: 3 children + dog, any combination.
-- All spoken lines are recordings (no on-device TTS), so only lines with the name are re-recorded in the same voices. Name is sent over HTTPS via our server to ElevenLabs; audio returns and is stored on the device with the names and looks. The server does not store or log names or looks and sends no identifiers. We request ElevenLabs zero retention (enable_logging=false); if the plan rejects it, the request is sent without it. Parent-only, behind the gate each time, never asked of the child. If unused, nothing is sent. See the privacy policy (effective Nov 6, 2026).
+- All spoken lines are recordings (no on-device TTS), so only lines with the name are re-recorded in the same voices. Name is sent over HTTPS via our server to ElevenLabs; audio returns and is stored on the device with the names and looks. The server does not store or log names or looks and sends no identifiers. We request ElevenLabs zero retention (enable_logging=false); if the plan rejects or ignores it, we delete the generation record from the provider account right after the clip is made. Parent-only, behind the gate each time, never asked of the child. If unused, nothing is sent. See the privacy policy (effective Nov 6, 2026).
 
 AI-GENERATED CONTENT
 - Art: OpenAI image generation tools (commercial-use plan), composed by us. No photographs of real children appear in the app. No user or AI content is created at runtime except the optional name recordings.
@@ -64,7 +64,7 @@ Contact: hello@ddoystory.com
 **이름·주인공 모습** (선택, 보호자 전용)
 - 창작 동화 4편마다 주인공 이름과 모습(여자아이/남자아이 그림)을 정합니다. 구름 공장은 아이 셋·강아지를 따로, 어떤 조합도 가능. 준비된 그림 중 고르는 것이며 사진 업로드나 실행 중 그림 생성은 없습니다.
 - 이름이 든 줄(또는 모습에 따라 달라지는 줄)만 같은 목소리로 새로 녹음합니다. 남자아이·여자아이 버전의 아이 대사 녹음이 있습니다.
-- 입력한 이름은 HTTPS로 서버를 거쳐 ElevenLabs로 가고 오디오가 돌아옵니다. 이름·모습·오디오는 기기에만 저장. 서버는 이름·모습을 저장·로그하지 않고, 식별자도 안 보냅니다. zero-retention(enable_logging=false)을 요청하되 요금제가 안 받으면 옵션 없이 보내므로 '항상 적용'이라고는 말하지 않습니다. 처리방침(시행일 2026-11-06)에 적혀 있습니다.
+- 입력한 이름은 HTTPS로 서버를 거쳐 ElevenLabs로 가고 오디오가 돌아옵니다. 이름·모습·오디오는 기기에만 저장. 서버는 이름·모습을 저장·로그하지 않고, 식별자도 안 보냅니다. zero-retention(enable_logging=false)을 요청하되 요금제가 안 받으면 옵션 없이 보내므로 '항상 적용'이라고는 말하지 않습니다. 2026-11-13: 그 경우 생성된 기록은 서버가 음성을 받자마자 제공자 계정에서 삭제합니다(제공자 내부 보관까지 없어진다고는 말하지 않음). 처리방침(시행일 2026-11-06)에 적혀 있습니다.
 - 어린이에게 묻지 않고, 설정을 열 때마다 부모 확인이 있으며, 쓰지 않으면 이름은 어디로도 가지 않습니다.
 
 **AI 그림·음성 출처**
@@ -77,4 +77,4 @@ Contact: hello@ddoystory.com
 - **쿠폰 칸**: 앱·서버 코드에서 제거됨(2026-11-13). 이 빌드로 제출하면 노트의 "No coupon or redeem-code feature"가 사실입니다. 남은 일: 서버 배포 + `wrangler secret delete COUPON_SHA256`.
 - '아이 대사 반대 모습 녹음이 있다'는 줄과 '실제 아이 사진은 쓰지 않음' 줄은 공개 사실 범위에서 쓴 것입니다. 창작 동화 일부는 만들 때 가족 사진을 그림 참고로 쓴 적이 있어(CLAUDE.md §1 예외) '얼굴 없음'이라고는 쓰지 않았습니다.
 - 서버가 켜져 있어야 합니다(구매 검증·이름 녹음). 서버가 꺼져 있을 때의 실제 구동은 시험하지 않았습니다.
-- ElevenLabs zero-retention 적용 여부는 확인된 기록이 없습니다(노트는 '요청한다'까지만 씀).
+- ElevenLabs zero-retention 적용 여부는 확인된 기록이 없습니다(노트는 '요청한다'까지만 씀). 2026-11-13: Creator 요금제는 옵션을 무시해 기록이 남는 것을 확인 → 서버가 즉시 삭제하도록 함.

@@ -42,7 +42,7 @@ iOS 앱 주소(`capacitor://localhost`)는 코드에 이미 허용되어 있어 
 | `APPLE_ROOT_CA_G3_PEM` | 비밀값 | 선택 | `src/apple_root.js` 에 진짜 인증서가 이미 들어 있다(지문 63:34:3A…91:79, 2026-11-06 애플 사이트 파일과 대조). 인증서를 바꿀 때만 비밀값으로 덮어쓴다 |
 | `PLAY_PACKAGE_NAME` | 일반 변수 | 안드로이드용 | 기본값 있음 |
 | `GOOGLE_SERVICE_ACCOUNT_JSON` | 비밀값 | 안드로이드 때 | iOS 1.0 에는 불필요(구글 영수증 엔드포인트만 쓰므로) |
-| `ELEVENLABS_API_KEY` | 비밀값 | 이름 바꾸기 | 이름 바꾸기 녹음(`/v1/name/line`). 없으면 그 요청만 502 `tts_failed` |
+| `ELEVENLABS_API_KEY` | 비밀값 | 이름 바꾸기 | 이름 바꾸기 녹음(`/v1/name/line`). 없으면 그 요청만 502 `tts_failed`. 응답에 `history-item-id` 헤더가 있으면(Creator 요금제는 enable_logging=false 가 무시됨) 받자마자 `DELETE /v1/history/{id}` 로 생성 기록을 지움(2026-11-13) |
 | `NAME_DAILY_LINE_CAP` | 일반 변수 | 선택 | 이름 바꾸기 서버 전체 하루 줄 상한(기본 30000). 넘으면 503 `busy` |
 | `COUPON_SHA256` | 비밀값 | **지우기** | 개발 실험용 쿠폰은 **앱·서버 코드에서 제거됨(2026-11-13)**. 서버는 이 값을 더는 읽지 않고 `/v1/coupon` 은 404. 남은 일: 배포 + `npx wrangler secret delete COUPON_SHA256` |
 
