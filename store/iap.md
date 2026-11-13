@@ -18,7 +18,7 @@
 | 제품 ID | `com.papertale.theater.unlockall` (코드: entitlements.js `PRODUCT_ID`, StorePlugin.swift, ios/App/Products.storekit) |
 | 종류 | 비소모성 (Non-Consumable) |
 | 가격 | USD 4.99 (가격 점 4.99) |
-| 가족 공유 | **사용자 결정 필요.** 초안은 '끄기 추천(켜면 되돌릴 수 없음)'인데 `Products.storekit` 은 `familyShareable: true` 라서 두 곳이 어긋남. 앱·서버는 가족 공유 변경 알림을 받는 코드가 있음(커밋 189aec07 `ownedChanged`). 정하고 둘을 같게 맞출 것 |
+| 가족 공유 | **끄기 (2026-11-13 사용자 확정).** App Store Connect 에서도 끈 채로 둔다(켜면 되돌릴 수 없음, 끈 것은 나중에 켤 수 있음). `Products.storekit` 도 `familyShareable: false` 로 맞춤 |
 | 판매 가능 국가 | 앱과 같게 (사용자가 정함) |
 | **홍보용 구입(Promoted IAP)** | 켜면 App Store 페이지에서 바로 살 수 있습니다. 켤지는 사용자 결정(기본값: 끔). Kids 앱이라 끔을 추천 |
 
@@ -71,7 +71,7 @@ Change Names Again Pass (consumable) lets a parent redo the name and hero look o
 | unlockall `localizations[ko].displayName` | 모든 동화 열기 | 그대로 |
 | unlockall `localizations[ko].description` | 모든 동화를 한 번에 열어요 | 모든 동화와 동화마다 이름·모습 첫 설정 |
 | unlockall `localizations[en_US].description` | Unlock every tale, once | All tales + first name setup for each tale |
-| unlockall `familyShareable` | true | App Store Connect 에서 정한 값과 같게(§1 가족 공유) |
+| unlockall `familyShareable` | false | App Store Connect 에서 정한 값과 같게(§1 가족 공유) |
 | rename `localizations[ko].displayName` | 이름 바꾸기 1회 | 이름 다시 바꾸기 이용권 |
 | rename `localizations[ko].description` | 우리 아이 이름을 한 번 더 바꿔요 | 창작 동화 4편의 이름·모습을 한 번에 다시 바꿔요 |
 | rename `localizations[en_US].displayName` | One name change | Change Names Again Pass |
