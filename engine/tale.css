@@ -466,6 +466,13 @@ svg text { font-weight: 800; }
   @keyframes ctHint { 50% { transform: translateY(-6px); } }
 }
 @media (orientation: portrait) and (min-width: 701px) { #choiceTray .ct-b { max-width: 190px; height: min(15svh, 190px); } }
+/* 키가 낮은 세로 휴대폰 화면(접은 iPhone Duo 바깥 화면 466×678 등, 폭 ≤600·가로/세로 ≥0.6, 2026-11-18): 50svh 무대가 작아져 누르는 대상이 80px 아래로 줄었다(미녀와 야수 창문 71px).
+   레터링을 줄이고 무대를 키워 대상을 80px 이상으로, 고르기 판은 낮춰 두 줄 대사와 겹치지 않게 한다. 보통 휴대폰(0.46~0.56)·아이패드·펼친 Duo(폭 669)는 해당 없음.
+   팥죽할멈(카드 판 배치)은 자기 규칙이 더 강해 그대로다 */
+@media (orientation: portrait) and (max-width: 600px) and (min-aspect-ratio: 3/5) {
+  body.pt-title #tale { --pv: 57svh; --tt: 8svh; }
+  #choiceTray .ct-b { height: min(14svh, 132px); }
+}
 
 #rotateHint.gone { opacity: 0; pointer-events: none; }
 

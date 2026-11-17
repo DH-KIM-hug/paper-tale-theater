@@ -394,12 +394,21 @@ const Tale = (() => {
     const r = target.getBoundingClientRect(), s = root.getBoundingClientRect();
     return [r.left - s.left + r.width / 2, r.top - s.top + r.height / 2];
   }
+  let handAt = null;   // 지금 손가락이 가리키는 조각(화면 크기가 바뀌면 다시 맞춘다)
   function showHand(target, kind = 'tap') {
     const at = target.querySelector && target.querySelector('[data-hand]');   // 대상이 여러 조각이면 손가락을 놓을 조각을 data-hand 로 고를 수 있다
-    const [x, y] = screenPoint(at || target);
+    handAt = at || target;
+    const [x, y] = screenPoint(handAt);
     handEl.className = kind; handEl.style.left = x + 'px'; handEl.style.top = y + 'px'; handEl.hidden = false;
   }
-  function hideHand() { handEl.hidden = true; }
+  function hideHand() { handEl.hidden = true; handAt = null; }
+  /* 창 크기가 실행 중에 바뀌면(접는 아이폰 iPhone Duo 를 접고 펼 때, 아이패드 화면 나누기, 돌리기) 떠 있는 손가락을 대상 위로 다시 옮긴다(2026-11-18).
+     손가락 자리는 띄울 때 한 번 px 로 재므로, 무대가 다시 맞춰져도 옛 자리에 남아 있었다 */
+  function replaceHand() {
+    if (!handEl || handEl.hidden || !handAt || !handAt.isConnected) return;
+    const [x, y] = screenPoint(handAt);
+    handEl.style.left = x + 'px'; handEl.style.top = y + 'px';
+  }
 
   /* 막힘 방지 공통: 입력이 오면 poke()로 타이머 리셋 */
   function helper({ target, kind = 'tap', prompt, auto }) {
@@ -1611,8 +1620,9 @@ const Tale = (() => {
     const portraitMQ = window.matchMedia('(orientation: portrait)');
     const fitStage = () => { stage.setAttribute('preserveAspectRatio', portraitMQ.matches ? 'xMidYMid slice' : 'xMidYMid meet'); fitFrame(portraitMQ.matches); };
     fitStage(); portraitMQ.addEventListener ? portraitMQ.addEventListener('change', fitStage) : portraitMQ.addListener(fitStage);
-    if (window.ResizeObserver) new ResizeObserver(() => fitFrame(portraitMQ.matches)).observe($('#stageWrap'));
-    else addEventListener('resize', () => fitFrame(portraitMQ.matches));
+    if (window.ResizeObserver) new ResizeObserver(() => { fitFrame(portraitMQ.matches); replaceHand(); }).observe($('#stageWrap'));
+    else addEventListener('resize', () => { fitFrame(portraitMQ.matches); replaceHand(); });
+    addEventListener('resize', () => requestAnimationFrame(replaceHand));   // 무대 상자 크기는 그대로인데 화면만 바뀐 경우(가로↔세로 같은 크기)도 맞춘다
     /* '돌려서 크게 보기'는 처음 한 번만(2026-10-31 사용자: 세로 화면도 제대로 쓴다) */
     const hint = $('#rotateHint');
     let hintSeen = false; try { hintSeen = localStorage.getItem('rot_hint_seen') === '1'; localStorage.setItem('rot_hint_seen', '1'); } catch (e) { /* 저장 못 하면 매번 */ }

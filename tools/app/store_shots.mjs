@@ -1,11 +1,13 @@
 // App Store 스크린샷 만들기 (2026-11-07)
-// 실제 앱 코드를 헤드리스 크롬으로 기기 크기(아이패드 13" 가로 1376×1032@2, 아이폰 6.9" 1320×2868 = 440×956@3)에서 찍고,
+// 실제 앱 코드를 헤드리스 크롬으로 기기 크기(아이패드 13" 가로 1376×1032@2, 아이폰 6.9" 1320×2868 = 440×956@3,
+// iPhone Duo 바깥 1398×2034 = 466×678@3, 안쪽 2007×2853 = 669×951@3 — 2026-11-18)에서 찍고,
 // 위에 문구 띠를 붙여 정확한 픽셀 크기의 PNG(알파 없음)로 저장한다.
 //
 // 준비: 저장소 루트를 정적 서버로 연다(8791 은 쓰지 않는다).
 //   python3 -m http.server 8931 --bind 127.0.0.1
 // 실행:
 //   PLAYWRIGHT=<playwright-core 폴더> node tools/app/store_shots.mjs all            # ko·en × ipad13·iphone69 전부
+//   node tools/app/store_shots.mjs duo                                              # ko·en × duo_outer·duo_inner (iPhone Duo)
 //   node tools/app/store_shots.mjs set ko ipad13                                    # 한 묶음만
 //   node tools/app/store_shots.mjs probe ipad13 ko '{"tale":"heungbu","skipto":"<대사>","go":1,"wait":6500,"say":true}' /tmp/x.png  # 한 장면 시험(문구 띠 없이)
 // 환경 변수: BASE(기본 http://127.0.0.1:8931), CHROME(크롬 실행 파일), PLAYWRIGHT(playwright-core 경로),
@@ -30,6 +32,10 @@ const SHEET_DIR = process.env.SHEET_DIR || '';
 const DEVICES = {
   ipad13: { vw: 1376, vh: 1032, dpr: 2, W: 2752, H: 2064 },
   iphone69: { vw: 440, vh: 956, dpr: 3, W: 1320, H: 2868 },
+  /* iPhone Duo(접는 아이폰, 2026-11-18 사용자 결정: 필수로 올림). 바깥 화면 1398×2034, 펼친 안쪽 화면 2007×2853, 둘 다 세로(아이폰 세트와 같은 방향).
+     like: 장면 고르기의 기기별 바꿈(s.iphone69 등)을 그대로 물려받는다. frac: 문구 띠 아래 화면 높이 비율 */
+  duo_outer: { vw: 466, vh: 678, dpr: 3, W: 1398, H: 2034, like: 'iphone69', frac: 0.76 },
+  duo_inner: { vw: 669, vh: 951, dpr: 3, W: 2007, H: 2853, like: 'iphone69', frac: 0.78 },
 };
 const BANNED = ['kkultteok', 'red_car', 'unicorn', 'witch_candy'];
 
@@ -159,13 +165,14 @@ async function compose(browser, dev, lang, raw, cap) {
   const d = DEVICES[dev];
   const ctx = await browser.newContext({ viewport: { width: d.W, height: d.H }, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
-  const tall = dev === 'iphone69';
-  // 화면 크기: 높이의 ~82% (가로 아이패드는 폭이 남으니 높이 기준, 세로 아이폰도 높이 기준)
-  const sh = Math.round(d.H * (tall ? 0.80 : 0.80));
+  const tall = d.H > d.W;   // 세로 기기(아이폰·iPhone Duo)
+  const k = tall ? d.W / 1320 : 1;   // 글자 크기: 아이폰 6.9" 폭 기준으로 늘린다(아이폰은 1 그대로)
+  // 화면 크기: 높이의 ~80% (가로 아이패드는 폭이 남으니 높이 기준, 세로 아이폰도 높이 기준). Duo 는 d.frac
+  const sh = Math.round(d.H * (d.frac || 0.80));
   const sw = Math.round(sh * d.vw / d.vh);
   const top = d.H - sh - Math.round(d.H * (tall ? 0.035 : 0.04));
   const radius = Math.round(sw * (tall ? 0.07 : 0.025));
-  const hs = tall ? 104 : 118, ss = tall ? 50 : 54;
+  const hs = tall ? Math.round(104 * k) : 118, ss = tall ? Math.round(50 * k) : 54;
   const fontUrl = BASE + '/assets/fonts/PretendardVariable.woff2';
   const b64 = raw.toString('base64');
   await page.setContent(`<!doctype html><html><head><meta charset="utf-8"><style>
@@ -197,7 +204,7 @@ function toRGB(files) {
   execFileSync('python3', ['-c', py, ...files]);
 }
 function sheet(files, dev, out) {
-  const py = `import sys\nfrom PIL import Image\nout=sys.argv[1];fs=sys.argv[2:]\nims=[Image.open(f).convert('RGB') for f in fs]\nw=${dev === 'ipad13' ? 700 : 330};h=int(ims[0].height*w/ims[0].width);c=4\nr=(len(ims)+c-1)//c\ns=Image.new('RGB',(w*c+10*(c+1),h*r+10*(r+1)),'#888')\nfor i,im in enumerate(ims): s.paste(im.resize((w,h),Image.LANCZOS),(10+(i%c)*(w+10),10+(i//c)*(h+10)))\ns.save(out,quality=86)`;
+  const py = `import sys\nfrom PIL import Image\nout=sys.argv[1];fs=sys.argv[2:]\nims=[Image.open(f).convert('RGB') for f in fs]\nw=${dev === 'ipad13' ? 700 : dev === 'duo_inner' ? 420 : 330};h=int(ims[0].height*w/ims[0].width);c=4\nr=(len(ims)+c-1)//c\ns=Image.new('RGB',(w*c+10*(c+1),h*r+10*(r+1)),'#888')\nfor i,im in enumerate(ims): s.paste(im.resize((w,h),Image.LANCZOS),(10+(i%c)*(w+10),10+(i//c)*(h+10)))\ns.save(out,quality=86)`;
   execFileSync('python3', ['-c', py, out, ...files]);
 }
 
@@ -209,7 +216,8 @@ async function runSet(browser, lang, dev, only) {
   for (const s of SHOTS) {
     n++;
     if (only && !only.includes(s.id)) continue;
-    const ss = Object.assign({}, s, (s[dev] || {}), (s[lang] || {}), ((s[dev] || {})[lang] || {}));
+    const like = DEVICES[dev].like;   // Duo 는 아이폰 세로의 장면 바꿈을 물려받는다
+    const ss = Object.assign({}, s, (like && s[like]) || {}, (s[dev] || {}), (s[lang] || {}), ((like && s[like]) || {})[lang] || {}, ((s[dev] || {})[lang] || {}));
     const file = path.join(dir, `${String(n).padStart(2, '0')}_${s.id}.png`);
     process.stdout.write(`${lang}/${dev}/${path.basename(file)} … `);
     const raw = await shoot(browser, dev, lang, ss);
@@ -241,6 +249,8 @@ try {
     await runSet(browser, lang, dev, only ? only.split(',') : null);
   } else if (cmd === 'all') {
     for (const lang of ['ko', 'en']) for (const dev of ['ipad13', 'iphone69']) await runSet(browser, lang, dev);
+  } else if (cmd === 'duo') {   // iPhone Duo 두 크기만(2026-11-18)
+    for (const lang of ['ko', 'en']) for (const dev of ['duo_outer', 'duo_inner']) await runSet(browser, lang, dev);
   } else {
     console.log('usage: probe|set|all — 맨 위 설명 참고');
   }
