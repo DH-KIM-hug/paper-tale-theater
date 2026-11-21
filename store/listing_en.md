@@ -8,45 +8,63 @@
 | 부제 | Interactive tales for ages 2-5 | 30 / 30 |
 | 홍보 문구 | Paper-cut fairy tales to tap and play by day, and read-aloud bedtime stories by night. No ads. Some tales are always free, and four more are free each week. | 156 / 170 |
 | 키워드 (쉼표, 공백 없이) | `toddler,preschool,kids,bedtime,read aloud,storybook,learning,folktale,aesop,princess,sticker,korean` | 99 / 100 |
-| 설명 | 아래 본문 | 2859 / 4000 (2026-11-22 Child Name Change Pass $1.99·누구나 구매 반영 후 다시 센 값) |
+| 설명 | 아래 본문 | 2405 / 4000 (2026-11-22 사용자 요청으로 부모 시점·학습 중심 재작성) (2026-11-22 Child Name Change Pass $1.99·누구나 구매 반영 후 다시 센 값) |
 
 Words already in the name and subtitle (Tok, Tale, Theater, Interactive, ages) are left out of the keywords on purpose. Keywords are comma-separated with no spaces.
 
 ## 설명 본문 (그대로 붙여 넣기)
 
 ```
-Toki Toki Tale is a storybook app for ages 2 to 5. Children step into fairy tales cut from paper and help tell the story.
+Toki Toki Tale — storybook app for ages 2 to 5
 
-DAYTIME: TAP AND PLAY
-Children tap, choose and put things in order to keep the story going. A wrong answer is never punished. Taps appear only where the story has a reason for them.
-- Folk tales, Aesop fables and classics such as The Tortoise and the Hare, The Enormous Turnip, Cinderella and the Tiger and the Red Bean Porridge, plus original tales
-- Gentle activities in each tale: counting, comparing sizes, putting things in order, matching colors, listening for sounds and thinking about feelings
-- Every line is read aloud in a warm voice, with the words shown on screen
+■ About
+- Read paper-cut fairy tales and learn age-appropriate concepts together
+- A storybook for parents and children to share
+- No ads / no sign-in
 
-NIGHTTIME: BEDTIME STORIES
-Choose Read Aloud and the app reads a tale from start to finish. It keeps playing with the screen off and moves on to the next tale.
+■ Day: learn while reading
+- Follow the story by tapping, choosing and putting things in order on screen
+- Learning topics: counting, comparing sizes, putting things in order, matching colors, listening and choosing, understanding feelings
+- Every line is read aloud, with the words shown on screen
 
-LISTEN IN TWO LANGUAGES
-Every tale can be heard in English and in Korean, read slowly by the same voice, with the words shown on screen. Hearing a familiar story again in another language is a gentle way to get used to its sounds. Change the language in the grown-up menu.
+■ Night: bedtime stories
+- Keeps reading from start to finish with the screen off
+- Moves on to the next tale when one ends
 
-STICKER BOOK AND MY STAGE
-Finish a tale by playing it and collect a sticker. Use your stickers to decorate your own little stage.
+■ Listen in English
+- Every tale can be heard in Korean and English
+- Read slowly by the same voice, with English words shown on screen
+- Change the language in the grown-up menu
 
-YOUR CHILD AS THE HERO (FOR PARENTS)
-In the four original tales (Cloud Factory, My Red Car, Finding the Unicorn and the Candy Witch's Halloween), a parent can set the hero's name and look (girl or boy) for each tale. Cloud Factory has three children and a dog: set each name, and choose any mix of looks. Changed names are re-recorded in the same voices.
+■ Sticker book and my stage
+- Finish a tale and its learning activities to collect a sticker
+- Decorate your own stage with the stickers you collect
 
-HOW IT WORKS
-- The app is free to download. Four tales are always free, the four original tales are free, and four more tales are free each week.
-- Finish a tale to earn a star piece. Five star pieces open one locked tale.
-- Unlock All Tales (one-time purchase, $4.99) opens every tale and includes a first name-and-look setup for each original tale.
-- Anyone can buy a Child Name Change Pass ($1.99), with or without Unlock All. One pass sets or redoes the names and looks of all four original tales at once.
-- No ads. No sign-up or login.
-- Tales work offline. The internet is used only to link devices, confirm purchases, receive new name recordings and download notices.
+■ Your child as the hero (for parents)
+- Original tales: Cloud Factory, My Red Car, Finding the Unicorn, and the Candy Witch's Halloween
+- Set the hero's name and look (girl or boy) for each tale
+- Cloud Factory: set the names of three children and a dog; any mix of looks
+- Changed names are recorded in the same voices
 
-FOR PARENTS
-- Purchases, device linking, outside documents, name settings and feedback email are behind a grown-up check (hold the right answer to a multiplication question for 1.5 seconds).
-- In the grown-up menu (hold the gear at the top right for 1 second) you can set sound and captions, play time and language, find tales, see your access, link devices, set your child's name, read notices, send feedback (opens your mail app) and erase records.
-- Privacy policy: https://dh-kim-hug.github.io/paper-tale-theater/privacy.html
+■ How it works
+- Free to download
+- Free: four basic tales and four original tales always, plus four more tales free each week
+- Finish a tale to earn a star piece; five star pieces open one locked tale
+- Unlock All Tales ($4.99, one-time purchase)
+  · All tales open (including tales added later)
+  · First name-and-look setup for each original tale included
+- Child Name Change Pass ($1.99)
+  · Available without Unlock All Tales
+  · One pass sets or changes the names and looks of all four original tales
+- No ads, no sign-up, no login
+- Tales can be enjoyed offline
+  · Internet is used for device linking, purchase checks, name recordings and notices
+
+■ For parents
+- Purchases, device linking, outside documents and name settings are behind a grown-up check (hold the right answer to a multiplication question for 1.5 seconds)
+- Grown-up menu: hold the gear at the top right for 1 second
+  · Sound and captions, play time, language, find tales, access status, device linking, child's name, notices, erase records
+- Privacy policy: https://paper-tale-sync.papertale.workers.dev/privacy
 - Contact: hello@ddoystory.com
 ```
 
@@ -62,9 +80,9 @@ Leave empty for 1.0 (Apple does not require it for a first release). If you want
 ## URLs
 | Field | Value | Note |
 |---|---|---|
-| Support URL (required) | https://dh-kim-hug.github.io/paper-tale-theater/privacy.html | Temporary; the page ends with the contact email hello@ddoystory.com. A dedicated support page is better later |
+| Support URL (required) | https://paper-tale-sync.papertale.workers.dev/privacy | Temporary; the page ends with the contact email hello@ddoystory.com. A dedicated support page is better later |
 | Marketing URL (optional) | **Leave empty (recommended)** | The GitHub Pages root is the unlocked web version of the app, not a landing page; it also shows the original tales with the child character. See listing_ko.md for details |
-| Privacy Policy URL (required) | https://dh-kim-hug.github.io/paper-tale-theater/privacy.html | Returned HTTP 200 on 2026-11-06. Effective date is filled in (November 6, 2026) and the name-feature section is present. Fix the literal `\u2192` shown in the English ‘Retention and deletion’ paragraph before submitting |
+| Privacy Policy URL (required) | https://paper-tale-sync.papertale.workers.dev/privacy | Returned HTTP 200 on 2026-11-06. Effective date is filled in (November 6, 2026) and the name-feature section is present. Fix the literal `\u2192` shown in the English ‘Retention and deletion’ paragraph before submitting |
 
 ## Copyright
 `© 2026 DH-KIM-hug` (same as COPYRIGHT.md; change to a legal name if you prefer)
