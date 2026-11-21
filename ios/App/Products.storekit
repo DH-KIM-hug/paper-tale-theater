@@ -8,13 +8,13 @@
       "internalID": "6740000001",
       "localizations": [
         {
-          "description": "앱에서 제공하는 모든 동화를 볼 수 있습니다.(향후 추가되는 동화 포함)",
-          "displayName": "모든 동화 열기",
+          "description": "앱의 모든 동화(향후 추가되는 동화 포함)를 볼 수 있고 창작동화 아이이름 변경권 1회 제공됩니다",
+          "displayName": "모든 동화 열기(아이이름 변경권 1회 포함)",
           "locale": "ko"
         },
         {
-          "description": "Every tale in the app, including tales added later",
-          "displayName": "Unlock all tales",
+          "description": "All tales (incl. future ones) + one child-name change",
+          "displayName": "All tales + 1 name change",
           "locale": "en_US"
         }
       ],
