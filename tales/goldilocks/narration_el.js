@@ -14,51 +14,51 @@ Object.assign(NARRATION_CLIPS, {
  "톡톡! 골디락스랑 걸어요.": "audio/el/goldilocks/nar_447025bb84.mp3",
  "꽃을 세 송이 땄어요. 어? 저기 통나무집이 있어요!": [
   "audio/el/goldilocks/nar_999d120896.mp3",
-  "audio/el/goldilocks/goldi_0d75cc98a2.mp3"
+  "audio/el/goldilocks/goldi_d73a660911.mp3"
  ],
  "우와, 커다란 문이에요. 문을 톡 두드려 봐요.": [
-  "audio/el/goldilocks/goldi_56ccd8671e.mp3",
+  "audio/el/goldilocks/goldi_8cfc7601fe.mp3",
   "audio/el/goldilocks/nar_d7036a15d7.mp3"
  ],
  "문을 톡! 똑똑 두드려요.": "audio/el/goldilocks/nar_89e0820041.mp3",
- "골디락스: \"계세요?\"": "audio/el/goldilocks/goldi_fbe16378b9.mp3",
+ "골디락스: \"계세요?\"": "audio/el/goldilocks/goldi_fafaa353a9.mp3",
  "아무 대답이 없어요.": "audio/el/goldilocks/nar_a9f00c37e2.mp3",
  "문이 삐걱 열렸어요. 골디락스가 살짝 들어가 봤어요.": "audio/el/goldilocks/nar_f5e0844f52.mp3",
  "식탁 위에 죽이 세 그릇 있어요.": "audio/el/goldilocks/nar_85fa1100e6.mp3",
  "딱 좋은 죽은 어느 걸까요?": "audio/el/goldilocks/nar_966069d07a.mp3",
- "펄펄 너무 뜨거워요!": "audio/el/goldilocks/goldi_f0383f51f8.mp3",
- "얼음처럼 너무 차가워요!": "audio/el/goldilocks/goldi_753e2f54b4.mp3",
+ "펄펄 너무 뜨거워요!": "audio/el/goldilocks/goldi_85d1aea9e5.mp3",
+ "얼음처럼 너무 차가워요!": "audio/el/goldilocks/goldi_fa4bbdf9a5.mp3",
  "김이 펄펄 나면 뜨겁고, 얼음이 있으면 차가워요.": "audio/el/goldilocks/nar_a02b8e0c66.mp3",
  "김이 살짝 나는 작은 그릇이에요!": "audio/el/goldilocks/nar_dcc790e422.mp3",
  "딱 좋아요! 냠냠, 작은 그릇을 다 먹어 버렸어요.": [
-  "audio/el/goldilocks/goldi_d2fb8047bc.mp3",
+  "audio/el/goldilocks/goldi_9abf9a5288.mp3",
   "audio/el/goldilocks/nar_e5bf73fd81.mp3"
  ],
  "이번엔 의자가 세 개 있어요.": "audio/el/goldilocks/nar_e6f9f8ebee.mp3",
  "딱 맞는 의자는 어느 걸까요?": "audio/el/goldilocks/nar_b3e5dc446e.mp3",
  "너무 높아요! 다리가 달랑달랑.": [
-  "audio/el/goldilocks/goldi_2911cd307d.mp3",
+  "audio/el/goldilocks/goldi_12af423366.mp3",
   "audio/el/goldilocks/nar_2e3430c0d5.mp3"
  ],
  "너무 푹신해서 쏙 파묻혔어요!": "audio/el/goldilocks/nar_df5f0753b9.mp3",
  "너무 크지도, 너무 푹신하지도 않은 의자예요.": "audio/el/goldilocks/nar_0649293aae.mp3",
  "작은 의자예요! 반짝이는 의자를 눌러요.": "audio/el/goldilocks/nar_f463a4681c.mp3",
  "딱 맞아요! 그런데…": [
-  "audio/el/goldilocks/goldi_9ef4cf0a94.mp3",
+  "audio/el/goldilocks/goldi_b945049d3e.mp3",
   "audio/el/goldilocks/nar_ba60981052.mp3"
  ],
  "뿌지직! 작은 의자가 부서져서 엉덩방아를 찧었어요.": "audio/el/goldilocks/nar_721cf0d4a4.mp3",
  "하암, 졸려요. 위층에 침대가 세 개 있어요.": [
-  "audio/el/goldilocks/goldi_445598c948.mp3",
+  "audio/el/goldilocks/goldi_85ce1fa9df.mp3",
   "audio/el/goldilocks/nar_31395fae99.mp3"
  ],
  "딱 좋은 침대는 어느 걸까요?": "audio/el/goldilocks/nar_c4bca33fbd.mp3",
- "너무 딱딱해요!": "audio/el/goldilocks/goldi_5fbe618900.mp3",
- "너무 푹신해요!": "audio/el/goldilocks/goldi_609b2ba05b.mp3",
+ "너무 딱딱해요!": "audio/el/goldilocks/goldi_b33deee0fb.mp3",
+ "너무 푹신해요!": "audio/el/goldilocks/goldi_c8e50fdc33.mp3",
  "딱딱하지도, 너무 푹신하지도 않은 침대예요.": "audio/el/goldilocks/nar_33013c5e82.mp3",
  "작은 침대예요! 반짝이는 침대를 눌러요.": "audio/el/goldilocks/nar_99c8e68ff8.mp3",
  "딱 좋아요! 자장가를 들려줄게요. 잘 들어 봐요.": [
-  "audio/el/goldilocks/goldi_9f82226859.mp3",
+  "audio/el/goldilocks/goldi_a15d2b8dbd.mp3",
   "audio/el/goldilocks/nar_cfd9a91d69.mp3"
  ],
  "이번에는 침대를 톡 눌러 봐요. 자장가가 이어져요!": "audio/el/goldilocks/nar_62e3ffa5a8.mp3",
@@ -99,11 +99,11 @@ Object.assign(NARRATION_CLIPS, {
  "창문으로 나가려다 치마가 딱 걸렸어요!": "audio/el/goldilocks/nar_7ce5191cb6.mp3",
  "골디락스가 돌아서서 말했어요. \"미안해요.\"": [
   "audio/el/goldilocks/nar_21188d937d.mp3",
-  "audio/el/goldilocks/goldi_50a68e39fb.mp3"
+  "audio/el/goldilocks/goldi_bdf44429d1.mp3"
  ],
- "골디락스: \"허락 없이 들어와서 미안해요.\"": "audio/el/goldilocks/goldi_2cb620b1e7.mp3",
+ "골디락스: \"허락 없이 들어와서 미안해요.\"": "audio/el/goldilocks/goldi_60783db57f.mp3",
  "아빠 곰: \"괜찮아. 다음엔 똑똑 하고 기다려 줘.\"": "audio/el/goldilocks/dad_f9a1fe6d3d.mp3",
- "골디락스: \"아기 곰 의자, 같이 고칠래?\"": "audio/el/goldilocks/goldi_e99e58f368.mp3",
+ "골디락스: \"아기 곰 의자, 같이 고칠래?\"": "audio/el/goldilocks/goldi_36c116e142.mp3",
  "톡톡 눌러서 뚝딱뚝딱 고쳐요!": "audio/el/goldilocks/nar_2cf4c7c7be.mp3",
  "의자를 톡톡! 뚝딱뚝딱.": "audio/el/goldilocks/nar_f942e5e2a8.mp3",
  "짠! 의자가 다 고쳐졌어요.": "audio/el/goldilocks/nar_9a921fb358.mp3",
@@ -132,12 +132,12 @@ Object.assign(VOICE_LINES, {
  "mine_mom": "audio/el/goldilocks/mom_852cbcaece.mp3",
  "chair_dad": "audio/el/goldilocks/dad_46f63913cf.mp3",
  "chair_mom": "audio/el/goldilocks/mom_7e5ff3c0b9.mp3",
- "cut_hot": "audio/el/goldilocks/goldi_6a9a9ba49b.mp3",
- "cut_cold": "audio/el/goldilocks/goldi_d17ca62568.mp3",
- "cut_crack": "audio/el/goldilocks/goldi_a3bcdb7684.mp3",
+ "cut_hot": "audio/el/goldilocks/goldi_7ec66dbf44.mp3",
+ "cut_cold": "audio/el/goldilocks/goldi_71684e76b0.mp3",
+ "cut_crack": "audio/el/goldilocks/goldi_980206ea47.mp3",
  "cut_eyes": [
-  "audio/el/goldilocks/goldi_90eb832a08.mp3",
+  "audio/el/goldilocks/goldi_457da9d548.mp3",
   "audio/el/goldilocks/baby_88458fd541.mp3"
  ],
- "cut_skirt": "audio/el/goldilocks/goldi_d71b602ea0.mp3"
+ "cut_skirt": "audio/el/goldilocks/goldi_8143a38d3f.mp3"
 });

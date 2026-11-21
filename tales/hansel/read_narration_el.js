@@ -79,7 +79,7 @@ Object.assign(NARRATION_CLIPS, {
  "그레텔은 마녀가 낮잠을 자는 사이에 열쇠 세 개를 가져왔어요.": "audio/el/hansel/nar_20eb297922.mp3",
  "동그라미, 세모, 별 모양. 그레텔은 자물쇠 구멍을 요리조리 살펴보았어요.": "audio/el/hansel/nar_086f721d26.mp3",
  "\"별 모양이야!\" 그레텔은 별 열쇠를 살며시 꽂았어요.": [
-  "audio/el/hansel/gret_24a58d9d0e.mp3",
+  "audio/el/hansel/gret_033ef97966.mp3",
   "audio/el/hansel/nar_e1bb175d7e.mp3"
  ],
  "찰칵! 새장이 열렸어요. 헨젤이 폴짝 뛰어나왔어요!": "audio/el/hansel/nar_c1ff0ff9b7.mp3",
@@ -91,7 +91,7 @@ Object.assign(NARRATION_CLIPS, {
  "그때 마녀가 일어나 쿵쿵 걸어왔어요. 눈이 나빠서 더듬더듬 찾았어요.": "audio/el/hansel/nar_81ecf20820.mp3",
  "그레텔은 꾀가 났어요. \"마녀님, 화덕 안에 반짝이는 게 있어요!\"": [
   "audio/el/hansel/nar_1e4def354f.mp3",
-  "audio/el/hansel/gret_6ab3b3c89f.mp3"
+  "audio/el/hansel/gret_aadf1edc27.mp3"
  ],
  "마녀가 화덕 안을 기웃기웃 들여다보자, 그레텔이 화덕 문을 힘껏 밀었어요.": "audio/el/hansel/nar_68c6b20906.mp3",
  "쾅! 마녀는 깜짝 놀라 모자가 휙 날아갔어요.": "audio/el/hansel/nar_a54b8fa448.mp3",
@@ -113,7 +113,7 @@ Object.assign(NARRATION_CLIPS, {
  "둘은 오리 등에 폴짝 올라탔어요. 오리는 둥실둥실 강을 건넜지요.": "audio/el/hansel/nar_c870f56563.mp3",
  "오리가 둘을 태우고 강을 건너 주었어요. \"고마워, 오리야!\"": [
   "audio/el/hansel/nar_10ca9a5e78.mp3",
-  "audio/el/hansel/gret_b2afa62159.mp3"
+  "audio/el/hansel/gret_b609aad3bf.mp3"
  ],
  "그레텔은 오리의 보드라운 깃털을 살살 쓰다듬어 주었어요.": "audio/el/hansel/nar_16128e082a.mp3",
  "강을 건넌 두 아이는 숲길을 따라 계속 걸었어요.": "audio/el/hansel/nar_9bd8b1c532.mp3",

@@ -1,8 +1,8 @@
 {
- "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, goldi=Annie, dad=Brian, mom=Bella, baby=Mithi, bowl=Chaemong. 아기·꼬마 역(baby)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여.",
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, goldi=Annie, dad=Brian, mom=Bella, baby=Mithi, bowl=Chaemong. 아기·꼬마 역(baby)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여. | 2026-11-22 사용자 결정: goldi=Kurumin Cute(UiDW9qKjB9LaJDdoINsZ), 여자아이 배역 목소리 통일(Annie 에서 바꿈)",
  "voices": {
   "nar": "pFZP5JQG7iQjIQuC4Bku",
-  "goldi": "Lb7qkOn5hF8p7qfCDH8q",
+  "goldi": "UiDW9qKjB9LaJDdoINsZ",
   "dad": "EkK5I93UQWFDigLMpZcX",
   "mom": "hpp4J3VqNfWAUOO0d1Us",
   "baby": "MIl0Flub6Sc9KSkX2A42",

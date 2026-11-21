@@ -22,7 +22,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "소가 쑥쑥 밭을 갈아 주었어요. \"고마워, 소야!\"": [
   "audio/el/kongjwi/nar_bc9c0ac527.mp3",
-  "audio/el/kongjwi/kong_aac5abe9ae.mp3"
+  "audio/el/kongjwi/kong_db9b9a7a0f.mp3"
  ],
  "밭일을 마친 콩쥐는 집 우물가로 돌아왔어요.": "audio/el/kongjwi/nar_e5d0a96387.mp3",
  "\"이 독에 물을 가득 채워라!\" 새엄마가 말했어요.": [
@@ -41,7 +41,7 @@ Object.assign(NARRATION_CLIPS, {
  "콩쥐는 다시 물을 콸콸 부었어요. 독이 찰랑찰랑 차올랐지요.": "audio/el/kongjwi/nar_28d217f5d4.mp3",
  "독이 물로 가득 찼어요. \"고마워, 두꺼비야!\"": [
   "audio/el/kongjwi/nar_a5fe540ac8.mp3",
-  "audio/el/kongjwi/kong_a59ca23833.mp3"
+  "audio/el/kongjwi/kong_7e30c7769a.mp3"
  ],
  "물을 다 채운 콩쥐에게 새엄마가 곡식을 가져왔어요.": "audio/el/kongjwi/nar_e75ff62c8f.mp3",
  "\"겉겨를 벗겨서 쌀을 가져오너라!\" 새엄마가 말했어요.": [
@@ -56,7 +56,7 @@ Object.assign(NARRATION_CLIPS, {
  "참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요.": "audio/el/kongjwi/nar_fc59b1fa19.mp3",
  "짹짹, 콕콕! 쌀이 금방 하얗게 되었어요.": "audio/el/kongjwi/nar_baf49575a3.mp3",
  "\"고마워, 참새들아!\" 콩쥐는 참새들에게 손을 흔들었어요.": [
-  "audio/el/kongjwi/kong_4c802d9efc.mp3",
+  "audio/el/kongjwi/kong_6f0e6dc85b.mp3",
   "audio/el/kongjwi/nar_dd0ac8c912.mp3"
  ],
  "곡식 일을 마친 콩쥐는 방 안 베틀 앞에 앉았어요.": "audio/el/kongjwi/nar_de2190cd1d.mp3",
@@ -68,7 +68,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "콩쥐는 곱디고운 옷과 나비 꽃신을 받았어요. \"고맙습니다, 선녀님!\"": [
   "audio/el/kongjwi/nar_afa83140cc.mp3",
-  "audio/el/kongjwi/kong_8715ce6a49.mp3"
+  "audio/el/kongjwi/kong_c8a0ad58b1.mp3"
  ],
  "꽃신은 반짝반짝, 나비가 팔랑팔랑 날아갈 것만 같았어요.": "audio/el/kongjwi/nar_1cb0f91771.mp3",
  "다음 날, 콩쥐는 선물 받은 옷과 꽃신을 신었어요.": "audio/el/kongjwi/nar_bacfd54a76.mp3",
@@ -104,7 +104,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "콩쥐는 웃으며 말했어요. \"괜찮아요. 우리 같이 지내요.\"": [
   "audio/el/kongjwi/nar_0ce73c5e70.mp3",
-  "audio/el/kongjwi/kong_ff707fc989.mp3"
+  "audio/el/kongjwi/kong_8499b192cb.mp3"
  ],
  "모두 함께 떡을 나눠 먹어요.": "audio/el/kongjwi/nar_670ea513b5.mp3",
  "쫀득쫀득 떡을 냠냠, 웃음소리가 하하 호호 울려 퍼졌어요.": "audio/el/kongjwi/nar_9347c2ebcb.mp3",

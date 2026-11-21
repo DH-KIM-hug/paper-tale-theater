@@ -22,7 +22,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "통통통! 내 금공은 세상에서 제일 예뻐.": {
   "t": "Bounce, bounce! My golden ball is the prettiest in the whole world.",
-  "c": "audio/el/frog_prince/en/prin_fbbe0c9d90.mp3"
+  "c": "audio/el/frog_prince/en/prin_7bec25711d.mp3"
  },
  "어느 날, 공주는 숲속 샘가에서 공놀이를 했어요.": {
   "t": "One day, the princess played with her ball beside a spring in the forest.",
@@ -38,7 +38,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "엉엉, 내 금공… 내 금공이 사라졌어.": {
   "t": "Boo-hoo, my golden ball... my golden ball is gone.",
-  "c": "audio/el/frog_prince/en/prin_67e3f1a058.mp3"
+  "c": "audio/el/frog_prince/en/prin_c9c4ebcf1b.mp3"
  },
  "그때 샘물 위로 초록 개구리가 고개를 내밀었어요.": {
   "t": "Just then, a green frog poked his head up out of the water.",
@@ -50,7 +50,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "내 금공이 샘에 빠졌어. 흑흑.": {
   "t": "My golden ball fell into the spring. Sniff, sniff.",
-  "c": "audio/el/frog_prince/en/prin_085d18571f.mp3"
+  "c": "audio/el/frog_prince/en/prin_332d4bcb98.mp3"
  },
  "내가 공을 찾아 줄게. 대신 나랑 친구가 되고, 같이 먹고, 한 침대에서 자 줄래?": {
   "t": "I'll get your ball for you. But in return, will you be my friend, eat with me, and let me sleep in your bed?",
@@ -58,7 +58,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "좋아, 약속할게!": {
   "t": "Okay, I promise!",
-  "c": "audio/el/frog_prince/en/prin_8fd4617703.mp3"
+  "c": "audio/el/frog_prince/en/prin_eb12dde898.mp3"
  },
  "개구리는 풍덩 물속으로 들어가 금공을 물고 올라왔어요.": {
   "t": "The frog dived into the water, splash, and came back up with the golden ball in his mouth.",
@@ -66,7 +66,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "내 공이다!": {
   "t": "My ball!",
-  "c": "audio/el/frog_prince/en/prin_ea27379892.mp3"
+  "c": "audio/el/frog_prince/en/prin_9f973f9d2b.mp3"
  },
  "공주는 공을 받아 안고 성으로 쌩 달려갔어요.": {
   "t": "The princess grabbed the ball and ran straight home to the castle.",
@@ -86,7 +86,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "싫어! 저리 가!": {
   "t": "No! Go away!",
-  "c": "audio/el/frog_prince/en/prin_e18cbff2e3.mp3"
+  "c": "audio/el/frog_prince/en/prin_de198583b8.mp3"
  },
  "그 모습을 본 임금님이 공주에게 물었어요.": {
   "t": "The king saw this and asked the princess.",
@@ -98,7 +98,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "개구리가 금공을 찾아 주면… 친구가 되겠다고 했어요.": {
   "t": "I said that if the frog found my golden ball... I would be his friend.",
-  "c": "audio/el/frog_prince/en/prin_ec6fbe3be2.mp3"
+  "c": "audio/el/frog_prince/en/prin_8c4445eb76.mp3"
  },
  "약속은 지켜야 한단다. 도와준 친구에게는 더욱 그렇지.": {
   "t": "A promise must be kept. Even more so to a friend who helped you.",
@@ -106,7 +106,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "…알겠어요, 아버지.": {
   "t": "...Yes, Father.",
-  "c": "audio/el/frog_prince/en/prin_f0b2da8821.mp3"
+  "c": "audio/el/frog_prince/en/prin_b2cc57fcf8.mp3"
  },
  "공주는 개구리를 식탁으로 데려갔어요.": {
   "t": "The princess brought the frog to the table.",
@@ -114,7 +114,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "약속했으니까 같이 먹자.": {
   "t": "I promised, so let's eat together.",
-  "c": "audio/el/frog_prince/en/prin_3f5b92afe8.mp3"
+  "c": "audio/el/frog_prince/en/prin_8b1d14fd0f.mp3"
  },
  "접시에 빵이 몇 개일까요? 접시를 톡 눌러 봐요.": {
   "t": "How many buns are on the plate? Tap the plate!",
@@ -122,7 +122,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "빵이 세 개! 너 하나, 나 하나, 남은 하나는 나눠 먹자.": {
   "t": "Three buns! One for you, one for me, and we'll share the last one.",
-  "c": "audio/el/frog_prince/en/prin_0379fe5920.mp3"
+  "c": "audio/el/frog_prince/en/prin_0b98aa21f2.mp3"
  },
  "냠냠, 맛있다!": {
   "t": "Yum yum, delicious!",
@@ -138,7 +138,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "으, 이제 그만!": {
   "t": "Ugh, that's enough!",
-  "c": "audio/el/frog_prince/en/prin_e691239f6f.mp3"
+  "c": "audio/el/frog_prince/en/prin_145e07f307.mp3"
  },
  "공주는 개구리를 침대 쪽으로 휙 던졌어요. 개구리는 푹신한 베개 위에 포옥!": {
   "t": "The princess tossed the frog toward the bed. Plop! He landed softly on the fluffy pillow!",
@@ -150,7 +150,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어머, 개구리가… 왕자님이었구나!": {
   "t": "Oh my, the frog... was a prince!",
-  "c": "audio/el/frog_prince/en/prin_09717589bf.mp3"
+  "c": "audio/el/frog_prince/en/prin_c30f55ee05.mp3"
  },
  "다음 날, 공주와 왕자는 성 뜰에서 함께 놀았어요.": {
   "t": "The next day, the princess and the prince played together in the castle garden.",
@@ -162,7 +162,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "응! 우리 같이 공놀이하자!": {
   "t": "Yes! Let's play ball together!",
-  "c": "audio/el/frog_prince/en/prin_09f7d146cc.mp3"
+  "c": "audio/el/frog_prince/en/prin_80160b59cf.mp3"
  },
  "둘은 금공을 주고받으며 오래오래 사이좋게 지냈답니다.": {
   "t": "And the two of them tossed the golden ball back and forth and were the best of friends for a long, long time.",
@@ -170,7 +170,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  }
 });
 Object.assign(VOICE_LINES_EN, {
- "n1": "audio/el/frog_prince/en/prin_82e2758145.mp3",
- "n2": "audio/el/frog_prince/en/prin_e6aaa52809.mp3",
- "n3": "audio/el/frog_prince/en/prin_6cd47fb63e.mp3"
+ "n1": "audio/el/frog_prince/en/prin_c59595352c.mp3",
+ "n2": "audio/el/frog_prince/en/prin_e69c7c093d.mp3",
+ "n3": "audio/el/frog_prince/en/prin_4422b25809.mp3"
 });

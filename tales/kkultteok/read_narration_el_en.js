@@ -14,7 +14,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"구름은 어디서 올까?\"": {
   "t": "Where do clouds come from?",
-  "c": "audio/el/kkultteok/en/nuna_b193888972.mp3"
+  "c": "audio/el/kkultteok/en/nuna_becc30e693.mp3"
  },
  "꿀떡이는 땅에 코를 대고 킁킁.": {
   "t": "Kkulddeok puts his nose to the ground. Sniff, sniff.",
@@ -38,7 +38,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"같이 가자!\"": {
   "t": "Wait for us!",
-  "c": "audio/el/kkultteok/en/nuna_e7dcd269e1.mp3"
+  "c": "audio/el/kkultteok/en/nuna_4b663e49b7.mp3"
  },
  "삼남매는 영차, 영차 언덕을 올라요.": {
   "t": "Heave-ho, heave-ho! The three kids climb the hill.",
@@ -70,7 +70,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"구름이 여기서 오는구나!\"": {
   "t": "So this is where clouds come from!",
-  "c": "audio/el/kkultteok/en/nuna_503b5b68d3.mp3"
+  "c": "audio/el/kkultteok/en/nuna_ef0708c936.mp3"
  },
  "\"퐁!\" 은우가 따라 해요.": {
   "t": "Pong! Eunwoo says it too.",
@@ -153,7 +153,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"여기는 구름 공장이야!\"": {
   "t": "This is a cloud factory!",
-  "c": "audio/el/kkultteok/en/nuna_9723335a54.mp3"
+  "c": "audio/el/kkultteok/en/nuna_eef7b6d9e1.mp3"
  },
  "삼남매와 꿀떡이는 구름 모양을 만드는 기계 앞으로 갔어요.": {
   "t": "The children and Kkulddeok went to a machine that made cloud shapes.",
@@ -197,7 +197,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"저 빨간 단추는 뭘까? 궁금해!\"": {
   "t": "What is that red button for? I want to know!",
-  "c": "audio/el/kkultteok/en/nuna_30489aa440.mp3"
+  "c": "audio/el/kkultteok/en/nuna_6450ac9932.mp3"
  },
  "은우가 아장아장 단추 앞으로 다가가요.": {
   "t": "Eunwoo toddles right up to the button.",
@@ -237,7 +237,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"비를 만들려나 봐.\"": {
   "t": "I think they're making rain.",
-  "c": "audio/el/kkultteok/en/nuna_c973afa680.mp3"
+  "c": "audio/el/kkultteok/en/nuna_b6994848ba.mp3"
  },
  "꿀떡이는 축축한 바닥을 킁킁.": {
   "t": "Kkulddeok sniffs the wet floor.",
@@ -297,7 +297,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"비 좋아! 장화 신고 첨벙첨벙!\"": {
   "t": "We love rain! We put on our boots and splash!",
-  "c": "audio/el/kkultteok/en/nuna_8c4ab1db1c.mp3"
+  "c": "audio/el/kkultteok/en/nuna_fda47fcd1d.mp3"
  },
  "\"첨벙첨벙!\" 이현이도 폴짝 뛰어요.": {
   "t": "Splash, splash! Ihyun jumps too.",
@@ -443,7 +443,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "A big rainbow in the sky! Wow!",
   "c": [
    "audio/el/kkultteok/en/nar_677843d6fc.mp3",
-   "audio/el/kkultteok/en/nuna_21aed906e4.mp3"
+   "audio/el/kkultteok/en/nuna_8a407b2a1b.mp3"
   ]
  },
  "빨강, 주황, 노랑, 초록, 파랑, 남색, 보라. 일곱 색이 반짝반짝 빛나요.": {
@@ -460,7 +460,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"구름은 여기서 오는 거였어!\"": {
   "t": "So this is where clouds come from!",
-  "c": "audio/el/kkultteok/en/nuna_503b5b68d3.mp3"
+  "c": "audio/el/kkultteok/en/nuna_ef0708c936.mp3"
  },
  "꿀떡이는 젖은 흙에 코를 대고 킁킁.": {
   "t": "Kkulddeok puts his nose to the wet dirt. Sniff, sniff.",
@@ -483,7 +483,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"또 놀러 와, 아기 구름아!\"": {
   "t": "Come play again, little cloud!",
-  "c": "audio/el/kkultteok/en/nuna_98e5794ba0.mp3"
+  "c": "audio/el/kkultteok/en/nuna_6b25109c0e.mp3"
  },
  "꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.": {
   "t": "Kkulddeok takes one last sniff of the wind from the chimney.",
@@ -508,7 +508,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"잘 자, 아기 구름!\" 다현이와 이현이가 소곤소곤 말했어요.": {
   "t": "\"Good night, little cloud!\" Dahyun and Ihyun whispered.",
   "c": [
-   "audio/el/kkultteok/en/nuna_4d57d6ba11.mp3",
+   "audio/el/kkultteok/en/nuna_19868c4bf3.mp3",
    "audio/el/kkultteok/en/nar_183098b121.mp3"
   ]
  },

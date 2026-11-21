@@ -69,7 +69,7 @@ Object.assign(NARRATION_CLIPS, {
  "앗, 호랑이가 오는 소리! 커다란 장독 뒤로 숨어요!": "audio/el/sunmoon/nar_aa51dc8e0d.mp3",
  "오누이는 숨을 꼭 참고 장독 뒤에 납작 붙어 있었어요. 가슴이 콩닥콩닥 뛰었지요.": "audio/el/sunmoon/nar_2f0ceb6af7.mp3",
  "\"오빠, 무서워…\" 동생이 덜덜 떨며 오빠 손을 꼭 잡았어요.": [
-  "audio/el/sunmoon/girl_68c83e9ad9.mp3",
+  "audio/el/sunmoon/girl_263dcca02c.mp3",
   "audio/el/sunmoon/nar_012cf915dd.mp3"
  ],
  "\"얘들아~ 어디 갔니?\" 호랑이는 두리번두리번하다가 집 쪽으로 돌아갔어요.": [
@@ -105,7 +105,7 @@ Object.assign(NARRATION_CLIPS, {
  "미끌 쭈르륵! 호랑이는 자꾸자꾸 미끄러졌어요.": "audio/el/sunmoon/nar_4eec8ba63a.mp3",
  "그때 동생이 깔깔 웃으며 말해 버렸어요. \"도끼로 콕콕 찍고 올라왔지~\"": [
   "audio/el/sunmoon/nar_2e50da0374.mp3",
-  "audio/el/sunmoon/girl_92c64018a9.mp3"
+  "audio/el/sunmoon/girl_a0f31990d4.mp3"
  ],
  "오빠가 \"쉿!\" 했지만… 벌써 들어 버렸어요!": [
   "audio/el/sunmoon/nar_b591d9d315.mp3",
@@ -141,7 +141,7 @@ Object.assign(NARRATION_CLIPS, {
  "오빠는 낮에 쨍쨍 환하게, 동생은 밤에 은은하게 세상을 비추었지요.": "audio/el/sunmoon/nar_366e8e3360.mp3",
  "동생이 말했어요. \"오빠, 나는 밤이 무서워요.\"": [
   "audio/el/sunmoon/nar_c7a2ac1ab8.mp3",
-  "audio/el/sunmoon/girl_7caadcf71f.mp3"
+  "audio/el/sunmoon/girl_c819c2e85a.mp3"
  ],
  "\"그럼 우리 바꾸자!\"": "audio/el/sunmoon/boy_4fac98e0ca.mp3",
  "오빠는 싱긋 웃으며 기꺼이 자리를 바꿔 주었어요.": "audio/el/sunmoon/nar_6c845cd385.mp3",

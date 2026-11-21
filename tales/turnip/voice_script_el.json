@@ -3,7 +3,7 @@
   "nar": "pFZP5JQG7iQjIQuC4Bku",
   "grandpa": "qAZH0aMXY8tw1QufPN0D",
   "grandma": "gnWujHp24oqX3I03lRbU",
-  "girl": "Lb7qkOn5hF8p7qfCDH8q",
+  "girl": "UiDW9qKjB9LaJDdoINsZ",
   "dog": "n7Wi4g1bhpw4Bs8HK5ph",
   "cat": "ygoBNrnmTEdu5NtDTmAY",
   "mouse": "XjGYkUkzth8BPs29fmcV"
@@ -852,5 +852,5 @@
   "cat",
   "mouse"
  ],
- "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, grandpa=Namchun, grandma=Huelyn, girl=Annie, dog=Munni, cat=Hopsi, mouse=Teddy. 아기·꼬마 역(dog, cat, mouse)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여."
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, grandpa=Namchun, grandma=Huelyn, girl=Annie, dog=Munni, cat=Hopsi, mouse=Teddy. 아기·꼬마 역(dog, cat, mouse)은 아기 말투 태그([baby voice, lisping, very young child, giggly])를 대사 방향에 부여. | 2026-11-22 사용자 결정: girl=Kurumin Cute(UiDW9qKjB9LaJDdoINsZ), 여자아이 배역 목소리 통일(Annie 에서 바꿈)"
 }

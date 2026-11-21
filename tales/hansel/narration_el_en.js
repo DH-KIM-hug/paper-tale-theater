@@ -83,7 +83,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"아빠? 아빠!\" 그레텔이 불러 봤지만, 숲은 조용했어요.": {
   "t": "\"Papa? Papa!\" Gretel called, but the forest was silent.",
   "c": [
-   "audio/el/hansel/en/gret_2cf75f7a11.mp3",
+   "audio/el/hansel/en/gret_754c9b35c3.mp3",
    "audio/el/hansel/en/nar_6ae6a93a2f.mp3"
   ]
  },
@@ -144,7 +144,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"오빠, 이것도 먹어 봐!\" 그레텔이 제일 큰 산딸기를 건넸어요.": {
   "t": "\"Hansel, try this one too!\" Gretel handed him the biggest berry of all.",
   "c": [
-   "audio/el/hansel/en/gret_30e2d9b4fc.mp3",
+   "audio/el/hansel/en/gret_3f20e8654f.mp3",
    "audio/el/hansel/en/nar_5377f52b4a.mp3"
   ]
  },
@@ -163,7 +163,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"오빠, 무서워…\" 그레텔이 헨젤의 손을 꼭 잡았어요.": {
   "t": "\"Hansel, I am scared...\" Gretel held his hand tight.",
   "c": [
-   "audio/el/hansel/en/gret_a5cf28b8da.mp3",
+   "audio/el/hansel/en/gret_2e24ff2e8d.mp3",
    "audio/el/hansel/en/nar_4052bc7a28.mp3"
   ]
  },
@@ -196,7 +196,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"아이고, 우리 길이 없어졌네!\" 그레텔이 울상을 지었어요.": {
   "t": "\"Oh no, our trail is gone!\" Gretel's face crumpled.",
   "c": [
-   "audio/el/hansel/en/gret_fed7b8ba4a.mp3",
+   "audio/el/hansel/en/gret_e515591c0a.mp3",
    "audio/el/hansel/en/nar_8dc48fa4fc.mp3"
   ]
  },
@@ -276,7 +276,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Gretel's eyes filled with tears. \"Hansel, I will get you out, I promise!\"",
   "c": [
    "audio/el/hansel/en/nar_4beb4ca4bb.mp3",
-   "audio/el/hansel/en/gret_b93c5ea00b.mp3"
+   "audio/el/hansel/en/gret_2be722f739.mp3"
   ]
  },
  "그레텔은 마녀가 낮잠을 자는 사이에 열쇠 세 개를 가져왔어요.": {
@@ -322,7 +322,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Gretel had a clever idea. Witch, there is something sparkly in the oven!",
   "c": [
    "audio/el/hansel/en/nar_8ce7c2feae.mp3",
-   "audio/el/hansel/en/gret_352bb9fdf9.mp3"
+   "audio/el/hansel/en/gret_e360ab6056.mp3"
   ]
  },
  "\"반짝이는 거? 어디, 어디?\" 마녀는 화덕 쪽으로 성큼성큼 갔어요.": {
@@ -369,7 +369,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"어떡하지? 우리는 헤엄을 못 치는데.\" 그레텔이 발을 동동 굴렀어요.": {
   "t": "\"What do we do? We cannot swim.\" Gretel stamped her feet, worried.",
   "c": [
-   "audio/el/hansel/en/gret_4be5760457.mp3",
+   "audio/el/hansel/en/gret_e3251f69d3.mp3",
    "audio/el/hansel/en/nar_a9c85ad78e.mp3"
   ]
  },
@@ -392,7 +392,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The duck carried them across the river. Thank you, Duck!",
   "c": [
    "audio/el/hansel/en/nar_3e0bbffa50.mp3",
-   "audio/el/hansel/en/gret_e6f61f585f.mp3"
+   "audio/el/hansel/en/gret_5793d17f08.mp3"
   ]
  },
  "저 멀리 집이 보여요. 아빠가 숲에서 둘을 애타게 찾고 있었어요.": {
@@ -402,7 +402,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"아빠다! 아빠!\" 그레텔이 먼저 달려갔어요.": {
   "t": "\"Papa! It is Papa!\" Gretel ran ahead first.",
   "c": [
-   "audio/el/hansel/en/gret_b895df52ea.mp3",
+   "audio/el/hansel/en/gret_ce17ee39aa.mp3",
    "audio/el/hansel/en/nar_9f8337e448.mp3"
   ]
  },

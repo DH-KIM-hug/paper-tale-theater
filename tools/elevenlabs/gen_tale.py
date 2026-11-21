@@ -128,7 +128,7 @@ def main():
         v = v['c'] if isinstance(v, dict) else v
         return [v] if isinstance(v, str) else v
     used = {u for v in list(clips.values()) + list(voice.values()) for u in urls_of(v)}
-    for fn in ([] if read else os.listdir(outdir)):
+    for fn in ([] if read or '--keep' in sys.argv else os.listdir(outdir)):  # --keep: 옛 클립을 지우지 않는다
         fp = os.path.join(outdir, fn)
         if fn.partition('_')[0] in MODELS: continue  # 모델을 따로 쓰는 배역은 비교용으로 옛 클립을 남긴다
         if os.path.isfile(fp) and f'audio/el/{tale}/{sub}{fn}' not in used: os.remove(fp)

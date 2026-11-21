@@ -6,7 +6,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어? 초대장이다!": {
   "t": "Oh? An invitation!",
-  "c": "audio/el/witch_candy/en/kid_6a160f342d.mp3"
+  "c": "audio/el/witch_candy/en/kid_42b76048a9.mp3"
  },
  "거리 끝 사탕 가게 창이 환하게 켜졌어요.": {
   "t": "At the end of the street, the candy shop window lit up bright.",
@@ -46,7 +46,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "네, 제가 할게요!": {
   "t": "Yes! I want to do it!",
-  "c": "audio/el/witch_candy/en/kid_ebd73379ad.mp3"
+  "c": "audio/el/witch_candy/en/kid_9da68a1257.mp3"
  },
  "다현이가 넣어 줘. 하나든 여러 개든 좋아.": {
   "t": "Dahyun, you put them in. One or lots, it's all good.",
@@ -58,7 +58,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "으엑! 콧물이요?": {
   "t": "Eww! Snot?",
-  "c": "audio/el/witch_candy/en/kid_abf9ae67f0.mp3"
+  "c": "audio/el/witch_candy/en/kid_7e5144742e.mp3"
  },
  "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.": {
   "t": "One, two! The cauldron water swirled round and round, and its colour changed.",
@@ -82,7 +82,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "냠… 딸기 사탕이다!": {
   "t": "Yum... it's strawberry candy!",
-  "c": "audio/el/witch_candy/en/kid_0128a4e78e.mp3"
+  "c": "audio/el/witch_candy/en/kid_622c23d346.mp3"
  },
  "뿅! 다현이가 빨간 딸기가 됐어요!": {
   "t": "Poof! Dahyun turned into a red strawberry!",
@@ -90,7 +90,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "데굴데굴, 멈춰 줘요~!": {
   "t": "Rolly, rolly, roll... somebody stop me!",
-  "c": "audio/el/witch_candy/en/kid_5dd0ac2792.mp3"
+  "c": "audio/el/witch_candy/en/kid_27d1846ada.mp3"
  },
  "히히, 핼러윈 마법이야!": {
   "t": "Hee hee, it's Halloween magic!",
@@ -118,7 +118,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "냠… 오리 사탕이다!": {
   "t": "Yum... it's duck candy!",
-  "c": "audio/el/witch_candy/en/kid_8d83fd7b9d.mp3"
+  "c": "audio/el/witch_candy/en/kid_4d35a5cb0e.mp3"
  },
  "뿅! 다현이 발이 오리발이 됐어요!": {
   "t": "Poof! Dahyun's feet turned into duck feet!",
@@ -126,7 +126,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "꽥꽥… 어? 내 발이!": {
   "t": "Quack, quack... huh? My feet!",
-  "c": "audio/el/witch_candy/en/kid_4ffab049fc.mp3"
+  "c": "audio/el/witch_candy/en/kid_84534689e7.mp3"
  },
  "뒤뚱뒤뚱, 호박이도 뒤뚱뒤뚱.": {
   "t": "Waddle, waddle, and Pumpkin the cat waddled too.",
@@ -138,7 +138,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "으엑! 응가요?": {
   "t": "Eww! Poo?",
-  "c": "audio/el/witch_candy/en/kid_17d45e17b9.mp3"
+  "c": "audio/el/witch_candy/en/kid_3e81334f8f.mp3"
  },
  "파랑만 넣었더니 파란 물고기 사탕이 됐어요!": {
   "t": "Only blue went in, so it became a blue fish candy!",
@@ -146,7 +146,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "냠… 물고기 사탕이다!": {
   "t": "Yum... it's fish candy!",
-  "c": "audio/el/witch_candy/en/kid_7d2bb8ec0c.mp3"
+  "c": "audio/el/witch_candy/en/kid_7d126e066f.mp3"
  },
  "뿅! 다현이한테 물고기 꼬리가 생겼어요!": {
   "t": "Poof! Dahyun grew a fish tail!",
@@ -154,7 +154,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "하늘에서 수영이다!": {
   "t": "I'm swimming in the sky!",
-  "c": "audio/el/witch_candy/en/kid_4fc2c4b4b1.mp3"
+  "c": "audio/el/witch_candy/en/kid_975ac0f511.mp3"
  },
  "보름달 둘레를 보글보글 헤엄쳤어요.": {
   "t": "She swam, bubble bubble, all around the full moon.",
@@ -170,7 +170,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "냠… 개구리 사탕이다!": {
   "t": "Yum... it's frog candy!",
-  "c": "audio/el/witch_candy/en/kid_ebba83cbae.mp3"
+  "c": "audio/el/witch_candy/en/kid_cb6349650a.mp3"
  },
  "뿅! 다현이가 청록 개구리가 됐어요!": {
   "t": "Poof! Dahyun turned into a teal frog!",
@@ -178,7 +178,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "개굴! 지붕까지 폴짝!": {
   "t": "Ribbit! Hop, all the way up to the roof!",
-  "c": "audio/el/witch_candy/en/kid_b44e1db6d7.mp3"
+  "c": "audio/el/witch_candy/en/kid_6486839b8b.mp3"
  },
  "폴짝, 폴짝, 폴짝! 지붕 위에서 손을 흔들었어요.": {
   "t": "Hop, hop, hop! She waved from up on the roof.",
@@ -194,7 +194,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "냠… 호박 사탕이다!": {
   "t": "Yum... it's pumpkin candy!",
-  "c": "audio/el/witch_candy/en/kid_1d22015738.mp3"
+  "c": "audio/el/witch_candy/en/kid_956b5fc60a.mp3"
  },
  "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!": {
   "t": "Poof! Dahyun's cheeks and tummy glowed like a pumpkin!",
@@ -202,7 +202,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "내 배가 등불이 됐어!": {
   "t": "My tummy turned into a lantern!",
-  "c": "audio/el/witch_candy/en/kid_1e5b9a9630.mp3"
+  "c": "audio/el/witch_candy/en/kid_1a665ede60.mp3"
  },
  "깜깜한 길이 다현이 덕분에 환해졌어요.": {
   "t": "The dark street grew bright, all thanks to Dahyun.",
@@ -218,7 +218,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "냠… 박쥐 사탕이다!": {
   "t": "Yum... it's bat candy!",
-  "c": "audio/el/witch_candy/en/kid_0b9a6ed443.mp3"
+  "c": "audio/el/witch_candy/en/kid_d84ee9942f.mp3"
  },
  "뿅! 다현이 등에 박쥐 날개가 돋았어요!": {
   "t": "Poof! Bat wings sprouted on Dahyun's back!",
@@ -226,7 +226,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "파닥파닥, 달님 안녕!": {
   "t": "Flap, flap, hello, Moon!",
-  "c": "audio/el/witch_candy/en/kid_c90806bf97.mp3"
+  "c": "audio/el/witch_candy/en/kid_308d4685fd.mp3"
  },
  "박쥐 친구들이랑 달 앞을 빙글 돌았어요.": {
   "t": "She circled in front of the moon with her bat friends.",
@@ -242,7 +242,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "냠… 초콜릿 사탕이다!": {
   "t": "Yum... it's chocolate candy!",
-  "c": "audio/el/witch_candy/en/kid_67546cb1b6.mp3"
+  "c": "audio/el/witch_candy/en/kid_471b86166e.mp3"
  },
  "뿅! 다현이 입에 초콜릿 수염이 났어요!": {
   "t": "Poof! Dahyun grew a chocolate moustache!",
@@ -250,7 +250,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "주르륵… 나 녹아요~": {
   "t": "Drip, drip... I'm melting!",
-  "c": "audio/el/witch_candy/en/kid_c7cbef5733.mp3"
+  "c": "audio/el/witch_candy/en/kid_072f24894c.mp3"
  },
  "납작해졌다가… 뿅!": {
   "t": "She went flat as a pancake... then poof!",
@@ -270,7 +270,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "냠… 키위 사탕이다!": {
   "t": "Yum... it's kiwi candy!",
-  "c": "audio/el/witch_candy/en/kid_ab67d6046a.mp3"
+  "c": "audio/el/witch_candy/en/kid_8f6f2d1776.mp3"
  },
  "뿅! 다현이가 동그란 연두 키위가 됐어요!": {
   "t": "Poof! Dahyun turned into a round lime-green kiwi!",
@@ -278,7 +278,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "보송보송… 간지러워! 히히!": {
   "t": "So fuzzy... it tickles! Hee hee!",
-  "c": "audio/el/witch_candy/en/kid_0c1cc7b3c2.mp3"
+  "c": "audio/el/witch_candy/en/kid_2f81e7198b.mp3"
  },
  "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.": {
   "t": "Boing, boing, boing! She bounced down the street like a kiwi ball.",
@@ -294,7 +294,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "냠… 악어 사탕이다!": {
   "t": "Yum... it's crocodile candy!",
-  "c": "audio/el/witch_candy/en/kid_cd5ec9a852.mp3"
+  "c": "audio/el/witch_candy/en/kid_c6a24ee8b5.mp3"
  },
  "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!": {
   "t": "Poof! Dahyun grew a green crocodile tail!",
@@ -302,7 +302,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "앙! 앙! 나는 악어다!": {
   "t": "Snap! Snap! I'm a crocodile!",
-  "c": "audio/el/witch_candy/en/kid_3dfc8e05d0.mp3"
+  "c": "audio/el/witch_candy/en/kid_3ccd05ecbb.mp3"
  },
  "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.": {
   "t": "She crawled along, creep, creep... then SNAP! Pumpkin the cat jumped in surprise.",
@@ -326,7 +326,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "전부 다요?": {
   "t": "Every single one?",
-  "c": "audio/el/witch_candy/en/kid_42ffac1dca.mp3"
+  "c": "audio/el/witch_candy/en/kid_bf7f008abc.mp3"
  },
  "다현이가 하나씩, 하나씩, 퐁퐁퐁 넣었어요.": {
   "t": "Dahyun dropped them in one by one. Plop, plop, plop!",
@@ -346,7 +346,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어? 입이 까매졌다! 유령 사탕이다~": {
   "t": "Huh? My lips turned black! It's ghost candy!",
-  "c": "audio/el/witch_candy/en/kid_473fb13869.mp3"
+  "c": "audio/el/witch_candy/en/kid_d5d26b6591.mp3"
  },
  "히히, 나도!": {
   "t": "Hee hee, me too!",
@@ -386,7 +386,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "네! 다음엔 다른 색으로요!": {
   "t": "Yes! Next time, with different colours!",
-  "c": "audio/el/witch_candy/en/kid_d88a88ddcb.mp3"
+  "c": "audio/el/witch_candy/en/kid_f903bd0725.mp3"
  },
  "다현이가 사탕 마녀 손을 잡고 폴짝 뛰었어요.": {
   "t": "Dahyun took the Candy Witch's hand and hopped for joy.",

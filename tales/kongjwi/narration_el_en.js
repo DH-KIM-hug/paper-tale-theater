@@ -45,7 +45,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The ox plowed the field fast. Thank you, ox!",
   "c": [
    "audio/el/kongjwi/en/nar_a49503f1d3.mp3",
-   "audio/el/kongjwi/en/kong_7c12b2fbf2.mp3"
+   "audio/el/kongjwi/en/kong_ac298d37b5.mp3"
   ]
  },
  "\"이 독에 물을 가득 채워라!\" 새엄마가 말했어요.": {
@@ -86,7 +86,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The jar was full of water. Thank you, toad!",
   "c": [
    "audio/el/kongjwi/en/nar_1f39233dc4.mp3",
-   "audio/el/kongjwi/en/kong_f3aa5019c8.mp3"
+   "audio/el/kongjwi/en/kong_1afa456802.mp3"
   ]
  },
  "\"겉겨를 벗겨서 쌀을 가져오너라!\" 새엄마가 말했어요.": {
@@ -134,7 +134,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Kongjwi got a beautiful dress and butterfly shoes. Thank you, fairy!",
   "c": [
    "audio/el/kongjwi/en/nar_7ab995a655.mp3",
-   "audio/el/kongjwi/en/kong_0be2bb0fc1.mp3"
+   "audio/el/kongjwi/en/kong_6770fa3459.mp3"
   ]
  },
  "콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡! 건너 봐요!": {
@@ -207,7 +207,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Kongjwi smiled and said, It's okay. Let's live together.",
   "c": [
    "audio/el/kongjwi/en/nar_0ebdab9e63.mp3",
-   "audio/el/kongjwi/en/kong_1078d18576.mp3"
+   "audio/el/kongjwi/en/kong_6718b5df1d.mp3"
   ]
  },
  "모두 함께 떡을 나눠 먹어요.": {

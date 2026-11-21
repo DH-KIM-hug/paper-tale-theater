@@ -57,7 +57,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The ox plowed the field fast. Thank you, ox!",
   "c": [
    "audio/el/kongjwi/en/nar_a49503f1d3.mp3",
-   "audio/el/kongjwi/en/kong_7c12b2fbf2.mp3"
+   "audio/el/kongjwi/en/kong_ac298d37b5.mp3"
   ]
  },
  "밭일을 마친 콩쥐는 집 우물가로 돌아왔어요.": {
@@ -106,7 +106,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The jar was full of water. Thank you, toad!",
   "c": [
    "audio/el/kongjwi/en/nar_1f39233dc4.mp3",
-   "audio/el/kongjwi/en/kong_f3aa5019c8.mp3"
+   "audio/el/kongjwi/en/kong_1afa456802.mp3"
   ]
  },
  "물을 다 채운 콩쥐에게 새엄마가 곡식을 가져왔어요.": {
@@ -142,7 +142,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"고마워, 참새들아!\" 콩쥐는 참새들에게 손을 흔들었어요.": {
   "t": "\"Thank you, little sparrows!\" Kongjwi waved to the sparrows as they flew away.",
   "c": [
-   "audio/el/kongjwi/en/kong_e0b10fb5bb.mp3",
+   "audio/el/kongjwi/en/kong_17c95c2a7a.mp3",
    "audio/el/kongjwi/en/nar_ca02c7605b.mp3"
   ]
  },
@@ -169,7 +169,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Kongjwi got a beautiful dress and butterfly shoes. Thank you, fairy!",
   "c": [
    "audio/el/kongjwi/en/nar_7ab995a655.mp3",
-   "audio/el/kongjwi/en/kong_0be2bb0fc1.mp3"
+   "audio/el/kongjwi/en/kong_6770fa3459.mp3"
   ]
  },
  "꽃신은 반짝반짝, 나비가 팔랑팔랑 날아갈 것만 같았어요.": {
@@ -268,7 +268,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Kongjwi smiled and said, It's okay. Let's live together.",
   "c": [
    "audio/el/kongjwi/en/nar_0ebdab9e63.mp3",
-   "audio/el/kongjwi/en/kong_1078d18576.mp3"
+   "audio/el/kongjwi/en/kong_6718b5df1d.mp3"
   ]
  },
  "모두 함께 떡을 나눠 먹어요.": {

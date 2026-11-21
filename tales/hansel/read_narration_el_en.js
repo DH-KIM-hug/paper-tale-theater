@@ -234,7 +234,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"별 모양이야!\" 그레텔은 별 열쇠를 살며시 꽂았어요.": {
   "t": "\"It is the star!\" Gretel gently slid the star key into the lock.",
   "c": [
-   "audio/el/hansel/en/gret_3084ad0a3e.mp3",
+   "audio/el/hansel/en/gret_91c5ce7c44.mp3",
    "audio/el/hansel/en/nar_ffbc432ea7.mp3"
   ]
  },
@@ -261,7 +261,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Gretel had a clever idea. Witch, there is something sparkly in the oven!",
   "c": [
    "audio/el/hansel/en/nar_8ce7c2feae.mp3",
-   "audio/el/hansel/en/gret_352bb9fdf9.mp3"
+   "audio/el/hansel/en/gret_e360ab6056.mp3"
   ]
  },
  "마녀가 화덕 안을 기웃기웃 들여다보자, 그레텔이 화덕 문을 힘껏 밀었어요.": {
@@ -313,7 +313,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The duck carried them across the river. Thank you, Duck!",
   "c": [
    "audio/el/hansel/en/nar_3e0bbffa50.mp3",
-   "audio/el/hansel/en/gret_e6f61f585f.mp3"
+   "audio/el/hansel/en/gret_5793d17f08.mp3"
   ]
  },
  "그레텔은 오리의 보드라운 깃털을 살살 쓰다듬어 주었어요.": {

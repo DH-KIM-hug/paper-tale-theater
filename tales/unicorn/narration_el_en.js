@@ -6,7 +6,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "진짜 유니콘을 만나고 싶어요.": {
   "t": "I want to meet a real unicorn.",
-  "c": "audio/el/unicorn/en/kid_dbd7e73074.mp3"
+  "c": "audio/el/unicorn/en/kid_7e35fbf7c5.mp3"
  },
  "유니콘에게 줄 빨간 꽃을 찾아 볼까요? 톡, 눌러 봐요.": {
   "t": "Let's find a red flower for the unicorn. Tap it!",
@@ -90,7 +90,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "같이 가자!": {
   "t": "Let's go together!",
-  "c": "audio/el/unicorn/en/kid_dbcf53ef9e.mp3"
+  "c": "audio/el/unicorn/en/kid_2d975e7be7.mp3"
  },
  "다현이와 양은 손을 잡고 구름 길을 걸었어요.": {
   "t": "Dahyun and the sheep walked the cloud path hand in hand.",
@@ -130,7 +130,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "유니콘은… 아니구나.": {
   "t": "You're... not a unicorn.",
-  "c": "audio/el/unicorn/en/kid_d2278b1fa3.mp3"
+  "c": "audio/el/unicorn/en/kid_8b32b115e6.mp3"
  },
  "폭포 위에 무지개가 떠 있어요. 말 한 마리가 서 있어요.": {
   "t": "A rainbow hangs over the waterfall. A horse is standing there.",
@@ -146,7 +146,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자, 같이 먹자.": {
   "t": "Here, let's share.",
-  "c": "audio/el/unicorn/en/kid_af60fa923b.mp3"
+  "c": "audio/el/unicorn/en/kid_07f0f8b49b.mp3"
  },
  "말은 간식을 냠냠 맛있게 먹었어요.": {
   "t": "The horse munched the snack happily.",
@@ -158,7 +158,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "너도… 유니콘은 아니구나.": {
   "t": "You're not... a unicorn either.",
-  "c": "audio/el/unicorn/en/kid_a77e7f218f.mp3"
+  "c": "audio/el/unicorn/en/kid_02f29d3ea6.mp3"
  },
  "해가 지고, 길은 텅 비었어요.": {
   "t": "The sun went down, and the road was empty.",
@@ -166,7 +166,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "진짜 유니콘은… 없나 봐.": {
   "t": "Maybe... there is no real unicorn.",
-  "c": "audio/el/unicorn/en/kid_3d01e57d04.mp3"
+  "c": "audio/el/unicorn/en/kid_837955384f.mp3"
  },
  "다현이는 땅만 보며 터벅터벅 걸었어요.": {
   "t": "Dahyun trudged along, looking only at the ground.",
@@ -194,7 +194,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "유니콘…!": {
   "t": "A unicorn...!",
-  "c": "audio/el/unicorn/en/kid_83631a22b6.mp3"
+  "c": "audio/el/unicorn/en/kid_b33895e8e1.mp3"
  },
  "유니콘을 톡, 눌러서 인사해요.": {
   "t": "Tap the unicorn to say hello.",
@@ -246,7 +246,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"유니콘, 내일도 거기 있을 거지?\"": {
   "t": "Unicorn, will you be there tomorrow too?",
-  "c": "audio/el/unicorn/en/kid_50bde63db9.mp3"
+  "c": "audio/el/unicorn/en/kid_046f7611b8.mp3"
  },
  "\"그럼. 언제나 여기 있어.\"": {
   "t": "Of course. I'm always right here.",

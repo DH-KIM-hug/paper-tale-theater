@@ -6,7 +6,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어? 초대장이다!": {
   "t": "Oh? An invitation!",
-  "c": "audio/el/witch_candy/en/kid_6a160f342d.mp3"
+  "c": "audio/el/witch_candy/en/kid_42b76048a9.mp3"
  },
  "거리 끝 사탕 가게 창이 환하게 켜졌어요.": {
   "t": "At the end of the street, the candy shop window lit up bright.",
@@ -46,7 +46,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "으엑! 콧물이랑 응가요?": {
   "t": "Eww! Snot and poo?",
-  "c": "audio/el/witch_candy/en/kid_c79bf0a6df.mp3"
+  "c": "audio/el/witch_candy/en/kid_d5da7ba1c2.mp3"
  },
  "아기 용 콧물이랑": {
   "t": "baby dragon snot and",
@@ -146,11 +146,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "으엑! 콧물이요?": {
   "t": "Eww! Snot?",
-  "c": "audio/el/witch_candy/en/kid_abf9ae67f0.mp3"
+  "c": "audio/el/witch_candy/en/kid_7e5144742e.mp3"
  },
  "으엑! 응가요?": {
   "t": "Eww! Poo?",
-  "c": "audio/el/witch_candy/en/kid_17d45e17b9.mp3"
+  "c": "audio/el/witch_candy/en/kid_3e81334f8f.mp3"
  },
  "냐… 냄새!": {
   "t": "Nya... stinky!",
@@ -162,7 +162,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "네, 제가 할게요!": {
   "t": "Yes! I want to do it!",
-  "c": "audio/el/witch_candy/en/kid_ebd73379ad.mp3"
+  "c": "audio/el/witch_candy/en/kid_9da68a1257.mp3"
  },
  "넣고 싶은 재료를 톡 눌러 솥에 넣어요.": {
   "t": "Tap the ingredients you want to drop into the cauldron.",
@@ -326,63 +326,63 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "콧물로 만든 건데… 으웩…": {
   "t": "But it's made from snot... eww...",
-  "c": "audio/el/witch_candy/en/kid_b0f052a9ac.mp3"
+  "c": "audio/el/witch_candy/en/kid_88bbe68604.mp3"
  },
  "어? 맛있다! …딸기 사탕이다!": {
   "t": "Huh? It's yummy! ...It's strawberry candy!",
-  "c": "audio/el/witch_candy/en/kid_cc00708631.mp3"
+  "c": "audio/el/witch_candy/en/kid_869f6ca924.mp3"
  },
  "어? 맛있다! …오리 사탕이다!": {
   "t": "Huh? It's yummy! ...It's duck candy!",
-  "c": "audio/el/witch_candy/en/kid_57da9be470.mp3"
+  "c": "audio/el/witch_candy/en/kid_9b32b92276.mp3"
  },
  "어? 맛있다! …물고기 사탕이다!": {
   "t": "Huh? It's yummy! ...It's fish candy!",
-  "c": "audio/el/witch_candy/en/kid_70e5f77fd6.mp3"
+  "c": "audio/el/witch_candy/en/kid_f0475d4bb3.mp3"
  },
  "어? 맛있다! …개구리 사탕이다!": {
   "t": "Huh? It's yummy! ...It's frog candy!",
-  "c": "audio/el/witch_candy/en/kid_f89095091c.mp3"
+  "c": "audio/el/witch_candy/en/kid_c1117847a1.mp3"
  },
  "어? 맛있다! …호박 사탕이다!": {
   "t": "Huh? It's yummy! ...It's pumpkin candy!",
-  "c": "audio/el/witch_candy/en/kid_0e178f3bfc.mp3"
+  "c": "audio/el/witch_candy/en/kid_3feb8844c6.mp3"
  },
  "어? 맛있다! …박쥐 사탕이다!": {
   "t": "Huh? It's yummy! ...It's bat candy!",
-  "c": "audio/el/witch_candy/en/kid_844bc91d91.mp3"
+  "c": "audio/el/witch_candy/en/kid_9f8ef17e43.mp3"
  },
  "어? 맛있다! …초콜릿 사탕이다!": {
   "t": "Huh? It's yummy! ...It's chocolate candy!",
-  "c": "audio/el/witch_candy/en/kid_98f2041470.mp3"
+  "c": "audio/el/witch_candy/en/kid_eea9cceb7f.mp3"
  },
  "냠… 딸기 사탕이다!": {
   "t": "Yum... it's strawberry candy!",
-  "c": "audio/el/witch_candy/en/kid_0128a4e78e.mp3"
+  "c": "audio/el/witch_candy/en/kid_622c23d346.mp3"
  },
  "냠… 오리 사탕이다!": {
   "t": "Yum... it's duck candy!",
-  "c": "audio/el/witch_candy/en/kid_8d83fd7b9d.mp3"
+  "c": "audio/el/witch_candy/en/kid_4d35a5cb0e.mp3"
  },
  "냠… 물고기 사탕이다!": {
   "t": "Yum... it's fish candy!",
-  "c": "audio/el/witch_candy/en/kid_7d2bb8ec0c.mp3"
+  "c": "audio/el/witch_candy/en/kid_7d126e066f.mp3"
  },
  "냠… 개구리 사탕이다!": {
   "t": "Yum... it's frog candy!",
-  "c": "audio/el/witch_candy/en/kid_ebba83cbae.mp3"
+  "c": "audio/el/witch_candy/en/kid_cb6349650a.mp3"
  },
  "냠… 호박 사탕이다!": {
   "t": "Yum... it's pumpkin candy!",
-  "c": "audio/el/witch_candy/en/kid_1d22015738.mp3"
+  "c": "audio/el/witch_candy/en/kid_956b5fc60a.mp3"
  },
  "냠… 박쥐 사탕이다!": {
   "t": "Yum... it's bat candy!",
-  "c": "audio/el/witch_candy/en/kid_0b9a6ed443.mp3"
+  "c": "audio/el/witch_candy/en/kid_d84ee9942f.mp3"
  },
  "냠… 초콜릿 사탕이다!": {
   "t": "Yum... it's chocolate candy!",
-  "c": "audio/el/witch_candy/en/kid_67546cb1b6.mp3"
+  "c": "audio/el/witch_candy/en/kid_471b86166e.mp3"
  },
  "뿅! 다현이가 빨간 딸기가 됐어요!": {
   "t": "Poof! Dahyun turned into a red strawberry!",
@@ -410,31 +410,31 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "데굴데굴, 멈춰 줘요~!": {
   "t": "Rolly, rolly, roll... somebody stop me!",
-  "c": "audio/el/witch_candy/en/kid_5dd0ac2792.mp3"
+  "c": "audio/el/witch_candy/en/kid_27d1846ada.mp3"
  },
  "꽥꽥… 어? 내 발이!": {
   "t": "Quack, quack... huh? My feet!",
-  "c": "audio/el/witch_candy/en/kid_4ffab049fc.mp3"
+  "c": "audio/el/witch_candy/en/kid_84534689e7.mp3"
  },
  "하늘에서 수영이다!": {
   "t": "I'm swimming in the sky!",
-  "c": "audio/el/witch_candy/en/kid_4fc2c4b4b1.mp3"
+  "c": "audio/el/witch_candy/en/kid_975ac0f511.mp3"
  },
  "개굴! 지붕까지 폴짝!": {
   "t": "Ribbit! Hop, all the way up to the roof!",
-  "c": "audio/el/witch_candy/en/kid_b44e1db6d7.mp3"
+  "c": "audio/el/witch_candy/en/kid_6486839b8b.mp3"
  },
  "내 배가 등불이 됐어!": {
   "t": "My tummy turned into a lantern!",
-  "c": "audio/el/witch_candy/en/kid_1e5b9a9630.mp3"
+  "c": "audio/el/witch_candy/en/kid_1a665ede60.mp3"
  },
  "파닥파닥, 달님 안녕!": {
   "t": "Flap, flap, hello, Moon!",
-  "c": "audio/el/witch_candy/en/kid_c90806bf97.mp3"
+  "c": "audio/el/witch_candy/en/kid_308d4685fd.mp3"
  },
  "주르륵… 나 녹아요~": {
   "t": "Drip, drip... I'm melting!",
-  "c": "audio/el/witch_candy/en/kid_c7cbef5733.mp3"
+  "c": "audio/el/witch_candy/en/kid_072f24894c.mp3"
  },
  "히히, 핼러윈 마법이야!": {
   "t": "Hee hee, it's Halloween magic!",
@@ -510,7 +510,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "전부 다요?": {
   "t": "Every single one?",
-  "c": "audio/el/witch_candy/en/kid_42ffac1dca.mp3"
+  "c": "audio/el/witch_candy/en/kid_bf7f008abc.mp3"
  },
  "이번엔 빨강, 노랑, 파랑 다 넣어요! 톡 눌러요.": {
   "t": "This time, put in red, yellow and blue, all of them! Tap!",
@@ -530,7 +530,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "어? 입이 까매졌다! 유령 사탕이다~": {
   "t": "Huh? My lips turned black! It's ghost candy!",
-  "c": "audio/el/witch_candy/en/kid_473fb13869.mp3"
+  "c": "audio/el/witch_candy/en/kid_d5d26b6591.mp3"
  },
  "히히, 나도!": {
   "t": "Hee hee, me too!",
@@ -570,7 +570,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "네! 다음엔 다른 색으로요!": {
   "t": "Yes! Next time, with different colours!",
-  "c": "audio/el/witch_candy/en/kid_d88a88ddcb.mp3"
+  "c": "audio/el/witch_candy/en/kid_f903bd0725.mp3"
  },
  "사탕 마녀를 톡 눌러 인사해요.": {
   "t": "Tap the Candy Witch to say goodbye.",
@@ -586,11 +586,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "냠… 키위 사탕이다!": {
   "t": "Yum... it's kiwi candy!",
-  "c": "audio/el/witch_candy/en/kid_ab67d6046a.mp3"
+  "c": "audio/el/witch_candy/en/kid_8f6f2d1776.mp3"
  },
  "냠… 악어 사탕이다!": {
   "t": "Yum... it's crocodile candy!",
-  "c": "audio/el/witch_candy/en/kid_cd5ec9a852.mp3"
+  "c": "audio/el/witch_candy/en/kid_c6a24ee8b5.mp3"
  },
  "뿅! 다현이가 동그란 연두 키위가 됐어요!": {
   "t": "Poof! Dahyun turned into a round lime-green kiwi!",
@@ -598,7 +598,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "보송보송… 간지러워! 히히!": {
   "t": "So fuzzy... it tickles! Hee hee!",
-  "c": "audio/el/witch_candy/en/kid_0c1cc7b3c2.mp3"
+  "c": "audio/el/witch_candy/en/kid_2f81e7198b.mp3"
  },
  "통, 통, 통! 키위 공처럼 길을 통통 튀어 갔어요.": {
   "t": "Boing, boing, boing! She bounced down the street like a kiwi ball.",
@@ -610,7 +610,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "앙! 앙! 나는 악어다!": {
   "t": "Snap! Snap! I'm a crocodile!",
-  "c": "audio/el/witch_candy/en/kid_3dfc8e05d0.mp3"
+  "c": "audio/el/witch_candy/en/kid_3ccd05ecbb.mp3"
  },
  "엉금엉금 기어가다 앙! 호박이가 깜짝 놀라 폴짝 뛰었어요.": {
   "t": "She crawled along, creep, creep... then SNAP! Pumpkin the cat jumped in surprise.",
@@ -627,10 +627,10 @@ Object.assign(VOICE_LINES_EN, {
  "n3": "audio/el/witch_candy/en/nar_105464873a.mp3",
  "n4": "audio/el/witch_candy/en/nar_8e0b8be21a.mp3",
  "n5": "audio/el/witch_candy/en/nar_8e0df6c358.mp3",
- "yuck": "audio/el/witch_candy/en/kid_1afcf7aac5.mp3",
- "ghost_kid": "audio/el/witch_candy/en/kid_348d860f70.mp3",
+ "yuck": "audio/el/witch_candy/en/kid_f4bbd256d2.mp3",
+ "ghost_kid": "audio/el/witch_candy/en/kid_345b0758a3.mp3",
  "ghost_all": [
-  "audio/el/witch_candy/en/kid_348d860f70.mp3",
+  "audio/el/witch_candy/en/kid_345b0758a3.mp3",
   "audio/el/witch_candy/en/witch_8105509496.mp3",
   "audio/el/witch_candy/en/cat_ce064ffee3.mp3",
   "audio/el/witch_candy/en/rabbit_54a0fd2277.mp3",
@@ -638,7 +638,7 @@ Object.assign(VOICE_LINES_EN, {
   "audio/el/witch_candy/en/fox_ef3ee711af.mp3"
  ],
  "happy_all": [
-  "audio/el/witch_candy/en/kid_ff262a4f0c.mp3",
+  "audio/el/witch_candy/en/kid_0fccb3eb78.mp3",
   "audio/el/witch_candy/en/witch_6e2efb473c.mp3",
   "audio/el/witch_candy/en/cat_8ee4f77b7f.mp3",
   "audio/el/witch_candy/en/rabbit_8c3d1038b9.mp3",

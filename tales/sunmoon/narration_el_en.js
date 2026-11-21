@@ -266,7 +266,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"어? 털이 복슬복슬… 줄무늬도 있네!\"": {
   "t": "\"Huh? It is furry... and it has stripes!\"",
-  "c": "audio/el/sunmoon/en/girl_8349dc4fb7.mp3"
+  "c": "audio/el/sunmoon/en/girl_2ce8d3384d.mp3"
  },
  "\"어? 하얗긴 한데… 뾰족한 발톱이 있네!\"": {
   "t": "\"Huh? It is white, but... it has sharp claws!\"",
@@ -414,7 +414,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then the sister burst out laughing and blurted, \"We chopped with an axe, chop, chop, and climbed up~\"",
   "c": [
    "audio/el/sunmoon/en/nar_5c69c2a89b.mp3",
-   "audio/el/sunmoon/en/girl_55738d4884.mp3"
+   "audio/el/sunmoon/en/girl_f5a9405671.mp3"
   ]
  },
  "오빠가 \"쉿!\" 했지만… 벌써 들어 버렸어요!": {
@@ -503,7 +503,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The sister said, \"Big brother, I am scared of the night.\"",
   "c": [
    "audio/el/sunmoon/en/nar_bf2a34495d.mp3",
-   "audio/el/sunmoon/en/girl_aeeabf3020.mp3"
+   "audio/el/sunmoon/en/girl_859768cc7d.mp3"
   ]
  },
  "\"그럼 우리 바꾸자!\"": {

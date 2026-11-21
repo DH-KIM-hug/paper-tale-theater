@@ -76,7 +76,7 @@ Object.assign(NARRATION_CLIPS, {
  "생쥐예요! 반짝이는 친구를 눌러 봐요!": "audio/el/turnip/nar_3603028224.mp3",
  "할아버지: \"나는 다음이야~\"": "audio/el/turnip/grandpa_476675cbc8.mp3",
  "할머니: \"나는 다음이야~\"": "audio/el/turnip/grandma_f05025bc88.mp3",
- "손녀: \"나는 다음이야~\"": "audio/el/turnip/girl_5ff3f02c79.mp3",
+ "손녀: \"나는 다음이야~\"": "audio/el/turnip/girl_45db66d6a0.mp3",
  "강아지: \"나는 다음이야~\"": "audio/el/turnip/dog_ed804f0990.mp3",
  "고양이: \"나는 다음이야~\"": "audio/el/turnip/cat_281e4b7bec.mp3",
  "생쥐: \"나는 다음이야~\"": "audio/el/turnip/mouse_d1cfe41dc4.mp3",

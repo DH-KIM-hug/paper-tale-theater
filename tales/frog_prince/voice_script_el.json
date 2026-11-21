@@ -1,8 +1,8 @@
 {
- "notes": "ElevenLabs 목소리 배정(2026-10-21 확정): nar=Huelyn(여자 내레이터 돌려 쓰기 — 미녀와 야수 Huelyn·인어공주 Annie·빨간 자동차 Lily 다음 차례), prin=Annie(공주: 여자아이 원형, 가볍고 밝다가 7장부터 작아진다), frog=Will(개구리: 느긋한 낙천가 목소리를 느리고 살짝 쉰 개구리 말투로 — 연기 지시로만), king=Namchun(아버지 원형, 부드럽지만 단호), prince=Eric(젊은 남성 왕자 원형; 개구리와 다른 목소리 — 마법이 풀린 것을 목소리로도 알린다, 한 편 안에서 목소리 겹침 없음). 빵 세기 하나·둘·셋은 공주 목소리의 소리 대사(extra n1~n3)로만 나오고 글 말풍선은 없다. 합창 없음. 모델 eleven_v4, 배역별 settings. 교훈은 대사로 말하지 않는다(끝 화면 글자·부제만). 벽에 던지는 장면은 베개 위에 포옥 떨어지는 말로만(아픈 표현 없음).",
+ "notes": "ElevenLabs 목소리 배정(2026-10-21 확정): nar=Huelyn(여자 내레이터 돌려 쓰기 — 미녀와 야수 Huelyn·인어공주 Annie·빨간 자동차 Lily 다음 차례), prin=Annie(공주: 여자아이 원형, 가볍고 밝다가 7장부터 작아진다), frog=Will(개구리: 느긋한 낙천가 목소리를 느리고 살짝 쉰 개구리 말투로 — 연기 지시로만), king=Namchun(아버지 원형, 부드럽지만 단호), prince=Eric(젊은 남성 왕자 원형; 개구리와 다른 목소리 — 마법이 풀린 것을 목소리로도 알린다, 한 편 안에서 목소리 겹침 없음). 빵 세기 하나·둘·셋은 공주 목소리의 소리 대사(extra n1~n3)로만 나오고 글 말풍선은 없다. 합창 없음. 모델 eleven_v4, 배역별 settings. 교훈은 대사로 말하지 않는다(끝 화면 글자·부제만). 벽에 던지는 장면은 베개 위에 포옥 떨어지는 말로만(아픈 표현 없음). | 2026-11-22 사용자 결정: prin=Kurumin Cute(UiDW9qKjB9LaJDdoINsZ), 여자아이 배역 목소리 통일(Annie 에서 바꿈)",
  "voices": {
   "nar": "gnWujHp24oqX3I03lRbU",
-  "prin": "Lb7qkOn5hF8p7qfCDH8q",
+  "prin": "UiDW9qKjB9LaJDdoINsZ",
   "frog": "1SM7GgM6IMuvQlz2BwM3",
   "king": "qAZH0aMXY8tw1QufPN0D",
   "prince": "c6SfcYrb2t09NHXiT80T"

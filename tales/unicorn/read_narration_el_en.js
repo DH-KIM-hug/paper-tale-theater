@@ -14,7 +14,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "진짜 유니콘을 만나고 싶어요.": {
   "t": "I want to meet a real unicorn.",
-  "c": "audio/el/unicorn/en/kid_dbd7e73074.mp3"
+  "c": "audio/el/unicorn/en/kid_7e35fbf7c5.mp3"
  },
  "다현이는 바람에 떨어진 꽃 한 송이를 살며시 주워 바구니에 쏙 넣었어요.": {
   "t": "Dahyun gently picked up a flower the wind had dropped and popped it into her basket.",
@@ -50,7 +50,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "괜찮아, 내가 받아 줄게!": {
   "t": "It's okay, I'll catch you!",
-  "c": "audio/el/unicorn/en/kid_7e16aebab9.mp3"
+  "c": "audio/el/unicorn/en/kid_78f578f57f.mp3"
  },
  "양이 폴짝 뛰어내렸어요!": {
   "t": "The sheep hopped right down!",
@@ -62,7 +62,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "같이 가자!": {
   "t": "Let's go together!",
-  "c": "audio/el/unicorn/en/kid_dbcf53ef9e.mp3"
+  "c": "audio/el/unicorn/en/kid_2d975e7be7.mp3"
  },
  "다현이와 양은 손을 잡고 구름 길을 걸었어요.": {
   "t": "Dahyun and the sheep walked the cloud path hand in hand.",
@@ -126,7 +126,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "유니콘은… 아니구나.": {
   "t": "You're... not a unicorn.",
-  "c": "audio/el/unicorn/en/kid_d2278b1fa3.mp3"
+  "c": "audio/el/unicorn/en/kid_8b32b115e6.mp3"
  },
  "사슴은 고개를 끄덕끄덕 인사하고, 사뿐사뿐 숲속으로 돌아갔어요.": {
   "t": "The deer nodded, nod, nod, to say goodbye, and stepped softly, step, step, back into the forest.",
@@ -166,7 +166,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "자, 같이 먹자.": {
   "t": "Here, let's share.",
-  "c": "audio/el/unicorn/en/kid_af60fa923b.mp3"
+  "c": "audio/el/unicorn/en/kid_07f0f8b49b.mp3"
  },
  "다현이는 바구니를 열어 간식을 반으로 똑 나누었어요.": {
   "t": "Dahyun opened the basket and broke the snack, snap, right in half.",
@@ -182,7 +182,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "너도… 유니콘은 아니구나.": {
   "t": "You're not... a unicorn either.",
-  "c": "audio/el/unicorn/en/kid_a77e7f218f.mp3"
+  "c": "audio/el/unicorn/en/kid_02f29d3ea6.mp3"
  },
  "말은 히힝 인사하고, 다그닥다그닥 무지개 너머로 달려갔어요.": {
   "t": "The horse neighed goodbye, neigh, and galloped away, clip-clop, clip-clop, over the rainbow.",
@@ -202,7 +202,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "진짜 유니콘은… 없나 봐.": {
   "t": "Maybe... there is no real unicorn.",
-  "c": "audio/el/unicorn/en/kid_3d01e57d04.mp3"
+  "c": "audio/el/unicorn/en/kid_837955384f.mp3"
  },
  "다현이는 땅만 보며 터벅터벅 걸었어요.": {
   "t": "Dahyun trudged along, looking only at the ground.",
@@ -254,7 +254,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "유니콘…!": {
   "t": "A unicorn...!",
-  "c": "audio/el/unicorn/en/kid_83631a22b6.mp3"
+  "c": "audio/el/unicorn/en/kid_b33895e8e1.mp3"
  },
  "다현이의 눈이 반짝반짝 빛났어요. 가슴이 콩닥콩닥 뛰었지요.": {
   "t": "Dahyun's eyes shone, sparkle, sparkle. Her heart went thump, thump, thump.",
@@ -290,7 +290,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"유니콘, 내일도 거기 있을 거지?\"": {
   "t": "Unicorn, will you be there tomorrow too?",
-  "c": "audio/el/unicorn/en/kid_50bde63db9.mp3"
+  "c": "audio/el/unicorn/en/kid_046f7611b8.mp3"
  },
  "\"그럼. 언제나 여기 있어.\"": {
   "t": "Of course. I'm always right here.",

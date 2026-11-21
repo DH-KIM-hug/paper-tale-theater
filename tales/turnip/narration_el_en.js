@@ -243,7 +243,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "손녀: \"나는 다음이야~\"": {
   "t": "The granddaughter: \"I'm next~\"",
-  "c": "audio/el/turnip/en/girl_74b464e208.mp3"
+  "c": "audio/el/turnip/en/girl_00523a2154.mp3"
  },
  "강아지: \"나는 다음이야~\"": {
   "t": "The puppy: \"I'm next~\"",

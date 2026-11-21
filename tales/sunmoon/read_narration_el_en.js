@@ -206,7 +206,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"오빠, 무서워…\" 동생이 덜덜 떨며 오빠 손을 꼭 잡았어요.": {
   "t": "\"Big brother, I am scared...\" The sister trembled and held her brother's hand tight.",
   "c": [
-   "audio/el/sunmoon/en/girl_291a6e6bdd.mp3",
+   "audio/el/sunmoon/en/girl_d360109bd7.mp3",
    "audio/el/sunmoon/en/nar_e3355319e6.mp3"
   ]
  },
@@ -293,7 +293,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then the sister burst out laughing and blurted, \"We chopped with an axe, chop, chop, and climbed up~\"",
   "c": [
    "audio/el/sunmoon/en/nar_5c69c2a89b.mp3",
-   "audio/el/sunmoon/en/girl_55738d4884.mp3"
+   "audio/el/sunmoon/en/girl_f5a9405671.mp3"
   ]
  },
  "오빠가 \"쉿!\" 했지만… 벌써 들어 버렸어요!": {
@@ -398,7 +398,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The sister said, \"Big brother, I am scared of the night.\"",
   "c": [
    "audio/el/sunmoon/en/nar_bf2a34495d.mp3",
-   "audio/el/sunmoon/en/girl_aeeabf3020.mp3"
+   "audio/el/sunmoon/en/girl_859768cc7d.mp3"
   ]
  },
  "\"그럼 우리 바꾸자!\"": {

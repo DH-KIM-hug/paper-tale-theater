@@ -8,7 +8,7 @@ Object.assign(NARRATION_CLIPS, {
  "셋! 바구니가 가득 찼어요.": "audio/el/red_hood/nar_7921f937b7.mp3",
  "엄마가 빨간 모자를 머리에 씌워 주었어요. 빨간 모자가 한 번 빙글 돌았어요.": "audio/el/red_hood/nar_70712c0389.mp3",
  "\"길에서 벗어나면 안 돼. 모르는 사람과 이야기하지도 마.\"": "audio/el/red_hood/mama_333b128053.mp3",
- "\"네, 엄마! 약속해요.\"": "audio/el/red_hood/hood_4e43b81bf3.mp3",
+ "\"네, 엄마! 약속해요.\"": "audio/el/red_hood/hood_67ded4b419.mp3",
  "엄마와 빨간 모자는 새끼손가락을 걸었어요.": "audio/el/red_hood/nar_b0b08201be.mp3",
  "빨간 모자는 콧노래를 부르며 숲길을 걸어요.": "audio/el/red_hood/nar_8f1132afcf.mp3",
  "어, 나무 뒤에서 뭔가 보슬보슬한 게 살짝 보였어요. 꼬리였나 봐요!": "audio/el/red_hood/nar_3a3295cbc6.mp3",
@@ -17,12 +17,12 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/red_hood/wolf_84a14085b0.mp3"
  ],
  "\"할머니 댁에 가요.\" 빨간 모자가 대답했어요.": [
-  "audio/el/red_hood/hood_3d18c0e24b.mp3",
+  "audio/el/red_hood/hood_1a2ff88fe0.mp3",
   "audio/el/red_hood/nar_11d45d24ae.mp3"
  ],
  "\"꽃을 따 가면 할머니가 참 좋아하실 텐데~\"": "audio/el/red_hood/wolf_30a4ba91f1.mp3",
  "\"좋은 생각이에요!\" 빨간 모자는 엄마와 한 약속을 깜빡하고 말았어요.": [
-  "audio/el/red_hood/hood_dc508372d6.mp3",
+  "audio/el/red_hood/hood_49440de478.mp3",
   "audio/el/red_hood/nar_81ea540a16.mp3"
  ],
  "꽃밭에 알록달록 꽃이 가득해요. 꽃을 같은 색 꽃병에 쏙쏙 담아요!": "audio/el/red_hood/nar_cd446af80c.mp3",
@@ -36,7 +36,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/red_hood/nar_2e15813edb.mp3"
  ],
  "\"할머니, 오셨어요?\" 그런데 침대 속 할머니가 어딘가 이상해요.": [
-  "audio/el/red_hood/hood_19c8f8af0f.mp3",
+  "audio/el/red_hood/hood_bb9747f68e.mp3",
   "audio/el/red_hood/nar_03bbde0b16.mp3"
  ],
  "벽에 걸린 진짜 할머니 사진과 비교해서 다른 곳을 찾아봐요!": "audio/el/red_hood/nar_4ec7fa9cf1.mp3",
@@ -59,25 +59,25 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "빨간 모자도 옷장에서 살그머니 나왔어요. \"할머니!\"": [
   "audio/el/red_hood/nar_0b33760e71.mp3",
-  "audio/el/red_hood/hood_5013ca892e.mp3"
+  "audio/el/red_hood/hood_e8a8977066.mp3"
  ],
  "할머니 집 식탁에서 모두 함께 차를 마셔요. 바구니 속 간식을 한 가지씩 나눠 줘요!": "audio/el/red_hood/nar_8c508c517e.mp3",
  "\"모두 고마워요!\" 할머니는 활짝 웃었어요.": [
   "audio/el/red_hood/granny_88d6fd10ad.mp3",
   "audio/el/red_hood/nar_955c5abd7c.mp3"
  ],
- "\"이제 약속을 꼭 지킬게요. 길에서 벗어나지 않고, 모르는 사람과는 이야기하지 않을래요.\"": "audio/el/red_hood/hood_fa376d1692.mp3",
+ "\"이제 약속을 꼭 지킬게요. 길에서 벗어나지 않고, 모르는 사람과는 이야기하지 않을래요.\"": "audio/el/red_hood/hood_405fb461a4.mp3",
  "빨간 모자는 새끼손가락을 걸고, 오늘 일을 오래오래 기억했어요.": "audio/el/red_hood/nar_9dd513f45c.mp3",
  "톡! 바구니에 담아요.": "audio/el/red_hood/nar_210bc9bb5c.mp3",
  "빨간 모자를 톡! 새끼손가락을 걸어요.": "audio/el/red_hood/nar_5160babbec.mp3",
  "빨간 모자를 톡톡톡! 한 걸음씩 걸어가요.": "audio/el/red_hood/nar_620d95ef90.mp3",
  "꽃이랑 색깔이 같은 꽃병이 어디 있을까?": "audio/el/red_hood/nar_84da465409.mp3",
  "빨간 모자를 톡! 똑똑똑 노크해요.": "audio/el/red_hood/nar_a19920b07a.mp3",
- "\"할머니, 귀가 왜 이렇게 커요?\"": "audio/el/red_hood/hood_307fa1a624.mp3",
+ "\"할머니, 귀가 왜 이렇게 커요?\"": "audio/el/red_hood/hood_3b4e5a5554.mp3",
  "\"네 말을 잘 들으려고 그렇지~\"": "audio/el/red_hood/wolf_ebcd8e8cf9.mp3",
- "\"할머니, 눈이 왜 이렇게 노랗고 커요?\"": "audio/el/red_hood/hood_d51cd1e408.mp3",
+ "\"할머니, 눈이 왜 이렇게 노랗고 커요?\"": "audio/el/red_hood/hood_7c35e5fa6e.mp3",
  "\"너를 잘 보려고 그렇지~\"": "audio/el/red_hood/wolf_5d82bd285b.mp3",
- "\"할머니, 입이 왜 이렇게 길어요?\"": "audio/el/red_hood/hood_79f6877b7e.mp3",
+ "\"할머니, 입이 왜 이렇게 길어요?\"": "audio/el/red_hood/hood_385d2b34ce.mp3",
  "\"그건 말이지… 어흥! 놀랐지?\"": "audio/el/red_hood/wolf_f1cd915abc.mp3",
  "사진 속 할머니와 달라 보이는 곳을 톡!": "audio/el/red_hood/nar_75f81161cc.mp3",
  "이불 말고, 얼굴을 자세히 봐요.": "audio/el/red_hood/nar_5824d734eb.mp3",

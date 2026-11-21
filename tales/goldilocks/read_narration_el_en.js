@@ -52,7 +52,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "She picked three flowers. Oh? Look, a log cabin!",
   "c": [
    "audio/el/goldilocks/en/nar_e56d513455.mp3",
-   "audio/el/goldilocks/en/goldi_9fbead61d8.mp3"
+   "audio/el/goldilocks/en/goldi_e08f68ac81.mp3"
   ]
  },
  "골디락스는 통나무집 문 앞으로 다가갔어요.": {
@@ -61,7 +61,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "우와, 커다란 문이에요.": {
   "t": "Wow, what a big door!",
-  "c": "audio/el/goldilocks/en/goldi_257090509e.mp3"
+  "c": "audio/el/goldilocks/en/goldi_543200634a.mp3"
  },
  "똑똑, 똑똑! 골디락스가 문을 두드렸어요.": {
   "t": "Knock, knock! Knock, knock! Goldilocks tapped on the door.",
@@ -69,7 +69,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "골디락스: \"계세요?\"": {
   "t": "Goldilocks: \"Hello? Is anyone home?\"",
-  "c": "audio/el/goldilocks/en/goldi_0a107cdb25.mp3"
+  "c": "audio/el/goldilocks/en/goldi_a685b481b4.mp3"
  },
  "아무 대답이 없어요.": {
   "t": "There is no answer.",
@@ -93,7 +93,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "펄펄 너무 뜨거워요!": {
   "t": "Hot, hot! It's way too hot!",
-  "c": "audio/el/goldilocks/en/goldi_ccc6d1e7e0.mp3"
+  "c": "audio/el/goldilocks/en/goldi_0d648e8aa7.mp3"
  },
  "이번엔 중간 그릇을 한 입 호록!": {
   "t": "Then a sip from the medium bowl. Slurp!",
@@ -101,7 +101,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "얼음처럼 너무 차가워요!": {
   "t": "It's way too cold, like ice!",
-  "c": "audio/el/goldilocks/en/goldi_05ca445082.mp3"
+  "c": "audio/el/goldilocks/en/goldi_dcaa00ebc1.mp3"
  },
  "김이 살짝 나는 작은 그릇이에요!": {
   "t": "It's the small bowl with just a little steam!",
@@ -110,7 +110,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "딱 좋아요! 냠냠, 작은 그릇을 다 먹어 버렸어요.": {
   "t": "Just right! Yum, yum! She ate up the whole small bowl.",
   "c": [
-   "audio/el/goldilocks/en/goldi_64d3108fb0.mp3",
+   "audio/el/goldilocks/en/goldi_3ae1e1cc77.mp3",
    "audio/el/goldilocks/en/nar_5e885d8da4.mp3"
   ]
  },
@@ -129,7 +129,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "너무 높아요! 다리가 달랑달랑.": {
   "t": "It's too high! Her legs dangle, dangle.",
   "c": [
-   "audio/el/goldilocks/en/goldi_ba92044f18.mp3",
+   "audio/el/goldilocks/en/goldi_c3d124b0a3.mp3",
    "audio/el/goldilocks/en/nar_72a4515090.mp3"
   ]
  },
@@ -148,7 +148,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "딱 맞아요! 그런데…": {
   "t": "Just right! But then...",
   "c": [
-   "audio/el/goldilocks/en/goldi_b37996e869.mp3",
+   "audio/el/goldilocks/en/goldi_961ac90060.mp3",
    "audio/el/goldilocks/en/nar_0b7bb81c06.mp3"
   ]
  },
@@ -159,7 +159,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "하암, 졸려요. 위층에 침대가 세 개 있어요.": {
   "t": "Yaaawn, I'm sleepy. There are three beds upstairs.",
   "c": [
-   "audio/el/goldilocks/en/goldi_b1a34f2aab.mp3",
+   "audio/el/goldilocks/en/goldi_d0e6ac69b5.mp3",
    "audio/el/goldilocks/en/nar_97cdd9a446.mp3"
   ]
  },
@@ -173,7 +173,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "너무 딱딱해요!": {
   "t": "It's too hard!",
-  "c": "audio/el/goldilocks/en/goldi_ca0a60f30f.mp3"
+  "c": "audio/el/goldilocks/en/goldi_9524a1cafb.mp3"
  },
  "중간 침대는 푹신푹신, 몸이 쑥 파묻혔어요.": {
   "t": "The medium bed was squishy, squashy, and she sank right in.",
@@ -181,7 +181,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "너무 푹신해요!": {
   "t": "It's too soft!",
-  "c": "audio/el/goldilocks/en/goldi_6fadd0180d.mp3"
+  "c": "audio/el/goldilocks/en/goldi_76151e92b6.mp3"
  },
  "작은 침대는 포근포근, 딱 좋았어요.": {
   "t": "The small bed was snug and cozy, just right.",
@@ -259,7 +259,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Goldilocks turned around and said, \"I'm sorry.\"",
   "c": [
    "audio/el/goldilocks/en/nar_629a8eb5c4.mp3",
-   "audio/el/goldilocks/en/goldi_c9434ff4d8.mp3"
+   "audio/el/goldilocks/en/goldi_a90f8a23c4.mp3"
   ]
  },
  "골디락스는 걸린 치마를 살살 빼냈어요.": {
@@ -272,7 +272,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "골디락스: \"허락 없이 들어와서 미안해요.\"": {
   "t": "Goldilocks: \"I'm sorry I came in without asking.\"",
-  "c": "audio/el/goldilocks/en/goldi_d28d03c545.mp3"
+  "c": "audio/el/goldilocks/en/goldi_24ea445a5d.mp3"
  },
  "아빠 곰: \"괜찮아. 다음엔 똑똑 하고 기다려 줘.\"": {
   "t": "Papa Bear: \"It's okay. Next time, knock and wait for us.\"",
@@ -280,7 +280,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "골디락스: \"아기 곰 의자, 같이 고칠래?\"": {
   "t": "Goldilocks: \"Shall we fix Baby Bear's chair together?\"",
-  "c": "audio/el/goldilocks/en/goldi_e8317f05d3.mp3"
+  "c": "audio/el/goldilocks/en/goldi_ba98b31877.mp3"
  },
  "뚝딱뚝딱, 쿵쿵! 골디락스와 곰 가족이 함께 의자를 고쳤어요.": {
   "t": "Bang, bang! Tap, tap! Goldilocks and the bears fixed the chair together.",

@@ -30,7 +30,7 @@ Object.assign(NARRATION_CLIPS, {
  "헨젤은 조약돌을 하나씩 살짝 떨어뜨렸어요.": "audio/el/hansel/nar_55b9a180ce.mp3",
  "아빠는 둘을 숲에 남겨 두고 돌아갔어요.": "audio/el/hansel/nar_6a9dc99bda.mp3",
  "\"아빠? 아빠!\" 그레텔이 불러 봤지만, 숲은 조용했어요.": [
-  "audio/el/hansel/gret_93a92a3a9b.mp3",
+  "audio/el/hansel/gret_c4845c030a.mp3",
   "audio/el/hansel/nar_22fb480acd.mp3"
  ],
  "밤이 되자 조약돌이 달빛에 반짝반짝 빛났어요. 둘은 조약돌을 따라 집으로 돌아왔어요.": "audio/el/hansel/nar_e138c977e4.mp3",
@@ -52,14 +52,14 @@ Object.assign(NARRATION_CLIPS, {
  "빈터에는 빨간 산딸기가 가득했어요. 둘은 냠냠 따 먹었어요.": "audio/el/hansel/nar_c2ade35101.mp3",
  "아삭아삭, 새콤달콤! 손가락이 빨갛게 물들었어요.": "audio/el/hansel/nar_0b77d61138.mp3",
  "\"오빠, 이것도 먹어 봐!\" 그레텔이 제일 큰 산딸기를 건넸어요.": [
-  "audio/el/hansel/gret_78e8151936.mp3",
+  "audio/el/hansel/gret_1dee8f5bca.mp3",
   "audio/el/hansel/nar_17e21b1ac3.mp3"
  ],
  "배가 부르니 졸려서 둘은 나무 밑에서 깜빡 잠이 들었어요.": "audio/el/hansel/nar_0475948fb7.mp3",
  "눈을 떠 보니 아빠가 보이지 않았어요. 둘은 길을 잃었어요.": "audio/el/hansel/nar_058ac9fb1d.mp3",
  "그레텔은 마음이 조금 무서웠어요.": "audio/el/hansel/nar_82ab2b2be7.mp3",
  "\"오빠, 무서워…\" 그레텔이 헨젤의 손을 꼭 잡았어요.": [
-  "audio/el/hansel/gret_b9b412fe4b.mp3",
+  "audio/el/hansel/gret_ec1b1ff683.mp3",
   "audio/el/hansel/nar_3ca4eae2d1.mp3"
  ],
  "\"괜찮아, 빵 부스러기 길을 따라가자!\" 헨젤이 말했어요.": [
@@ -74,7 +74,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/hansel/nar_a8d07e2378.mp3"
  ],
  "\"아이고, 우리 길이 없어졌네!\" 그레텔이 울상을 지었어요.": [
-  "audio/el/hansel/gret_0e53d2cc9d.mp3",
+  "audio/el/hansel/gret_c6b1640c19.mp3",
   "audio/el/hansel/nar_a46e879c8d.mp3"
  ],
  "새는 포르르, 하늘로 날아가 버렸어요.": "audio/el/hansel/nar_9c234e5b05.mp3",
@@ -106,7 +106,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "그레텔은 눈물이 그렁그렁했어요. \"오빠, 내가 꼭 꺼내 줄게!\"": [
   "audio/el/hansel/nar_f5a8a777a5.mp3",
-  "audio/el/hansel/gret_b751316dbf.mp3"
+  "audio/el/hansel/gret_380b21d5cc.mp3"
  ],
  "그레텔은 마녀가 낮잠을 자는 사이에 열쇠 세 개를 가져왔어요.": "audio/el/hansel/nar_20eb297922.mp3",
  "동그라미, 세모, 별 모양. 그레텔은 자물쇠 구멍을 요리조리 살펴보았어요.": "audio/el/hansel/nar_086f721d26.mp3",
@@ -122,7 +122,7 @@ Object.assign(NARRATION_CLIPS, {
  "그때 마녀가 일어나 쿵쿵 걸어왔어요. 눈이 나빠서 더듬더듬 찾았어요.": "audio/el/hansel/nar_81ecf20820.mp3",
  "그레텔은 꾀가 났어요. \"마녀님, 화덕 안에 반짝이는 게 있어요!\"": [
   "audio/el/hansel/nar_1e4def354f.mp3",
-  "audio/el/hansel/gret_6ab3b3c89f.mp3"
+  "audio/el/hansel/gret_aadf1edc27.mp3"
  ],
  "\"반짝이는 거? 어디, 어디?\" 마녀는 화덕 쪽으로 성큼성큼 갔어요.": [
   "audio/el/hansel/witch_9c08266f17.mp3",
@@ -142,7 +142,7 @@ Object.assign(NARRATION_CLIPS, {
  "집으로 가는 길에 넓은 강이 나왔어요. 다리가 없어요!": "audio/el/hansel/nar_521f7d0607.mp3",
  "강물이 콸콸, 세차게 흘렀어요.": "audio/el/hansel/nar_c316baac96.mp3",
  "\"어떡하지? 우리는 헤엄을 못 치는데.\" 그레텔이 발을 동동 굴렀어요.": [
-  "audio/el/hansel/gret_20b09b0bff.mp3",
+  "audio/el/hansel/gret_3a1876272c.mp3",
   "audio/el/hansel/nar_301cbb7359.mp3"
  ],
  "그때 흰 오리가 헤엄쳐 왔어요.": "audio/el/hansel/nar_37a17da952.mp3",
@@ -153,11 +153,11 @@ Object.assign(NARRATION_CLIPS, {
  "둘은 오리 등에 폴짝 올라탔어요. 오리는 둥실둥실 강을 건넜지요.": "audio/el/hansel/nar_c870f56563.mp3",
  "오리가 둘을 태우고 강을 건너 주었어요. \"고마워, 오리야!\"": [
   "audio/el/hansel/nar_10ca9a5e78.mp3",
-  "audio/el/hansel/gret_b2afa62159.mp3"
+  "audio/el/hansel/gret_b609aad3bf.mp3"
  ],
  "저 멀리 집이 보여요. 아빠가 숲에서 둘을 애타게 찾고 있었어요.": "audio/el/hansel/nar_aef4bd583d.mp3",
  "\"아빠다! 아빠!\" 그레텔이 먼저 달려갔어요.": [
-  "audio/el/hansel/gret_8b9dbd6b69.mp3",
+  "audio/el/hansel/gret_e369f25021.mp3",
   "audio/el/hansel/nar_e1851f733c.mp3"
  ],
  "\"헨젤! 그레텔!\" 아빠가 달려왔어요.": [

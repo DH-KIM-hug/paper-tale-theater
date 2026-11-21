@@ -81,7 +81,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/sunmoon/boy_4edae9863a.mp3"
  ],
  "진짜 엄마 손은 뭘까요? 잘 보고 골라 봐요!": "audio/el/sunmoon/nar_cff9c9d369.mp3",
- "\"어? 털이 복슬복슬… 줄무늬도 있네!\"": "audio/el/sunmoon/girl_abe13d044e.mp3",
+ "\"어? 털이 복슬복슬… 줄무늬도 있네!\"": "audio/el/sunmoon/girl_6c6073b895.mp3",
  "\"어? 하얗긴 한데… 뾰족한 발톱이 있네!\"": "audio/el/sunmoon/boy_1226106247.mp3",
  "진짜 엄마 손을 톡 골라 봐요!": "audio/el/sunmoon/nar_f7744ab201.mp3",
  "엄마 손은 손가락이 길쭉하고 떡가루가 묻어 있어요.": "audio/el/sunmoon/nar_6790f5d4c7.mp3",
@@ -133,7 +133,7 @@ Object.assign(NARRATION_CLIPS, {
  "미끌 쭈르륵! 호랑이는 자꾸자꾸 미끄러졌어요.": "audio/el/sunmoon/nar_4eec8ba63a.mp3",
  "그때 동생이 깔깔 웃으며 말해 버렸어요. \"도끼로 콕콕 찍고 올라왔지~\"": [
   "audio/el/sunmoon/nar_2e50da0374.mp3",
-  "audio/el/sunmoon/girl_92c64018a9.mp3"
+  "audio/el/sunmoon/girl_a0f31990d4.mp3"
  ],
  "오빠가 \"쉿!\" 했지만… 벌써 들어 버렸어요!": [
   "audio/el/sunmoon/nar_b591d9d315.mp3",
@@ -165,7 +165,7 @@ Object.assign(NARRATION_CLIPS, {
  "하늘 나라에 간 오빠는 해님이, 동생은 달님이 되었어요.": "audio/el/sunmoon/nar_ea4c6a484e.mp3",
  "동생이 말했어요. \"오빠, 나는 밤이 무서워요.\"": [
   "audio/el/sunmoon/nar_c7a2ac1ab8.mp3",
-  "audio/el/sunmoon/girl_7caadcf71f.mp3"
+  "audio/el/sunmoon/girl_c819c2e85a.mp3"
  ],
  "\"그럼 우리 바꾸자!\"": "audio/el/sunmoon/boy_4fac98e0ca.mp3",
  "그래서 동생은 해님, 오빠는 달님이 되었답니다.": "audio/el/sunmoon/nar_9cfda619a5.mp3",

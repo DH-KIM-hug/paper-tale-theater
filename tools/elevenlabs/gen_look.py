@@ -10,9 +10,9 @@ KEY = open(os.path.expanduser('~/.config/elevenlabs/key')).read().strip()
 MODEL0 = 'eleven_v3'
 TAG = {'happy': '[cheerful] ', 'sad': '[sad] ', 'angry': '[angry] ', 'whisper': '[whispers] ', 'toneup': '[excited] ', 'tonedown': '[calm] '}
 SETTINGS = {'stability': 0.5, 'similarity_boost': 0.75, 'style': 0.3}
-V = dict(Hopsi='ygoBNrnmTEdu5NtDTmAY', Annie='Lb7qkOn5hF8p7qfCDH8q', Teddy='XjGYkUkzth8BPs29fmcV', Mark='DUnzBkwtjRWXPr6wRbmL', Emmaline='nDJIICjR9zfJExIFeSCN', Lulu='ocZQ262SsZb9RIxcQBOj')
+V = dict(Hopsi='ygoBNrnmTEdu5NtDTmAY', Annie='Lb7qkOn5hF8p7qfCDH8q', Teddy='XjGYkUkzth8BPs29fmcV', Mark='DUnzBkwtjRWXPr6wRbmL', Emmaline='nDJIICjR9zfJExIFeSCN', Lulu='ocZQ262SsZb9RIxcQBOj', Kurumin='UiDW9qKjB9LaJDdoINsZ')
 # 동화: [(자리, 배역, 모습, 목소리)]
-JOBS = {'red_car': [('B', 'child', 'g', 'Annie')], 'unicorn': [('A', 'kid', 'b', 'Teddy')], 'witch_candy': [('A', 'kid', 'b', 'Teddy')],
+JOBS = {'red_car': [('B', 'child', 'g', 'Kurumin')], 'unicorn': [('A', 'kid', 'b', 'Teddy')], 'witch_candy': [('A', 'kid', 'b', 'Teddy')],
         'kkultteok': [('A', 'nuna', 'b', 'Mark'), ('B', 'oppa', 'g', 'Emmaline'), ('C', 'agi', 'g', 'Lulu')]}
 dry = '--dry' in sys.argv
 only = sys.argv[sys.argv.index('--only') + 1] if '--only' in sys.argv else None

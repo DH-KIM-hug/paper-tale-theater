@@ -1,7 +1,7 @@
 {
  "voices": {
   "nar": "pFZP5JQG7iQjIQuC4Bku",
-  "hood": "Lb7qkOn5hF8p7qfCDH8q",
+  "hood": "UiDW9qKjB9LaJDdoINsZ",
   "wolf": "EkK5I93UQWFDigLMpZcX",
   "granny": "gnWujHp24oqX3I03lRbU",
   "mama": "hpp4J3VqNfWAUOO0d1Us",
@@ -832,5 +832,5 @@
    ]
   }
  ],
- "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, hood=Annie, wolf=Brian, granny=Huelyn, mama=Bella, hunter=Eric"
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Lily, hood=Annie, wolf=Brian, granny=Huelyn, mama=Bella, hunter=Eric | 2026-11-22 사용자 결정: hood=Kurumin Cute(UiDW9qKjB9LaJDdoINsZ), 여자아이 배역 목소리 통일(Annie 에서 바꿈)"
 }

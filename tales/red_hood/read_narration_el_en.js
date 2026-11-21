@@ -33,7 +33,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"네, 엄마! 약속해요.\"": {
   "t": "Yes, Mother! I promise.",
-  "c": "audio/el/red_hood/en/hood_bad77ce349.mp3"
+  "c": "audio/el/red_hood/en/hood_b29bd34d3a.mp3"
  },
  "엄마와 빨간 모자는 새끼손가락을 걸었어요.": {
   "t": "Mother and Red Hood hooked their little fingers together.",
@@ -65,7 +65,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"할머니 댁에 가요.\" 빨간 모자가 대답했어요.": {
   "t": "I'm going to Grandmother's house. Red Hood answered.",
   "c": [
-   "audio/el/red_hood/en/hood_fc0b496855.mp3",
+   "audio/el/red_hood/en/hood_0db92e965f.mp3",
    "audio/el/red_hood/en/nar_2d999dc6a9.mp3"
   ]
  },
@@ -80,7 +80,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"좋은 생각이에요!\" 빨간 모자는 엄마와 한 약속을 깜빡하고 말았어요.": {
   "t": "What a good idea! Red Hood forgot her promise to Mother.",
   "c": [
-   "audio/el/red_hood/en/hood_8ff950eb68.mp3",
+   "audio/el/red_hood/en/hood_f12830acb6.mp3",
    "audio/el/red_hood/en/nar_04f3c7f3aa.mp3"
   ]
  },
@@ -157,13 +157,13 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"할머니, 오셨어요?\" 그런데 침대 속 할머니가 어딘가 이상해요.": {
   "t": "Grandmother, are you here? But Grandmother in the bed looked a little odd.",
   "c": [
-   "audio/el/red_hood/en/hood_7b3f756d31.mp3",
+   "audio/el/red_hood/en/hood_884198af42.mp3",
    "audio/el/red_hood/en/nar_f940374407.mp3"
   ]
  },
  "\"할머니, 귀가 왜 이렇게 커요?\"": {
   "t": "Grandmother, why are your ears so big?",
-  "c": "audio/el/red_hood/en/hood_973aeb3afc.mp3"
+  "c": "audio/el/red_hood/en/hood_bc23d97850.mp3"
  },
  "\"네 말을 잘 들으려고 그렇지~\"": {
   "t": "All the better to hear you with~",
@@ -171,7 +171,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"할머니, 눈이 왜 이렇게 노랗고 커요?\"": {
   "t": "Grandmother, why are your eyes so big and yellow?",
-  "c": "audio/el/red_hood/en/hood_17d028308f.mp3"
+  "c": "audio/el/red_hood/en/hood_5776519eed.mp3"
  },
  "\"너를 잘 보려고 그렇지~\"": {
   "t": "All the better to see you with~",
@@ -179,7 +179,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "\"할머니, 입이 왜 이렇게 길어요?\"": {
   "t": "Grandmother, why is your mouth so long?",
-  "c": "audio/el/red_hood/en/hood_f37ecc4d74.mp3"
+  "c": "audio/el/red_hood/en/hood_91265b9f26.mp3"
  },
  "\"그건 말이지… 어흥! 놀랐지?\"": {
   "t": "Well, you see... Roar! Did I scare you?",
@@ -244,7 +244,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Red Hood crept out of the wardrobe too. Grandma!",
   "c": [
    "audio/el/red_hood/en/nar_7529118b95.mp3",
-   "audio/el/red_hood/en/hood_689b78a4c3.mp3"
+   "audio/el/red_hood/en/hood_011bf89132.mp3"
   ]
  },
  "\"아이고, 우리 강아지!\" 할머니는 빨간 모자를 꼭 끌어안았어요.": {
@@ -276,13 +276,13 @@ Object.assign(NARRATION_CLIPS_EN, {
  "\"엄마 말을 안 들어서 큰일 날 뻔했어요.\" 빨간 모자는 고개를 푹 숙였어요.": {
   "t": "\"I didn't listen to Mother, and I almost got into big trouble.\" Red Hood hung her head low.",
   "c": [
-   "audio/el/red_hood/en/hood_026cd3787e.mp3",
+   "audio/el/red_hood/en/hood_4a801eb62e.mp3",
    "audio/el/red_hood/en/nar_8f82c0bbb7.mp3"
   ]
  },
  "\"이제 약속을 꼭 지킬게요. 길에서 벗어나지 않고, 모르는 사람과는 이야기하지 않을래요.\"": {
   "t": "I'll keep my promise now. I won't leave the path, and I won't talk to strangers.",
-  "c": "audio/el/red_hood/en/hood_47b9ae6252.mp3"
+  "c": "audio/el/red_hood/en/hood_634d5e92cc.mp3"
  },
  "빨간 모자는 새끼손가락을 걸고, 오늘 일을 오래오래 기억했어요.": {
   "t": "Red Hood hooked her little finger again, and remembered today for a long, long time.",

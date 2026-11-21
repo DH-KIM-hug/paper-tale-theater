@@ -1,7 +1,7 @@
 {
  "voices": {
   "nar": "gnWujHp24oqX3I03lRbU",
-  "kong": "Lb7qkOn5hF8p7qfCDH8q",
+  "kong": "UiDW9qKjB9LaJDdoINsZ",
   "pat": "FGY2WhTYpPnrIDTdsKH5",
   "step": "TC0Zp7WVFzhA8zpTlRqV",
   "toad": "pqHfZKP75CvOlQylNhV4",
@@ -70,7 +70,7 @@
   "won",
   "sparrow"
  ],
- "notes": "ElevenLabs 목소리 확정 배정: nar=Huelyn, kong=Annie, pat=Laura, step=Matilda, toad=Bill, ox=Roger, fairy=Lily, won=Daniel, sparrow=Jessica",
+ "notes": "ElevenLabs 목소리 확정 배정: nar=Huelyn, kong=Annie, pat=Laura, step=Matilda, toad=Bill, ox=Roger, fairy=Lily, won=Daniel, sparrow=Jessica | 2026-11-22 사용자 결정: kong=Kurumin Cute(UiDW9qKjB9LaJDdoINsZ), 여자아이 배역 목소리 통일(Annie 에서 바꿈)",
  "lines": [
   {
    "text": "옛날 옛날에 마음씨 고운 콩쥐가 살았어요.",
