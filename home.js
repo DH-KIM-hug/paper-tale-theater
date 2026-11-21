@@ -1540,19 +1540,19 @@
     const E = Entitlements, nm = namesOn();
     const orig = TALES.filter(t => t.origin === 'original' && t.ready).length;
     const menu = isApp
-      ? (nm ? L('소리와 자막, 놀이 시간, 언어, 우리 아이 이름을 정하고 이용권도 볼 수 있어요.', 'Set sound and captions, play time, language and your child\'s name, and see your access.')
-            : L('소리와 자막, 놀이 시간, 언어를 정하고 이용권도 볼 수 있어요.', 'Set sound and captions, play time and language, and see your access.'))
-      : L('소리와 자막, 놀이 시간, 언어를 정할 수 있어요.', 'Set sound and captions, play time and language.');
+      ? (nm ? L('소리와 자막, 놀이 시간, 언어, 우리 아이 이름을 정하고 이용권도 볼 수 있습니다.', 'Set sound and captions, play time, language and your child\'s name, and see your access.')
+            : L('소리와 자막, 놀이 시간, 언어를 정하고 이용권도 볼 수 있습니다.', 'Set sound and captions, play time and language, and see your access.'))
+      : L('소리와 자막, 놀이 시간, 언어를 정할 수 있습니다.', 'Set sound and captions, play time and language.');
     return [
       { pic: 'assets/banner/rabbit.webp', chip: 'assets/ui/hand.webp', t: L('낮에는 톡톡 놀이', 'Daytime: tap and play'),
-        d: [L('\'동화 놀이\'에서 톡 누르고, 고르고, 차례대로 놓으며 이야기를 이어 가요. 틀려도 혼나지 않아요.', 'In Tale Play, children tap, choose and put things in order to keep the story going. A wrong answer is never punished.')] },
+        d: [L('\'동화 놀이\'에서 톡 누르고, 고르고, 차례대로 놓으며 이야기를 이어 갑니다.', 'In Tale Play, children tap, choose and put things in order to keep the story going.')] },
       { pic: 'assets/banner/sunmoon.webp', chip: 'assets/ui/tab_night.webp', t: L('밤에는 읽어 주기', 'Nighttime: Read to Me'),
-        d: [L('\'읽어 주기\'를 고르면 이야기를 처음부터 끝까지 읽어 줘요. 화면을 꺼도 멈추지 않아요.', 'Choose Read to Me and a tale is read from start to finish. It keeps playing with the screen off.')] },
-      { pic: 'assets/banner/three_pigs.webp', chip: 'assets/ui/g_lang.webp', t: L('영어로도 들어요', 'Listen in two languages'),
-        d: [L('동화를 영어로도 들을 수 있어요. 한국어와 같은 목소리가 천천히 읽어 줘요. 언어는 보호자 메뉴에서 바꿔요.', 'Tales can be heard in English and in Korean, read slowly by the same voice. Change the language in the grown-up menu.')] },
+        d: [L('\'읽어 주기\'를 고르면 이야기를 처음부터 끝까지 읽어 줍니다. 화면을 꺼도 멈추지 않습니다.', 'Choose Read to Me and a tale is read from start to finish. It keeps playing with the screen off.')] },
+      { pic: 'assets/banner/three_pigs.webp', chip: 'assets/ui/g_lang.webp', t: L('영어로도 듣기', 'Listen in two languages'),
+        d: [L('동화를 영어로도 들을 수 있습니다. 한국어와 같은 목소리가 천천히 읽어 줍니다. 언어는 보호자 메뉴에서 바꾸실 수 있습니다.', 'Tales can be heard in English and in Korean, read slowly by the same voice. Change the language in the grown-up menu.')] },
       { panel: true, t: L('보호자 메뉴', 'Grown-up menu'),
-        d: [L('오른쪽 위 톱니를 1초 동안 꾹 누르면 열려요. ', 'Hold the gear at the top right for 1 second. ') + menu,
-          ...(isApp ? [L(`항상 무료인 동화 ${E.FREE_ALWAYS.length}편과 창작 동화 ${orig}편, 매주 바뀌는 무료 동화 ${E.PER_WEEK}편이 있어요. 별 조각 ${E.STAR_NEED}개를 모으면 잠긴 동화 한 편을 열 수 있어요.`,
+        d: [L('오른쪽 위 톱니를 1초 동안 꾹 누르면 열립니다. ', 'Hold the gear at the top right for 1 second. ') + menu,
+          ...(isApp ? [L(`항상 무료인 동화 ${E.FREE_ALWAYS.length}편과 창작 동화 ${orig}편, 매주 바뀌는 무료 동화 ${E.PER_WEEK}편이 있습니다. 별 조각 ${E.STAR_NEED}개를 모으면 잠긴 동화 한 편을 열 수 있습니다.`,
             `${enNum(E.FREE_ALWAYS.length, true)} tales are always free, the ${enNum(orig)} original tales are free, and ${enNum(E.PER_WEEK)} more are free each week. ${enNum(E.STAR_NEED, true)} star pieces open one locked tale.`)] : [])] }
     ];
   }
