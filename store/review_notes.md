@@ -1,6 +1,6 @@
 # 심사 노트 (App Review Information > Notes)
 
-작성일 2026-11-06, 2026-11-07 갱신(이름 설정 2판·뒤로 가기·무음 모드·서버 주소 반영), 2026-11-13 갱신(공지사항·의견 보내기). 아래 영어 본문(3969자, 2026-11-13 스크립트로 다시 셈 — ``` 안 본문 글자 수, 칸 한도 4000자 이내)을 'Notes' 칸에 그대로 붙여 넣고, 한국어는 사용자 확인용입니다. 로그인 정보 칸은 **'로그인 필요 없음'** 으로 체크(Sign-in required 끄기). 연락처는 hello@ddoystory.com (전화번호는 사용자가 입력).
+작성일 2026-11-06, 2026-11-07 갱신(이름 설정 2판·뒤로 가기·무음 모드·서버 주소 반영), 2026-11-13 갱신(공지사항·의견 보내기). 아래 영어 본문(3985자, 2026-11-22 스크립트로 다시 셈 — ``` 안 본문 글자 수, 칸 한도 4000자 이내)을 'Notes' 칸에 그대로 붙여 넣고, 한국어는 사용자 확인용입니다. 로그인 정보 칸은 **'로그인 필요 없음'** 으로 체크(Sign-in required 끄기). 연락처는 hello@ddoystory.com (전화번호는 사용자가 입력).
 
 ## English (paste this)
 ```
@@ -30,7 +30,7 @@ CHILD'S NAME AND HERO LOOK (optional; grown-up menu > Child's name, after Unlock
 AI-GENERATED CONTENT
 - Art: OpenAI image generation tools (commercial-use plan), composed by us. No photographs of real children appear in the app. No user or AI content is created at runtime except the optional name recordings.
 - Voices: pre-recorded with ElevenLabs and Typecast (commercial plans), bundled.
-- Sounds/music: CC0, CC BY, Pixabay license (commercial use OK); credits: grown-up menu > About > Credits.
+- Sounds/music: ElevenLabs (paid plan), CC0, CC BY, Pixabay (commercial use OK); credits: grown-up menu > About > Credits.
 - Stories are public-domain folk tales and fables; text, art and performances are ours.
 Contact: hello@ddoystory.com
 ```
@@ -70,7 +70,7 @@ Contact: hello@ddoystory.com
 
 **AI 그림·음성 출처**
 - 모든 그림은 OpenAI 이미지 생성 도구(ChatGPT·Codex)로 상업 이용이 되는 요금제에서 만들고 직접 종이 오림 스타일로 구성했습니다. 앱에 실제 아이 사진은 쓰거나 보이지 않으며, 이름 녹음 말고 실행 중 만드는 콘텐츠는 없습니다.
-- 해설은 ElevenLabs·Typecast(상업 요금제)로 미리 녹음해 오디오 파일로 담았습니다.
+- 해설은 ElevenLabs·Typecast(상업 요금제)로 미리 녹음해 오디오 파일로 담았습니다. 배경 음악·일부 효과음은 ElevenLabs(유료 요금제)로 만들었습니다(2026-11-21).
 - 효과음·음악은 CC0·CC BY·Pixabay 라이선스이며 앱 안 크레딧 4줄이 있습니다(보호자 메뉴 > 정보 > 그림·소리 출처).
 - 이야기는 공공 영역의 전래동화·우화이고 글·그림·연기는 자체 제작입니다.
 

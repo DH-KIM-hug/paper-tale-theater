@@ -1244,7 +1244,7 @@
     const lines = [
       ['그림: 이 앱을 위해 새로 만든 그림입니다(OpenAI 이미지 생성).', 'Art: made for this app (OpenAI image generation).'],
       ['목소리: ElevenLabs·Typecast 로 녹음했습니다.', 'Voices: recorded with ElevenLabs and Typecast.'],
-      ['소리·음악: Pixabay, Kenney(CC0), Wikimedia Commons(퍼블릭 도메인) 녹음을 다듬어 썼습니다.', 'Sounds and music: edited from Pixabay, Kenney (CC0) and Wikimedia Commons (public domain) recordings.'],
+      ['소리·음악: ElevenLabs(유료 요금제)로 만든 배경 음악·효과음과, Pixabay, Kenney(CC0), Wikimedia Commons(퍼블릭 도메인) 녹음을 다듬어 썼습니다.', 'Sounds and music: background music and sound effects made with ElevenLabs (paid plan), plus edited Pixabay, Kenney (CC0) and Wikimedia Commons (public domain) recordings.'],
       ['클래식 곡은 작곡이 퍼블릭 도메인입니다.', 'Classical pieces are public-domain compositions.']
     ];
     box.innerHTML = '<div class="g-doc credits" tabindex="0">' + lines.map(l => `<p>${L(l[0], l[1])}</p>`).join('') + '</div>';
