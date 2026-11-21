@@ -6,6 +6,7 @@ import { APPLE_ROOT_CA_G3_PEM } from './apple_root.js';
 import { DEFAULT_BUNDLE_ID, PRODUCT_ID, RENAME_PRODUCT_ID, ReceiptConfigError, ReceiptInvalid, verifyAppleTransaction } from './apple.js';
 import { MAX_NAME_BODY, applyRenameReceipt, catalog, mergeName, nameCheck, nameLine, nameRun, nameState, quota } from './name.js';
 import { notices } from './notices.js';
+import { PRIVACY_HTML } from './privacy_page.js';
 import { GoogleConfigError, GoogleInvalid, GoogleUpstreamError, verifyGooglePurchase } from './google.js';
 
 export const CODE_ALPHABET = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
@@ -239,6 +240,10 @@ export async function handle(request, env, deps = {}) {
     if (route === 'GET /v1/notices') {
       // 공지 읽기(공개): 인증·본문 없음, 아무것도 저장하지 않는다. 10분 동안 캐시해도 된다.
       return jsonResponse(notices(deps.noticesSource), 200, { ...cors, 'cache-control': 'public, max-age=600' });
+    }
+    if (route === 'GET /privacy' || route === 'GET /privacy.html') {
+      // 처리방침 페이지(공개). 소스 저장소와 분리해 서버에서 보여 준다. 내용은 privacy.html 과 같다.
+      return new Response(PRIVACY_HTML, { status: 200, headers: { ...cors, 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=3600' } });
     }
     if (!path.startsWith('/v1/')) throw new ApiError(404, 'not_found');
     const known = ['GET /v1/state', 'PUT /v1/state', 'POST /v1/link/create', 'POST /v1/link/redeem', 'POST /v1/receipt/apple', 'POST /v1/receipt/google', 'DELETE /v1/account',
