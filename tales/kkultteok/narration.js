@@ -12,7 +12,6 @@ const NARRATION_CLIPS = {
  "\"멍! 구름 냄새다!\"": "audio/tc/kkultteok/dog_9a92f8e3e4.mp3",
  "꿀떡이를 톡! 달려 나가게 해 줘요.": "audio/tc/kkultteok/nar_47deb92b13.mp3",
  "꿀떡이는 문밖으로 달려 나가요.": "audio/tc/kkultteok/nar_fb178db4da.mp3",
- "\"꿀떡아, 같이 가!\"": "audio/tc/kkultteok/nuna_d07d6e2cca.mp3",
  "킁킁, 킁킁. 꿀떡이는 냄새만 따라가요.": "audio/tc/kkultteok/nar_537977995b.mp3",
  "언덕을 넘고, 풀밭을 지나고.": "audio/tc/kkultteok/nar_27358f39d9.mp3",
  "이현이는 길가 꽃을 살짝 만져 봐요.": "audio/tc/kkultteok/nar_d041e6ec36.mp3",
