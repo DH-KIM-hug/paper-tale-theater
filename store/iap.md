@@ -26,8 +26,8 @@
 
 | 언어 | 표시 이름 | 글자 수 | 설명 | 글자 수 |
 |---|---|---|---|---|
-| 한국어 | 모든 동화 열기 | 8 | 모든 동화와 동화마다 이름·모습 첫 설정 | 22 |
-| English (U.S.) | Unlock all tales | 16 | All tales + first name setup for each tale | 42 |
+| 한국어 | 모든 동화 열기 | 8 | 앱에서 제공하는 모든 동화를 볼 수 있습니다.(향후 추가되는 동화 포함) | 40 |
+| English (U.S.) | Unlock all tales | 16 | Every tale in the app, including tales added later | 50 |
 
 표시 이름은 앱 안 단추 문구('모든 동화 열기 $4.99' / 'Unlock all $4.99')와 맞췄습니다. 초안의 '전체 동화 열기'는 앱 문구와 달라 바꿨습니다. 설명 문구는 심사 노트·스토어 설명과 같은 뜻입니다.
 
@@ -69,8 +69,8 @@ Change Names Again Pass (consumable) lets a parent redo the name and hero look o
 | 위치 | 지금 값 | 권장 값 |
 |---|---|---|
 | unlockall `localizations[ko].displayName` | 모든 동화 열기 | 그대로 |
-| unlockall `localizations[ko].description` | 모든 동화를 한 번에 열어요 | 모든 동화와 동화마다 이름·모습 첫 설정 |
-| unlockall `localizations[en_US].description` | Unlock every tale, once | All tales + first name setup for each tale |
+| unlockall `localizations[ko].description` | 모든 동화를 한 번에 열어요 | 앱에서 제공하는 모든 동화를 볼 수 있습니다.(향후 추가되는 동화 포함) |
+| unlockall `localizations[en_US].description` | Unlock every tale, once | Every tale in the app, including tales added later |
 | unlockall `familyShareable` | true | App Store Connect 에서 정한 값과 같게(§1 가족 공유) |
 | rename `localizations[ko].displayName` | 이름 바꾸기 1회 | 이름 다시 바꾸기 이용권 |
 | rename `localizations[ko].description` | 우리 아이 이름을 한 번 더 바꿔요 | 창작 동화 4편의 이름·모습을 한 번에 다시 바꿔요 |

@@ -8,12 +8,12 @@
       "internalID": "6740000001",
       "localizations": [
         {
-          "description": "모든 동화와 동화마다 이름·모습 첫 설정",
+          "description": "앱에서 제공하는 모든 동화를 볼 수 있습니다.(향후 추가되는 동화 포함)",
           "displayName": "모든 동화 열기",
           "locale": "ko"
         },
         {
-          "description": "All tales + first name setup for each tale",
+          "description": "Every tale in the app, including tales added later",
           "displayName": "Unlock all tales",
           "locale": "en_US"
         }
