@@ -3,7 +3,7 @@
 import { b64ToBytes, bytesToHex } from './util.js';
 
 export const PRODUCT_ID = 'com.papertale.theater.unlockall';
-export const RENAME_PRODUCT_ID = 'com.papertale.theater.rename'; // 이름 바꾸기권(소모성, 0.99달러)
+export const RENAME_PRODUCT_ID = 'com.papertale.theater.rename'; // 아이 이름 변경권(소모성, 1.99달러)
 export const DEFAULT_BUNDLE_ID = 'com.papertale.theater';
 
 export class ReceiptInvalid extends Error {}

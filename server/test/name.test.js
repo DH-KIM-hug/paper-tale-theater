@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { fill, hasBatchim, valid, validLook, slotsIn, ORIGINAL, ORIGINAL_LOOK } from '../src/name_form.js';
 import { NAME_LINES, NAME_LINES_VERSION } from '../src/name_lines.js';
-import { _resetZeroRetention, nameState, voiceFor } from '../src/name.js';
+import { _resetZeroRetention, _setHistoryRetryDelays, nameState, voiceFor } from '../src/name.js';
 import { isBanned } from '../src/banned_names.js';
 import { handle } from '../src/app.js';
 import { goodPayload, makeChain, signTransaction } from './helpers/pki.js';
@@ -298,14 +298,46 @@ describe('GET /v1/name/catalog·quota', () => {
 });
 
 describe('POST /v1/name/run (동화별 첫 설정 · 이용권 실행)', () => {
-  it('미구매 403 not_owned', async () => {
+  it('미구매: 첫 설정은 403 not_owned, 이용권 실행은 이용권이 없으니 402 no_credit (2026-11-22 A안)', async () => {
     const { env, deps } = setup();
     const a = await newAccount(env, deps);
-    for (const body of [{ tale: 'unicorn' }, { ticket: true }]) {
-      const r = await raw(env, 'POST', '/v1/name/run', { auth: a, body, deps });
-      expect(r.status).toBe(403);
-      expect(r.json.error).toBe('not_owned');
-    }
+    const r = await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps });
+    expect(r.status).toBe(403);
+    expect(r.json.error).toBe('not_owned');
+    const t = await raw(env, 'POST', '/v1/name/run', { auth: a, body: { ticket: true }, deps });
+    expect(t.status).toBe(402);
+    expect(t.json.error).toBe('no_credit');
+  });
+  it('미구매 + 이용권: 네 편 실행·줄 받기·미리 듣기가 되고, 첫 설정은 여전히 403', async () => {
+    const { env, deps } = setup();
+    const a = await newAccount(env, deps);
+    setName(env, a, (n) => ({ ...n, tickets: 1 }));
+    expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body: { preview: true, ...LINE, lang: 'ko', names: NAMES }, deps })).status).toBe(200);
+    const run = await raw(env, 'POST', '/v1/name/run', { auth: a, body: { ticket: true }, deps });
+    expect(run.status).toBe(200);
+    expect(run.json).toMatchObject({ kind: 'ticket', tales: [...ALL, 'home'] });
+    const q = (await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json;
+    expect(q).toMatchObject({ owned: false, firstLeft: [], tickets: 0, activeRun: { runId: run.json.runId, kind: 'ticket' } });
+    for (const lang of ['ko', 'en']) expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.json.runId, ...LINE, lang, names: NAMES }, deps })).status).toBe(200);
+    expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body: { preview: true, ...LINE, lang: 'ko', names: NAMES }, deps })).status).toBe(200); // 실행 중 미리 듣기
+    // 실행 안의 동화로 { tale } 을 부르면 그 이용권 실행을 돌려받는다(첫 설정을 쓰지 않음)
+    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps })).json).toMatchObject({ runId: run.json.runId, resumed: true });
+    // 실행이 끝나고 이용권도 없으면: 첫 설정 403, 미리 듣기 403
+    setName(env, a, (n) => ({ ...n, run: { ...n.run, exp: NOW - 1 } }));
+    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps })).status).toBe(403);
+    expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body: { preview: true, ...LINE, lang: 'ko', names: NAMES }, deps })).status).toBe(403);
+  });
+  it('구매를 잃은(환불) 계정의 첫 설정 실행은 줄을 더 받지 못한다', async () => {
+    const { env, deps } = setup();
+    const a = await newAccount(env, deps);
+    await own(env, a);
+    const run = await firstRun(env, a, deps);
+    const k = 'acct:' + a.accountId, rec = JSON.parse(env.ACCOUNTS.map.get(k));
+    rec.state.owned = false;
+    env.ACCOUNTS.map.set(k, JSON.stringify(rec));
+    const r = await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, ...LINE, lang: 'ko', names: NAMES }, deps });
+    expect(r.status).toBe(403);
+    expect(r.json.error).toBe('not_owned');
   });
   it('요청 모양: tale 또는 ticket:true 하나만, 옛 {} 와 {backfill} 은 400', async () => {
     const { env, deps } = setup();
@@ -597,6 +629,30 @@ describe('POST /v1/name/line', () => {
       expect(del[0].headers['xi-api-key']).toBe(KEY);
       expect(deps.fetch.calls.find((c) => c.method === 'POST').url).toContain('enable_logging=false');
     });
+    it('DELETE 가 404(기록이 아직 없음)면 잠깐 뒤 다시 지운다', async () => {
+      _setHistoryRetryDelays([0, 0]);
+      try {
+        const { env, deps } = setup();
+        const pending = [];
+        deps.waitUntil = (p) => pending.push(p);
+        let dels = 0;
+        deps.fetch = fakeEleven((url, init) => (init.method === 'DELETE' ? new Response('{}', { status: ++dels < 2 ? 404 : 200 }) : withId('h404')(url, init)));
+        expect((await go(deps, env)).status).toBe(200);
+        await Promise.all(pending);
+        expect(deps.fetch.calls.filter((c) => c.method === 'DELETE')).toHaveLength(2);
+        // 계속 404 면 정해진 횟수(1 + 2)만 하고 멈춘다
+        dels = -100;
+        const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
+        deps.fetch = fakeEleven((url, init) => (init.method === 'DELETE' ? new Response('{}', { status: 404 }) : withId('h404')(url, init)));
+        pending.length = 0;
+        expect((await go(deps, env)).status).toBe(200);
+        await Promise.all(pending);
+        spy.mockRestore();
+        expect(deps.fetch.calls.filter((c) => c.method === 'DELETE')).toHaveLength(3);
+      } finally {
+        _setHistoryRetryDelays([1500, 4000]);
+      }
+    });
     it('헤더가 없으면 DELETE 를 부르지 않는다', async () => {
       const { env, deps } = setup();
       deps.fetch = fakeEleven(withId(null));
@@ -670,29 +726,30 @@ describe('POST /v1/name/check', () => {
   });
 });
 
-describe('0.99 이름 바꾸기권 영수증', () => {
+describe('아이 이름 변경권(1.99) 영수증', () => {
   let chain;
   beforeAll(async () => { chain = await makeChain(); });
   const rename = (tx) => goodPayload({ productId: 'com.papertale.theater.rename', transactionId: tx, originalTransactionId: tx, type: 'Consumable' });
 
-  it('미구매 403, 구매 뒤 +1, 같은 거래는 한 번만, 다른 계정은 422', async () => {
+  it('미구매도 +1(owned 는 false 그대로), 같은 거래는 한 번만, 다른 계정은 422', async () => {
     const { env, deps } = setup({ APPLE_ROOT_CA_G3_PEM: undefined });
     env.APPLE_ROOT_CA_G3_PEM = chain.rootPem;
     const clock2 = { t: Date.UTC(2026, 9, 27, 12) };
     const d = { ...deps, now: () => clock2.t };
     const a = await newAccount(env, d);
     const jws1 = await signTransaction(chain, rename('2000000000000001'));
-    const no = await call(env, 'POST', '/v1/receipt/apple', { auth: a, body: { signedTransaction: jws1 }, deps: d });
-    expect(no.status).toBe(403);
-    expect(no.json.error).toBe('not_owned');
-    // 전체 구매(unlockall)
-    expect((await call(env, 'POST', '/v1/receipt/apple', { auth: a, body: { signedTransaction: await signTransaction(chain, goodPayload()) }, deps: d })).json.owned).toBe(true);
     const ok = await call(env, 'POST', '/v1/receipt/apple', { auth: a, body: { signedTransaction: jws1 }, deps: d });
     expect(ok.status).toBe(200);
-    expect(ok.json.quota).toMatchObject({ owned: true, tickets: 1, firstLeft: ALL });
+    expect(ok.json.owned).toBe(false); // 이용권은 전체 구매를 열지 않는다(앱이 owned 로 잠금을 풀지 않게)
+    expect(ok.json.state.owned).toBe(false);
+    expect(ok.json.quota).toMatchObject({ owned: false, tickets: 1, firstLeft: [] });
+    // 전체 구매(unlockall) 뒤에도 이용권은 그대로, 첫 설정이 생긴다
+    expect((await call(env, 'POST', '/v1/receipt/apple', { auth: a, body: { signedTransaction: await signTransaction(chain, goodPayload()) }, deps: d })).json.owned).toBe(true);
+    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps: d })).json).toMatchObject({ owned: true, tickets: 1, firstLeft: ALL });
     const dup = await call(env, 'POST', '/v1/receipt/apple', { auth: a, body: { signedTransaction: jws1 }, deps: d });
     expect(dup.status).toBe(200);
     expect(dup.json.duplicate).toBe(true);
+    expect(dup.json.owned).toBe(true);
     expect(dup.json.quota.tickets).toBe(1);
     // 다른 계정(구매자)이 같은 거래를 쓰면 거절
     const b = await newAccount(env, d);

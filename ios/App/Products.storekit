@@ -23,23 +23,23 @@
       "type": "NonConsumable"
     },
     {
-      "displayPrice": "0.99",
+      "displayPrice": "1.99",
       "familyShareable": false,
       "internalID": "6740000002",
       "localizations": [
         {
-          "description": "창작 동화 4편의 이름·모습을 한 번에 다시 바꿔요",
-          "displayName": "이름 다시 바꾸기 이용권",
+          "description": "창작 동화 4편의 아이 이름·모습을 한 번에 정하거나 바꿔요",
+          "displayName": "아이 이름 변경권",
           "locale": "ko"
         },
         {
-          "description": "Names & looks in all 4 original tales, again",
-          "displayName": "Change Names Again Pass",
+          "description": "Set or change names & looks in all 4 original tales",
+          "displayName": "Child Name Change Pass",
           "locale": "en_US"
         }
       ],
       "productID": "com.papertale.theater.rename",
-      "referenceName": "Rename",
+      "referenceName": "Child Name Change Pass",
       "type": "Consumable"
     }
   ],

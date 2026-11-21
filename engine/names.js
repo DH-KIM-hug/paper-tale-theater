@@ -19,7 +19,7 @@
      apply() 가 모습이 원래와 다른 자리의 맵을 읽어 이름 덮어쓰기보다 먼저 덮는다. 맵의 vl 은 VOICE_LINES(말풍선 없는 소리 대사)를 덮는다
    · 화면 글자: Names.view(글, 동화id) — 원래 이름을 받침 규칙으로 바꾸고, 영어 대명사 줄은 서버 템플릿(tplEn)을 모습으로 채운다
    · 서버 호출은 Entitlements.nameCall(인증 Bearer) 로만. 이름·모습은 요청 본문에만 실리고 서버에 남지 않는다
-   · 이용권(2판): 4.99 구매에 동화마다 첫 설정 1번(run { tale }) · 그 뒤 0.99 이용권 1장 = 네 편 한 번에(run { ticket: true }, 48시간)
+   · 이용권(2판): 4.99 구매에 동화마다 첫 설정 1번(run { tale }) · 그 뒤 아이 이름 변경권(1.99) 1장 = 네 편 한 번에(run { ticket: true }, 48시간)
    · TTS 없음: 녹음이 다 받아지지 않은 동화는 원래 녹음을 그대로 쓴다 */
 const Names = (() => {
   const K_SET = 'paperTheater.names', K_CAT = 'paperTheater.names.cat';
@@ -437,7 +437,7 @@ const Names = (() => {
     save(); restore(); emit();
     return pump();
   }
-  /* 0.99 이용권 1장 쓰기: 네 편 + home 을 48시간 안에 다시 바꿀 수 있는 실행. 이미 도는 이용권 실행이면 그것을 돌려받는다 */
+  /* 아이 이름 변경권(1.99) 1장 쓰기: 네 편 + home 을 48시간 안에 다시 바꿀 수 있는 실행. 이미 도는 이용권 실행이면 그것을 돌려받는다 */
   async function useTicket() {
     const r = await call('POST', '/name/run', { ticket: true });
     if (!r.ok) return { ok: false, error: r.error };

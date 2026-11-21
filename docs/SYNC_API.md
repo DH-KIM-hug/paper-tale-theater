@@ -81,12 +81,12 @@
 
 ### 횟수
 - **첫 설정(kind `first`)**: 전체 구매(`owned`)에 **동화마다 1번씩** 포함. `POST /v1/name/run { tale }` 이 그 동화를 `first` 에 넣는다(실행을 만들 때 쓴다 — 줄 받기가 실패해도 돌려주지 않는다). 이름이든 주인공 모습이든 한 번의 설정으로 센다(모습만 바꾸기는 따로 없음). 새 동화가 추가되면 그 동화의 첫 설정이 새로 생긴다(보충 규칙 없음).
-- **이용권(kind `ticket`)**: 0.99 이용권(`com.papertale.theater.rename`, 소모성) **1장 = 네 편 + home 을 48시간 한 번에** 다시. `POST /v1/name/run { ticket: true }` 이 `tickets` 를 1 줄인다. `tickets` 는 **남은 장수**다(영수증이 +1).
+- **이용권(kind `ticket`)**: 아이 이름 변경권(`com.papertale.theater.rename`, 소모성, 1.99달러 — 2026-11-22 이름·가격 변경, 옛 '이름 다시 바꾸기 이용권' 0.99) **1장 = 네 편 + home 을 48시간 한 번에** 정하거나 다시. 2026-11-22 A안: **전체 구매(`owned`) 없이도** 사고 쓴다(미구매 계정은 첫 설정이 없으므로 이용권이 유일한 길). `POST /v1/name/run { ticket: true }` 이 `tickets` 를 1 줄인다. `tickets` 는 **남은 장수**다(영수증이 +1).
 - 이미 도는 이용권 실행(48시간)이 있으면 `{ ticket: true }`·`{ tale }` 는 그 실행을 `resumed: true` 로 이어 주고 이용권도 첫 설정도 쓰지 않는다. 첫 설정이 이미 쓰인 동화의 `{ tale }` 는 그 동화의 첫 설정 실행이 살아 있으면 이어 주고, 아니면 402 `no_credit`.
 - 진행 중인 실행은 계정당 하나. 첫 설정 실행이 도는 중에 다른 동화의 첫 설정을 하면 **같은 실행 id 에 동화를 보탠다**(앞 동화의 줄 받기가 끊기지 않음, 만료는 다시 48시간). 그 밖의 새 실행은 옛 실행 id 를 `run_invalid` 로 만든다. 실행은 48시간 유효.
 - 옛 기록(1판의 `used`·`covered`)은 서버가 읽을 때 옮긴다: 생성을 한 번이라도 했으면 `first = covered`(이미 받은 동화는 첫 설정을 쓴 것), 이용권은 산 누계에서 포함분 1회를 뺀 쓴 횟수를 뺀 남은 장수. 안 했으면 모든 동화가 무료 첫 설정. 다음 기록 때 옛 필드는 없어진다.
 - 실행 안에서 한 줄·한 언어는 2번까지 만들 수 있다(실패한 요청은 세지 않음) → 실행당 상한 = 줄 수 × 언어 수 × 2.
-- 미리 듣기: 계정당 하루(UTC) 10회, 첫 설정·이용권과 별개.
+- 미리 듣기: 계정당 하루(UTC) 10회, 첫 설정·이용권과 별개. 조건은 `owned` 이거나 남은 이용권 ≥ 1 이거나 이용권 실행 중(아무것도 사지 않은 계정의 무료 생성을 막는다).
 - 서버 전체 하루 상한: 실행을 만들 때 그 실행의 줄 수(동화 줄 합)만큼, 미리 듣기마다 1씩 잡는다. `NAME_DAILY_LINE_CAP`(기본 30000)를 넘으면 `busy`.
 
 | 메서드·경로 | 조건 | 요청 | 응답 |
@@ -94,11 +94,11 @@
 | `GET /v1/name/catalog` | 인증만(구매 불필요) | - | `{ version, slots: {A:{ko,en},B,C,D}, originalLook: {A:'g',B:'b',C:'b'}, tales: { <taleId>: { lines: [ { id, key, keyEn, tpl, en, tplEn, mode, seg, segEn, langs, g } ] } } }` |
 | `GET /v1/name/quota` | 인증 | - | `{ owned, first: [taleId], firstLeft: [taleId], tickets, activeRun: { runId, tales, kind, expiresAt } \| null, previewsLeftToday }` |
 | `POST /v1/name/run` | owned | `{ tale: "<taleId>" }` | `{ runId, tales: [taleId] (witch_candy 는 + 'home'), kind: 'first', expiresAt }` — 무료 첫 설정(동화마다 1번) |
-| `POST /v1/name/run` | owned + tickets ≥ 1 | `{ ticket: true }` | `{ runId, tales: [kkultteok, red_car, unicorn, witch_candy, home], kind: 'ticket', expiresAt }` — 이용권 1장 소모. 도는 중이면 `resumed: true` 로 같은 실행 |
-| `POST /v1/name/line` | 실행 범위 안 | `{ runId, tale, id, lang: "ko"\|"en", names, look? }` | `audio/mpeg` 바이트, 헤더 `X-Name-Version` |
-| `POST /v1/name/line` | owned | `{ preview: true, tale, id, lang, names, look? }` | 미리 듣기 mp3 |
+| `POST /v1/name/run` | tickets ≥ 1 (owned 불필요) | `{ ticket: true }` | `{ runId, tales: [kkultteok, red_car, unicorn, witch_candy, home], kind: 'ticket', expiresAt }` — 이용권 1장 소모. 도는 중이면 `resumed: true` 로 같은 실행 |
+| `POST /v1/name/line` | 실행 범위 안(첫 설정 실행은 owned 도) | `{ runId, tale, id, lang: "ko"\|"en", names, look? }` | `audio/mpeg` 바이트, 헤더 `X-Name-Version` |
+| `POST /v1/name/line` | owned 또는 이용권(남음·실행 중) | `{ preview: true, tale, id, lang, names, look? }` | 미리 듣기 mp3 |
 | `POST /v1/name/check` | 인증 | `{ names, look? }` | `{ ok, errors: { A: "banned"\|"invalid", look: "invalid", … } }` — 형식·금칙어(`server/src/banned_names.js`), 저장 없음 |
-| `POST /v1/receipt/apple` | 인증 | 이용권 JWS | 이용권이면 `{ owned, state, quota }` (같은 계정이 같은 거래를 다시 보내면 `duplicate: true` 로 횟수 그대로) |
+| `POST /v1/receipt/apple` | 인증 | 이용권 JWS | 이용권이면 `{ owned, state, quota }` — `owned` 는 계정의 실제 전체 구매 여부(이용권이 전체 구매를 열지 않는다) (같은 계정이 같은 거래를 다시 보내면 `duplicate: true` 로 횟수 그대로) |
 | `POST /v1/receipt/google` | 인증 | `{ purchaseToken, productId: "com.papertale.theater.rename" }` | 같음(앱이 구매를 consume 한다) |
 
 - 카탈로그 줄: `key` = 녹음 맵 열쇠(한국어 원문, `NARRATION_CLIPS[key]`·`NARRATION_CLIPS_EN[keyEn]`). `keyEn` 은 동화에서는 `key` 와 같고, `home`(스티커 이름 3줄)만 영어 글(`NARRATION_CLIPS_EN` 이 영어 글을 열쇠로 쓴다). `tpl`·`tplEn` 은 화면 글 템플릿, `en` 은 영어 원문.
@@ -108,9 +108,9 @@
 - `g`(2판): 주인공 모습(look)에 따라 결과가 달라지는 자리 목록(예 `['A']`). 영어 `{A_g:…}` 대명사가 든 줄, 또는 모습별 목소리가 실제로 다른 줄. 비면 모습과 무관. 모습만 바뀐 앱은 `g` 가 있는 줄을 다시 받는다(실행 안에서만 만들 수 있다).
 - 모습별 목소리(2판): 이름이 든 아이 대사(구름 공장 첫째 nuna=A·둘째 oppa=B·막내 agi=C 배역 줄)는 `look` 으로 그 아이의 모습에 맞는 목소리 id 로 만든다. 표는 `tools/elevenlabs/build_name_lines.py` 의 `LOOK_VOICE` 한 곳(지금은 모두 원래 목소리 — 목소리 id 를 정하면 표만 바꾸고 다시 만든다). 줄 데이터에는 `look: { slot, voices: { b, g } }` 로 들어가며, 앱에는 내보내지 않는다.
 - 영어에서 영어 이름을 비우면 원래 녹음과 같은 발음 표기(예: 빨간 자동차의 `Ee-hyun`)로 만든다.
-- 이용권 영수증: owned 가 아니면 403 `not_owned`. 거래 하나(애플 `transactionId`, 구글 `purchaseToken`)는 한 계정에 한 번만 인정하고, KV 에는 해시만 둔다(`rename:<sha256>`). 다른 계정이 같은 거래를 쓰면 `receipt_invalid`. 계정을 지워도 '쓴 거래' 표시는 남는다.
+- 이용권 영수증: 누구나(2026-11-22 A안, 전에는 owned 가 아니면 403 `not_owned`). 거래 하나(애플 `transactionId`, 구글 `purchaseToken`)는 한 계정에 한 번만 인정하고, KV 에는 해시만 둔다(`rename:<sha256>`). 다른 계정이 같은 거래를 쓰면 `receipt_invalid`. 계정을 지워도 '쓴 거래' 표시는 남는다.
 - 연결 코드로 계정을 합치면 `tickets` 는 더하고 `first` 는 합집합, 진행 중인 실행은 남는 계정 것을 쓴다.
-- 오류: `not_owned`(403), `no_credit`(402, 첫 설정을 이미 쓴 동화·이용권 0장), `look_invalid`(400, look 값이 `b`·`g` 가 아님), `name_invalid`·`name_banned`(400), `run_invalid`(404 없음·바뀜·범위 밖 / 410 만료), `quota_exceeded`(429, 미리 듣기·줄 한도), `tts_failed`(502), `busy`(503). 이름 기능 요청 본문은 1KB 까지.
+- 오류: `not_owned`(403, 미구매 계정의 첫 설정·미리 듣기), `no_credit`(402, 첫 설정을 이미 쓴 동화·이용권 0장), `look_invalid`(400, look 값이 `b`·`g` 가 아님), `name_invalid`·`name_banned`(400), `run_invalid`(404 없음·바뀜·범위 밖 / 410 만료), `quota_exceeded`(429, 미리 듣기·줄 한도), `tts_failed`(502), `busy`(503). 이름 기능 요청 본문은 1KB 까지.
 - ElevenLabs 호출: `POST https://api.elevenlabs.io/v1/text-to-speech/<voice>?output_format=mp3_44100_128&enable_logging=false`, 본문 `{ text, model_id, voice_settings }`(녹음 스크립트 gen_tale.py 와 같은 값). 요금제가 `enable_logging=false`(zero retention)를 거절하면 그 옵션만 빼고 다시 보낸다. 응답 헤더 `history-item-id` 가 있으면(= 요금제가 zero retention 을 못 받아 생성 기록이 남은 경우) 음성을 받자마자 `DELETE https://api.elevenlabs.io/v1/history/<id>` 로 그 기록을 지운다(`ctx.waitUntil` 로 응답을 늦추지 않음, 실패해도 요청은 성공, 로그에는 상태 코드만). 헤더가 없으면 아무것도 안 한다. 제공자 내부 보관까지 없어진다는 뜻은 아니다. 키는 Worker 비밀값 `ELEVENLABS_API_KEY`.
 - 서버 녹음은 다듬기(polish.py: EQ·압축·-16 LUFS)를 거치지 않은 원본이다. 앱이 기기에서 맞춘다(기획 §5).
 - KV 쓰기: 실행 만들기 2번(전체 하루 상한 + 계정 기록), 줄 하나마다 1번(줄 카운터 `nl:<runId>:…`, 실행 만료 뒤 사라짐), 미리 듣기마다 2번. 이름 줄을 받을 때는 계정 기록을 쓰지 않는다. 동화 한 편 첫 설정은 그 동화 줄 수만큼, 이용권 실행(네 편 한국어만 130줄)은 약 135번, 한·영 모두면 약 270번이다.

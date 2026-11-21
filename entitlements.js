@@ -14,7 +14,7 @@ const Entitlements = (() => {
   /* 서버 주소는 여기 한 곳. 빌드/시험에서 window.PAPERTALE_API_BASE 로 바꿀 수 있고, 비어 있으면 동기화를 끈다 */
   const API_BASE = (typeof window !== 'undefined' && window.PAPERTALE_API_BASE) || '';
   const PRODUCT_ID = 'com.papertale.theater.unlockall';
-  const RENAME_ID = 'com.papertale.theater.rename';   // 이름 바꾸기 이용권 0.99달러(소모성, 4.99 산 사람만). docs/NAME_CHANGE_PLAN.md 확정 사항
+  const RENAME_ID = 'com.papertale.theater.rename';   // 아이 이름 변경권 1.99달러(소모성, 2026-11-22 이름·가격 변경). 2026-11-22 A안: '모든 동화 열기'를 사지 않아도 누구나 산다
 
   const FREE_ALWAYS = ['rabbit', 'turnip', 'cinderella', 'patjuk'];
   const PER_WEEK = 4;
@@ -26,7 +26,7 @@ const Entitlements = (() => {
   const ID_RE = /^[a-z0-9_]{1,40}$/;
   const CAST_RE = /^[a-z0-9_]{1,40}\.[a-z0-9_]{1,40}$/;
   const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
-  let price = '$4.99', renamePrice = '$0.99';
+  let price = '$4.99', renamePrice = '$1.99';
   const OWNED_KEY = 'owned_all';        // 옛 구매 기록(호환): state.owned 와 함께 읽는다
   const K_ACCOUNT = 'sync_account', K_STATE = 'sync_state', K_DIRTY = 'sync_dirty', K_RECEIPT = 'sync_receipt';
   const store = {
@@ -439,7 +439,6 @@ const Entitlements = (() => {
   /* 이름 바꾸기 이용권 사기: 결제(부모 확인은 화면 쪽) → 영수증을 서버로(상품 ID 로 서버가 구분) → 성공이면 true.
      앱은 네이티브 Store.purchaseRename, 시험은 setBridge({ purchaseRename }) */
   async function purchaseRename() {
-    if (!owned()) return { ok: false, error: 'not_owned' };
     let r = null;
     try {
       if (bridge && bridge.purchaseRename) r = await bridge.purchaseRename();

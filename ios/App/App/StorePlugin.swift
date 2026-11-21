@@ -3,7 +3,7 @@ import Capacitor
 import StoreKit
 
 let unlockAllProductID = "com.papertale.theater.unlockall"
-/// 이름 바꾸기 이용권 0.99달러(소모성). 4.99(unlockall) 산 사람만 산다 — 화면이 버튼을 숨기고 서버도 다시 확인한다 (docs/NAME_CHANGE_PLAN.md)
+/// 아이 이름 변경권 1.99달러(소모성, 2026-11-22 이름·가격 변경). 2026-11-22 A안: unlockall 을 사지 않은 사람도 산다(서버가 거래 ID 를 한 번만 쓴다)
 let renameProductID = "com.papertale.theater.rename"
 
 @objc(StorePlugin)
@@ -124,7 +124,6 @@ public class StorePlugin: CAPPlugin, CAPBridgedPlugin {
     @objc func purchaseRename(_ call: CAPPluginCall) {
         Task {
             do {
-                guard await Self.ownsUnlockAll() else { call.resolve(["purchased": false, "reason": "not_owned"]); return }
                 guard let product = try await Product.products(for: [renameProductID]).first else {
                     call.resolve(["purchased": false, "reason": "no-product"]); return
                 }

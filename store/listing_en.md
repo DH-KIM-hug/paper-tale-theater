@@ -8,7 +8,7 @@
 | 부제 | Interactive tales for ages 2-5 | 30 / 30 |
 | 홍보 문구 | Paper-cut fairy tales to tap and play by day, and read-aloud bedtime stories by night. No ads. Some tales are always free, and four more are free each week. | 156 / 170 |
 | 키워드 (쉼표, 공백 없이) | `toddler,preschool,kids,bedtime,read aloud,storybook,learning,folktale,aesop,princess,sticker,korean` | 99 / 100 |
-| 설명 | 아래 본문 | 2813 / 4000 (2026-11-13 notices·feedback 반영 후 다시 센 값) |
+| 설명 | 아래 본문 | 2859 / 4000 (2026-11-22 Child Name Change Pass $1.99·누구나 구매 반영 후 다시 센 값) |
 
 Words already in the name and subtitle (Tok, Tale, Theater, Interactive, ages) are left out of the keywords on purpose. Keywords are comma-separated with no spaces.
 
@@ -39,7 +39,7 @@ HOW IT WORKS
 - The app is free to download. Four tales are always free, the four original tales are free, and four more tales are free each week.
 - Finish a tale to earn a star piece. Five star pieces open one locked tale.
 - Unlock All Tales (one-time purchase, $4.99) opens every tale and includes a first name-and-look setup for each original tale.
-- To change them again later, one Change Names Again Pass ($0.99) lets you redo all four original tales at once.
+- Anyone can buy a Child Name Change Pass ($1.99), with or without Unlock All. One pass sets or redoes the names and looks of all four original tales at once.
 - No ads. No sign-up or login.
 - Tales work offline. The internet is used only to link devices, confirm purchases, receive new name recordings and download notices.
 

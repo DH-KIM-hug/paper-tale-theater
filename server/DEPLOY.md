@@ -60,7 +60,7 @@ npx wrangler secret put APPLE_ROOT_CA_G3_PEM < AppleRootCA-G3.pem
 npx wrangler secret put ELEVENLABS_API_KEY < ~/.config/elevenlabs/key   # 화면에 키를 찍지 않게 파일에서 바로 넣는다
 ```
 가능하면 서버 전용 키를 새로 만들어(권한: Text to Speech 만) 넣습니다. 요금제가 zero retention(`enable_logging=false`)을 지원하지 않으면 서버가 그 옵션을 빼고 보냅니다(`wrangler tail` 에 `enable_logging=false 미지원` 한 줄).
-App Store Connect 에 소모성 상품 `com.papertale.theater.rename`(0.99달러)을 따로 만듭니다. 서버는 기존 `/v1/receipt/apple` 로 이 상품도 받습니다.
+App Store Connect 에 소모성 상품 `com.papertale.theater.rename`(아이 이름 변경권, 1.99달러 — 2026-11-22 0.99에서 올림)을 따로 만듭니다. 서버는 기존 `/v1/receipt/apple` 로 이 상품도 받습니다.
 
 개발 실험용 쿠폰: **앱·서버 코드에서 제거됨(2026-11-13)**. 남은 일: 이 코드로 배포 + 남아 있는 비밀값 지우기
 ```sh

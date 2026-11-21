@@ -1,6 +1,6 @@
 # 심사 노트 (App Review Information > Notes)
 
-작성일 2026-11-06, 2026-11-07 갱신(이름 설정 2판·뒤로 가기·무음 모드·서버 주소 반영), 2026-11-13 갱신(공지사항·의견 보내기). 아래 영어 본문(3985자, 2026-11-22 스크립트로 다시 셈 — ``` 안 본문 글자 수, 칸 한도 4000자 이내)을 'Notes' 칸에 그대로 붙여 넣고, 한국어는 사용자 확인용입니다. 로그인 정보 칸은 **'로그인 필요 없음'** 으로 체크(Sign-in required 끄기). 연락처는 hello@ddoystory.com (전화번호는 사용자가 입력).
+작성일 2026-11-06, 2026-11-07 갱신(이름 설정 2판·뒤로 가기·무음 모드·서버 주소 반영), 2026-11-13 갱신(공지사항·의견 보내기). 아래 영어 본문(3959자, 2026-11-22 A안(이용권 누구나 구매)·아이 이름 변경권 1.99 반영 뒤 스크립트로 다시 셈 — ``` 안 본문 글자 수, 칸 한도 4000자 이내)을 'Notes' 칸에 그대로 붙여 넣고, 한국어는 사용자 확인용입니다. 로그인 정보 칸은 **'로그인 필요 없음'** 으로 체크(Sign-in required 끄기). 연락처는 hello@ddoystory.com (전화번호는 사용자가 입력).
 
 ## English (paste this)
 ```
@@ -21,9 +21,9 @@ SERVER (live): https://paper-tale-sync.papertale.workers.dev (Cloudflare Workers
 
 IN-APP PURCHASES (parent area, behind the gate; test with a Sandbox tester: grown-up menu > Access)
 - com.papertale.theater.unlockall, non-consumable $4.99, "Unlock all tales": all tales + one first name-and-look setup for each of the 4 original tales.
-- com.papertale.theater.rename, consumable $0.99, "Change Names Again Pass": after first setups are used, one pass redoes all 4 original tales at once (48 h). Only on a device owning Unlock All; the server re-checks the receipt and accepts each transaction ID once; unused passes are kept on the server account (consumables cannot be restored). Not promoted.
+- com.papertale.theater.rename, consumable $1.99, "Child Name Change Pass": one pass sets or redoes names and looks of all 4 original tales at once (48 h). Anyone can buy it, Unlock All not needed: Child's name > Set names. Each transaction ID is accepted once; unused passes stay on the server account (consumables cannot be restored). Not promoted.
 
-CHILD'S NAME AND HERO LOOK (optional; grown-up menu > Child's name, after Unlock All)
+CHILD'S NAME AND HERO LOOK (optional; grown-up menu > Child's name)
 - Per original tale a parent sets the hero's name and look (girl/boy, prepared illustrations; no uploads).
 - All spoken lines are recordings (no on-device TTS), so only lines with the name are re-recorded in the same voices. Name is sent over HTTPS via our server to ElevenLabs; audio returns and is stored on the device with the names and looks. The server does not store or log names or looks and sends no identifiers. We request ElevenLabs zero retention (enable_logging=false); if the plan rejects or ignores it, we delete the generation record from the provider account right after the clip is made. Parent-only, behind the gate each time, never asked of the child. If unused, nothing is sent. See the privacy policy (effective Nov 13, 2026).
 
@@ -59,8 +59,8 @@ Contact: hello@ddoystory.com
 
 **인앱 구입**
 - `com.papertale.theater.unlockall`(비소모성 4.99달러, 모든 동화 열기): 모든 동화 해제 + 창작 동화 4편 각각의 이름·모습 첫 설정 1번씩 포함.
-- `com.papertale.theater.rename`(소모성 0.99달러, 이름 다시 바꾸기 이용권): 첫 설정을 쓴 뒤 한 장으로 창작 동화 4편의 이름·모습을 48시간 안에 한꺼번에 다시 바꿈. 전체 해제 기기에서만 판매, 서버가 영수증 소유 재확인·거래 ID 1회만. 안 쓴 이용권은 서버 계정에 기록. 홍보용 구입 끔.
-- 시험: Sandbox 계정으로 보호자 메뉴 > 이용권에서 구매 → 보호자 메뉴 > 우리 아이 이름에서 한 편 설정 → '다시 바꾸기 (이용권 $0.99)'.
+- `com.papertale.theater.rename`(소모성 1.99달러, 아이 이름 변경권): 한 장으로 창작 동화 4편의 이름·모습을 48시간 안에 한꺼번에 정하거나 다시 바꿈. 2026-11-22부터 '모든 동화 열기'를 사지 않아도 누구나 삼(우리 아이 이름 > '이름 정하기'). 서버는 거래 ID를 한 번만 받음. 안 쓴 이용권은 서버 계정에 기록. 홍보용 구입 끔.
+- 시험: Sandbox 계정으로 보호자 메뉴 > 이용권에서 구매 → 보호자 메뉴 > 우리 아이 이름에서 한 편 설정 → '다시 바꾸기 (변경권 $1.99)'. 구매 없이도 우리 아이 이름 > '이름 정하기 (변경권 $1.99)'로 변경권을 바로 삼.
 
 **이름·주인공 모습** (선택, 보호자 전용)
 - 창작 동화 4편마다 주인공 이름과 모습(여자아이/남자아이 그림)을 정합니다. 구름 공장은 아이 셋·강아지를 따로, 어떤 조합도 가능. 준비된 그림 중 고르는 것이며 사진 업로드나 실행 중 그림 생성은 없습니다.

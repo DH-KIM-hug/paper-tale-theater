@@ -55,7 +55,7 @@ export function catalog() {
 }
 
 // ---------- 계정 안의 이름 기능 상태 ----------
-// 2판(docs/NAME_SETUP_V2_PLAN.md §5): { first: [첫 설정을 쓴 동화], tickets: 남은 0.99 이용권 장수, run, pv, tx }.
+// 2판(docs/NAME_SETUP_V2_PLAN.md §5): { first: [첫 설정을 쓴 동화], tickets: 남은 아이 이름 변경권(1.99) 장수, run, pv, tx }.
 // 옛 기록({ used, tickets(산 누계), covered })은 읽을 때 옮긴다: 생성을 한 번이라도 했으면 first = covered,
 // tickets = 산 누계 − (포함분 1회를 뺀 쓴 횟수)(남은 장수). 다음에 쓸 때 옛 필드는 사라진다.
 export function nameState(rec) {
@@ -90,7 +90,7 @@ export function quota(rec, now) {
     owned,
     first: n.first,                                            // 첫 설정을 쓴 동화
     firstLeft: owned ? TALE_IDS.filter((t) => !n.first.includes(t)) : [], // 아직 안 쓴 동화(무료 첫 설정 가능)
-    tickets: n.tickets,                                        // 남은 0.99 이용권 장수(한 장 = 네 편 한 번에)
+    tickets: n.tickets,                                        // 남은 아이 이름 변경권(1.99) 장수(한 장 = 네 편 한 번에)
     activeRun: run,
     previewsLeftToday: Math.max(0, PREVIEWS_PER_DAY - (n.pv && n.pv.d === day(now) ? n.pv.n : 0)),
   };
@@ -160,12 +160,25 @@ export function _resetZeroRetention() {
 
 // 생성 기록 지우기: 요금제가 enable_logging=false 를 받지 않으면 ElevenLabs 가 기록(History)에 글을 남긴다.
 // 응답 헤더 history-item-id 가 있으면 음성을 받자마자 DELETE /v1/history/{id}. 실패해도 요청은 실패시키지 않는다(키·글은 로그에 쓰지 않음).
+// 2026-11-22 실측: 음성을 받은 바로 그 순간에는 기록이 아직 없어 404 가 나고, 1~2초 뒤에는 지워진다 → 404 면 잠깐 기다렸다 다시 지운다.
+let historyRetryDelays = [1500, 4000];
+export function _setHistoryRetryDelays(d) {
+  historyRetryDelays = d;
+}
 async function deleteHistory(env, fetchFn, id) {
-  try {
-    const res = await fetchFn(EL_HISTORY_URL + encodeURIComponent(id), { method: 'DELETE', headers: { 'xi-api-key': env.ELEVENLABS_API_KEY } });
-    if (!res.ok) console.error('name_tts: history delete', res.status);
-  } catch {
-    console.error('name_tts: history delete network');
+  for (let i = 0; ; i++) {
+    try {
+      const res = await fetchFn(EL_HISTORY_URL + encodeURIComponent(id), { method: 'DELETE', headers: { 'xi-api-key': env.ELEVENLABS_API_KEY } });
+      if (res.ok) return;
+      if (res.status !== 404 || i >= historyRetryDelays.length) {
+        console.error('name_tts: history delete', res.status);
+        return;
+      }
+    } catch {
+      console.error('name_tts: history delete network');
+      return;
+    }
+    await new Promise((r) => setTimeout(r, historyRetryDelays[i]));
   }
 }
 
@@ -252,10 +265,10 @@ const runOut = (run, extra) => ({ runId: run.id, tales: run.tales, kind: run.kin
 
 // 실행 만들기(2판).
 //  { tale }          그 동화의 무료 첫 설정(동화마다 1번, first 에 넣는다). witch_candy 는 홈 스티커 줄(home)도 함께.
-//  { ticket: true }  0.99 이용권 1장 = 네 편 + home 을 48시간 안에 한 번에. 이용권이 없으면 no_credit.
+//  { ticket: true }  아이 이름 변경권(1.99) 1장 = 네 편 + home 을 48시간 안에 한 번에. 이용권이 없으면 no_credit.
+// 2026-11-22 A안: 이용권은 '모든 동화 열기'를 사지 않은 계정도 사고 쓴다. 무료 첫 설정({ tale })만 구매(owned)가 필요하다.
 export async function nameRun(env, me, body, now, putAccount) {
   const rec = me.rec;
-  if (!rec.state.owned) throw NE.notOwned();
   const hasTale = body.tale !== undefined, hasTicket = body.ticket !== undefined;
   if (hasTale === hasTicket || (hasTicket && body.ticket !== true) || (hasTale && (typeof body.tale !== 'string' || !TALE_IDS.includes(body.tale)))) throw E.badRequest();
   const n = nameState(rec);
@@ -274,7 +287,8 @@ export async function nameRun(env, me, body, now, putAccount) {
 
   const tale = body.tale;
   const tales = [tale, ...(tale === HOME_TALE ? ['home'] : [])];
-  if (cur && cur.kind === 'ticket' && cur.tales.includes(tale)) return runOut(cur, { resumed: true }); // 이용권 실행 안에서 이미 받을 수 있다 → 무료 첫 설정을 아끼고 그 실행을 쓴다
+  if (cur && cur.kind === 'ticket' && cur.tales.includes(tale)) return runOut(cur, { resumed: true });
+  if (!rec.state.owned) throw NE.notOwned(); // 무료 첫 설정은 '모든 동화 열기'에 들어 있다 // 이용권 실행 안에서 이미 받을 수 있다 → 무료 첫 설정을 아끼고 그 실행을 쓴다
   if (n.first.includes(tale)) {
     // 이미 첫 설정을 쓴 동화. 그 실행이 아직 살아 있으면 이어 쓰고, 아니면 이용권이 필요하다.
     if (cur && cur.kind === 'first' && cur.tales.includes(tale)) return runOut(cur, { resumed: true });
@@ -300,11 +314,13 @@ export async function nameLine(env, me, body, now, deps, cors, getAccount, putAc
   const part = lang === 'ko' ? line.ko : line.enRec;
   if (!part) throw E.badRequest(); // 이 언어 녹음에는 이름이 없다(원래 녹음을 그대로 쓴다)
   const rec = me.rec;
-  if (!rec.state.owned) throw NE.notOwned();
   const n = nameState(rec);
   const fetchFn = deps.fetch || globalThis.fetch;
 
   if (body.preview === true) {
+    // 미리 듣기: 구매(owned)했거나, 이용권이 남았거나, 이용권 실행 중일 때만(아무것도 사지 않은 계정의 무료 생성을 막는다)
+    const cur = activeRun(n, now);
+    if (!rec.state.owned && n.tickets < 1 && !(cur && cur.kind === 'ticket')) throw NE.notOwned();
     const today = day(now);
     const used = n.pv && n.pv.d === today ? n.pv.n : 0;
     if (used >= PREVIEWS_PER_DAY) throw NE.quota();
@@ -318,6 +334,7 @@ export async function nameLine(env, me, body, now, deps, cors, getAccount, putAc
   if (typeof body.runId !== 'string' || !n.run || body.runId !== n.run.id) throw NE.runMissing();
   if (n.run.exp <= now) throw NE.runExpired();
   if (!n.run.tales.includes(tale)) throw NE.runMissing();
+  if (n.run.kind !== 'ticket' && !rec.state.owned) throw NE.notOwned(); // 첫 설정 실행은 구매가 있어야 한다(환불 등)
   // 줄·언어마다 카운터 키를 따로 둔다(같은 키 초당 1회 쓰기 제한을 피하고, 계정 기록을 줄마다 쓰지 않게)
   const ck = `nl:${n.run.id}:${tale}:${id}:${lang}`;
   const count = Number(await env.ACCOUNTS.get(ck)) || 0;
@@ -333,20 +350,21 @@ export function nameCheck(body) {
   return { ok: Object.keys(errors).length === 0, errors };
 }
 
-// 0.99 이름 바꾸기권 영수증. txKey 는 'apple:<transactionId>' 처럼 플랫폼 거래 하나.
+// 아이 이름 변경권(1.99) 영수증. txKey 는 'apple:<transactionId>' 처럼 플랫폼 거래 하나.
+// 2026-11-22 A안: 구매(owned)와 상관없이 누구나 산다. 응답의 owned 는 계정의 실제 구매 여부다(이용권이 전체 구매를 열지 않는다).
 export async function applyRenameReceipt(env, me, txKey, now, putAccount) {
-  if (!me.rec.state.owned) throw NE.notOwned();
+  const owned = !!me.rec.state.owned;
   const h = await sha256Hex('rename|' + txKey); // 거래 번호 원문은 저장하지 않는다
   const r = await env.ACCOUNTS.get('rename:' + h, 'json');
   const n = nameState(me.rec);
   if (r) {
     if (r.acct !== me.id) throw E.receiptInvalid(); // 다른 계정이 이미 쓴 거래
-    return { owned: true, state: me.rec.state, quota: quota(me.rec, now), duplicate: true };
+    return { owned, state: me.rec.state, quota: quota(me.rec, now), duplicate: true };
   }
   await env.ACCOUNTS.put('rename:' + h, JSON.stringify({ acct: me.id }));
   me.rec.name = { ...n, tickets: n.tickets + 1, tx: [...n.tx, h] };
   await putAccount(env, me.id, me.rec);
-  return { owned: true, state: me.rec.state, quota: quota(me.rec, now) };
+  return { owned, state: me.rec.state, quota: quota(me.rec, now) };
 }
 
 export const NAME_STATS = { tales: NAME_TALES.length, recordings: RECORDINGS };
