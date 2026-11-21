@@ -121,13 +121,32 @@
   const popSfx = (T, keep) => { if (keep) AudioFX.sfx('pop') || T.tone([500, 800], .12, { vol: .12 }); };
 
   async function run(T) {
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       구름 공장 곡(el_kkultteok_bgm: 마림바·칼림바·우쿨렐레·글로켄슈필)이 시작 음악(intro_cozy2) 뒤에 깔려 되풀이한다. 끝 음악·잠자리 자장가(브람스) 앞에서 끈다.
+       내레이션 동안 엔진이 낮추고(DUCK), 읽어 주기는 더 작게. 다른 음악(클래식·대금·노래) 동안은 dip 으로 비켜 주고, 끝 음악에서 끈다 */
+    const bgmRd = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    try { AudioFX.preloadMusic(['el_kkultteok_bgm']); AudioFX.preloadSfx(['el_cloud_press']); } catch (e) { /* 무시 */ }
+    const BGM_VOL = () => (bgmRd() ? 0.14 : 0.24);
+    let bgmTok = 0, bgmName = '', bgmDone = false, introDone = false;
+    const bgm = (n = 'el_kkultteok_bgm') => { if (bgmDone) return; try { bgmName = n; const tok = ++bgmTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+      const go = () => { if (tok !== bgmTok) return; try { if (AudioFX.bgm(n, { vol: BGM_VOL(), fadeIn: 2.5, xfade: 2 })) return; } catch (e) { return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const bgmFor = n => { if (!introDone || bgmDone) return; if (n !== bgmName) bgm(n); }; // 시작 음악 전에는 바꾸지 않는다(끝나면 본 곡부터)
+    const bgmDip = (sec, level = 0) => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.dip(sec, level); } catch (e) { /* 무시 */ } };
+    const bgmUp = () => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } };
+    const bgmOff = (f = 2) => { bgmDone = true; bgmTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elfx = (n, v, alt) => { try { if (bgmRd()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
+    const afterIntro = () => { if (introDone) return; introDone = true; bgm(); }; // 시작 음악이 끝나면 한 번
+    { /* 엔진 가락(자장가·따라 연주) 동안 배경 음악은 비켜 준다 */
+      ['playMelody', 'holdMelody', 'followMelody'].forEach(k => { const f0 = T[k]; if (typeof f0 !== 'function' || f0.__bgm) return; const f = function (...a) { bgmDip(0); const p = f0.apply(this, a); Promise.resolve(p).then(bgmUp, bgmUp); return p; }; f.__bgm = 1; T[k] = f; });
+    }
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro(); } catch (e) { /* 무시 */ } }; // 시작 음악이 끝나면 배경 음악
       const go = (delay = 0) => {
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_cozy2', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_cozy2', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
+        setTimeout(() => { try { afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
@@ -139,14 +158,14 @@
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
     /* 맨 끝 축하 음악(2026-10-31 사용자 지시): Pixabay 녹음 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 곡 끝까지 기다렸다가 끝 처리 */
     let finaleEnd = 0;
-    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleMusic = () => { try { bgmOff(1.5); const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
     /* 잠자리 장면(2026-11-01 사용자 결정, engine/bedtime.js): 누르기 없는 큰 그림 한 장 — 하얀 아기 구름이 달 앞에 와서 눕고 방이 어둑해진다.
        자리(u, v)는 그림 안 비율: 가로 cf4_bed_wide · 세로 cf4_bed_tall 을 따로 잰 것 */
     const BED = { wide: src('bed_wide'), tall: src('bed_tall'), tallY: .4, focus: { w: [.42, .52], t: [.5, .6] }, moon: { w: [.879, .126], t: [.633, .104] } };
     let bedB = null;
     const bed = {
-      open() { BED.wide = jsrc('bed_wide'); BED.tall = jsrc('bed_tall'); bedB = Bedtime.open(T, BED); },   // 모습 조합이 원래와 다르면 합성 그림
+      open() { bgmOff(2); BED.wide = jsrc('bed_wide'); BED.tall = jsrc('bed_tall'); bedB = Bedtime.open(T, BED); },   // 모습 조합이 원래와 다르면 합성 그림
       cloud() {
         const B = bedB; if (!B) return;
         const h = B.ih * .15, n = B.img(src('baby_sleep'), { w: [BED.moon.w[0], BED.moon.w[1] + .03], t: [BED.moon.t[0], BED.moon.t[1] + .03] }, h, 1.4968);
@@ -506,7 +525,7 @@
       press(shape) {
         const i = { rabbit: 1, whale: 2, puppy: 3 }[shape]; if (!i || !RS.shapes) return;
         const HOLES = [[378, 206], [500, 219], [628, 219]], BELT = 343, c = RS.shapes[i - 1], [hx, hy] = HOLES[i - 1], my = live();
-        oppa.hop(8, 220); AudioFX.sfx('bonk') || popSfx(T); T.shake();
+        oppa.hop(8, 220); elfx('el_cloud_press', .9, () => AudioFX.sfx('bonk') || popSfx(T)); T.shake();
         put(T, c, hx, hy + 40, { s: .35 });
         c.pos.animate([{ transform: `translate(${hx}px,${hy + 40}px) scale(.35)`, opacity: .4 }, { transform: `translate(${hx}px,${hy + 95}px) scale(.8)`, opacity: 1, offset: .55 },
           { transform: `translate(${hx}px,${BELT}px) scale(1)`, opacity: 1 }], { duration: 1800, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'forwards' }).finished.then(() => {
@@ -515,7 +534,7 @@
           T.pop(hx, BELT - 150, tr(['토끼!', '고래!', '강아지!'][i - 1]));
         }).catch(() => {});
       },
-      button() { agi.look('press', 'left'); AudioFX.sfx('bonk') || popSfx(T); T.shake(); },
+      button() { agi.look('press', 'left'); elfx('el_cloud_press', .9, () => AudioFX.sfx('bonk') || popSfx(T)); T.shake(); },
       flue(verb, who) {
         const FLX = 771, FLY = 400, my = live();
         if (verb !== 'up') return;
@@ -673,7 +692,7 @@
       READ_ACTS.animal = (n, v) => { try { if (!T.readInstant()) AudioFX.animal(n, +v || .4); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } return r; });
+    if (T.reading()) return T.readPlay(READ_ACTS).finally(() => bgmOff(3)).then(async r => { await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } return r; });
 
     const SCENES = [];
     const S = f => SCENES.push(f);
@@ -869,7 +888,7 @@
       const outs = [];
       const pressStep = i => {
         const c = shapes[i - 1], [hx, hy] = HOLES[i - 1];
-        oppa.hop(8, 220); AudioFX.sfx('bonk') || popSfx(T); T.shake();
+        oppa.hop(8, 220); elfx('el_cloud_press', .9, () => AudioFX.sfx('bonk') || popSfx(T)); T.shake();
         put(T, c, hx, hy + 40, { s: .35 });
         // 구멍에서 쑥 밀려 나와(커지며) 벨트 위로 툭 내려앉는다
         outs.push(c.pos.animate([{ transform: `translate(${hx}px,${hy + 40}px) scale(.35)`, opacity: .4 }, { transform: `translate(${hx}px,${hy + 95}px) scale(.8)`, opacity: 1, offset: .55 },
@@ -911,7 +930,7 @@
       await say('구석에 커다란 빨간 단추가 있어요.');
       await say('"눌러 봐도 돼?"');
       await T.ask('빨간 단추를 톡!', () => T.tap(hitC(BX, BYY, 70), { prompt: '빨간 단추를 톡!' }));
-      agi.look('press', 'left'); AudioFX.sfx('bonk') || popSfx(T); T.shake();
+      agi.look('press', 'left'); elfx('el_cloud_press', .9, () => AudioFX.sfx('bonk') || popSfx(T)); T.shake();
       await say('은우가 꾹! 눌렀어요.');
       dog.look('lookup', 'right'); kids.forEach(k => k.look('lookup', 'right'));
       // 굴뚝 관 아래 입구로 빨려 들어가며 작아져 사라진다

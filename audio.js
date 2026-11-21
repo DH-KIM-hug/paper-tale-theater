@@ -372,21 +372,22 @@ const AudioFX = (() => {
 
   /* 배경 소리(ambient) 공용: 한 통(bus)을 거치게 해서 내레이션이 읽히는 동안 한꺼번에 낮춘다 */
   const DUCK = .45; // 내레이션 중 배경 소리 배율(약 -7dB). 평소 vol(.25~.35)과 곱해져 -15~-20dB 안팎
-  let ambs = [], ambGain = null, ambTimer = 0;
+  let ambs = [], ambGain = null, ambTimer = 0, bgmH = null, bgmAway = null; // bgmH: 배경 음악 하나(api.bgm), bgmAway: 화면을 떠나 끈 곡(돌아오면 다시)
   function ambBus() {
     if (!ambGain || ambGain.context !== ctx) { ambGain = ctx.createGain(); ambGain.connect(ctx.destination); }
     return ambGain;
   }
   const narrating = () => !!(narSrc || narEnd || pairEnds.length || (narEl && !narEl.paused && !narEl.ended && narEl.src));
   function ambTick() { // 켜져 있는 동안만 0.25초마다 내레이션을 살펴 볼륨을 오르내린다
-    if (!ambs.length) { clearInterval(ambTimer); ambTimer = 0; return; }
+    if (!ambs.length && !bgmH) { clearInterval(ambTimer); ambTimer = 0; return; }
     if (!ambTimer) ambTimer = setInterval(ambTick, 250);
     try { if (ambGain && ctx) ambGain.gain.setTargetAtTime(narrating() ? DUCK : 1, ctx.currentTime, .3); } catch (e) { /* 무시 */ }
   }
   /* 화면을 떠나면 끈다. 읽어 주기(<audio> 내레이션) 중 화면 꺼짐은 이어 간다 */
-  addEventListener('pagehide', () => { try { ambs.slice().forEach(h => h.stop(.1)); } catch (e) { /* 무시 */ } });
+  addEventListener('pagehide', () => { try { ambs.slice().forEach(h => h.stop(.1)); if (bgmH) bgmH.stop(.1); } catch (e) { /* 무시 */ } });
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden && !mediaNar) { try { ambs.slice().forEach(h => h.stop(.3)); } catch (e) { /* 무시 */ } }
+    if (document.hidden && !mediaNar) { try { ambs.slice().forEach(h => h.stop(.3)); if (bgmH) { bgmAway = { name: bgmH.name, vol: bgmH.vol() }; bgmH.stop(.3); } } catch (e) { /* 무시 */ } }
+    else if (!document.hidden && bgmAway) { const b = bgmAway; bgmAway = null; setTimeout(() => { try { if (!hushed && !bgmH) api.bgm(b.name, { vol: b.vol, fadeIn: 2 }); } catch (e) { /* 무시 */ } }, 300); }
   });
 
   const api = {
@@ -467,6 +468,50 @@ const AudioFX = (() => {
         return h;
       } catch (e) { return null; }
     },
+    /* 배경 음악(2026-11-21 ElevenLabs 시범, sounds/music/<name>.mp3, sounds/CREDITS.md): 동화 내내 은은하게 되풀이하는 악기 연주 한 곡.
+       배경 소리와 같은 통(bus)을 거쳐 내레이션이 읽히는 동안 함께 낮아진다(DUCK). stopAmbient 로는 꺼지지 않아 장면이 바뀌어도 이어진다.
+       AudioFX.bgm('el_rabbit_bgm', { vol: .2, fadeIn: 2 }) → { name, stop(f), setVol(v, sec), dip(sec, level), vol() } | 아직 못 불러왔으면 null(불러 두고 넘어간다)
+       - 같은 이름이면 음량만 맞추고, 다른 이름이면 앞 곡은 서서히 끄고(xfade) 바꾼다. dip(sec, level): 다른 음악·노래가 나오는 동안 sec 초 낮췄다가 되돌린다(sec 0 = 다시 부를 때까지).
+       - AudioFX.stopBgm(f) 로 끈다. 홈으로(hush)·이어 듣기 끝(sessionEnd)·화면 떠남에서도 꺼진다(화면 꺼짐 중 읽어 주기는 이어 간다) */
+    bgm(name, { vol = .2, fadeIn = 2, xfade = 1.5 } = {}) {
+      try {
+        if (hushed) return null;
+        if (bgmH && bgmH.name === name) { bgmH.setVol(vol, 1); return bgmH; }
+        const path = 'music/' + name + '.mp3', buf = samples[path];
+        if (!buf) { loadSample(path); return null; }
+        const c = ensure(); if (!c) return null;
+        if (bgmH) bgmH.stop(xfade);
+        const s = c.createBufferSource(), g = c.createGain(), t0 = c.currentTime;
+        s.buffer = buf; s.loop = true;
+        /* mp3 는 앞뒤에 인코더 무음(수십 ms)이 붙어 되풀이 이음매가 '툭' 끊긴다 → 앞뒤 0.25초 안의 완전 무음은 건너뛰고 돈다 */
+        let a0 = 0, a1 = buf.length;
+        try { const d = buf.getChannelData(0), lim = Math.min(buf.length >> 2, Math.round(buf.sampleRate * .25)); while (a0 < lim && Math.abs(d[a0]) < 1e-4) a0++; while (a1 > buf.length - lim && Math.abs(d[a1 - 1]) < 1e-4) a1--; } catch (e) { a0 = 0; a1 = buf.length; }
+        s.loopStart = a0 / buf.sampleRate; s.loopEnd = a1 / buf.sampleRate;
+        g.gain.setValueAtTime(0.0001, t0); g.gain.linearRampToValueAtTime(Math.max(vol, 0.0001), t0 + Math.max(.05, fadeIn));
+        s.connect(g).connect(ambBus());
+        let base = vol, dipT = 0, stopped = false;
+        const ramp = (v, sec) => { const t = c.currentTime; g.gain.cancelScheduledValues(t); g.gain.setValueAtTime(Math.max(g.gain.value, 0.0001), t); g.gain.linearRampToValueAtTime(Math.max(v, 0.0001), t + Math.max(.05, sec)); };
+        const h = { name,
+          vol: () => base,
+          stop(f = 1.2) {
+            if (stopped) return; stopped = true; clearTimeout(dipT);
+            if (bgmH === h) bgmH = null;
+            try { ramp(0.0001, f); s.stop(c.currentTime + Math.max(.05, f) + .05); } catch (e) { /* 무시 */ }
+            setTimeout(() => { try { g.disconnect(); } catch (e) { /* 무시 */ } ambTick(); }, (f + .2) * 1000);
+          },
+          setVol(v, sec = 1) { base = v; if (!stopped) { try { ramp(v, sec); } catch (e) { /* 무시 */ } } },
+          dip(sec = 0, level = 0, f = .8) {
+            if (stopped) return; clearTimeout(dipT);
+            try { ramp(base * level, f); } catch (e) { /* 무시 */ }
+            if (sec > 0) dipT = setTimeout(() => { if (!stopped) { try { ramp(base, 1.5); } catch (e) { /* 무시 */ } } }, sec * 1000);
+          },
+        };
+        s.start(t0, a0 / buf.sampleRate); bgmH = h; ambTick();
+        return h;
+      } catch (e) { return null; }
+    },
+    stopBgm(f = 1.2) { bgmAway = null; try { if (bgmH) bgmH.stop(f); } catch (e) { /* 무시 */ } },
+    bgmNow: () => bgmH,
     /* 켜 둔 배경 소리를 모두 끈다. 장면이 바뀔 때·동화가 끝날 때 부른다(화면을 떠나면 저절로 꺼진다) */
     stopAmbient(fadeSec = .8) { ambs.slice().forEach(h => { try { h.stop(fadeSec); } catch (e) { /* 무시 */ } }); },
     async playUrl(url, { recordedOnly = false } = {}) {
@@ -556,7 +601,7 @@ const AudioFX = (() => {
     /* 동화 재생 중 '홈으로'(2026-11-07): 내레이션·배경음·효과음·음악을 모두 끊고, 페이지가 바뀌기 전까지 다시 울리지 않게 묶는다.
        <audio> 는 음소거·멈춤, Web Audio 는 잠재운다(ensure·wake 가 다시 깨우지 않는다) */
     hush() {
-      try { api.stopAmbient(0); } catch (e) { /* 무시 */ }
+      try { api.stopAmbient(0); api.stopBgm(0); } catch (e) { /* 무시 */ }
       try { api.stopNarration(); } catch (e) { /* 무시 */ }
       hushed = true;
       [narEl, keepAlive, ...narHelpers].forEach(el => { if (el) { try { el.muted = true; el.pause(); } catch (e) { /* 무시 */ } } });
@@ -567,7 +612,7 @@ const AudioFX = (() => {
     /* 잠자리 이어 듣기가 끝났을 때: 내레이션 <audio> 를 비우고 무음 유지 루프도 놓는다(배경에 무음만 남지 않게) */
     sessionEnd() {
       mediaNar = false; narHeld = false;
-      try { api.stopAmbient(.4); } catch (e) { /* 무시 */ }
+      try { api.stopAmbient(.4); api.stopBgm(.8); } catch (e) { /* 무시 */ }
       try { api.stopNarration(); } catch (e) { /* 무시 */ }
       pfStop();
       if (narEl) { try { narEl.pause(); narEl.removeAttribute('src'); narEl.load(); } catch (e) { /* 무시 */ } }

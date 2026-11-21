@@ -285,12 +285,14 @@
   /* ================= 이야기 ================= */
   async function run(T) {
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    let afterIntro = null; // 시작 음악이 끝나면 한 번 — 배경 음악 켜기 (아래에서 채운다)
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_playful', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_playful', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
+        setTimeout(() => { try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
@@ -301,12 +303,27 @@
        마지막 개구리 합창과 같이 시작해 잠드는 대사까지 이어진다(사용자: 개구리 우는 것과 노래를 같이). 내레이션 동안은 엔진이 낮춘다 */
     let lullEnd = 0;
     const LULL = 'frog_lullaby_long', LULL_S = 21.5;
-    const lullaby = () => { try { const o = { vol: T.reading() ? .3 : .45, loop: false, fadeIn: .5, dur: LULL_S }; lullEnd = Date.now() + LULL_S * 1000; if (!AudioFX.ambient(LULL, o)) setTimeout(() => { try { AudioFX.ambient(LULL, o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const lullaby = () => { try { bgmOff(2); const o = { vol: T.reading() ? .3 : .45, loop: false, fadeIn: .5, dur: LULL_S }; lullEnd = Date.now() + LULL_S * 1000; if (!AudioFX.ambient(LULL, o)) setTimeout(() => { try { AudioFX.ambient(LULL, o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const lullabyWait = () => (lullEnd ? sleep(Math.max(0, Math.min(8000, lullEnd - Date.now() - 600))) : Promise.resolve());
     try { AudioFX.preloadSfx(['intro_night', 'frog_lullaby_long', 'intro_playful', 'birds_chirp_1', 'birds_chirp_2', 'crickets_night_1', 'drumroll_crash', 'balloon_fly', 'whistle_down', 'whistle_up', 'boing_steps', 'sleepy_tuba']); } catch (e) { /* 소리 없이도 진행 */ }
     /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
-    const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const classical = n => { try { bgmDip(18); const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     try { AudioFX.preloadSfx(['classical_haydn_pizz']); } catch (e) { /* 무시 */ }
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       배경 음악은 시작 음악(12초) 뒤에 깔려 끝까지 되풀이한다(장면이 바뀌어도 이어짐). 내레이션 동안 엔진이 낮추고(DUCK), 읽어 주기는 더 작게.
+       햇살 연못의 마림바·칼림바·피치카토 곡. 폴짝 대회 클래식 한 토막(하이든) 동안 dip, 황소 쿵은 또렷한 북소리(el_big_steps)로 치며 잠깐 낮춘다.
+       밤 연못(개구리 합창·자장가)부터는 노래와 음이 부딪치지 않게 끈다. */
+    try { AudioFX.preloadMusic(['el_frog_bgm']); AudioFX.preloadSfx(['el_big_steps']); } catch (e) { /* 무시 */ }
+    const BGM_VOL = () => (T.reading() ? 0.15 : 0.26);
+    let bgmTok = 0, bgmName = '';
+    const bgm = (n = 'el_frog_bgm') => { try { bgmName = n; const tok = ++bgmTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+      const go = () => { if (tok !== bgmTok) return; try { if (AudioFX.bgm(n, { vol: BGM_VOL(), fadeIn: 2.5, xfade: 2 })) return; } catch (e) { return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const bgmDip = (sec, level = 0) => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.dip(sec, level); } catch (e) { /* 무시 */ } };
+    const bgmOff = (f = 2) => { bgmTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elfx = (n, v, alt) => { try { if (T.reading()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
+    let introDone = false; afterIntro = () => { if (introDone) return; introDone = true; bgm(); };
+    const bgmFor = n => { if (!introDone) return; if (n !== bgmName) bgm(n); }; // 시작 음악 전에는 바꾸지 않는다(끝나면 본 곡부터)
+    const oxThud = () => { bgmDip(1.6, .25); elfx('el_big_steps', 1, () => AudioFX.thud()); }; // 황소 쿵(배경 음악 잠깐 낮춤)
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
@@ -360,7 +377,7 @@
     const croakBaby = i => { AudioFX.animalNote('frog', [1.19, 1.0, 1.33][i], .85) || croak(T, 420); };
     const rCam = (x, z = 1, ms = 700) => (inst() ? camSnap(x, 280, z) : camTo(x, 280, z, ms));
     const rFx = {
-      ribbit: () => croak(T, 400), splash: () => AudioFX.splash(), thud: () => AudioFX.thud(), whoosh: () => AudioFX.whoosh(),
+      ribbit: () => croak(T, 400), splash: () => AudioFX.splash(), thud: () => oxThud(), whoosh: () => AudioFX.whoosh(),
       boing: () => AudioFX.sfx('hop') || AudioFX.hop(),
     };
     let rDrum = 0, rBoing = 0;
@@ -370,6 +387,7 @@
         if (key === 'meadow') { rMeadow++; rSteps = rMeadow >= 2 ? 3 : 0; }
         if (key === 'pond' || key === 'night') rPond++;
         T.clear(); camSnap(500, 280, 1);
+        if (key === 'night') bgmOff(3); // 밤 연못 합창·자장가: 배경 음악 끄기
         if (key === 'night') amb('crickets_night_1'); else if (key === 'pond' && rPond === 1) amb('birds_chirp_1'); else if (key === 'meadow' && rMeadow === 1) amb('birds_chirp_2'); else stopAmb();
         momArt.set('base'); runcle = null;
         babies.forEach(b => { b.parts.lids.setAttribute('opacity', 0); b.parts.hands.setAttribute('opacity', 0); });
@@ -535,6 +553,7 @@
       },
       chorus(verb) {
         const frogs = [babies[0], babies[1], mom, babies[2]];
+        if (verb === 'sing') bgmOff(2); // 합창과 배경 음악이 부딪치지 않게
         if (verb === 'sing') {
           const uncle = runcle;
           const croakNote = (n, d = .4) => { const r = Math.pow(2, (T.semi(n) - 4) / 12); AudioFX.animalNote('frog', r, .75, 0, Math.min(d, .5)) || T.tone(T.hz(n), Math.min(d, .5), { type: 'triangle', vol: .22 }); };
@@ -551,7 +570,7 @@
     const READ_ACTS = { lullaby: () => { lullaby(); return null; }, set: R.set, babies: R.babies, baby: R.baby, mom: R.mom, ox: R.ox, chart: R.chart, uncle: R.uncle, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam, chorus: R.chorus };
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await lullabyWait(); stopAmb(); return rr; }   // 자장가가 끝날 때까지(화면을 꺼도 계속)
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await lullabyWait(); bgmOff(2); stopAmb(); return rr; }   // 자장가가 끝날 때까지(화면을 꺼도 계속)
 
     await T.curtain(true);
     amb('birds_chirp_1');
@@ -781,12 +800,13 @@
     if (T.portrait()) await camTo(oxActor.x, 280, 1, 700); // 세로 화면: 황소 쪽으로
     oxArt.set('jumpfail'); sfx('whistle_up', .7);
     await T.anim(ox, [{ translate: '0 0' }, { translate: '0 -14px' }, { translate: '0 0' }], 400);
-    AudioFX.thud(); T.shake(); T.pop(oxActor.x, oxActor.y - 190, '쿵!'); vo('ox_thud');
+    oxThud(); T.shake(); T.pop(oxActor.x, oxActor.y - 190, '쿵!'); vo('ox_thud');
     oxArt.set('stand');
     await say('쿵! 황소는 폴짝 뛰지 못했어요. 누가 더 멀리 뛸까요? 개구리!');
     await cutArt(T, [['cut_jump', 'hop', 2600]]);
 
     /* --- 10. 밤 연못 합창 --- */
+    bgmOff(3); // 밤 연못 합창·자장가: 배경 음악 끄기
     await T.sceneCard('밤 연못', () => {
       amb('crickets_night_1', .25, 4);
       T.clear(); pads = pondBG(T, true); if (T.portrait()) camSnap(500, 280, 1);
@@ -815,7 +835,7 @@
     await sleep(7200);
     await say('개굴개굴~ 노래가 잦아들고, 개구리 가족은 쿨쿨 잠이 들었답니다.');
     await lullabyWait();
-    stopAmb();
+    bgmOff(2); stopAmb();
     return '개구리는 개구리대로 멋져요!';
   }
 

@@ -13,10 +13,12 @@
   /* 실제 효과음 → 없으면 합성음 */
   const sfx = (T, name, fb, vol) => AudioFX.sfx(name, vol) || (fb ? fb() : (AudioFX[name] && AudioFX[name]()));
   const peckSnd = T => sfx(T, 'knock', () => T.tone([1800, 1400], .06, { type: 'square', vol: .14 }), .6);
-  const lickSnd = T => { T.tone([500, 700], .1, { type: 'sine', vol: .18 }); T.tone([500, 750], .1, { type: 'sine', vol: .18, when: .16 }); };
-  const sipSnd = T => { T.tone([900, 1300], .08, { type: 'sine', vol: .16 }); T.tone([900, 1400], .08, { type: 'sine', vol: .16, when: .14 }); };
-  const bubbleSnd = T => T.tone([300 + Math.random() * 200, 700], .09, { type: 'sine', vol: .16 });
-  const craneCall = T => { T.tone([700, 1000], .18, { type: 'triangle', vol: .14 }); T.tone([1000, 800], .2, { type: 'triangle', vol: .12, when: .2 }); };
+  /* 2026-11-21 ElevenLabs 녹음 먼저(sounds/CREDITS.md), 못 불러왔으면 합성음 */
+  const rec = (n, v) => { try { return !!AudioFX.sfx(n, v); } catch (e) { return false; } };
+  const lickSnd = T => { if (rec('el_lick', .8)) return; T.tone([500, 700], .1, { type: 'sine', vol: .18 }); T.tone([500, 750], .1, { type: 'sine', vol: .18, when: .16 }); };
+  const sipSnd = T => { if (rec('el_sip', .8)) return; T.tone([900, 1300], .08, { type: 'sine', vol: .16 }); T.tone([900, 1400], .08, { type: 'sine', vol: .16, when: .14 }); };
+  const bubbleSnd = T => rec('bubbles', .45) || T.tone([300 + Math.random() * 200, 700], .09, { type: 'sine', vol: .16 });
+  const craneCall = T => { if (rec('el_crane_call', .75)) return; T.tone([700, 1000], .18, { type: 'triangle', vol: .14 }); T.tone([1000, 800], .2, { type: 'triangle', vol: .12, when: .2 }); };
 
   /* 머리(부리·주둥이) 끝이 target(월드 좌표)을 향하도록 돌리는 각도(로컬, deg) */
   function aim(a, pivot, tip, [tx, ty]) {
@@ -551,12 +553,14 @@
   /* ================= 이야기 ================= */
   async function run(T) {
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    let afterIntro = null; // 시작 음악이 끝나면 한 번 — 배경 음악 켜기 (아래에서 채운다)
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_playful', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_playful', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
+        setTimeout(() => { try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
@@ -572,8 +576,25 @@
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
     /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 팥죽과 같은 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 끝 화면 전에 곡 끝까지 기다린다 */
     let finaleEnd = 0;
-    const finaleMusic = () => { try { const o = { vol: isRead() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleMusic = () => { try { bgmOff(1.5); const o = { vol: isRead() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       배경 음악은 시작 음악(12초) 뒤에 깔려 끝까지 되풀이한다(장면이 바뀌어도 이어짐). 내레이션 동안 엔진이 낮추고(DUCK), 읽어 주기는 더 작게.
+       숲속 저녁 초대: 바순·오보에·피치카토·마림바의 장난스러운 곡. 끝 축하 음악 전에 끈다. 합성음이던 핥기·쪽쪽·두루미 울음·킁킁·킥킥·꼬르륵을 녹음으로. */
+    try { AudioFX.preloadMusic(['el_fox_crane_bgm']); AudioFX.preloadSfx(['el_lick', 'el_sip', 'el_crane_call', 'el_sniff', 'el_sly_laugh', 'stomach_growl', 'xylo_down', 'sparkle', 'spring']); } catch (e) { /* 무시 */ }
+    const BGM_VOL = () => (T.reading() ? 0.15 : 0.26);
+    let bgmTok = 0, bgmName = '';
+    const bgm = (n = 'el_fox_crane_bgm') => { try { bgmName = n; const tok = ++bgmTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+      const go = () => { if (tok !== bgmTok) return; try { if (AudioFX.bgm(n, { vol: BGM_VOL(), fadeIn: 2.5, xfade: 2 })) return; } catch (e) { return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const bgmDip = (sec, level = 0) => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.dip(sec, level); } catch (e) { /* 무시 */ } };
+    const bgmOff = (f = 2) => { bgmTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elfx = (n, v, alt) => { try { if (T.reading()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
+    let introDone = false; afterIntro = () => { if (introDone) return; introDone = true; bgm(); };
+    const bgmFor = n => { if (!introDone) return; if (n !== bgmName) bgm(n); }; // 시작 음악 전에는 바꾸지 않는다(끝나면 본 곡부터)
+    const sniffSnd = () => elfx('el_sniff', .8, () => T.tone([1200, 900], .08, { type: 'sine', vol: .1 })); // 킁킁
+    const foxLaugh = () => elfx('el_sly_laugh', .8, () => AudioFX.laugh()); // 여우 킥킥(악기 웃음)
+    const growlSnd = () => elfx('stomach_growl', .7, () => T.tone([500, 300], .5, { type: 'sine', vol: .14 })); // 배 꼬르륵
+    const dizzySnd = () => { let ok = false; try { ok = !!(AudioFX.hasSting && AudioFX.hasSting('dizzy') && AudioFX.sting('dizzy') !== false); } catch (e) { /* 무시 */ } if (!ok) [0, .15, .3].forEach(w => T.tone([700, 500], .12, { type: 'triangle', vol: .14, when: w })); }; // 엉덩방아 뒤 빙글빙글(만화 스팅)
     /* 대사 연출: 목소리 주인에게 카메라, 여우와 두루미가 서로 마주 봄 (장면마다 새 배우라 함수로) */
     const direct = (getFox, getCrane) => T.director({ cast: { fox: getFox, crane: getCrane }, listener: r => (r === 'fox' ? 'crane' : 'fox') });
     direct(() => fox, () => crane);
@@ -709,7 +730,7 @@
         if (inFeast && k === 'crane') mood(a, null);
         return a.hop(30);
       }
-      if (verb === 'giggle') { AudioFX.laugh(); return a.wiggle(8, 500); }
+      if (verb === 'giggle') { foxLaugh(); return a.wiggle(8, 500); }
       if (verb === 'peck') return (async () => {
         const peckAt = rHI() ? [604, 280] : [640, 418], words = ['콕!', '딱!', '딱딱!'];
         for (let i = 0; i < 3; i++) {
@@ -757,7 +778,7 @@
         await sleep(300);
         await fox.move(360, 500, 400);
         await fox.wiggle(5, 400);
-        T.tone([1200, 900], .08, { type: 'sine', vol: .1 });
+        sniffSnd();
         await T.anim(fox.body, [{ transform: 'scale(1,1)' }, { transform: 'scale(.95,1.15)' }, { transform: 'scale(.95,1.15)' }, { transform: 'scale(1,1)' }], 800);
         T.pop(360, 250, '영차!', C.pine);
         const SN = fox.parts.art ? FOX_STUCK_NOSE : [-130, -94];
@@ -781,7 +802,7 @@
         await fox.move(330, 380, 360, 'ease-out');
         await fox.move(300, 500, 320, 'ease-in');
         fox.body.style.transform = 'scale(1.08,.86)';
-        [0, .15, .3].forEach(w => T.tone([700, 500], .12, { type: 'triangle', vol: .14, when: w }));
+        dizzySnd();
       })();
       if (verb === 'sip') return (async () => {
         const mouth = rs.mouth;
@@ -855,7 +876,7 @@
         if (n === 'boing') return sfx(T, 'boing');
         if (n === 'hop' && rs.tag === 'forest' && !inst()) { setTimeout(() => cue('boing', .7), 700); }
         if (n === 'bubble') return bubbleSnd(T);
-        if (n === 'grumble') return T.tone([500, 300], .5, { type: 'sine', vol: .14 });
+        if (n === 'grumble') return growlSnd();
         if (n === 'pop') return sfx(T, 'pop');
         if (n === 'thud') { sfx(T, 'thud'); T.shake(); return; }
         return sfx(T, n);
@@ -865,7 +886,7 @@
     };
     const rStirBubble = () => { if (rs.pot) bubbleSnd(T); };
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(); return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); bgmOff(2); stopAmb(); return rr; }
 
     /* --- 1. 초대장 (숲길 와이드) --- */
     forestBG(T);
@@ -922,7 +943,7 @@
     await T.ask('냄비를 톡톡 눌러서 저어 볼까요?', () => T.tap(pot.pos, { prompt: '냄비를 톡톡 눌러서 휘휘 저어요!' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 5; i++) { await stirStep(i); await sleep(450); }
     await sleep(400);
-    AudioFX.laugh();
+    foxLaugh();
     await fox.wiggle(8, 500);
     await say('여우가 킥킥 웃어요. "납작 접시에 담아야지~"');
 
@@ -986,7 +1007,7 @@
       el('text', { x: 330, y: 80, 'text-anchor': 'middle', 'font-size': 56, fill: C.bean, stroke: '#fff', 'stroke-width': 10, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('핥핥!') }, svg);
     }, { hold: 2200 });
     mood(crane, 'sad');
-    T.tone([500, 300], .5, { type: 'sine', vol: .14 });
+    growlSnd();
     T.pop(740, HI ? 150 : 120, '꼬르륵', C.indigo);
     await say('여우는 혀로 핥핥, 다 먹었어요. 두루미는 배가 꼬르륵, 속상했어요.');
 
@@ -1029,7 +1050,7 @@
     await sleep(300); // 킁킁·영차는 저절로, 세 번째 폴짝만 톡 (2026-10-19)
     await fox.move(360, 500, 400);
     await fox.wiggle(5, 400);
-    T.tone([1200, 900], .08, { type: 'sine', vol: .1 }); T.pop(fox.x + 110, 360, '킁킁', C.bark);
+    sniffSnd(); T.pop(fox.x + 110, 360, '킁킁', C.bark);
     await sleep(400);
     // 2: 영차
     await T.anim(fox.body, [{ transform: 'scale(1,1)' }, { transform: 'scale(.95,1.15)' }, { transform: 'scale(.95,1.15)' }, { transform: 'scale(1,1)' }], 800);
@@ -1078,7 +1099,7 @@
     const stars = el('g', {}, T.fx);
     for (let k = 0; k < 3; k++) el('path', { d: 'M0 -10 L3 -3 10 -3 4 2 6 10 0 5 -6 10 -4 2 -10 -3 -3 -3 Z', fill: '#FFD54F', transform: `rotate(${k * 120}) translate(34 0)` }, stars);
     stars.animate([{ transform: 'translate(250px,320px) rotate(0)' }, { transform: 'translate(250px,320px) rotate(360deg)' }], { duration: 1100, iterations: 3 });
-    [0, .15, .3].forEach(w => T.tone([700, 500], .12, { type: 'triangle', vol: .14, when: w }));
+    dizzySnd();
     await say('뿅! 코가 빠졌어요. 엉덩방아 쿵!');
     stars.remove();
     // 두루미가 병 곁으로 다가가 부리를 병 입구에 넣고, 대사와 함께 쪽쪽 먹는다 (2026-11-02: 멀리 선 채 대사 전에 다 먹던 것)
@@ -1095,7 +1116,7 @@
         await sleep(150);
       }
     })();
-    setTimeout(() => T.tone([500, 300], .5, { type: 'sine', vol: .14 }), 1600);
+    setTimeout(growlSnd, 1600);
     await say('두루미는 긴 부리로 쪽쪽 먹었어요. 여우는 배가 꼬르륵, 속상했어요.');
     await sipping;
 
@@ -1249,7 +1270,7 @@
     }
     T.confetti(); finaleMusic(); // 합성 팡파르 대신 끝 축하 음악(2026-10-31 사용자)
     await say('배부르게 먹고, 모두 행복하게 웃었답니다.');
-    await finaleWait(); stopAmb();
+    await finaleWait(); bgmOff(2); stopAmb();
     return '친구 입장이 되어 보면 모두 즐거워요!';
   }
 

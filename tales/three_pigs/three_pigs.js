@@ -350,8 +350,54 @@
       READ_ACTS.music = (n, v, d, f) => { try { if (!T.readInstant()) AudioFX.music(n, { vol: +v || .3, dur: +d || undefined, fade: +f || .8 }); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.sfxs = (list, step, v) => { try { if (T.readInstant()) return null; String(list).split(',').forEach((n, i) => setTimeout(() => { try { AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } }, i * (+step || 260))); } catch (e) { /* 무시 */ } return null; };
     }
+    /* ---------- 배경 음악 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       본 곡(el_three_pigs_bgm)은 시작 음악이 끝나면(또는 첫 장면이 바뀌면) 깔려 끝까지 되풀이한다. 놀이 0.26·읽어 주기 0.15, 내레이션 동안은 엔진이 더 낮춘다(DUCK).
+       클래식 한 토막(classical_*)·다른 녹음 음악(AudioFX.music)이 나오는 동안은 비켜 주고(dip), 끝 축하 음악(finale_*)에서 끈다.
+       BGK.to(이름): 변주로 바꾸기(시작 음악 전이면 기다렸다가 그 곡으로), BGK.dip(초, 배율): 큰 타격음 동안 잠깐 낮추기, BGK.off(): 끄기 */
+    const BGK = (() => {
+      const rd = () => { try { return !!T.reading(); } catch (e) { return false; } };
+      const VOL = () => (rd() ? 0.15 : 0.26);
+      const INTRO = /^intro_/, END_MUSIC = /^pigs_band/;
+      let tok = 0, cur = '', want = 'el_three_pigs_bgm', held = 0, started = false, ended = false;
+      const now = () => { try { return AudioFX.bgmNow && AudioFX.bgmNow(); } catch (e) { return null; } };
+      const on = n => { if (ended) return; cur = n; started = true; const t = ++tok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+        const go = () => { if (t !== tok || ended) return; let h = null; try { h = AudioFX.bgm(n, { vol: VOL(), fadeIn: 2.5, xfade: 2 }); } catch (e) { return; } if (h) { if (held > 0) h.dip(0); return; } if (++k < 12) setTimeout(go, 1000); }; go(); };
+      const dip = (sec, lv = 0) => { const h = now(); if (h) try { h.dip(sec, lv); } catch (e) { /* 무시 */ } };
+      const hold = () => { held++; dip(0); };
+      const release = () => { if (held > 0 && --held === 0) { const h = now(); if (h) try { h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } } };
+      const once = f => { let d = false; return () => { if (!d) { d = true; f(); } }; };
+      const off = (f = 2) => { ended = true; tok++; held = 0; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+      const start = () => { if (!started) on(want); };
+      const to = n => { want = n; if (started && n !== cur) on(n); };
+      try {
+        AudioFX.preloadMusic(['el_three_pigs_bgm', 'el_wolf_goats_tense']);
+        const amb0 = AudioFX.ambient, mus0 = AudioFX.music;
+        AudioFX.ambient = function (name, o) {
+          const h = amb0.apply(this, arguments);
+          try {
+            if (h && INTRO.test(name)) { const s0 = h.stop; h.stop = function () { start(); return s0.apply(this, arguments); }; }
+            else if (h && /^finale_/.test(name)) off(1.5);
+            else if (h && /^classical_/.test(name)) { hold(); const r = once(release); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; setTimeout(r, ((o && o.dur) || 18) * 1000); }
+          } catch (e) { /* 무시 */ }
+          return h;
+        };
+        AudioFX.music = function (name) {
+          const h = mus0.apply(this, arguments);
+          try { if (h) { if (END_MUSIC && END_MUSIC.test(name)) off(1.5); else { hold(); const r = once(release); h.done.then(r, r); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; } } } catch (e) { /* 무시 */ }
+          return h;
+        };
+      } catch (e) { /* 소리 없이도 진행 */ }
+      setTimeout(start, 16000); // 시작 음악을 못 불러왔어도 곧 깔린다
+      const fx = (n, v, alt) => { try { if (rd()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; }; // 새 효과음(못 불러왔으면 alt)
+      return { to, dip, off, start, fx, main: 'el_three_pigs_bgm' };
+    })();
+    /* 늑대 장면(짚 집·나무 집에 늑대가 옴, 벽돌 집 밖, 굴뚝)은 살금살금 변주(el_wolf_goats_tense, 늑대와 일곱 마리 아기 염소와 같은 곡). 놀이는 장면 카드 이름, 읽어 주기는 set 배경 키로 고른다
+       (읽어 주기 strawlot·woodlot 는 처음은 집 짓기, 두 번째가 늑대 장면) */
+    { const TENSE = ['후~ 짚 집', '후~ 나무 집', '쿵쿵쿵!', '보글보글'], sc1 = T.sceneCard;
+      if (!T.reading()) T.sceneCard = function (label, ...a) { try { BGK.to(TENSE.includes(label) ? 'el_wolf_goats_tense' : BGK.main); } catch (e) { /* 무시 */ } return sc1.call(this, label, ...a); }; }
+    if (READ_ACTS && READ_ACTS.set) { const set0 = READ_ACTS.set, seen = {}; READ_ACTS.set = function (k) { try { seen[k] = (seen[k] || 0) + 1; const t = k === 'brick_out' || k === 'chimney' || ((k === 'strawlot' || k === 'woodlot') && seen[k] > 1); BGK.to(t ? 'el_wolf_goats_tense' : BGK.main); } catch (e) { /* 무시 */ } return set0.apply(this, arguments); }; }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS);
+    if (T.reading()) return T.readPlay(READ_ACTS).finally(() => BGK.off(2));
 
     /* 1. 엄마 배웅 */
     bg('meadow'); T.camSnap(500, 280, 1);
@@ -682,7 +728,7 @@
     for (let r = 0; r < (bandMusic ? 10 : 4); r++) { if (!bandMusic) tune([392, 523, 440, 587]); band.forEach((b, i) => setTimeout(() => b.hop(28, 350), i * 150)); await sleep(bandMusic ? 640 : 900); }
     await Promise.all([T.cutImage([{ src: U('cut_village'), hold: 2600 }]), more('저녁 해가 뉘엿뉘엿, 굴뚝에서는 연기가 모락모락 피어올랐어요.')]);   // 2026-11-02 싱크: 마을 컷이 대사 동안
     await say('삼 형제는 튼튼한 집에서 오래오래 행복하게 살았어요.');
-    stopAmb(.8);
+    stopAmb(.8); BGK.off(1.5);
     return '튼튼한 집은 하나씩 정성껏 쌓아서 만들어요!';
   }
 

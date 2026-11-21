@@ -647,14 +647,14 @@
   const quack = (T, v = .7) => AudioFX.animal('duck', v) || (T.tone([420, 300], .16, { type: 'square', vol: .09 }), T.tone([400, 290], .16, { type: 'square', vol: .09, when: .22 }));
   const peep = (T, f = 1500) => { T.tone([f, f * 1.25], .09, { type: 'sine', vol: .12 }); T.tone([f * 1.05, f * 1.3], .09, { type: 'sine', vol: .12, when: .13 }); };
   const honk = T => { T.tone([330, 280], .22, { type: 'sawtooth', vol: .06 }); T.tone([340, 290], .22, { type: 'sawtooth', vol: .06, when: .28 }); };
-  const cluck = T => [0, .14, .28].forEach(w => T.tone([700, 520], .08, { type: 'square', vol: .06, when: w }));
+  const cluck = T => AudioFX.sfx('el_hen_cluck', .55) || [0, .14, .28].forEach(w => T.tone([700, 520], .08, { type: 'square', vol: .06, when: w }));
   const crow = T => AudioFX.animal('rooster', .5) || cluck(T);
   const meow = T => AudioFX.animal('cat', .7) || T.tone([700, 900], .5, { type: 'sine', vol: .14 });
   const purr = T => { for (let i = 0; i < 9; i++) T.tone([95, 80], .08, { type: 'sawtooth', vol: .05, when: i * .09 }); };
-  const giggle = T => [0, .12, .24, .36].forEach((w, i) => T.tone([620 - i * 40, 520 - i * 40], .1, { type: 'triangle', vol: .12, when: w }));
-  const crack = T => AudioFX.sfx('poke', .6) || T.tone([1400, 700], .06, { type: 'square', vol: .1 });
-  /* 백조 소리: 녹음 파일이 없어 부드러운 나팔 소리를 만든다 */
-  const swanCall = T => [0, .5].forEach(w => {
+  const giggle = T => AudioFX.sfx('giggle_xylo', .5) || [0, .12, .24, .36].forEach((w, i) => T.tone([620 - i * 40, 520 - i * 40], .1, { type: 'triangle', vol: .12, when: w }));
+  const crack = T => AudioFX.sfx('el_egg_crack', .85) || AudioFX.sfx('poke', .6) || T.tone([1400, 700], .06, { type: 'square', vol: .1 });
+  /* 백조 소리: 녹음(el_swan_call, 2026-11-21 ElevenLabs — 백조 두 번 + 호른), 못 불러왔으면 부드러운 나팔 소리를 만든다 */
+  const swanCall = T => AudioFX.sfx('el_swan_call', .6) || [0, .5].forEach(w => {
     T.tone([466, 415], .45, { type: 'triangle', vol: .13, when: w });
     T.tone([233, 208], .45, { type: 'sine', vol: .07, when: w });
     T.tone([932, 830], .4, { type: 'sine', vol: .03, when: w + .02 });
@@ -1207,9 +1207,50 @@
       READ_ACTS.sfx = (n, v) => { try { if (!T.readInstant()) AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } return null; };
       READ_ACTS.sfxs = (list, step, v) => { try { if (T.readInstant()) return null; String(list).split(',').forEach((n, i) => setTimeout(() => { try { AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } }, i * (+step || 260))); } catch (e) { /* 무시 */ } return null; };
     }
+    /* ---------- 배경 음악 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       본 곡(el_ugly_duckling_bgm)은 시작 음악이 끝나면(또는 첫 장면이 바뀌면) 깔려 끝까지 되풀이한다. 놀이 0.24·읽어 주기 0.14, 내레이션 동안은 엔진이 더 낮춘다(DUCK).
+       클래식 한 토막(classical_*)·다른 녹음 음악(AudioFX.music)이 나오는 동안은 비켜 주고(dip), 끝 축하 음악(finale_*)에서 끈다.
+       BGK.to(이름): 변주로 바꾸기(시작 음악 전이면 기다렸다가 그 곡으로), BGK.dip(초, 배율): 큰 타격음 동안 잠깐 낮추기, BGK.off(): 끄기 */
+    const BGK = (() => {
+      const rd = () => { try { return !!T.reading(); } catch (e) { return false; } };
+      const VOL = () => (rd() ? 0.14 : 0.24);
+      const INTRO = /^intro_/, END_MUSIC = null;
+      let tok = 0, cur = '', want = 'el_ugly_duckling_bgm', held = 0, started = false, ended = false;
+      const now = () => { try { return AudioFX.bgmNow && AudioFX.bgmNow(); } catch (e) { return null; } };
+      const on = n => { if (ended) return; cur = n; started = true; const t = ++tok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+        const go = () => { if (t !== tok || ended) return; let h = null; try { h = AudioFX.bgm(n, { vol: VOL(), fadeIn: 2.5, xfade: 2 }); } catch (e) { return; } if (h) { if (held > 0) h.dip(0); return; } if (++k < 12) setTimeout(go, 1000); }; go(); };
+      const dip = (sec, lv = 0) => { const h = now(); if (h) try { h.dip(sec, lv); } catch (e) { /* 무시 */ } };
+      const hold = () => { held++; dip(0); };
+      const release = () => { if (held > 0 && --held === 0) { const h = now(); if (h) try { h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } } };
+      const once = f => { let d = false; return () => { if (!d) { d = true; f(); } }; };
+      const off = (f = 2) => { ended = true; tok++; held = 0; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+      const start = () => { if (!started) on(want); };
+      const to = n => { want = n; if (started && n !== cur) on(n); };
+      try {
+        AudioFX.preloadMusic(['el_ugly_duckling_bgm']); AudioFX.preloadSfx(['el_egg_crack', 'el_hen_cluck', 'el_swan_call', 'giggle_xylo']);
+        const amb0 = AudioFX.ambient, mus0 = AudioFX.music;
+        AudioFX.ambient = function (name, o) {
+          const h = amb0.apply(this, arguments);
+          try {
+            if (h && INTRO.test(name)) { const s0 = h.stop; h.stop = function () { start(); return s0.apply(this, arguments); }; }
+            else if (h && /^finale_/.test(name)) off(1.5);
+            else if (h && /^classical_/.test(name)) { hold(); const r = once(release); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; setTimeout(r, ((o && o.dur) || 18) * 1000); }
+          } catch (e) { /* 무시 */ }
+          return h;
+        };
+        AudioFX.music = function (name) {
+          const h = mus0.apply(this, arguments);
+          try { if (h) { if (END_MUSIC && END_MUSIC.test(name)) off(1.5); else { hold(); const r = once(release); h.done.then(r, r); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; } } } catch (e) { /* 무시 */ }
+          return h;
+        };
+      } catch (e) { /* 소리 없이도 진행 */ }
+      setTimeout(start, 16000); // 시작 음악을 못 불러왔어도 곧 깔린다
+      const fx = (n, v, alt) => { try { if (rd()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; }; // 새 효과음(못 불러왔으면 alt)
+      return { to, dip, off, start, fx, main: 'el_ugly_duckling_bgm' };
+    })();
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(.5); return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(.5); BGK.off(2); return rr; }
 
     /* ============ 1막 ============ */
     /* --- 1. 알 깨기 (둥지 하이앵글, 여름) --- */
@@ -1732,7 +1773,7 @@
     T.confetti(); finaleMusic();
     await say('다르게 생겼던 아기 오리는 이렇게 멋진 백조로 자랐답니다.');
     await finaleWait();
-    stopAmb(.8);
+    stopAmb(.8); BGK.off(1.5);
     return '달라도 괜찮아요. 모두 저마다 멋지게 자라요!';
   }
 

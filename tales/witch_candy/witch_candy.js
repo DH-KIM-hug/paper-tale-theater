@@ -300,7 +300,7 @@
     const playS = (n, v) => { try { return n.startsWith('animals/') ? AudioFX.animal(n.slice(8), v) : AudioFX.sfx(n, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const cue = (names, v = .6, fb) => { for (const n of [].concat(names)) if (playS(n, v)) return true; if (fb) fb(); return false; };
     const tn = (f, d = .25, o = {}) => () => T.tone(f, d, { vol: .16, ...o });
-    const SFXN = ['paper_turn', 'wing_flap_2', 'ding', 'ding_glock', 'ding_glock_2', 'whistle_up', 'whistle_down', 'whistle_wobble', 'bell', 'fire_crackle', 'whoosh', 'pot_boil', 'water_drip', 'fire_siren', 'bee_buzz', 'pop', 'harp_gliss', 'harp_gliss_2', 'chime_up', 'drum', 'squeak', 'splash', 'splash_big', 'pow', 'boom', 'cymbal', 'slide_up', 'slide_down', 'sparkle', 'shimmer', 'tada', 'wing_flap_1', 'party_horn', 'cushion', 'boing', 'spring', 'xylo_up', 'step_wood', 'giggle_xylo', 'chomp', 'gulp', 'zip', 'doop', 'paper_up', 'paper_down', 'knock', 'door', 'hop', 'toy_flute',
+    const SFXN = ['el_magic_poof', 'paper_turn', 'wing_flap_2', 'ding', 'ding_glock', 'ding_glock_2', 'whistle_up', 'whistle_down', 'whistle_wobble', 'bell', 'fire_crackle', 'whoosh', 'pot_boil', 'water_drip', 'fire_siren', 'bee_buzz', 'pop', 'harp_gliss', 'harp_gliss_2', 'chime_up', 'drum', 'squeak', 'splash', 'splash_big', 'pow', 'boom', 'cymbal', 'slide_up', 'slide_down', 'sparkle', 'shimmer', 'tada', 'wing_flap_1', 'party_horn', 'cushion', 'boing', 'spring', 'xylo_up', 'step_wood', 'giggle_xylo', 'chomp', 'gulp', 'zip', 'doop', 'paper_up', 'paper_down', 'knock', 'door', 'hop', 'toy_flute',
       'toot_kazoo', 'squelch', 'dino_roar', 'theremin_wobble', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'crickets_night_1', 'winter_wind_1', 'finale_happy'];
     AudioFX.preloadSfx(SFXN); ['duck', 'frog', 'cat', 'tiger_2'].forEach(n => { try { AudioFX.animal(n, 0); } catch (e) { /* */ } });
     const amb = (name, v = .25, d = 4) => { try { AudioFX.ambient(name, { vol: v, dur: d }); } catch (e) { /* */ } };
@@ -482,7 +482,7 @@
     }
     /* 펑 연기: 연기 뭉치 그림 1장을 셋으로 복제(PLAN §4-3) + 반짝 */
     async function smoke(big = false) {
-      cue('pow', .8) || cue('boom', .6); cue('cymbal', .4); setTimeout(() => cue('sparkle', .6), 200);
+      cue('el_magic_poof', big ? 1 : .9) || cue('pow', .8) || cue('boom', .6); cue('cymbal', .4); setTimeout(() => cue('sparkle', .6), 200); // 펑! 마법 연기(2026-11-21 ElevenLabs)
       const g = T.el('g', { 'pointer-events': 'none', filter: 'url(#pp)' }, T.fx), k = big ? 1.35 : 1, sh = HT.wc_prop_smoke_puff * k;
       const cs = [[-90, -40, .8], [90, -30, .85], [0, -70, 1], [0, -150, .6]];
       const els = cs.map(([dx, dy, s], i) => { const e = T.el('g', {}, g); pic(T, e, i === 3 ? 'wc_prop_sparkle_pop' : 'wc_prop_smoke_puff', POT.cx + dx * k, POT.cy + dy * k, sh * s * 1.12, sh * s); e.style.transformBox = 'fill-box'; e.style.transformOrigin = 'center'; return e; });

@@ -82,12 +82,14 @@
 
   async function run(T) {
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    let afterIntro = null; // 시작 음악이 끝나면 한 번 — 배경 음악 켜기 (아래 ElevenLabs 배경 음악에서 채운다)
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_cozy', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_cozy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
+        setTimeout(() => { try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
@@ -115,11 +117,30 @@
     const amb = (n, vol = .28, dur = 4) => { try { if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
     const sfx = (n, v = .9) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
     /* 대금 한 소절(2026-10-29): 조용하고 쓸쓸한 순간에만. 놀이 .3, 읽기 ×0.8. 기다리지 않고 try/catch */
-    const daeg = () => { try { const o = { vol: isRead() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const daeg = () => { try { elDip(7); const o = { vol: isRead() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     /* 맨 끝 축하 음악(2026-10-30, 픽사베이 녹음 finale_happy 9.5초): 합성 팡파르 대신. 내레이션이 읽히는 동안은 엔진이 자동으로 낮춘다 */
     let finaleEnd = 0;
-    const finaleMusic = () => { try { const v = isRead() ? .3 : .5; const o = { vol: v, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleMusic = () => { try { elOff(1.5); const v = isRead() ? .3 : .5; const o = { vol: v, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const finaleWait = () => sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)));
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       가야금 피치카토·해금·장구 겨울 잔치 곡(el_patjuk_bgm). 알밤 콩·멍석 돌돌·지게 풍덩처럼 크게 치는 순간엔 잠깐 낮춘다.
+       시작 음악이 끝나면(첫 장면 넘김 또는 11초 뒤) 깔려 끝까지 되풀이한다. 내레이션 동안은 엔진이 낮추고(DUCK), 읽어 주기는 더 작게(놀이 .26·읽어 주기 .15).
+       클래식 한 토막·대금 같은 다른 음악 동안은 비켜 주고(elDip), 크게 치는 소리 때 잠깐 낮추고(elHit), 끝 음악이 나오면 끈다(elOff) */
+    const EL_MAIN = 'el_patjuk_bgm';
+    try { AudioFX.preloadMusic(['el_patjuk_bgm']); AudioFX.preloadSfx(['el_mat_roll', 'el_big_bonk', 'whistle_wobble', 'el_tiger_sneak', 'el_jingle']); } catch (e) { /* 무시 */ }
+    const elVol = () => (T.reading() ? .15 : .26);
+    let elTok = 0, elName = '', elWant = EL_MAIN, elIntro = false, elDone = false, elDipTo = 0, elHeld = false;
+    const elNow = () => { try { return AudioFX.bgmNow && AudioFX.bgmNow(); } catch (e) { return null; } };
+    const elBgm = n => { try { elName = n; const tok = ++elTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번). 켜질 때 비켜 주는 중이면 그대로 낮춘다
+      const go = () => { if (tok !== elTok || elDone) return; let h = null; try { h = AudioFX.bgm(n, { vol: elVol(), fadeIn: 2.5, xfade: 2 }); } catch (e) { return; }
+        if (h) { const left = elDipTo - Date.now(); if (elHeld) h.dip(0); else if (left > 0) h.dip(left / 1000); return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const elDip = sec => { elDipTo = Math.max(elDipTo, Date.now() + sec * 1000); const h = elNow(); if (h && !elHeld) try { h.dip(sec); } catch (e) { /* 무시 */ } };
+    const elHit = (sec = 1.4) => { const h = elNow(); if (h && !elHeld && Date.now() > elDipTo) try { h.dip(sec, .3, .05); } catch (e) { /* 무시 */ } };
+    const elHold = on => { elHeld = !!on; const h = elNow(); if (!h) return; try { if (on) h.dip(0); else h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } };
+    const elOff = (f = 2) => { elDone = true; elTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elFor = n => { if (elDone) return; elWant = n; if (elIntro && n !== elName) elBgm(n); };
+    afterIntro = () => { if (elIntro || elDone) return; elIntro = true; elBgm(elWant); };
+    const elfx = (n, v, alt) => { try { if (T.reading()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
     let b1Seen = 0;
     let ambScene = null;
     const sceneAmb = k => {
@@ -556,7 +577,7 @@
         const dx = tigerHeadX() - FR.bam.x;
         AudioFX.pop();
         await anim(fact('bam'), [{ transform: 'translate(0px,0px)' }, { transform: `translate(${dx * .5}px,-120px) rotate(180deg)` }, { transform: `translate(${dx}px,-80px) rotate(360deg)` }], { duration: 550, easing: 'ease-out' });
-        AudioFX.bonk();
+        elHit(); elfx('el_big_bonk', .95, () => AudioFX.bonk());
         impact(tigerHeadX(), 390, '톡!');
         // 알밤은 컷이 떠 있는 동안 제자리로 돌아간다
         sleep(600).then(() => anim(fact('bam'), [{ transform: `translate(${dx}px,-80px)` }, { transform: `translate(${dx * .4}px,-140px) rotate(-180deg)` }, { transform: 'translate(0px,0px) rotate(-360deg)' }], { duration: 500, easing: 'ease-in' })).then(() => { fact('bam').style.transform = ''; });
@@ -593,7 +614,7 @@
       hide: id => { const fr = friends[id]; fr.shown = false; fr.pos.style.display = 'none'; },
       strike: id => STRIKE[id] && STRIKE[id](),
       async roll(id) { // 멍석이 돌돌 말린다 (호랑이를 감싸는 것은 tiger:rolled)
-        AudioFX.roll();
+        elfx('el_mat_roll', .9, () => AudioFX.roll());
         await anim(fact(id), [{ transform: 'translate(0px,0px) rotate(0deg)' }, { transform: 'translate(-10px,-40px) rotate(-360deg) scale(1.25)' }, { transform: 'translate(0px,-6px) rotate(-720deg) scale(1.1)' }], { duration: 900, easing: 'ease-in-out' });
       },
       async carry(id) { // 지게가 다가가 멍석말이 호랑이를 지고 물가로 (풍덩은 tiger:splash)
@@ -661,7 +682,7 @@
           tiger.place(POS.tigerEnter, 520); tigerShow();
           await walk(tiger, fieldTigerX(), 340);
           tiger.face('left'); granny.face('right');
-          AudioFX.thud(); T.shake(); granny.hop(26, 420);
+          elHit(); AudioFX.thud(); T.shake(); granny.hop(26, 420);
           return;
         }
         if (a === 'exit') { await walk(tiger, POS.tigerEnter, 340); parkTiger(); granny.face(gFace()); return; }
@@ -686,7 +707,7 @@
         }
         if (a === 'hop') return tiger.hop(b ? num(b) : 34, b ? 550 : 400);
         if (a === 'shiver') {
-          AudioFX.whimper();
+          elfx('whistle_wobble', .7, () => AudioFX.whimper());
           tiger.art.classList.add('shiver');
           tiger.hop(20, 420);
           await tiger.move(tiger.x + 26, 520, 420);
@@ -716,7 +737,7 @@
             { transform: 'translate(970px,505px) rotate(340deg) scale(.55)' },
           ], { duration: 800, easing: 'ease-in' });
           rolled.pos.style.display = 'none'; rolled.pos.style.transform = ''; rolled.place(POS.rolledSpot, 520);
-          AudioFX.splash();
+          elHit(); AudioFX.splash();
           impact(950, 420, '풍덩!', '#3e6a8a');
           const sp = el('g', { transform: 'translate(962,478)' }, T.fx);
           img(sp, 'v3w/pj_splash.webp', -35, -56, 70, 60); // 물보라 그림
@@ -744,7 +765,10 @@
       },
       rolled: a => { rolled.pos.style.display = a === 'show' ? '' : 'none'; },
       cut: id => showCut(id, 2600, id !== 'myeongseok'),
-      fx: n => { if (n === 'slide') sfx('whistle_down', .7); if (n === 'finale') return finaleMusic(); return n === 'win' ? AudioFX.sting('win') : AudioFX[n] && AudioFX[n](); },
+      fx: n => { if (n === 'slide') sfx('whistle_down', .7); if (n === 'finale') return finaleMusic();
+        if (n === 'roll') return void elfx('el_mat_roll', .9, () => AudioFX.roll()); if (n === 'bonk') { elHit(); return void elfx('el_big_bonk', .95, () => AudioFX.bonk()); } if (n === 'thud') elHit(); // 멍석 돌돌·알밤 콩은 녹음으로(2026-11-21)
+        if (n === 'jingle') return void elfx('el_jingle', .8, () => AudioFX.jingle());
+        return n === 'win' ? AudioFX.sting('win') : AudioFX[n] && AudioFX[n](); },
       pop(spec) {
         const [x, y, ...w] = String(spec).split(','), word = w.join(',');
         impact(x === 'tiger' ? tiger.x + 30 : num(x), num(y), word, word === '어흥!' ? '#c0392b' : undefined);
@@ -753,7 +777,7 @@
       confetti: () => T.confetti(),
     };
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); elOff(2); try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } return rr; }
 
     /* ================= 시작: 종이 조리개가 열리며 낮 팥밭이 보인다 ================= */
     async function openScene() {
@@ -787,7 +811,7 @@
         granny.face('right');
         grannyMood('scared');
         impact(tiger.x + 30, 170, '어흥!', '#c0392b');
-        AudioFX.thud(); T.shake();
+        elHit(); AudioFX.thud(); T.shake();
         granny.hop(26, 420);
         // 호랑이를 본 채 뒤로 밀린다(보는 쪽은 그대로, 2026-10-24 방향 고정)
         await granny.move(granny.x - 24, 520, 420, 'ease-out');
@@ -894,7 +918,7 @@
           camSnap(500, 280, 1);
         });
       }
-      AudioFX.growl();
+      AudioFX.growl(); if (!T.reading()) setTimeout(() => elfx('el_tiger_sneak', .7), 900); // 밤에 돌아온 호랑이: 살금살금 악당 금관
       const arrive = say(INTRO.tigerBack);
       // 호랑이가 부엌문을 벌컥 열고 들어와 문가에 버티고 선다
       tiger.pos.style.opacity = 0;
@@ -970,11 +994,11 @@
         const dx = tigerHeadX() - FR.bam.x;
         AudioFX.pop();
         await anim(act('bam'), [{ transform: 'translate(0px,0px)' }, { transform: `translate(${dx * .5}px,-120px) rotate(180deg)` }, { transform: `translate(${dx}px,-80px) rotate(360deg)` }], { duration: 550, easing: 'ease-out' });
-        AudioFX.bonk();
+        elHit(); elfx('el_big_bonk', .95, () => AudioFX.bonk());
         impact(tigerHeadX(), 390, '톡!');
         await showCut('bam');
         tigerEyesHurt(true);
-        AudioFX.whimper();
+        elfx('whistle_wobble', .7, () => AudioFX.whimper());
         tiger.hop(34, 400);
         await anim(act('bam'), [{ transform: `translate(${dx}px,-80px)` }, { transform: `translate(${dx * .4}px,-140px) rotate(-180deg)` }, { transform: 'translate(0px,0px) rotate(-360deg)' }], { duration: 500, easing: 'ease-in' });
         act('bam').style.transform = '';
@@ -985,7 +1009,7 @@
         await anim(act('jara'), [{ transform: 'translate(0px,0px)' }, { transform: 'translate(-8px,-30px) rotate(-20deg)' }, { transform: 'translate(0px,0px)' }], { duration: 450, easing: 'ease-out' });
         impact(300, 380, '앙!');
         await showCut('jara');
-        AudioFX.whimper();
+        elfx('whistle_wobble', .7, () => AudioFX.whimper());
         tiger.art.classList.add('shiver');
         tiger.hop(20, 420);
         await tiger.move(tiger.x + 26, 520, 420);
@@ -997,7 +1021,7 @@
         impact(440, 440, '미끌~', '#4f7d46');
         await tiger.move(POS.tigerStage[3], 520, 500, 'ease-in');
         pose('fallen');
-        AudioFX.thud();
+        elHit(); AudioFX.thud();
         impact(470, 460, '꽈당!');
         T.shake();
         await showCut('ddong');
@@ -1016,7 +1040,7 @@
         const dx = tigerHeadX() - FR.jeolgu.x, dy = jeolguDrop();
         AudioFX.slide();
         await anim(act('jeolgu'), [{ transform: 'translate(0px,0px)' }, { transform: `translate(${dx}px,${dy}px) rotate(14deg)` }], { duration: 420, easing: 'ease-in' });
-        AudioFX.bonk();
+        elHit(); elfx('el_big_bonk', .95, () => AudioFX.bonk());
         impact(tiger.x - 40, 370, '쿵!');
         T.shake();
         await showCut('jeolgu');
@@ -1027,7 +1051,7 @@
         act('jeolgu').style.transform = '';
       },
       async myeongseok() {
-        AudioFX.roll();
+        elfx('el_mat_roll', .9, () => AudioFX.roll());
         impact(560, 400, '돌돌돌!');
         showCut('myeongseok', 2600, false); // 말리는 동안 컷 (기다리지 않음 → 목소리는 첫 장에 몰아서)
         await anim(act('myeongseok'), [{ transform: 'translate(0px,0px) rotate(0deg)' }, { transform: 'translate(-10px,-40px) rotate(-360deg) scale(1.25)' }, { transform: 'translate(0px,-6px) rotate(-720deg) scale(1.1)' }], { duration: 900, easing: 'ease-in-out' });
@@ -1056,7 +1080,7 @@
           { transform: 'translate(970px,505px) rotate(340deg) scale(.55)' },
         ], { duration: 800, easing: 'ease-in' });
         rolled.pos.style.display = 'none'; rolled.pos.style.transform = '';
-        AudioFX.splash();
+        elHit(); AudioFX.splash();
         impact(950, 420, '풍덩!', '#3e6a8a');
         showCut('jige'); // 물보라와 동시 (기다리지 않음)
         const sp = el('g', { transform: 'translate(962,478)' }, T.fx);
@@ -1101,7 +1125,7 @@
         await Promise.all([walk(tiger, POS.tigerStage[5], 260), camTo(...STATION_CAM[5], 1400)]);
         dizzy(false);
         pose('flat');
-        AudioFX.thud();
+        elHit(); AudioFX.thud();
         await sleep(300);
       },
       6: async () => { await camTo(...STATION_CAM[6], 600); /* 멍석에 말린 상태 */ },
@@ -1132,13 +1156,13 @@
       async jeolgu() {
         AudioFX.slide();
         await anim(act('jeolgu'), [{ transform: 'translate(0px,0px)' }, { transform: 'translate(-30px,205px) rotate(30deg)' }], { duration: 450, easing: 'ease-in' });
-        AudioFX.thud();
+        elHit(); AudioFX.thud();
         await sleep(350);
         await anim(act('jeolgu'), [{ transform: 'translate(-30px,205px)' }, { transform: 'translate(0px,0px)' }], { duration: 500, easing: 'ease-out' });
         act('jeolgu').style.transform = '';
       },
       async myeongseok() {
-        AudioFX.roll();
+        elfx('el_mat_roll', .9, () => AudioFX.roll());
         await anim(act('myeongseok'), [{ transform: 'scaleX(1)' }, { transform: 'scaleX(1.5)' }, { transform: 'scaleX(.8)' }, { transform: 'scaleX(1)' }], 900);
       },
       async jige() {
@@ -1152,7 +1176,7 @@
       trayEl.hidden = true;
       try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ }
       await lastCut; // 풍덩 컷이 잔치 장면을 가리지 않게 끝까지 보고 넘어간다
-      AudioFX.sting('win'); // 두구두구-짜잔!-와아
+      elDip(3); AudioFX.sting('win'); // 두구두구-짜잔!-와아
       await camWide(900);
       T.confetti();
       grannyMood('happy');
@@ -1215,7 +1239,7 @@
       await look(505);
       await bow(granny.art);
       await look(880);
-      AudioFX.whimper();
+      elfx('whistle_wobble', .7, () => AudioFX.whimper());
       pose('bow'); // 반창고 붙인 호랑이도 꾸벅 — 무섭지 않게 끝낸다
       await bow(tiger.art);
       await sleep(700);
@@ -1246,7 +1270,7 @@
     }
     await happyEnd();
     trayEl.hidden = true;
-    try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ }
+    elOff(2); try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ }
     return '친구들이 힘을 모아 호랑이를 물리쳤어요!';
   }
 

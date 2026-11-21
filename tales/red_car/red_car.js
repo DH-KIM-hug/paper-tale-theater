@@ -352,12 +352,14 @@
   async function run(T) {
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
     /* 2026-11-02 사용자 지시: 시작 음악 intro_adventure(웅장한 모험 음악, 첫 장면에 안 맞음) → 클래식 슈만 〈어린이 정경〉 중 〈목마의 기사〉(장난감 목마). 제목에 '피아노'라고 적힌 픽사베이 녹음 처음 12초, sounds/CREDITS.md */
+    let afterIntro = null; // 시작 음악이 끝나면 한 번 — 배경 음악 켜기 (아래 ElevenLabs 배경 음악에서 채운다)
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('classical_rocking_horse', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('classical_rocking_horse', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
+        setTimeout(() => { try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
@@ -373,8 +375,27 @@
     const amb4 = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
     /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 팥죽과 같은 픽사베이 녹음 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 곡 끝까지 기다린 뒤 끈다 */
     let finaleEnd = 0;
-    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleMusic = () => { try { elOff(1.5); const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       토이 피아노·글로켄·기타 장난감 세상 곡(el_red_car_bgm). 시작 음악 〈목마의 기사〉 뒤에 깔리고, 〈빈 행진곡〉 한 토막 동안은 비켜 준다.
+       시작 음악이 끝나면(첫 장면 넘김 또는 11초 뒤) 깔려 끝까지 되풀이한다. 내레이션 동안은 엔진이 낮추고(DUCK), 읽어 주기는 더 작게(놀이 .26·읽어 주기 .15).
+       클래식 한 토막·대금 같은 다른 음악 동안은 비켜 주고(elDip), 크게 치는 소리 때 잠깐 낮추고(elHit), 끝 음악이 나오면 끈다(elOff) */
+    const EL_MAIN = 'el_red_car_bgm';
+    try { AudioFX.preloadMusic(['el_red_car_bgm']); AudioFX.preloadSfx(['el_toy_horn', 'car_drive']); } catch (e) { /* 무시 */ }
+    const elVol = () => (T.reading() ? .15 : .26);
+    let elTok = 0, elName = '', elWant = EL_MAIN, elIntro = false, elDone = false, elDipTo = 0, elHeld = false;
+    const elNow = () => { try { return AudioFX.bgmNow && AudioFX.bgmNow(); } catch (e) { return null; } };
+    const elBgm = n => { try { elName = n; const tok = ++elTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번). 켜질 때 비켜 주는 중이면 그대로 낮춘다
+      const go = () => { if (tok !== elTok || elDone) return; let h = null; try { h = AudioFX.bgm(n, { vol: elVol(), fadeIn: 2.5, xfade: 2 }); } catch (e) { return; }
+        if (h) { const left = elDipTo - Date.now(); if (elHeld) h.dip(0); else if (left > 0) h.dip(left / 1000); return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const elDip = sec => { elDipTo = Math.max(elDipTo, Date.now() + sec * 1000); const h = elNow(); if (h && !elHeld) try { h.dip(sec); } catch (e) { /* 무시 */ } };
+    const elHit = (sec = 1.4) => { const h = elNow(); if (h && !elHeld && Date.now() > elDipTo) try { h.dip(sec, .3, .05); } catch (e) { /* 무시 */ } };
+    const elHold = on => { elHeld = !!on; const h = elNow(); if (!h) return; try { if (on) h.dip(0); else h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } };
+    const elOff = (f = 2) => { elDone = true; elTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elFor = n => { if (elDone) return; elWant = n; if (elIntro && n !== elName) elBgm(n); };
+    afterIntro = () => { if (elIntro || elDone) return; elIntro = true; elBgm(elWant); };
+    const elfx = (n, v, alt) => { try { if (T.reading()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
     /* 잠자리 장면(2026-11-01 사용자 결정, engine/bedtime.js): 누르기 없는 큰 그림 한 장 — 차고의 네 대와 이현이 손의 빨간 자동차 전조등이 하나씩 꺼진다.
        자리(u, v)는 그림 안 비율: 가로 rc_bed_wide · 세로 rc_bed_tall 을 따로 잰 것. 불빛은 조명이라 그라데이션(CLAUDE.md 7-1) */
     const SLEEP = { wide: src('rc_bed_wide'), tall: src('rc_bed_tall'), tallY: .52, focus: { w: [.5, .55], t: [.5, .6] } };   // (BED 는 1장 침대 그림 자리)
@@ -430,7 +451,7 @@
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     AudioFX.preloadSfx(['classical_rocking_horse', 'paper_down', 'paper_up', 'swish', 'whoosh', 'rattle', 'knock', 'sparkle', 'tada', 'step_grass', 'pop', 'thud', 'splash', 'squeak', 'door', 'creak', 'police_siren', 'fire_siren', 'ambulance_siren', 'fire_crackle', 'birds_chirp_1', 'birds_chirp_2', 'ding_glock', 'question', 'whistle_down', 'harp_gliss', 'pop_appear', 'water_pour_1', 'latch_click', 'train', 'party_horn', 'finale_happy', 'classical_brahms_lullaby_box']);
     /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
-    const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const classical = n => { try { elDip(18); const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     try { AudioFX.preloadSfx(['classical_vienna_march']); } catch (e) { /* 무시 */ }
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율을 읽어 ASP 를 덮어쓴다 */
     const loads = [];
@@ -776,7 +797,7 @@
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) {
       if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
-      return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+      return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { elOff(2); try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
     }
 
     /* ===== 1. 언제나 함께 (배움 놀이 1: 빨간 것 찾기 — 첫 조작) ===== */
@@ -1205,9 +1226,10 @@
     await say(S.L44);
     await say(S.L45);
     T.pop(kid.x + X(-90, -45), FL - 250, tr('빵빵!')); T.pop(kid.x + X(90, 35), FL - X(250, 305), tr('부릉부릉!'));
+    elfx('el_toy_horn', .8); setTimeout(() => elfx('car_drive', .45), 700); // 빵빵(장난감 경적 녹음) · 부릉부릉
     await say('부릉부릉, 빵빵!');
     await finaleWait();
-    try { AudioFX.stopAmbient(); } catch (e) { /* */ }
+    elOff(2); try { AudioFX.stopAmbient(); } catch (e) { /* */ }
 
     /* ===== 11. 잠자리 (2026-11-01): 누르기 없음. 집 차고에 쏙, 전조등이 하나씩 꺼지고 이현이가 잠든다 ===== */
     await T.sceneCard('', () => bed.open());

@@ -435,10 +435,10 @@
   const meow = (T, v) => AudioFX.animal('cat', v) || T.tone([700, 900], .5, { type: 'sine', vol: .14 });
   const moo = T => AudioFX.animal('cow') || T.tone([150, 105], .9, { type: 'sawtooth', vol: .12 });
   const oink = T => AudioFX.animal('pig') || T.tone([260, 200], .25, { type: 'square', vol: .1 });
-  const squeak = T => { T.tone([1800, 2400], .08, { type: 'sine', vol: .12 }); T.tone([1900, 2500], .08, { type: 'sine', vol: .12, when: .14 }); };
-  const giggle = T => [0, .12, .24, .36].forEach((w, i) => T.tone([620 - i * 40, 520 - i * 40], .1, { type: 'triangle', vol: .12, when: w }));
+  const squeak = T => { if (AudioFX.sfx('mouse_squeak_1', .7)) return; T.tone([1800, 2400], .08, { type: 'sine', vol: .12 }); T.tone([1900, 2500], .08, { type: 'sine', vol: .12, when: .14 }); };
+  const giggle = T => AudioFX.sfx('giggle_xylo', .5) || [0, .12, .24, .36].forEach((w, i) => T.tone([620 - i * 40, 520 - i * 40], .1, { type: 'triangle', vol: .12, when: w }));
   /* "영차" 합창: 당기는 인원수만큼 목소리가 겹친다 */
-  const chorus = (T, n) => { for (let i = 0; i < n; i++) T.tone([200 + i * 55, 160 + i * 45], .32, { type: 'triangle', vol: .07, when: i * .025 }); AudioFX.sfx('step_grass', .25); };
+  const chorus = (T, n) => { for (let i = 0; i < n; i++) T.tone([200 + i * 55, 160 + i * 45], .32, { type: 'triangle', vol: .07, when: i * .025 }); AudioFX.sfx('step_grass', .25); if ((chorus.k = (chorus.k || 0) + 1) % 2) AudioFX.sfx('el_pull_strain', .32 + Math.min(n, 6) * .04); }; // 영차 두 번에 한 번 끄응 늘어나는 소리(2026-11-21)
   const thud = T => AudioFX.sfx('thud') || T.tone([120, 60], .25, { type: 'sine', vol: .25 });
 
   /* ================= 이야기 ================= */
@@ -879,7 +879,7 @@
           await T.cut(svg => cutTurnip(svg, 190, .6, '차~'), { hold: 1100 });
           return;
         }
-        if (k === 'pop') await ((artUrl('cut_pop') && T.cutImage([{ src: artUrl('cut_pop'), sfx: 'pow', hold: 2000 }], { hold: 2000 })) || T.cut(svg => cutTurnip(svg, 140, .6, '쑥!'), { hold: 1500, sfx: 'pow' }));
+        if (k === 'pop') await ((artUrl('cut_pop') && T.cutImage([{ src: artUrl('cut_pop'), sfx: () => { BGK.dip(2.2, .3); BGK.fx('el_turnip_pop', 1, () => AudioFX.pow()); }, hold: 2000 }], { hold: 2000 })) || T.cut(svg => cutTurnip(svg, 140, .6, '쑥!'), { hold: 1500, sfx: () => { BGK.dip(2.2, .3); BGK.fx('el_turnip_pop', 1, () => AudioFX.pow()); } }));
       },
       vo(k) {
         if (k === 'squeak_mouse') squeak(T);
@@ -948,8 +948,49 @@
       },
       finale: () => { if (!rInstant()) finaleMusic(); return null; }, // 맨 끝 축하 음악(2026-10-31 사용자)
     };
+    /* ---------- 배경 음악 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       본 곡(el_turnip_bgm)은 시작 음악이 끝나면(또는 첫 장면이 바뀌면) 깔려 끝까지 되풀이한다. 놀이 0.24·읽어 주기 0.14, 내레이션 동안은 엔진이 더 낮춘다(DUCK).
+       클래식 한 토막(classical_*)·다른 녹음 음악(AudioFX.music)이 나오는 동안은 비켜 주고(dip), 끝 축하 음악(finale_*)에서 끈다.
+       BGK.to(이름): 변주로 바꾸기(시작 음악 전이면 기다렸다가 그 곡으로), BGK.dip(초, 배율): 큰 타격음 동안 잠깐 낮추기, BGK.off(): 끄기 */
+    const BGK = (() => {
+      const rd = () => { try { return !!T.reading(); } catch (e) { return false; } };
+      const VOL = () => (rd() ? 0.14 : 0.24);
+      const INTRO = /^intro_/, END_MUSIC = null;
+      let tok = 0, cur = '', want = 'el_turnip_bgm', held = 0, started = false, ended = false;
+      const now = () => { try { return AudioFX.bgmNow && AudioFX.bgmNow(); } catch (e) { return null; } };
+      const on = n => { if (ended) return; cur = n; started = true; const t = ++tok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+        const go = () => { if (t !== tok || ended) return; let h = null; try { h = AudioFX.bgm(n, { vol: VOL(), fadeIn: 2.5, xfade: 2 }); } catch (e) { return; } if (h) { if (held > 0) h.dip(0); return; } if (++k < 12) setTimeout(go, 1000); }; go(); };
+      const dip = (sec, lv = 0) => { const h = now(); if (h) try { h.dip(sec, lv); } catch (e) { /* 무시 */ } };
+      const hold = () => { held++; dip(0); };
+      const release = () => { if (held > 0 && --held === 0) { const h = now(); if (h) try { h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } } };
+      const once = f => { let d = false; return () => { if (!d) { d = true; f(); } }; };
+      const off = (f = 2) => { ended = true; tok++; held = 0; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+      const start = () => { if (!started) on(want); };
+      const to = n => { want = n; if (started && n !== cur) on(n); };
+      try {
+        AudioFX.preloadMusic(['el_turnip_bgm']); AudioFX.preloadSfx(['el_turnip_pop', 'el_pull_strain', 'mouse_squeak_1', 'giggle_xylo']);
+        const amb0 = AudioFX.ambient, mus0 = AudioFX.music;
+        AudioFX.ambient = function (name, o) {
+          const h = amb0.apply(this, arguments);
+          try {
+            if (h && INTRO.test(name)) { const s0 = h.stop; h.stop = function () { start(); return s0.apply(this, arguments); }; }
+            else if (h && /^finale_/.test(name)) off(1.5);
+            else if (h && /^classical_/.test(name)) { hold(); const r = once(release); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; setTimeout(r, ((o && o.dur) || 18) * 1000); }
+          } catch (e) { /* 무시 */ }
+          return h;
+        };
+        AudioFX.music = function (name) {
+          const h = mus0.apply(this, arguments);
+          try { if (h) { if (END_MUSIC && END_MUSIC.test(name)) off(1.5); else { hold(); const r = once(release); h.done.then(r, r); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; } } } catch (e) { /* 무시 */ }
+          return h;
+        };
+      } catch (e) { /* 소리 없이도 진행 */ }
+      setTimeout(start, 16000); // 시작 음악을 못 불러왔어도 곧 깔린다
+      const fx = (n, v, alt) => { try { if (rd()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; }; // 새 효과음(못 불러왔으면 alt)
+      return { to, dip, off, start, fx, main: 'el_turnip_bgm' };
+    })();
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(); return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(); BGK.off(2); return rr; }
 
     /* --- 1. 씨 뿌리기 (텃밭 봄) --- */
     let bgp = gardenBG(T, { season: 'spring' });
@@ -1222,7 +1263,7 @@
     await T.cut(svg => cutTurnip(svg, 230, .6, '영~'), { hold: 1100 });
     await T.cut(svg => cutTurnip(svg, 190, .6, '차~'), { hold: 1100 });
     // 쑥! 은 그림 컷(얼굴 없는 순무가 흙을 튀기며 쑥, 여섯이 벌렁) — 없으면 코드 컷
-    await ((artUrl('cut_pop') && T.cutImage([{ src: artUrl('cut_pop'), sfx: 'pow', hold: 2000 }], { hold: 2000 })) || T.cut(svg => cutTurnip(svg, 140, .6, '쑥!'), { hold: 1500, sfx: 'pow' }));
+    await ((artUrl('cut_pop') && T.cutImage([{ src: artUrl('cut_pop'), sfx: () => { BGK.dip(2.2, .3); BGK.fx('el_turnip_pop', 1, () => AudioFX.pow()); }, hold: 2000 }], { hold: 2000 })) || T.cut(svg => cutTurnip(svg, 140, .6, '쑥!'), { hold: 1500, sfx: () => { BGK.dip(2.2, .3); BGK.fx('el_turnip_pop', 1, () => AudioFX.pow()); } }));
     /* 순무가 날아가고, 생쥐부터 할아버지까지 벌렁 도미노. 세로 화면(보이는 폭 ≈520)에선 줄 바로 왼쪽에 떨어진다 */
     const SPREAD = [0, 6, 16, 32, 46, 54];
     const landX = T.portrait() ? 290 : 110;
@@ -1336,7 +1377,7 @@
     lbFade(T, 'feast'); // 잔치 밤 라이트박스
     await say('모두 함께 맛있게 먹었답니다.');
     await finaleWait(); stopAmb();
-    clearInterval(steam); ui.remove();
+    clearInterval(steam); ui.remove(); BGK.off(1.5);
     return '작은 힘도 모이면 커다란 힘이 돼요!';
   }
 

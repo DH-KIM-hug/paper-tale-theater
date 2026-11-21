@@ -344,7 +344,7 @@
           stoneP = prop(T, 'wg_stone', 520, 548, 90);
           (async () => {
             for (let i = 1; i <= 3; i++) {
-              await stoneP.move(BELLY[0] - 40, 480, 380); hide(stoneP); T.pop(BELLY[0], 250, '쏙!'); AudioFX.tap(); await sleep(300);
+              await stoneP.move(BELLY[0] - 40, 480, 380); hide(stoneP); T.pop(BELLY[0], 250, '쏙!'); BGK.fx('el_stone_plop', .95, () => AudioFX.tap()); await sleep(300);
               if (i < 3) { stoneP.place(520, 548); appear(stoneP); }
               await sleep(300);
             }
@@ -381,8 +381,54 @@
       READ_ACTS.finale = () => { try { if (!T.readInstant()) finaleMusic(); } catch (e) { /* 무시 */ } return null; }; // 맨 끝 축하 음악(2026-10-31 사용자)
       READ_ACTS.sfxs = (list, step, v) => { try { if (T.readInstant()) return null; String(list).split(',').forEach((n, i) => setTimeout(() => { try { AudioFX.sfx(n, +v || .55); } catch (e) { /* 무시 */ } }, i * (+step || 260))); } catch (e) { /* 무시 */ } return null; };
     }
+    /* ---------- 배경 음악 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       본 곡(el_wolf_goats_bgm)은 시작 음악이 끝나면(또는 첫 장면이 바뀌면) 깔려 끝까지 되풀이한다. 놀이 0.26·읽어 주기 0.15, 내레이션 동안은 엔진이 더 낮춘다(DUCK).
+       클래식 한 토막(classical_*)·다른 녹음 음악(AudioFX.music)이 나오는 동안은 비켜 주고(dip), 끝 축하 음악(finale_*)에서 끈다.
+       BGK.to(이름): 변주로 바꾸기(시작 음악 전이면 기다렸다가 그 곡으로), BGK.dip(초, 배율): 큰 타격음 동안 잠깐 낮추기, BGK.off(): 끄기 */
+    const BGK = (() => {
+      const rd = () => { try { return !!T.reading(); } catch (e) { return false; } };
+      const VOL = () => (rd() ? 0.15 : 0.26);
+      const INTRO = /^(intro_|classical_perfect_happiness$)/, END_MUSIC = null;
+      let tok = 0, cur = '', want = 'el_wolf_goats_bgm', held = 0, started = false, ended = false;
+      const now = () => { try { return AudioFX.bgmNow && AudioFX.bgmNow(); } catch (e) { return null; } };
+      const on = n => { if (ended) return; cur = n; started = true; const t = ++tok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+        const go = () => { if (t !== tok || ended) return; let h = null; try { h = AudioFX.bgm(n, { vol: VOL(), fadeIn: 2.5, xfade: 2 }); } catch (e) { return; } if (h) { if (held > 0) h.dip(0); return; } if (++k < 12) setTimeout(go, 1000); }; go(); };
+      const dip = (sec, lv = 0) => { const h = now(); if (h) try { h.dip(sec, lv); } catch (e) { /* 무시 */ } };
+      const hold = () => { held++; dip(0); };
+      const release = () => { if (held > 0 && --held === 0) { const h = now(); if (h) try { h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } } };
+      const once = f => { let d = false; return () => { if (!d) { d = true; f(); } }; };
+      const off = (f = 2) => { ended = true; tok++; held = 0; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+      const start = () => { if (!started) on(want); };
+      const to = n => { want = n; if (started && n !== cur) on(n); };
+      try {
+        AudioFX.preloadMusic(['el_wolf_goats_bgm', 'el_wolf_goats_tense']); AudioFX.preloadSfx(['el_jingle', 'el_stone_plop']);
+        const amb0 = AudioFX.ambient, mus0 = AudioFX.music;
+        AudioFX.ambient = function (name, o) {
+          const h = amb0.apply(this, arguments);
+          try {
+            if (h && INTRO.test(name)) { const s0 = h.stop; h.stop = function () { start(); return s0.apply(this, arguments); }; }
+            else if (h && /^finale_/.test(name)) off(1.5);
+            else if (h && /^classical_/.test(name)) { hold(); const r = once(release); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; setTimeout(r, ((o && o.dur) || 18) * 1000); }
+          } catch (e) { /* 무시 */ }
+          return h;
+        };
+        AudioFX.music = function (name) {
+          const h = mus0.apply(this, arguments);
+          try { if (h) { if (END_MUSIC && END_MUSIC.test(name)) off(1.5); else { hold(); const r = once(release); h.done.then(r, r); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; } } } catch (e) { /* 무시 */ }
+          return h;
+        };
+      } catch (e) { /* 소리 없이도 진행 */ }
+      setTimeout(start, 16000); // 시작 음악을 못 불러왔어도 곧 깔린다
+      const fx = (n, v, alt) => { try { if (rd()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; }; // 새 효과음(못 불러왔으면 alt)
+      return { to, dip, off, start, fx, main: 'el_wolf_goats_bgm' };
+    })();
+    { const jin0 = AudioFX.jingle; AudioFX.jingle = () => BGK.fx('el_jingle', .8, jin0); } // 합성 반짝 → 녹음 반짝(이 동화 페이지에서만)
+    /* 늑대가 문 앞에 온 때부터 숨바꼭질까지는 살금살금 변주(el_wolf_goats_tense: 약음 트롬본·바순·피치카토). 놀이는 장면 카드 이름, 읽어 주기는 set 배경 키로 고른다 */
+    { const TENSE = ['똑똑똑!', '분필 먹은 늑대', '하얀 발', '숨바꼭질'], sc1 = T.sceneCard;
+      if (!T.reading()) T.sceneCard = function (label, ...a) { try { BGK.to(TENSE.includes(label) ? 'el_wolf_goats_tense' : BGK.main); } catch (e) { /* 무시 */ } return sc1.call(this, label, ...a); }; }
+    if (READ_ACTS && READ_ACTS.set) { const set0 = READ_ACTS.set; READ_ACTS.set = function (k) { try { BGK.to(['inside_door', 'door', 'house'].includes(k) ? 'el_wolf_goats_tense' : BGK.main); } catch (e) { /* 무시 */ } return set0.apply(this, arguments); }; }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(.5); return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(.5); BGK.off(2); return rr; }
 
     /* --- 1. 부엌 --- */
     bg(T, 'kitchen');
@@ -558,7 +604,7 @@
     await say('"이제 늑대 배에 돌멩이를 넣어 주자."');
     await mm3.move(BELLY[0] + 6, 548, 800); // 다시 배 앞에 서서 가린다
     const stone = prop(T, 'wg_stone', 520, 548, 90);
-    const drop = async i => { await stone.move(BELLY[0] - 40, 480, 380); hide(stone); T.pop(BELLY[0], 250, '쏙!'); AudioFX.tap(); await sleep(300); if (i < 3) { stone.place(520, 548); appear(stone); } };
+    const drop = async i => { await stone.move(BELLY[0] - 40, 480, 380); hide(stone); T.pop(BELLY[0], 250, '쏙!'); BGK.fx('el_stone_plop', .95, () => AudioFX.tap()); await sleep(300); if (i < 3) { stone.place(520, 548); appear(stone); } };
     await T.tap(stone.pos, { prompt: '돌멩이를 톡! 눌러 봐요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     for (let i = 1; i <= 3; i++) { await drop(i); await sleep(400); }
     await cutArt(T, 'wg_cut_stitch', 'magic');
@@ -600,7 +646,7 @@
     await sleep(700);
     await say('엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.');
     await finaleWait();
-    stopAmb(.8);
+    stopAmb(.8); BGK.off(1.5);
     return '엄마 목소리를 잘 기억해요!';
   }
 

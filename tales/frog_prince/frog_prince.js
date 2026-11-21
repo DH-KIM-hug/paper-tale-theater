@@ -295,12 +295,14 @@
 
   async function run(T) {
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    let afterIntro = null; // 시작 음악이 끝나면 한 번 — 배경 음악 켜기 (아래에서 채운다)
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_magic', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_magic', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
+        setTimeout(() => { try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
@@ -314,7 +316,7 @@
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
     /* 맨 끝 축하 음악(2026-10-31 사용자 지시): Pixabay 녹음 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 곡 끝까지 기다렸다가 끝 처리 */
     let finaleEnd = 0;
-    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleMusic = () => { try { bgmOff(1.5); const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
     const cue = (name, v) => { try { if (T.reading() && document.hidden && /^marimba_/.test(name)) return true; /* 화면 꺼짐: 화음 방지 */ return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { fp_bg_yard_v2: 'birds_chirp_1', fp_bg_room_night_lb: 'crickets_night_1' };
@@ -329,6 +331,19 @@
     const X = (l, p) => (P ? p : l);
     const follow = (x, ms = 700) => (P ? T.camTo(x, 280, 1, ms) : Promise.resolve());
     AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'hop', 'ball_bounce', 'splash', 'splash_big', 'bubbles', 'knock', 'door', 'step_grass', 'step_wood', 'paper_up', 'paper_down', 'swish', 'sparkle', 'tada', 'chomp', 'pop', 'birds_chirp_1', 'crickets_night_1', 'stream_1', 'question', 'ding_glock', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'cushion', 'boing', 'shimmer', 'party_horn']);
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       배경 음악은 시작 음악(12초) 뒤에 깔려 끝까지 되풀이한다(장면이 바뀌어도 이어짐). 내레이션 동안 엔진이 낮추고(DUCK), 읽어 주기는 더 작게.
+       성 정원의 류트·하프·리코더 곡. 왕자로 바뀌는 '팡!'에는 녹음 반짝(el_jingle)을 더하고 배경 음악을 잠깐 낮춘다. 끝 축하 음악 전에 끈다. */
+    try { AudioFX.preloadMusic(['el_frog_prince_bgm']); AudioFX.preloadSfx(['el_jingle']); } catch (e) { /* 무시 */ }
+    const BGM_VOL = () => (T.reading() ? 0.14 : 0.24);
+    let bgmTok = 0, bgmName = '';
+    const bgm = (n = 'el_frog_prince_bgm') => { try { bgmName = n; const tok = ++bgmTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+      const go = () => { if (tok !== bgmTok) return; try { if (AudioFX.bgm(n, { vol: BGM_VOL(), fadeIn: 2.5, xfade: 2 })) return; } catch (e) { return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const bgmDip = (sec, level = 0) => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.dip(sec, level); } catch (e) { /* 무시 */ } };
+    const bgmOff = (f = 2) => { bgmTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elfx = (n, v, alt) => { try { if (T.reading()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
+    let introDone = false; afterIntro = () => { if (introDone) return; introDone = true; bgm(); };
+    const bgmFor = n => { if (!introDone) return; if (n !== bgmName) bgm(n); }; // 시작 음악 전에는 바꾸지 않는다(끝나면 본 곡부터)
     /* 그림 파일 미리 받기: 있으면 쓰고, 없으면 자리표시. 있는 그림은 실제 비율을 읽어 ASP 를 덮어쓴다 */
     const loads = [];
     BGS.forEach(k => loads.push(T.preload(src(k)).then(ok => { bgOK[k] = ok; })));
@@ -453,7 +468,7 @@
           if (!P) T.camTo(BED.x - 80, 300, 1.12, 500);
           const b = front(L.magic_burst, BED.x, BED.top - 100 + HT.fp_layer_magic_burst / 2); b.body.style.transformBox = 'fill-box'; b.body.style.transformOrigin = '50% 50%';
           b.body.animate([{ transform: 'scale(.2) rotate(0deg)', opacity: 1 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 1, offset: .7 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 0 }], { duration: 700, easing: 'ease-out' }).finished.then(() => hide(b), () => hide(b));
-          flash(T, BED.x, BED.top - 100); roomBright();
+          flash(T, BED.x, BED.top - 100); roomBright(); bgmDip(2.2, .3); if (!(T.readInstant && T.readInstant())) elfx('el_jingle', .7); // 변신 반짝(녹음)
         },
         petals: () => petals(T),
         fx(n) {
@@ -472,7 +487,7 @@
       };
     })();
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+    if (T.reading()) return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { bgmOff(2); try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
 
     /* ===== 1. 성 뜰 (배움 놀이 1: 금공 모양 고르기 — 첫 조작) ===== */
     scene('fp_bg_yard_v2');
@@ -722,7 +737,7 @@
     })();
     await say(S.L32); await t9b;
     await sleep(500);
-    sfx('shimmer', .7, () => sparkleSfx(T)); T.pop(BED.x, BED.top - 240, tr('팡!'), GOLD);
+    sfx('shimmer', .7, () => sparkleSfx(T)); bgmDip(2.2, .3); elfx('el_jingle', .75); T.pop(BED.x, BED.top - 240, tr('팡!'), GOLD); // 변신 반짝(녹음)
     if (!P) T.camTo(BED.x - 80, 300, 1.12, 500);
     { const b = front(L.magic_burst, BED.x, BED.top - 100 + HT.fp_layer_magic_burst / 2); b.body.style.transformBox = 'fill-box'; b.body.style.transformOrigin = '50% 50%';
       b.body.animate([{ transform: 'scale(.2) rotate(0deg)', opacity: 1 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 1, offset: .7 }, { transform: 'scale(1.6) rotate(20deg)', opacity: 0 }], { duration: 700, easing: 'ease-out' }).finished.then(() => hide(b), () => hide(b)); }
@@ -766,7 +781,7 @@
       await ball.move(510, FL + 2, 600, 'ease-in');
     })();
     finaleMusic(); await say(S.L38); await tb;
-    try { await finaleWait(); AudioFX.stopAmbient(); } catch (e) { /* */ }
+    try { await finaleWait(); bgmOff(2); AudioFX.stopAmbient(); } catch (e) { /* */ }
     T.finale();
     await sleep(2500);
     return '한 약속은 지켜요.';

@@ -107,12 +107,13 @@
   /* ================= 소리 ================= */
   const SND = {
     violin(T, f) { T.tone(f, .5, { type: 'sawtooth', vol: .05 }); T.tone(f * 2, .45, { type: 'triangle', vol: .06 }); T.tone(f * 1.005, .5, { type: 'triangle', vol: .08 }); },
-    tune(T) { [523, 659, 784, 659, 880].forEach((f, i) => { T.tone(f, .3, { type: 'triangle', vol: .09, when: i * .16 }); T.tone(f, .3, { type: 'sawtooth', vol: .03, when: i * .16 }); }); },
+    /* 2026-11-21 ElevenLabs 녹음 먼저(sounds/CREDITS.md): 베짱이 바이올린 한 소절·반짝·덜덜 떨기. 못 불러왔으면 합성음 */
+    tune(T) { if (AudioFX.sfx('el_fiddle_tune', T.reading && T.reading() ? .6 : .75)) return; [523, 659, 784, 659, 880].forEach((f, i) => { T.tone(f, .3, { type: 'triangle', vol: .09, when: i * .16 }); T.tone(f, .3, { type: 'sawtooth', vol: .03, when: i * .16 }); }); },
     yeongcha(T, n = 3) { for (let i = 0; i < n; i++) T.tone([700 + i * 90, 560 + i * 80], .22, { type: 'triangle', vol: .06, when: i * .03 }); },
     roll(T) { for (let i = 0; i < 5; i++) T.tone([260 - i * 12, 200], .08, { type: 'triangle', vol: .1, when: i * .1 }); },
-    shiver(T) { [0, .08, .16, .24].forEach((w, i) => T.tone(i % 2 ? 520 : 600, .06, { type: 'square', vol: .05, when: w })); },
+    shiver(T) { if (AudioFX.sfx('el_shiver', T.reading && T.reading() ? .55 : .7)) return; [0, .08, .16, .24].forEach((w, i) => T.tone(i % 2 ? 520 : 600, .06, { type: 'square', vol: .05, when: w })); },
     sneeze(T) { T.tone([500, 900], .25, { type: 'sine', vol: .12 }); T.tone([1200, 300], .2, { type: 'sawtooth', vol: .1, when: .3 }); },
-    sparkle(T) { [1047, 1319, 1568, 2093].forEach((f, i) => T.tone(f, .16, { type: 'triangle', vol: .1, when: i * .07 })); },
+    sparkle(T) { if (AudioFX.sfx('el_jingle', T.reading && T.reading() ? .55 : .7)) return; [1047, 1319, 1568, 2093].forEach((f, i) => T.tone(f, .16, { type: 'triangle', vol: .1, when: i * .07 })); },
     step(T) { AudioFX.sfx('step_grass', .3) || T.tone([300, 200], .08, { type: 'sine', vol: .08 }); },
     snowStep(T) { AudioFX.sfx('step_grass', .25) || T.tone([220, 160], .1, { type: 'triangle', vol: .08 }); },
     knock(T) { AudioFX.sfx('knock') || [0, .2].forEach(w => T.tone([180, 90], .12, { type: 'square', vol: .12, when: w })); },
@@ -678,6 +679,7 @@
     const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
     try { AudioFX.preloadSfx(['intro_playful', 'birds_chirp_1', 'birds_chirp_2', 'rain_1', 'winter_wind_1', 'marimba_1', 'marimba_2', 'marimba_3', 'marimba_4', 'marimba_5', 'marimba_6', 'marimba_7', 'marimba_8', 'marimba_note', 'finale_happy', 'party_horn', 'boing', 'question', 'xylo_down', 'stomach_growl', 'applause_1', 'ding_glock', 'page_turn', 'page_turn_big', 'step_grass', 'knock', 'creak', 'door']); } catch (e) { /* 무시 */ }
+    try { AudioFX.preloadSfx(['el_fiddle_tune', 'el_shiver', 'el_jingle']); } catch (e) { /* 무시 */ } // 2026-11-21 녹음 효과음. 배경 음악(bgm)은 넣지 않는다: 장면마다 〈사계〉가 흘러 겹친다
     AudioFX.preloadMusic(['vivaldi_spring', 'vivaldi_spring3', 'vivaldi_summer1', 'vivaldi_summer3', 'vivaldi_autumn1', 'vivaldi_winter', 'vivaldi_winter1']);
     /* 계절 음악 (2026-10-20): 계절 장면마다 〈사계〉 해당 곡. 한 번에 한 곡만 — 새로 틀면 앞 곡은 서서히 끈다. 목소리 밑에 깔리게 작게(vol .3) */
     let bgm = null;

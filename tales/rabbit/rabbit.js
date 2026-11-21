@@ -549,7 +549,8 @@
     else { const p = drawAnimal(T, T.el('g', { transform: 'translate(0 50) scale(.95)' }, g), k); show(p.legs, 1); }
     return g;
   }
-  const footstep = T => T.tone([120, 80], .14, { type: 'sine', vol: .3 });
+  let stepN = 0; // 엉금엉금 발소리(2026-11-21 ElevenLabs 시범): 두 걸음에 한 번만 녹음 소리, 못 불러왔으면 합성음
+  const footstep = T => { if (stepN++ % 2) return; try { if (AudioFX.sfx('el_turtle_step', T.reading() ? .4 : .55)) return; } catch (e) { /* 합성음으로 */ } T.tone([120, 80], .14, { type: 'sine', vol: .3 }); };
   const snore = (T, k) => T.tone(k ? [140, 210] : [210, 130], .7, { type: 'sine', vol: .07 });
 
   /* ================= 경주 지도 막대 (화면 고정, 카메라 영향 없음) ================= */
@@ -652,12 +653,14 @@
   /* ================= 이야기 ================= */
   async function run(T) {
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    let afterIntro = null; // 시작 음악이 끝나면 한 번 — 배경 음악 켜기 (아래에서 채운다)
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_playful', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_playful', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
+        setTimeout(() => { try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
@@ -668,13 +671,31 @@
     /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
     /* classical('off'): 18초가 다 안 됐어도 서서히 끈다(토끼 낮잠 대사 밑에 빠른 캉캉이 남던 것, 2026-11-01 사용자 음악 점검) */
     let clH = null, clT = 0;
-    const classical = n => { try { if (n === 'off') { clearTimeout(clT); clH && clH.stop(1.2); clH = null; return; } const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!(clH = AudioFX.ambient('classical_' + n, o))) clT = setTimeout(() => { try { clH = AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const classical = n => { try { const bh = AudioFX.bgmNow && AudioFX.bgmNow(); if (bh) bh.dip(n === 'off' ? .01 : 18); if (n === 'off') { clearTimeout(clT); clH && clH.stop(1.2); clH = null; return; } const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!(clH = AudioFX.ambient('classical_' + n, o))) clT = setTimeout(() => { try { clH = AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     try { AudioFX.preloadSfx(['classical_cancan']); } catch (e) { /* 무시 */ }
     const isRead = () => { try { return !!T.reading(); } catch (e) { return false; } };
     let ambTok = 0; // 장면이 바뀌면 이전 재시도는 버린다
     const amb = (n, vol = .28, dur = 4) => { try { AudioFX.stopAmbient(.4); if (isRead()) { vol = vol * .8; dur = Math.min(dur, 5); } const tok = ++ambTok; if (!AudioFX.ambient(n, { vol, dur })) setTimeout(() => { if (tok === ambTok) { try { AudioFX.ambient(n, { vol, dur }); } catch (e) { /* 무시 */ } } }, 900); } catch (e) { /* 무시 */ } };
     const sfx = (n, v = .9) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs 시범, sounds/CREDITS.md 'ElevenLabs') ----------
+       배경 음악은 시작 음악(intro_playful 12초) 뒤에 깔려 끝까지 되풀이한다. 내레이션 동안 엔진이 낮추고(DUCK), 읽어 주기는 더 작게.
+       다른 음악(캉캉·잔치 연주) 동안은 dip 으로 비켜 준다. 결승 장면만 짧은 변주(el_rabbit_finish) */
+    try { AudioFX.preloadMusic(['el_rabbit_bgm', 'el_rabbit_finish']); AudioFX.preloadSfx(['el_turtle_step', 'el_carrot_crunch', 'el_run_patter', 'el_start_drum', 'el_ribbon_snap', 'el_fanfare', 'el_jingle', 'el_camera_click', 'applause_1']); } catch (e) { /* 무시 */ }
+    const BGM_VOL = () => (isRead() ? .16 : .28);
+    let bgmTok = 0;
+    const bgm = (n = 'el_rabbit_bgm') => { try { const tok = ++bgmTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+      const go = () => { if (tok !== bgmTok) return; try { if (AudioFX.bgm(n, { vol: BGM_VOL(), fadeIn: 2.5 })) return; } catch (e) { return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const bgmDip = (sec, level = 0) => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.dip(sec, level); } catch (e) { /* 무시 */ } };
+    const bgmOff = (f = 2) => { bgmTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elfx = (n, v, alt) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
+    { // 합성음뿐이던 팡파르·반짝 소리를 녹음으로 (이 동화 페이지에서만)
+      const fan0 = AudioFX.fanfare, jin0 = AudioFX.jingle;
+      AudioFX.fanfare = () => elfx('el_fanfare', .85, fan0);
+      AudioFX.jingle = () => elfx('el_jingle', .8, jin0);
+    }
+    let introDone = false; afterIntro = () => { if (introDone) return; introDone = true; bgm(); };
+    const camClick = () => elfx('el_camera_click', .9, () => AudioFX.poke()); // 결승 사진 찰칵
     const SCENE_AMB = { '초대장 돌리기': ['birds_chirp_2', .25, 3], '개울': ['stream_1', .28, 4], '숲속 잔치': ['crickets_night_1', .25, 4] }; // 장면 카드 이름 → 장소 소리 (장면 처음 몇 초만)
     const wrap = T.root.querySelector('#stageWrap');
     stopLoops();
@@ -701,7 +722,7 @@
     const rabbitReset = () => { rp.pose('stand'); rp.setEyes('open'); rp.mouth('smile'); rp.sleepy(false); rp.ears(1); faceR(rabbit); };
     const turtleReset = () => { tp.step(0); tp.neck(1); tp.tilt(0); tp.swim(false); faceR(turtle); };
     const walk = (ms, gap = 260) => { let k = 0; const h = setInterval(() => { tp.step(k++ % 2); footstep(T); }, gap); setTimeout(() => { clearInterval(h); tp.step(0); }, ms); };
-    const scene = (label, fn) => T.sceneCard(label, () => { stopLoops(); T.clear(); camSnap(500, 280, 1); const sa = SCENE_AMB[label]; if (sa) amb(...sa); else stopAmb(); fn(); });
+    const scene = (label, fn) => T.sceneCard(label, () => { stopLoops(); T.clear(); camSnap(500, 280, 1); const sa = SCENE_AMB[label]; if (sa) amb(...sa); else stopAmb(); if (label === '마지막 한 발') bgm('el_rabbit_finish'); else if (label === '시상식') bgm(); fn(); });
     /* 세로 화면(양옆이 잘림)용: 카메라가 x를 따라가고, 넓게 벌려 선 자리는 가운데로 모은다. 가로 화면에서는 아무 일도 안 한다 */
     const follow = (x, dur = 500) => T.portrait() ? camTo(x, 280, 1, dur) : Promise.resolve();
     const PX = (x, k) => T.portrait() ? Math.round(500 + (x - 500) * k) : x;
@@ -811,6 +832,7 @@
         R.set = k;
         if (k === 'dream') sfx('sleepy_tuba', .6); // 쿨쿨 잠든 바로 다음 장면
         if (k === 'village' && !R.sawVillage) { R.sawVillage = 1; amb('birds_chirp_1'); } else if (k === 'alley') amb('birds_chirp_2', .25, 3); else if (k === 'grass_low') amb('stream_1', .28, 4); else if (k === 'party') amb('crickets_night_1', .25, 4); else stopAmb();
+        if (k === 'finish' && !R.finMus) { R.finMus = 1; bgm('el_rabbit_finish'); } else if (k === 'party') bgm(); // 결승 변주 → 잔치에서 본 곡
         (DRAW[k] || (() => artBG(T, 'bg_' + k)))();
         if (k === 'shade') { // 이불은 배우보다 앞, 덮은 뒤라면 덮인 자리로
           RD.blanket = el('g', { transform: 'translate(220 470)' }, T.world);
@@ -970,12 +992,12 @@
         if (a === 'carrot') { AudioFX.bell(); return T.anim(RD.carrot, [{ opacity: 0, transform: 'translate(790px,520px) scale(.6)' }, { opacity: 1, transform: 'translate(790px,474px) scale(1)' }], 600).then(() => { RD.carrot.setAttribute('opacity', 1); }); }
         if (a === 'bite') { show(RD.bite, 1); rabbit.hop(40, 400); }
       },
-      drum: () => { AudioFX.boom(); T.shake(); },
+      drum: () => { bgmDip(1.6, .25); elfx('el_start_drum', 1, () => AudioFX.boom()); T.shake(); }, // 출발 북(2026-11-21 사용자: 더 크고 힘 있게) — 배경 음악은 잠깐 비켜 준다
       race: s => { const [r, t] = nums(s); setRace(r, t, instant() ? 0 : 700); },
       bar: a => bar.show(a === 'show'),
       tape: () => {
         R.tapeBroken = true; if (!RD.tapeTop) return;
-        AudioFX.pop(); RD.tapeSnap();
+        elfx('el_ribbon_snap', .9); AudioFX.pop(); RD.tapeSnap();
         return tween(500, t => { RD.tapeTop.setAttribute('transform', `rotate(${-70 * t} 790 376)`); RD.tapeBot.setAttribute('transform', `rotate(${70 * t} 790 476)`); });
       },
       photo: () => { // 찰칵! 하얀 빛 한 번
@@ -1007,7 +1029,7 @@
         } });
       },
       cut(k) {
-        const spec = { wake: ['cut_wake', 'hop', 2200], dash: ['cut_dash', 'whoosh', 2800], photo: ['cut_photo', 'poke', 2600] }[k];
+        const spec = { wake: ['cut_wake', 'hop', 2200], dash: ['cut_dash', 'whoosh', 2800], photo: ['cut_photo', camClick, 2600] }[k];
         if (!spec) return;
         return cutArt(T, ...spec, k === 'dash' ? () => setTimeout(() => AudioFX.whoosh(), 1800) : undefined);
       },
@@ -1015,7 +1037,9 @@
       fx(n) {
         if (n === 'footstep') return footstep(T);
         if (KINDS.includes(n) || n === 'rooster') return AudioFX.animal(n) || (CRY[n] && CRY[n](T));
-        if (n === 'win') return AudioFX.fanfare ? AudioFX.fanfare() : AudioFX.sting('win');
+        if (n === 'win') { if (!instant()) setTimeout(() => bgm(), 2600); return AudioFX.fanfare ? AudioFX.fanfare() : AudioFX.sting('win'); } // 1등 팡파르 뒤 본 곡으로
+        if (n === 'chomp' && R.set === 'dream') return elfx('el_carrot_crunch', .9, () => AudioFX.chomp()); // 꿈속 당근 아삭
+        if (n === 'whoosh' && R.set === 'start' && !instant()) setTimeout(() => elfx('el_run_patter', .6), 150); // 출발: 다다다
         AudioFX[n] && AudioFX[n]();
       },
       pop(spec) { const [x, y, ...w] = String(spec).split(','); T.pop(+x, +y, w.join(','), /영차|쭈욱/.test(w.join(',')) ? C.pine : C.bean); },
@@ -1029,7 +1053,7 @@
     { const at0 = READ_ACTS.rabbit; READ_ACTS.rabbit = (a, b) => (a === 'at' && R.set === 'dream' ? put(rabbit, 502, 314, .9) : at0(a, b)); }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); bgmOff(3); return rr; }
 
     /* ===== 1막 — 경주를 열자 ===== */
     /* --- 1. 숲속 마을 아침 --- */
@@ -1195,9 +1219,9 @@
     });
     await say('너구리 심판이 커다란 북을 가져왔어요.');
     await T.ask('준비~ 북을 톡 치면 출발해요!', () => T.tap(drum, { prompt: '큰 북을 톡 쳐 봐요!' }));
-    AudioFX.boom(); T.shake(); T.pop(...drumAt, '땅!', C.bean);
+    bgmDip(1.6, .25); elfx('el_start_drum', 1, () => AudioFX.boom()); T.shake(); T.pop(...drumAt, '땅!', C.bean); // 큰 북 둥! (배경 음악 잠깐 낮춤)
     ['duck', 'cow', 'dog', 'rooster'].forEach((k, i) => setTimeout(() => aud[k].cheer('', true), i * 150)); // 응원 글자는 없이 소리·몸짓만 ('땅!'을 가리지 않게)
-    rp.pose('run'); AudioFX.whoosh(); speedLines(T, 14, 450); puff(T, rabbit.x - 30, 460);
+    rp.pose('run'); AudioFX.whoosh(); setTimeout(() => elfx('el_run_patter', .7), 150); speedLines(T, 14, 450); puff(T, rabbit.x - 30, 460);
     camTo(360, 330, 1.12, 250);
     walk(700);
     await Promise.all([rabbit.move(1250, rabbit.y, 450, 'ease-in'), turtle.move(470, turtle.y, 700)]);
@@ -1271,7 +1295,7 @@
     await T.ask('토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!', () => T.mash(wrap, { count: 3, prompt: '화면을 톡톡 눌러 봐요!', onStep: i => { // 예전엔 '옆으로 쓱'이었지만 톡이 더 쉽다 (놀이 피드백)
       // 그림: 3번 눌러 -390 → 1.35배 그림 안에 머문다
       far.style.transform = `translateX(${(ART.bg_hill ? -130 : -280) * i}px)`; near.style.transform = `translateX(${-900 * i}px)`;
-      AudioFX.whoosh(); speedLines(T, 16, 480); rabbit.hop(70, 500); T.pop(rabbit.x + 60, 300, '쌩!', C.persimmon);
+      AudioFX.whoosh(); elfx('el_run_patter', .55); speedLines(T, 16, 480); rabbit.hop(70, 500); T.pop(rabbit.x + 60, 300, '쌩!', C.persimmon);
       const cx = T.portrait() ? 370 : 490; // 세로 화면은 토끼 쪽으로
       camTo(cx, 300, 1.2, 180).then(() => camTo(cx - 20, 300, 1.12, 300));
       setRace(.3 + .1 * i, null, 700);
@@ -1400,7 +1424,7 @@
       AudioFX.slide && AudioFX.slide();
       await tween(500, t => carrot.setAttribute('transform', `translate(${790 - 140 * t} ${474 - 50 * t})`), easeOut);
     }
-    AudioFX.chomp(); show(bite, 1); T.pop(...biteAt, '아삭!', C.persimmon); rabbit.hop(40, 400);
+    elfx('el_carrot_crunch', .9, () => AudioFX.chomp()); show(bite, 1); T.pop(...biteAt, '아삭!', C.persimmon); rabbit.hop(40, 400);
     await say('"아삭! 음~ 맛있다!"');
     /* 꿈에서 깨어 진짜 모습으로: 나무 그늘 그림 위에 나뭇잎 이불 덮고 자는 토끼를 겹쳐 서서히 보인다 (대사 전에, 2026-11-02) */
     if (ART.bg_shade && ART.rabbit_sleep) {
@@ -1687,14 +1711,14 @@
     walk(1800, 450);
     speedLines(T, 10, 900);
     setTimeout(() => {
-      AudioFX.pop(); T.pop(790, 330, '골인!', C.bean); tapeSnap();
+      elfx('el_ribbon_snap', .9); AudioFX.pop(); T.pop(790, 330, '골인!', C.bean); tapeSnap();
       tween(500, t => { tapeTop.setAttribute('transform', `rotate(${-70 * t} 790 376)`); tapeBot.setAttribute('transform', `rotate(${70 * t} 790 476)`); });
     }, 1150);
     follow(640, 2000); // 세로 화면: 결승선 쪽으로
     await Promise.all([turtle.move(650, 476, 2000, 'ease-out'), rabbit.move(430, 472, 2100, 'ease-out')]);
     setRace(.95, 1, 500);
     rp.pose('stand');
-    await (cutArt(T, 'cut_photo', 'poke', 2600) || T.cut(svg => {
+    await (cutArt(T, 'cut_photo', camClick, 2600) || T.cut(svg => {
       el('rect', { x: 40, y: 30, width: 320, height: 240, rx: 6, fill: C.snow }, svg);
       el('rect', { x: 56, y: 46, width: 288, height: 190, fill: C.sky }, svg);
       el('rect', { x: 56, y: 190, width: 288, height: 46, fill: C.dirt }, svg);
@@ -1702,9 +1726,10 @@
       const gr = el('g', { transform: 'translate(120 222) scale(.7)' }, svg); drawRabbit(T, gr).pose('run');
       const gt = el('g', { transform: 'translate(170 226) scale(.85)' }, svg); drawTurtle(T, gt);
       el('text', { x: 200, y: 262, 'text-anchor': 'middle', 'font-size': 26, fill: C.bark, 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('찰칵!') }, svg);
-    }, { sfx: 'poke', hold: 2600 }));
+    }, { sfx: camClick, hold: 2600 }));
     await say('사진을 보니… 거북이 코끝이 먼저 닿았어요!');
     AudioFX.fanfare && AudioFX.fanfare(); T.confetti();
+    setTimeout(() => AudioFX.sfx('applause_1', .4), 900); // 짝짝짝 (2026-11-21)
     turtle.hop(30, 500);
     await say('거북이가 1등이에요!');
     KINDS.forEach(k => aud[k].sit());
@@ -1791,6 +1816,7 @@
     // 한 번 톡 하면 나머지는 저절로 함께 연주 (음마다 누르던 followMelody 는 너무 힘들어서 뺌 — 2026-11-01)
     await T.ask('이번에는 친구들을 톡톡 눌러서 같이 연주해요!', () => T.tap(cast.pig.pos, { prompt: '이번에는 친구들을 톡톡 눌러서 같이 연주해요!' }));
     await sleep(300);
+    bgmDip(7); // 친구들 연주 동안 배경 음악은 비켜 준다
     T.playMelody(MARCH, { beat: .17, voice: marchVoice, onNote: i => { marchHop(i); if (MARCH[i][1] >= 4) ['pig', 'dog', 'rooster', 'turtle', 'owl', 'cat'].forEach(k => cast[k].hop(30, 380)); } });
     await sleep(5800);
     AudioFX.sfx('cheer', .6);
@@ -1800,6 +1826,7 @@
     await say('천천히 가도 끝까지 하면 해낼 수 있어요!');
     KINDS.forEach(k => show(aud[k].parts.instr, 0));
     bar.remove();
+    bgmOff(3);
     return '천천히, 꾸준히, 끝까지!';
   }
 

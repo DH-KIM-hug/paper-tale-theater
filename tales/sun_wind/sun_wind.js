@@ -114,13 +114,14 @@
     whoosh(T, k = 1) { // 바람 세기 1~5단계
       if (!AudioFX.sfx(k >= 3 ? 'blow_long' : 'blow', Math.min(1, .55 + k * .1))) AudioFX.whoosh(); // 입으로 후~ 부는 숨소리
     },
-    warm(T, lv = 1) { // 따뜻한 합성 화음 (도미솔 → 한 음씩 쌓임)
+    warm(T, lv = 1) { // 따뜻한 햇살 화음: 녹음(el_sun_warm, 2026-11-21), 못 불러왔으면 합성 화음 (도미솔 → 한 음씩 쌓임)
+      if (AudioFX.sfx('el_sun_warm', Math.min(.9, .55 + lv * .12))) return;
       [262, 330, 392, 523].slice(0, 2 + lv).forEach((f, i) => T.tone(f, 1.4, { type: 'sine', vol: .07, when: i * .08 }));
     },
-    sparkle(T) { [1047, 1319, 1568, 2093].forEach((f, i) => T.tone(f, .16, { type: 'triangle', vol: .12, when: i * .07 })); },
+    sparkle(T) { if (AudioFX.sfx('el_jingle', .8)) return; [1047, 1319, 1568, 2093].forEach((f, i) => T.tone(f, .16, { type: 'triangle', vol: .12, when: i * .07 })); },
     breeze(T) { if (!AudioFX.sfx('blow', .45)) T.tone([500, 820], .7, { type: 'sine', vol: .06 }); },
     pant(T) { T.tone([420, 300], .18, { type: 'sine', vol: .1 }); T.tone([400, 280], .18, { type: 'sine', vol: .1, when: .32 }); },
-    shiver(T) { [0, .08, .16, .24].forEach(w => T.tone(w % .16 ? 520 : 600, .06, { type: 'square', vol: .05, when: w })); },
+    shiver(T) { if (AudioFX.sfx('el_shiver_brr', .6)) return; [0, .08, .16, .24].forEach(w => T.tone(w % .16 ? 520 : 600, .06, { type: 'square', vol: .05, when: w })); },
     babble(T) { // 개울 물소리 (졸졸)
       return setInterval(() => { T.tone(rnd(700, 1600), .07, { type: 'sine', vol: .035 }); if (Math.random() < .3) T.tone(rnd(900, 1300), .06, { type: 'sine', vol: .03, when: .09 }); }, 170);
     },
@@ -838,9 +839,51 @@
     };
     const READ_ACTS = { set: R.set, sun: R.sun, wind: R.wind, man: R.man, leaves: R.leaves, flap: R.flap, sweat: R.sweat, breeze: R.breeze, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam };
     READ_ACTS.finale = () => { finaleMusic(); }; // 끝 축하 음악 (2026-10-31 사용자 지시)
+    /* ---------- 배경 음악 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       본 곡(el_sun_wind_bgm)은 시작 음악이 끝나면(또는 첫 장면이 바뀌면) 깔려 끝까지 되풀이한다. 놀이 0.26·읽어 주기 0.15, 내레이션 동안은 엔진이 더 낮춘다(DUCK).
+       클래식 한 토막(classical_*)·다른 녹음 음악(AudioFX.music)이 나오는 동안은 비켜 주고(dip), 끝 축하 음악(finale_*)에서 끈다.
+       BGK.to(이름): 변주로 바꾸기(시작 음악 전이면 기다렸다가 그 곡으로), BGK.dip(초, 배율): 큰 타격음 동안 잠깐 낮추기, BGK.off(): 끄기 */
+    const BGK = (() => {
+      const rd = () => { try { return !!T.reading(); } catch (e) { return false; } };
+      const VOL = () => (rd() ? 0.15 : 0.26);
+      const INTRO = /^intro_/, END_MUSIC = null;
+      let tok = 0, cur = '', want = 'el_sun_wind_bgm', held = 0, started = false, ended = false;
+      const now = () => { try { return AudioFX.bgmNow && AudioFX.bgmNow(); } catch (e) { return null; } };
+      const on = n => { if (ended) return; cur = n; started = true; const t = ++tok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+        const go = () => { if (t !== tok || ended) return; let h = null; try { h = AudioFX.bgm(n, { vol: VOL(), fadeIn: 2.5, xfade: 2 }); } catch (e) { return; } if (h) { if (held > 0) h.dip(0); return; } if (++k < 12) setTimeout(go, 1000); }; go(); };
+      const dip = (sec, lv = 0) => { const h = now(); if (h) try { h.dip(sec, lv); } catch (e) { /* 무시 */ } };
+      const hold = () => { held++; dip(0); };
+      const release = () => { if (held > 0 && --held === 0) { const h = now(); if (h) try { h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } } };
+      const once = f => { let d = false; return () => { if (!d) { d = true; f(); } }; };
+      const off = (f = 2) => { ended = true; tok++; held = 0; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+      const start = () => { if (!started) on(want); };
+      const to = n => { want = n; if (started && n !== cur) on(n); };
+      try {
+        AudioFX.preloadMusic(['el_sun_wind_bgm']); AudioFX.preloadSfx(['el_sun_warm', 'el_shiver_brr', 'el_jingle']);
+        const amb0 = AudioFX.ambient, mus0 = AudioFX.music;
+        AudioFX.ambient = function (name, o) {
+          const h = amb0.apply(this, arguments);
+          try {
+            if (h && INTRO.test(name)) { const s0 = h.stop; h.stop = function () { start(); return s0.apply(this, arguments); }; }
+            else if (h && /^finale_/.test(name)) off(1.5);
+            else if (h && /^classical_/.test(name)) { hold(); const r = once(release); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; setTimeout(r, ((o && o.dur) || 18) * 1000); }
+          } catch (e) { /* 무시 */ }
+          return h;
+        };
+        AudioFX.music = function (name) {
+          const h = mus0.apply(this, arguments);
+          try { if (h) { if (END_MUSIC && END_MUSIC.test(name)) off(1.5); else { hold(); const r = once(release); h.done.then(r, r); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; } } } catch (e) { /* 무시 */ }
+          return h;
+        };
+      } catch (e) { /* 소리 없이도 진행 */ }
+      setTimeout(start, 16000); // 시작 음악을 못 불러왔어도 곧 깔린다
+      const fx = (n, v, alt) => { try { if (rd()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; }; // 새 효과음(못 불러왔으면 alt)
+      return { to, dip, off, start, fx, main: 'el_sun_wind_bgm' };
+    })();
+    { const jin0 = AudioFX.jingle; AudioFX.jingle = () => BGK.fx('el_jingle', .8, jin0); } // 합성 반짝 → 녹음 반짝(이 동화 페이지에서만)
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(); return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(); BGK.off(2); return rr; }
 
 
     /* --- 1. 하늘 자랑 --- */
@@ -1212,7 +1255,7 @@
     [btns.sun, btns.wind].forEach(a => a.hop(24)); finaleMusic();
     await say('해님과 바람은 오늘도 사이좋게 하늘을 지켜요.');
     await say('다정한 마음이 제일 힘이 세답니다. 끝!');
-    await finaleWait();
+    await finaleWait(); BGK.off(1.5);
     return '다정한 마음이 제일 힘이 세요!';
   }
 

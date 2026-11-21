@@ -200,12 +200,14 @@
 
   async function run(T) {
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    let afterIntro = null; // 시작 음악이 끝나면 한 번 — 배경 음악 켜기 (아래에서 채운다)
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_magic', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_magic', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
+        setTimeout(() => { try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
@@ -217,11 +219,26 @@
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
     try { AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'fire_crackle', 'crickets_night_1', 'crowd_murmur_1', 'shimmer', 'chime_up', 'horse_neigh_1', 'horse_hooves_1', 'question', 'surprise_sting', 'xylo_down', 'knock', 'ding_glock', 'party_horn', 'whoosh', 'sparkle', 'swish', 'bell', 'tada', 'creak', 'ding']); } catch (e) { /* 무시 */ }
     /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
-    const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const classical = n => { try { bgmDip(18); const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     try { AudioFX.preloadSfx(['classical_blue_danube_box']); } catch (e) { /* 무시 */ }
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       배경 음악은 시작 음악(12초) 뒤에 깔려 끝까지 되풀이한다(장면이 바뀌어도 이어짐). 내레이션 동안 엔진이 낮추고(DUCK), 읽어 주기는 더 작게.
+       오르골·첼레스타·하프 왈츠. 무도회 클래식 한 토막(푸른 도나우) 동안은 dip, 열두 시 종(el_clock_midnight)이 울릴 때도 잠깐 낮추고, 끝 축하 음악 전에 끈다. */
+    try { AudioFX.preloadMusic(['el_cinderella_bgm']); AudioFX.preloadSfx(['el_clock_midnight']); } catch (e) { /* 무시 */ }
+    const BGM_VOL = () => (T.reading() ? 0.14 : 0.24);
+    let bgmTok = 0, bgmName = '';
+    const bgm = (n = 'el_cinderella_bgm') => { try { bgmName = n; const tok = ++bgmTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+      const go = () => { if (tok !== bgmTok) return; try { if (AudioFX.bgm(n, { vol: BGM_VOL(), fadeIn: 2.5, xfade: 2 })) return; } catch (e) { return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const bgmDip = (sec, level = 0) => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.dip(sec, level); } catch (e) { /* 무시 */ } };
+    const bgmOff = (f = 2) => { bgmTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elfx = (n, v, alt) => { try { if (T.reading()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
+    let introDone = false; afterIntro = () => { if (introDone) return; introDone = true; bgm(); };
+    const bgmFor = n => { if (!introDone) return; if (n !== bgmName) bgm(n); }; // 시작 음악 전에는 바꾸지 않는다(끝나면 본 곡부터)
+    let clockOK = false;
+    const midBell = i => { if (i % 3) { if (!clockOK) bellSfx(T); return; } bgmDip(3.2, .25); clockOK = elfx('el_clock_midnight', .9, () => bellSfx(T)); }; // 열두 시 큰 시계 종: 세 번 울리는 녹음을 세 박자마다
     /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 서양 명작 동화 끝 음악 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 끝 화면 전에 곡 끝까지 기다린다 */
     let finaleEnd = 0;
-    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleMusic = () => { try { bgmOff(1.5); const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
@@ -610,7 +627,7 @@
         L.chand.forEach(ch => { if (on(ch)) jolt(T, ch); });
         for (let i = 0; i < (+n || 3); i++) {
           c.g.style.transformOrigin = `${c.cx}px ${c.cy}px`;
-          bellSfx(T); c.g.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-3deg)' }, { transform: 'rotate(3deg)' }, { transform: 'rotate(0)' }], { duration: 420 });
+          midBell(i); c.g.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-3deg)' }, { transform: 'rotate(3deg)' }, { transform: 'rotate(0)' }], { duration: 420 });
           T.pop(c.cx + (i % 2 ? 200 : 170), c.cy + 90, tr('땡!'));
           await sleep(520);
         }
@@ -641,7 +658,7 @@
         const SFX = {
           coach: () => { sparkleSfx(T); setTimeout(() => AudioFX.sfx('whoosh'), 500); },
           gown: () => { sparkleSfx(T); setTimeout(() => sparkleSfx(T), 700); },
-          midnight: () => { bellSfx(T); setTimeout(() => bellSfx(T), 900); },
+          midnight: () => { midBell(0); },
           stairs_slipper: () => { sparkleSfx(T); setTimeout(() => AudioFX.sfx('ding') || popSfx(T), 400); },
           fit: () => { popSfx(T); setTimeout(() => sparkleSfx(T), 250); },
         };
@@ -676,7 +693,7 @@
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     READ_ACTS.finale = () => { finaleMusic(); return null; };
     if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
-    if (T.reading()) return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { stopAmb(.5); });
+    if (T.reading()) return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { bgmOff(2); stopAmb(.5); });
 
     /* ===== 1. 재투성이 ===== */
     scene('kitchen_v2');
@@ -989,14 +1006,14 @@
     await say('맞아요, 열두 시!');
     cards.forEach(c => c.g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' }));
     if (!hinted) await clock.toTwelve(1200);
-    await cutArt(T, 'midnight', () => { bellSfx(T); setTimeout(() => bellSfx(T), 900); });
+    await cutArt(T, 'midnight', () => { midBell(0); });
     /* 땡, 땡, 땡… 홀이 어두워지고 샹들리에 불빛이 꺼지며 크게 한 번 흔들린다 */
     { const nt = tint(T, '#1F2A56', 0); nt.animate([{ opacity: 0 }, { opacity: .35 }], { duration: 2500, fill: 'forwards' }); }
     if (ballDots) ballDots.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 1500, fill: 'forwards' });
     L.chand.forEach(c => jolt(T, c));
     for (let i = 0; i < 6; i++) {
       clock.g.style.transformOrigin = `${clock.cx}px ${clock.cy}px`;
-      bellSfx(T); clock.g.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-3deg)' }, { transform: 'rotate(3deg)' }, { transform: 'rotate(0)' }], { duration: 420 });
+      midBell(i); clock.g.animate([{ transform: 'rotate(0)' }, { transform: 'rotate(-3deg)' }, { transform: 'rotate(3deg)' }, { transform: 'rotate(0)' }], { duration: 420 });
       T.pop(clock.cx + (i % 2 ? 200 : 170), clock.cy + 90, tr('땡!'));
       await sleep(520);
     }
@@ -1155,7 +1172,7 @@
     await Promise.all([cind.hop(20, 460), sis1.hop(16, 460), sis2.hop(16, 460), prince.hop(12, 460)]);
     await say('모두 함께 웃었어요.');
     await say('착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.');
-    await finaleWait(); T.finale(); stopAmb(.8);
+    await finaleWait(); bgmOff(2); T.finale(); stopAmb(.8);
     await sleep(1500);
     return '착한 마음은 나를 괴롭힌 사람도 용서할 수 있어요.';
   }

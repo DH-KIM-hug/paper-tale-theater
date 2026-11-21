@@ -538,23 +538,43 @@
   }
 
   /* ================= 소리 ================= */
-  const giggle = T => [0, .12, .24, .36].forEach((w, i) => T.tone([620 - i * 40, 520 - i * 40], .1, { type: 'triangle', vol: .12, when: w }));
+  /* 2026-11-21 ElevenLabs·녹음 효과음 먼저, 못 불러왔으면 합성음 (sounds/CREDITS.md) */
+  const giggle = T => AudioFX.sfx('giggle_xylo', .45 * (T.reading && T.reading() ? .75 : 1)) || [0, .12, .24, .36].forEach((w, i) => T.tone([620 - i * 40, 520 - i * 40], .1, { type: 'triangle', vol: .12, when: w }));
   const thud = T => AudioFX.sfx('thud') || T.tone([120, 60], .25, { type: 'sine', vol: .25 });
   const knock = T => AudioFX.sfx('knock') || (T.tone([220, 160], .08, { type: 'square', vol: .2 }), T.tone([220, 160], .08, { type: 'square', vol: .2, when: .18 }));
-  const hot = T => { T.tone([500, 1300], .25, { type: 'triangle', vol: .14 }); T.tone([1300, 900], .2, { type: 'triangle', vol: .12, when: .25 }); };
-  const brr = T => { for (let i = 0; i < 8; i++) T.tone(i % 2 ? 300 : 340, .06, { type: 'square', vol: .07, when: i * .07 }); };
-  const snore = T => { T.tone([140, 110], .6, { type: 'sine', vol: .12 }); T.tone([600, 900], .4, { type: 'sine', vol: .06, when: .7 }); };
+  const hot = T => { if (AudioFX.sfx('el_hot', .75 * (T.reading && T.reading() ? .75 : 1))) return; T.tone([500, 1300], .25, { type: 'triangle', vol: .14 }); T.tone([1300, 900], .2, { type: 'triangle', vol: .12, when: .25 }); };
+  const brr = T => { if (AudioFX.sfx('el_shiver', .75 * (T.reading && T.reading() ? .75 : 1))) return; for (let i = 0; i < 8; i++) T.tone(i % 2 ? 300 : 340, .06, { type: 'square', vol: .07, when: i * .07 }); };
+  const snore = T => { if (AudioFX.sfx('el_snore', .6 * (T.reading && T.reading() ? .75 : 1))) return; T.tone([140, 110], .6, { type: 'sine', vol: .12 }); T.tone([600, 900], .4, { type: 'sine', vol: .06, when: .7 }); };
   const blow = T => AudioFX.sfx('blow', .9) || T.tone([900, 300], .3, { type: 'sine', vol: .1 });
 
   /* ================= 이야기 ================= */
   async function run(T) {
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       숲속 통나무집 곡(el_goldilocks_bgm: 기타·리코더·바순·피치카토)이 시작 음악(intro_cozy) 뒤에 깔려 끝까지 되풀이한다. 자장가 가락 동안 비켜 주고, 끝 노래 〈곰 세 마리〉·끝 음악 앞에서 끈다.
+       내레이션 동안 엔진이 낮추고(DUCK), 읽어 주기는 더 작게. 다른 음악(클래식·대금·노래) 동안은 dip 으로 비켜 주고, 끝 음악에서 끈다 */
+    const bgmRd = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    try { AudioFX.preloadMusic(['el_goldilocks_bgm']); AudioFX.preloadSfx(['el_hot', 'el_shiver', 'el_snore', 'giggle_xylo']); } catch (e) { /* 무시 */ }
+    const BGM_VOL = () => (bgmRd() ? 0.15 : 0.26);
+    let bgmTok = 0, bgmName = '', bgmDone = false, introDone = false;
+    const bgm = (n = 'el_goldilocks_bgm') => { if (bgmDone) return; try { bgmName = n; const tok = ++bgmTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+      const go = () => { if (tok !== bgmTok) return; try { if (AudioFX.bgm(n, { vol: BGM_VOL(), fadeIn: 2.5, xfade: 2 })) return; } catch (e) { return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const bgmFor = n => { if (!introDone || bgmDone) return; if (n !== bgmName) bgm(n); }; // 시작 음악 전에는 바꾸지 않는다(끝나면 본 곡부터)
+    const bgmDip = (sec, level = 0) => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.dip(sec, level); } catch (e) { /* 무시 */ } };
+    const bgmUp = () => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } };
+    const bgmOff = (f = 2) => { bgmDone = true; bgmTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elfx = (n, v, alt) => { try { if (bgmRd()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
+    const afterIntro = () => { if (introDone) return; introDone = true; bgm(); }; // 시작 음악이 끝나면 한 번
+    { /* 엔진 가락(자장가·따라 연주) 동안 배경 음악은 비켜 준다 */
+      ['playMelody', 'holdMelody', 'followMelody'].forEach(k => { const f0 = T[k]; if (typeof f0 !== 'function' || f0.__bgm) return; const f = function (...a) { bgmDip(0); const p = f0.apply(this, a); Promise.resolve(p).then(bgmUp, bgmUp); return p; }; f.__bgm = 1; T[k] = f; });
+    }
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro(); } catch (e) { /* 무시 */ } }; // 시작 음악이 끝나면 배경 음악
       const go = (delay = 0) => {
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_cozy', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_cozy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
+        setTimeout(() => { try { afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
@@ -570,7 +590,7 @@
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
     /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 팥죽과 같은 픽사베이 녹음 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다 */
     let finaleEnd = 0;
-    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleMusic = () => { try { bgmOff(1.5); const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
     /* 세로 화면(무대 양옆이 잘림): 카메라를 조금 물리고(Z) 가로 자리를 가운데로 모은다(K) */
     const P = () => window.matchMedia('(orientation: portrait)').matches;
@@ -1028,7 +1048,7 @@
       finale: () => { finaleMusic(); return null; }, // 끝 음악(2026-10-31). 놀이판은 끝 노래 〈곰 세 마리〉 녹음이 있어 따로 넣지 않음
     });
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(); return rr; } // 끝 음악이 끝날 때까지 기다림(화면을 꺼도 계속)
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS).finally(() => bgmOff(3)); await finaleWait(); stopAmb(); return rr; } // 끝 음악이 끝날 때까지 기다림(화면을 꺼도 계속)
 
     /* ---------- 1. 곰 집 아침 (부엌 와이드) ---------- */
     kitchenBG(T);
@@ -1517,6 +1537,7 @@
     T.confetti(); AudioFX.sfx('bell', .5);
     await sleep(900);
     await say('골디락스와 곰 가족은 사이좋은 친구가 되었답니다.');
+    bgmOff(1.5); // 끝 노래 〈곰 세 마리〉 앞에서 배경 음악을 끈다
     await gomSeMari(T, [bears.dad, bears.mom, bears.baby], goldi);
     return '"미안해요" 하면 다시 친구가 될 수 있어요!';
   }

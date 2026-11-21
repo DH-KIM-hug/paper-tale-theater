@@ -322,3 +322,130 @@ Pixabay 검색 페이지가 자동 접속을 막아 소리 파일을 받지 못�
 | `sfx/classical_happy_farmer.mp3` | Pixabay "Classical Piano by Schumann - The Happy Farmer" — nesrality-classical-piano-by-schumann-the-happy-farmer-112574.mp3 (슈만 〈즐거운 농부〉, 제목에 적힌 편성: 피아노) | Nesrality (연주), 원곡은 공개 곡(작곡가 사망 후 70년 넘음) | Pixabay Content License (출처 표기 불필요) | 원본 처음 12초(전체 0:42), 앞 무음 제거·페이드(0.3s 인·2s 아웃)·모노 96k·-22 LUFS. 동화 첫 장면 시작 음악(2026-11-02, intro_adventure 대신): bremen. https://pixabay.com/music/classical-piano-classical-piano-by-schumann-the-happy-farmer-112574/ |
 | `sfx/classical_haydn_pizz.mp3` | Pixabay "Haydn sonata in F major pizzicato violin classical music" — gregorquendel-haydn-sonata-in-f-major-hobxvi-23-arr-for-pizzicato-violin-296143.mp3 (하이든 소나타 F장조(바이올린 피치카토), 제목·태그에 적힌 편성: 바이올린 뜯기) | gregorquendel (편곡·연주), 원곡은 공개 곡(작곡가 사망 후 70년 넘음) | Pixabay Content License (출처 표기 불필요) | 원본 처음 18초(전체 12:18), 앞 무음 제거·페이드(0.3s 인·2s 아웃)·모노 96k·-23 LUFS. 클래식 한 토막(2026-10-31): frog. https://pixabay.com/music/solo-classical-instruments-haydn-sonata-in-f-major-hobxvi-23-arr-for-pizzicato-violin-296143/ |
 | `sfx/frog_lullaby_long.mp3` | 위 `sfx/intro_night.mp3`(Pixabay "Music Box Sleep Lullaby" — tunetank-music-box-sleep-lullaby-349471.mp3)를 두 번 이은 것 | Tunetank | Pixabay Content License (출처 표기 불필요) | 12초 두 벌을 2.5초 겹쳐 이음(acrossfade)·끝 2초 페이드·모노 96k, 21.5초. 황소와 개구리 마지막 합창과 잠드는 대사에 함께(2026-10-31). |
+
+## ElevenLabs 생성 효과음·배경 음악 (2026-11-21 시범: 토끼와 거북이·해와 달이 된 오누이)
+
+ElevenLabs Creator 요금제(유료 구독 중 생성)로 만든 소리. 유료 요금제에서 만든 결과물은 상업 이용 가능(출처 표기 불필요).
+음악(Eleven Music)은 Music Model-Specific Terms 의 Creator 표 기준: 개인 이용, 영화·TV·라디오·'Studio Game' 제외 상업 이용 허용,
+음악 라이브러리(남에게 소리 모음으로 배포)·모델 재판매 금지. 이 앱은 Indie Game 기준(출시 뒤 순매출 50만 달러 미만) 안이라 Studio Game 이 아니다 — 매출이 기준을 넘으면 60일 안에 상위 요금제로 옮겨야 한다(약관 4.7).
+출처: https://elevenlabs.io/eleven-music-model-specific-terms · https://elevenlabs.io/docs/help-center/legal/can-i-publish-the-content-i-generate-on-the-platform · https://elevenlabs.io/pricing
+후처리: 앞뒤 무음 자르기·짧은 페이드, 효과음은 피크 -2dBFS(통합 -16 LUFS 넘지 않게), 음악은 -24 LUFS(조심 변주 -26) 2.5초 등전력 크로스페이드로 이음매 없는 반복, 모두 모노 64k mp3.
+사람 말소리·가사 없음(효과음 프롬프트 'no voice', 음악은 force_instrumental).
+
+| 파일 | 만든 곳 | 설명(프롬프트 요지) | 쓰는 곳 |
+|---|---|---|---|
+| `music/el_rabbit_bgm.mp3` | Eleven Music (music_v2_5), 48초 → 44.7초 반복 | 봄 들판, 우쿨렐레·클라리넷·나무 피리·마림바·피치카토, 92BPM 조용히 | 토끼와 거북이 배경 음악(놀이 .28·읽어 주기 .16) |
+| `music/el_rabbit_finish.mp3` | Eleven Music, 30초 → 27.5초 반복 | 거북이 마지막 한 발, 피치카토·바순·글로켄슈필, 104BPM | 토끼와 거북이 '마지막 한 발' |
+| `music/el_sunmoon_bgm.mp3` | Eleven Music, 60초 → 56초 반복 | 산골 밤, 가야금 아르페지오·대금·먼 북, 60BPM 자장가처럼 | 해와 달이 된 오누이 배경 음악(놀이 .24·읽어 주기 .14) |
+| `music/el_sunmoon_tense.mp3` | Eleven Music, 36초 중 11.5~33.5초 → 19.5초 반복 | 호랑이가 살금살금, 거문고·피치카토·장구 심장 박동, 무섭지 않게 | 해와 달이 된 오누이 '똑똑똑'~'나무 아래 호랑이' |
+| `sfx/el_turtle_step.mp3` | Sound Effects (eleven_text_to_sound_v2) | 거북이 엉금엉금 발소리(나무 툭 + 피치카토) | 토끼와 거북이 걷기(두 걸음에 한 번) |
+| `sfx/el_carrot_crunch.mp3` | Sound Effects | 당근 아삭 | 토끼의 꿈 |
+| `sfx/el_run_patter.mp3` | Sound Effects | 만화식 다다다 달리기 | 요이~ 땅!·쌩쌩 토끼 |
+| `sfx/el_start_drum.mp3` | Sound Effects | 팀파니 두 번 둥둥(작은 스피커에서도 들리게), 저음 EQ(110·220Hz)·포화·리미터로 -13 LUFS (2026-11-21 사용자: 더 크고 힘 있게) | 요이~ 땅! (북 칠 때 배경 음악 1.6초 낮춤) |
+| `sfx/el_ribbon_snap.mp3` | Sound Effects | 결승 테이프 툭 | 골인 |
+| `sfx/el_camera_click.mp3` | Sound Effects | 사진기 찰칵 | 결승 사진 |
+| `sfx/el_fanfare.mp3` | Sound Effects | 트럼펫·글로켄슈필·실로폰 짧은 팡파르 | 토끼와 거북이 1등 (합성 팡파르 대신) |
+| `sfx/el_jingle.mp3` | Sound Effects | 올라가는 글로켄슈필·벨트리 반짝 | 두 동화의 반짝 소리(합성 jingle 대신), 오누이 하늘 오르기 |
+| `sfx/el_tiger_sneak.mp3` | Sound Effects | 약음 트롬본·튜바 살금살금 악당 소절(우스꽝스럽게) | 고개마다 호랑이 불쑥 |
+| `sfx/el_paper_poke.mp3` | Sound Effects | 창호지 콕 뚫기 | 창호지 구멍 |
+| `sfx/el_rope_snap.mp3` | Sound Effects | 낡은 새끼줄 뚝 끊김 | 수수밭 컷 |
+| `sfx/el_rope_descend.mp3` | Sound Effects | 하프 글리산도·작은 종 반짝(동아줄 내려옴) | 하늘 동아줄 |
+| `sfx/el_tree_climb.mp3` | Sound Effects | 나무 타기 바스락·껍질 긁힘 | 우물가 큰 나무 오르기 |
+
+묶음 C(2026-11-21, 까치·팥죽 할멈·완두콩 공주·라푼젤·빨간 자동차·빨간 암탉·빨간 모자·잠자는 숲속의 공주). 만든 곳·후처리는 위와 같다(음악 Eleven Music music_v1, 효과음 eleven_text_to_sound_v2).
+
+| 파일 | 만든 곳 | 설명(프롬프트 요지) | 쓰는 곳 |
+|---|---|---|---|
+| `music/el_magpie_bgm.mp3` | Eleven Music, 42초 중 0~30초 → 27.5초 반복 | 산골, 가야금·대금·해금·먼 북, 72BPM 고요하게 | 까치의 보은 배경 음악(놀이 .22·읽어 주기 .13) |
+| `music/el_patjuk_bgm.mp3` | Eleven Music, 42초 → 39.5초 반복 | 눈 오는 겨울 잔치, 가야금 피치카토·해금·장구, 96BPM 장난스럽게 | 팥죽 할멈과 호랑이(.26·.15) |
+| `music/el_princess_pea_bgm.mp3` | Eleven Music, 42초 중 0~35.5초 → 32.9초 반복 | 성, 하프·플루트·첼레스타·피치카토 왈츠 84BPM | 완두콩 공주(.24·.14) |
+| `music/el_rapunzel_bgm.mp3` | Eleven Music, 42초 중 0~37초 → 34.5초 반복 | 숲속 탑, 류트·하프·리코더·현악, 76BPM | 라푼젤(.24·.14) |
+| `music/el_red_car_bgm.mp3` | Eleven Music, 42초 중 0~38초 → 35.5초 반복 | 장난감 세상, 토이 피아노·글로켄·기타·셰이커, 104BPM | 나의 빨간 자동차(.26·.15) |
+| `music/el_red_hen_bgm.mp3` | Eleven Music, 42초 중 0~36초 → 33.4초 반복 | 시골 농장, 핑거피킹 기타·피들·틴 휘슬·베이스, 92BPM | 빨간 암탉(.24·.14, 클래식 세 곡 동안은 0) |
+| `music/el_red_hood_bgm.mp3` | Eleven Music, 42초 → 39.5초 반복 | 숲길, 바순·오보에·클라리넷·피치카토·우드블록, 88BPM | 빨간 모자(.26·.15) |
+| `music/el_red_hood_tense.mp3` | Eleven Music, 26초 → 22.9초 반복(-26 LUFS) | 살금살금 늑대, 피치카토·바순·약음 트롬본(악당)·팀파니 심장 박동, 무섭지 않게 | 빨간 모자 '늑대가 먼저'~'옷장으로!' |
+| `music/el_sleeping_beauty_bgm.mp3` | Eleven Music, 42초 중 0~39.5초 → 36.9초 반복 | 궁전, 하프·첼레스타·현악·플루트 느린 왈츠 72BPM | 잠자는 숲속의 공주(.22·.13) |
+| `sfx/el_big_bonk.mp3` | Sound Effects | 만화식 머리 콩(나무 콩·작게 톡), 저음 EQ·리미터로 또렷하게 | 팥죽 할멈 알밤 톡·쿵 |
+| `sfx/el_mat_roll.mp3` | Sound Effects | 짚 멍석이 돌돌 말리는 바스락 + 우드블록 굴림 | 팥죽 할멈 멍석 돌돌(합성음 대신) |
+| `sfx/el_scissor_snip.mp3` | Sound Effects | 큰 가위 싹둑싹둑 | 라푼젤 싹둑 |
+| `sfx/el_mill_grind.mp3` | Sound Effects | 나무 맷돌이 밀을 가는 낮은 드르륵·삐걱 | 빨간 암탉 방앗간 |
+| `sfx/el_thorn_grow.mp3` | Sound Effects | 가시덤불이 스르륵 자라는 바스락·가지 삐걱·하프 살짝 | 잠자는 숲속의 공주 가시덤불 자람·열림 |
+| `sfx/el_toy_horn.mp3` | Sound Effects | 장난감 자동차 경적 빵빵 | 나의 빨간 자동차 끝 장면 |
+
+묶음 C에서 다시 쓴 시범 효과음: `sfx/el_tiger_sneak.mp3`(팥죽 할멈 밤에 돌아온 호랑이·빨간 모자 늑대·잠자는 숲속의 공주 토라진 요정 — 모두 악당), `sfx/el_jingle.mp3`(완두콩 공주 진짜 공주·팥죽 할멈 읽어 주기 반짝).
+
+묶음 A(2026-11-21, 개미와 베짱이·미녀와 야수·브레멘 음악대·별주부전·신데렐라·여우와 두루미·개구리 왕자·황소와 개구리). 만든 곳·후처리는 위와 같다(음악 Eleven Music music_v1, 효과음 eleven_text_to_sound_v2). 개미와 베짱이는 장면마다 〈사계〉가 흘러 배경 음악을 넣지 않았다.
+
+| 파일 | 만든 곳 | 설명(프롬프트 요지) | 쓰는 곳 |
+|---|---|---|---|
+| `music/el_beauty_beast_bgm.mp3` | Eleven Music, 50초 중 0~46초 → 43.4초 반복 | 장미 정원 궁전, 하프·첼레스타·바이올린·현악 왈츠 84BPM | 미녀와 야수(놀이 .26·읽어 주기 .15, 캐논·변신 음악 동안 0) |
+| `music/el_bremen_bgm.mp3` | Eleven Music, 50초 중 0~49초 → 46.3초 반복 | 독일 시골길, 아코디언·클라리넷·튜바 움파·피치카토, 100BPM | 브레멘 음악대(.26·.15, 빅밴드 동안 0) |
+| `music/el_bremen_night.mp3` | Eleven Music, 30초 → 27.5초 반복(-26 LUFS) | 캄캄한 숲 살금살금, 약음 튜바·바순 스타카토·피치카토·우드블록, 무섭지 않게 | 브레멘 '캄캄한 숲'~'캄캄한 밤' |
+| `music/el_byeoljubu_bgm.mp3` | Eleven Music, 50초 중 0~46초 → 43.3초 반복 | 용궁·바닷가, 가야금·해금·장구·풍경, 84BPM 밝게 | 별주부전(.26·.15, 대금 동안 0) |
+| `music/el_byeoljubu_palace.mp3` | Eleven Music, 30초 → 27.3초 반복(-26 LUFS) | 용왕 앞 토끼의 꾀, 거문고·해금·장구 심장 박동, 무섭지 않게 | 별주부전 '간을 다오'·'토끼의 꾀' |
+| `music/el_cinderella_bgm.mp3` | Eleven Music, 50초 중 0~48초 → 45.4초 반복 | 오르골·첼레스타·하프·플루트 왈츠 88BPM | 신데렐라(.24·.14, 푸른 도나우 동안 0) |
+| `music/el_fox_crane_bgm.mp3` | Eleven Music, 50초 중 0~48초 → 45.5초 반복 | 숲속 저녁 초대, 바순·오보에·피치카토·마림바, 96BPM 장난스럽게 | 여우와 두루미(.26·.15) |
+| `music/el_frog_prince_bgm.mp3` | Eleven Music, 50초 중 0~48초 → 45.4초 반복 | 성 정원 샘가, 류트·하프·리코더·글로켄슈필, 80BPM | 개구리 왕자(.24·.14) |
+| `music/el_frog_bgm.mp3` | Eleven Music, 50초 → 47.5초 반복 | 햇살 연못, 마림바·칼림바·피치카토·클라리넷, 100BPM | 황소와 개구리(.26·.15, 하이든 동안 0, 밤 연못 합창부터 끔) |
+| `sfx/el_shiver.mp3` | Sound Effects | 덜덜 떨기(실로폰 트레몰로·우드블록 딱딱) | 개미와 베짱이 추운 베짱이(합성음 대신) |
+| `sfx/el_fiddle_tune.mp3` | Sound Effects | 바이올린 다섯 음 즐거운 한 소절 | 개미와 베짱이 베짱이 연주(합성음 대신) |
+| `sfx/el_big_steps.mp3` | Sound Effects | 큰 짐승 쿵 발소리(팀파니), 저음 EQ(110·220Hz)·포화·리미터로 -13 LUFS | 미녀와 야수 야수 등장 쿵 쿵, 황소와 개구리 황소 쿵 (칠 때 배경 음악 낮춤) |
+| `sfx/el_clock_midnight.mp3` | Sound Effects | 궁전 큰 시계 열두 시 종 세 번 | 신데렐라 열두 시(합성 bell 대신, 세 박자마다) |
+| `sfx/el_lick.mp3` | Sound Effects | 납작 접시 혀로 핥핥 두 번 | 여우와 두루미(합성음 대신) |
+| `sfx/el_sip.mp3` | Sound Effects | 긴 부리로 병 속 쪽쪽 | 여우와 두루미(합성음 대신) |
+| `sfx/el_crane_call.mp3` | Sound Effects | 두루미 두 음 울음(나무 피리 같은) | 여우와 두루미(합성음 대신) |
+| `sfx/el_sniff.mp3` | Sound Effects | 만화식 킁킁킁 | 여우와 두루미 긴 병 냄새(합성음 대신) |
+| `sfx/el_sly_laugh.mp3` | Sound Effects | 바순·클라리넷 스타카토 킥킥(악기 웃음, 사람 목소리 없음) | 여우와 두루미 여우 킥킥(합성 laugh 대신) |
+
+묶음 A에서 다시 쓴 효과음: `sfx/el_jingle.mp3`(개미와 베짱이 반짝·개구리 왕자 변신), `sfx/el_tiger_sneak.mp3`(브레멘 도둑 두목 '하하하' — 악당), `sfx/stomach_growl.mp3`·`sfx/bubbles.mp3`(여우와 두루미 꼬르륵·보글, 합성음 대신).
+
+묶음 D(2026-11-21, 백설공주·해님과 바람·아기 돼지 삼형제·커다란 순무·미운 아기 오리·유니콘을 찾아서·사탕 마녀의 핼러윈·늑대와 일곱 마리 아기 염소). 만든 곳·후처리는 위와 같다(음악 Eleven Music music_v2_5 force_instrumental, 효과음 eleven_text_to_sound_v2). 음악은 3초 창 음량 고르기 뒤 -24 LUFS(변주 -25), 큰 타격음(펑·쏙)은 소프트 클립으로 또렷하게.
+
+| 파일 | 만든 곳 | 설명(프롬프트 요지) | 쓰는 곳 |
+|---|---|---|---|
+| `music/el_snow_white_bgm.mp3` | Eleven Music, 46초 → 43.5초 반복 | 독일 숲속 오두막 동화 왈츠, 첼레스타·하프·나무 플루트·피치카토·바순 3/4 84BPM | 백설공주(.26·.15) |
+| `music/el_sun_wind_bgm.mp3` | Eleven Music, 46초 → 43.5초 반복 | 그리스 들판, 작은 리라 하프·팬플루트·피치카토·프레임 드럼 92BPM | 해님과 바람(.26·.15) |
+| `music/el_three_pigs_bgm.mp3` | Eleven Music, 46초 → 43.5초 반복 | 영국 시골 민요, 틴 휘슬·피들 피치카토·우쿨렐레·바순 100BPM | 아기 돼지 삼형제(.26·.15, 끝 돼지 악단 음악에서 끔) |
+| `music/el_turnip_bgm.mp3` | Eleven Music, 46초 → 43.3초 반복 | 러시아 시골 민요, 발랄라이카·버튼 아코디언·돔라·탬버린 96BPM | 커다란 순무(.24·.14) |
+| `music/el_ugly_duckling_bgm.mp3` | Eleven Music, 46초 → 43.5초 반복 | 덴마크 농장 연못, 하프·클라리넷·현악·플루트 72BPM, 조금 쓸쓸하지만 따뜻하게 | 미운 아기 오리(.24·.14) |
+| `music/el_unicorn_bgm.mp3` | Eleven Music, 46초 → 43.5초 반복 | 무지개 언덕 꿈 같은 모험, 어쿠스틱 기타·첼레스타·하프·글로켄슈필 80BPM | 유니콘을 찾아서(.22·.13, 잠자리 장면 전 끝 음악에서 끔) |
+| `music/el_wolf_goats_bgm.mp3` | Eleven Music, 46초 → 43.1초 반복 | 독일 산골 오두막 민요, 아코디언·클라리넷·피치카토·글로켄슈필 92BPM | 늑대와 일곱 마리 아기 염소(.26·.15) |
+| `music/el_wolf_goats_tense.mp3` | Eleven Music, 26초 → 23.5초 반복 | 살금살금 만화 늑대, 약음 트롬본(악당)·바순·피치카토 베이스·팀파니 88BPM, 무섭지 않게 | 늑대와 일곱 마리 아기 염소 '똑똑똑!'~'숨바꼭질', 아기 돼지 삼형제 늑대 장면 |
+| `sfx/el_mirror_magic.mp3` | Sound Effects | 마법 거울이 깨어나는 첼레스타·벨트리 반짝 + 바람 | 백설공주 거울 |
+| `sfx/el_sun_warm.mp3` | Sound Effects | 햇살: 하프 아르페지오·비브라폰 장화음이 부풀어 오름 | 해님과 바람 해님 비춤(합성 화음 대신) |
+| `sfx/el_shiver_brr.mp3` | Sound Effects | 만화식 덜덜 떨기, 실로폰·우드블록 트릴 | 해님과 바람 나그네 덜덜(합성음 대신) |
+| `sfx/el_turnip_pop.mp3` | Sound Effects | 커다란 채소가 쑥 뽑히는 만화 펑 + 흙 + 올라가는 슬라이드 휘슬 | 커다란 순무 쑥!(배경 음악 2초 낮춤) |
+| `sfx/el_pull_strain.mp3` | Sound Effects | 줄다리기 끄응: 늘어나는 밧줄 삐걱 + 바순 | 커다란 순무 영차(두 번에 한 번) |
+| `sfx/el_egg_crack.mp3` | Sound Effects | 작은 알껍데기 톡 깨짐 | 미운 아기 오리 알 깨기 |
+| `sfx/el_hen_cluck.mp3` | Sound Effects | 암탉 꼬꼬꼬 세 번 | 미운 아기 오리 암탉(합성음 대신) |
+| `sfx/el_swan_call.mp3` | Sound Effects | 백조 두 번 울음 + 부드러운 호른 | 미운 아기 오리 백조 소리(합성 나팔 대신) |
+| `sfx/el_stone_plop.mp3` | Sound Effects | 둥근 돌이 천 자루에 쿵 쏙 | 늑대와 일곱 마리 아기 염소 돌멩이 넣기 |
+| `sfx/el_magic_poof.mp3` | Sound Effects | 만화 마법 연기 펑 + 반짝 꼬리 | 사탕 마녀의 핼러윈 펑 연기 |
+| `sfx/el_hoof_trot.mp3` | Sound Effects | 작은 말발굽 따각따각(코코넛) + 반짝 | 유니콘을 찾아서 유니콘 걸음 |
+
+묶음 D에서 다시 쓴 효과음: `sfx/el_jingle.mp3`(해님과 바람·늑대와 일곱 마리 아기 염소 반짝, 합성 jingle 대신), `sfx/el_carrot_crunch.mp3`(백설공주 사과 아삭), `music/el_wolf_goats_tense.mp3`(아기 돼지 삼형제 늑대 장면). 사탕 마녀의 핼러윈은 이미 「산왕의 궁전에서」 오르골이 내내 깔려 있어 새 배경 음악을 넣지 않았다.
+
+묶음 B(2026-11-21, 골디락스와 곰 세 마리·헨젤과 그레텔·흥부와 놀부·구름 공장·콩쥐 팥쥐·사자와 생쥐·인어공주·요술 항아리). 만든 곳·후처리는 위와 같다(음악 Eleven Music music_v2_5 force_instrumental 44초 → 2.5초 등전력 크로스페이드 반복 -24 LUFS, 변주 -26 LUFS, 효과음 eleven_text_to_sound_v2 후보 2개 중 고름, 피크 -2dBFS·-16 LUFS 넘지 않게, 모두 모노 64k mp3).
+
+| 파일 | 만든 곳 | 설명(프롬프트 요지) | 쓰는 곳 |
+|---|---|---|---|
+| `music/el_goldilocks_bgm.mp3` | Eleven Music, 44초 → 41.5초 반복 | 햇살 숲 통나무집, 핑거피킹 기타·나무 리코더·바순·피치카토·글로켄슈필 88BPM | 골디락스와 곰 세 마리(.26·.15, 자장가 가락 동안 비킴, 끝 노래 〈곰 세 마리〉 앞에서 끔) |
+| `music/el_hansel_bgm.mp3` | Eleven Music, 44초 → 41.5초 반복 | 검은 숲, 오르골·첼레스타·오보에·약음 현·클라리넷 76BPM, 조금 신비롭지만 포근하게 | 헨젤과 그레텔(.24·.14) |
+| `music/el_hansel_tense.mp3` | Eleven Music, 28초 → 26초 반복 | 마녀의 과자 집 살금살금, 피치카토·바순·클라리넷·첼레스타·작은 팀파니 80BPM, 무섭지 않게 | 헨젤과 그레텔 '마녀'·'새장'·'화덕' |
+| `music/el_heungbu_bgm.mp3` | Eleven Music, 44초 → 41.5초 반복 | 초가 마을 봄, 가야금·해금·장구·나무 타악 90BPM | 흥부와 놀부(.26·.15) |
+| `music/el_kkultteok_bgm.mp3` | Eleven Music, 44초 → 41.4초 반복 | 하늘 구름 공장, 마림바·칼림바·우쿨렐레·글로켄슈필·업라이트 베이스 90BPM | 구름 공장(.24·.14, 끝 음악·잠자리 자장가 앞에서 끔) |
+| `music/el_kongjwi_bgm.mp3` | Eleven Music, 44초 → 41.2초 반복 | 옛 마을, 가야금 아르페지오·대금·해금·작은 북 72BPM, 희망차고 조금 애틋하게 | 콩쥐 팥쥐(.24·.14, 잔치 북 칠 때 낮춤) |
+| `music/el_lion_mouse_bgm.mp3` | Eleven Music, 44초 → 41.2초 반복 | 햇살 초원, 칼림바·마림바·셰이커·핸드 드럼·피치카토 더블베이스 92BPM | 사자와 생쥐(.26·.15) |
+| `music/el_little_mermaid_bgm.mp3` | Eleven Music, 44초 → 41.5초 반복 | 바닷속, 하프 아르페지오·첼레스타·비브라폰·낮은 현 70BPM | 인어공주(.24·.14, 폭풍 장면에서 낮춤) |
+| `music/el_magic_jar_bgm.mp3` | Eleven Music, 44초 → 41.5초 반복 | 익살스러운 옛 마을, 가야금·단소(피리)·소고·나무 딱딱이 96BPM | 요술 항아리(.26·.15) |
+| `sfx/el_snore.mp3` | Sound Effects | 만화식 코 골기: 바순 들숨 + 슬라이드 휘슬 날숨(악기, 사람 소리 없음) | 골디락스 쿨쿨·사자 낮잠(합성음 대신) |
+| `sfx/el_hot.mp3` | Sound Effects | 앗 뜨거: 올라가는 슬라이드 휘슬 + 작은 지글 + 실로폰 딸꾹 | 골디락스 뜨거운 죽(합성음 대신) |
+| `sfx/el_shiver.mp3` | Sound Effects | 으 차가워: 실로폰 트레몰로 + 덜덜 우드블록 | 골디락스 차가운 죽(합성음 대신) |
+| `sfx/el_gnaw.mp3` | Sound Effects | 생쥐 이빨로 밧줄 사각사각 갉기 | 사자와 생쥐 그물 갉기(chop 대신) |
+| `sfx/el_net_drop.mp3` | Sound Effects | 밧줄 그물이 휙 떨어져 툭, 줄이 조이며 삐걱 | 사자와 생쥐 밤 숲 그물(북처럼 칠 때 배경 음악 낮춤) |
+| `sfx/el_gourd_saw.mp3` | Sound Effects | 큰 박을 톱으로 슬근슬근 켜는 나무 톱질 | 흥부와 놀부 박 타기(pop 대신) |
+| `sfx/el_swallow_chirp.mp3` | Sound Effects | 제비 짹짹 두 번 | 흥부와 놀부 아기 제비 받기·박씨 |
+| `sfx/el_cloud_press.mp3` | Sound Effects | 장난감 기계 큰 단추 덜컥 + 김 폭 | 구름 공장 모양 틀·빨간 단추(bonk 대신) |
+| `sfx/el_jar_copy.mp3` | Sound Effects | 항아리 속 뽀옹 + 띠용 + 글로켄슈필 반짝 | 요술 항아리 괭이·엽전이 늘어날 때 |
+
+묶음 B에서 다시 쓴 효과음: `sfx/el_tiger_sneak.mp3`(악당만 — 헨젤과 그레텔 마녀, 콩쥐 팥쥐 새엄마, 인어공주 바다 마녀, 요술 항아리 욕심쟁이 부자), `sfx/mouse_squeak_1.mp3`·`sfx/mouse_squeak_2.mp3`·`sfx/giggle_xylo.mp3`(사자와 생쥐 찍찍·골디락스 킥킥, 합성음 대신).

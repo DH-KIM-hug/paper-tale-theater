@@ -551,10 +551,12 @@
   /* ================= 이야기 ================= */
   async function run(T) {
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    let afterIntro = null; // 시작 음악이 끝나면 한 번 — 배경 음악 켜기 (아래에서 채운다)
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
+        setTimeout(() => { try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_night', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_night', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
       };
@@ -573,12 +575,37 @@
     const sfx = (n, v = .9) => { try { if (isRead()) v *= .8; const r = AudioFX.sfx(n, v); if (r === false) console.warn('[sfx] 아직 못 불러옴:', n); return r; } catch (e) { return false; } };
     const short = (n, vol = .6, dur = 2) => { try { if (isRead()) vol *= .8; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
     /* 대금 한 소절(2026-10-29): 깜깜한 밤·하늘에 비는 순간처럼 조용하고 쓸쓸할 때만. 놀이 .3, 읽기 ×0.8. 기다리지 않는다 */
-    const daeg = () => { try { const o = { vol: isRead() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const daeg = () => { try { bgmDip(7); const o = { vol: isRead() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs 시범, sounds/CREDITS.md 'ElevenLabs') ----------
+       가야금·대금 밤 곡(el_sunmoon_bgm)이 시작 음악(intro_night) 뒤에 깔려 되풀이한다. 호랑이가 문 앞에 온 때부터 나무 아래까지는
+       조심조심 변주(el_sunmoon_tense), 하늘 동아줄부터 다시 본 곡. 밤 동화라 놀이 .24·읽어 주기 .14 로 토끼보다 작게, 내레이션 동안은 엔진이 더 낮춘다.
+       대금 한 소절·끝 음악(finale_korean) 동안은 비켜 주고, 끝 음악이 나오면 끈다 */
+    try { AudioFX.preloadMusic(['el_sunmoon_bgm', 'el_sunmoon_tense']); AudioFX.preloadSfx(['el_tiger_sneak', 'el_paper_poke', 'el_rope_snap', 'el_rope_descend', 'el_tree_climb', 'el_jingle']); } catch (e) { /* 무시 */ }
+    const BGM_VOL = () => (isRead() ? .14 : .24);
+    let bgmTok = 0, bgmName = '';
+    const bgm = (n = 'el_sunmoon_bgm') => { try { bgmName = n; const tok = ++bgmTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+      const go = () => { if (tok !== bgmTok) return; try { if (AudioFX.bgm(n, { vol: BGM_VOL(), fadeIn: 2.5, xfade: 2 })) return; } catch (e) { return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const bgmDip = (sec, level = 0) => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.dip(sec, level); } catch (e) { /* 무시 */ } };
+    const bgmOff = (f = 2) => { bgmTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    let introDone = false; afterIntro = () => { if (introDone) return; introDone = true; bgm(); };
+    const bgmFor = n => { if (!introDone) return; if (n !== bgmName) bgm(n); }; // 시작 음악 전에는 바꾸지 않는다(끝나면 본 곡부터)
+    const elfx = (n, v, alt) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
+    { // 합성음뿐이던 반짝·팡파르를 녹음으로 (이 동화 페이지에서만). 전래동화라 금관 팡파르 대신 반짝 소리
+      const fan0 = AudioFX.fanfare, jin0 = AudioFX.jingle;
+      AudioFX.jingle = () => elfx('el_jingle', .8, jin0);
+      AudioFX.fanfare = () => elfx('el_jingle', .9, fan0);
+    }
+    const tigerSneak = () => { if (!(T.readInstant && T.readInstant())) setTimeout(() => elfx('el_tiger_sneak', .7), 120); }; // 호랑이 불쑥 (악당 금관, 우스꽝스럽게)
+    const ropeDown = () => elfx('el_rope_descend', .8, () => AudioFX.bell()); // 하늘에서 동아줄이 스르르
+    const ropeSnap = () => elfx('el_rope_snap', .9, () => AudioFX.pow && AudioFX.pow()); // 썩은 동아줄 뚝
+    const TENSE = ['똑똑똑', // 놀이 장면 이름(읽어 주기는 아래 READ_ACTS.set 의 세트 이름으로 바꾼다)
+      '문틈으로 쑥', '창호지 구멍', '뒷마당', '우물가 큰 나무', '우물 속을 보니', '나무 아래 호랑이'];
+    if (!isRead()) { const sc1 = T.sceneCard; T.sceneCard = function (label, ...a) { try { bgmFor(TENSE.includes(label) ? 'el_sunmoon_tense' : 'el_sunmoon_bgm'); } catch (e) { /* 무시 */ } return sc1.call(this, label, ...a); }; }
     /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 전래동화 끝 음악 finale_korean(9.5초, sounds/CREDITS.md). 내레이션이 읽히는 동안은 엔진이 자동으로 낮춘다(ambient 덕킹).
        끝 화면 전에 곡 끝(페이드)까지 기다린다. 읽어 주기도 같은 곡(화면을 꺼도 끝까지 재생) */
     let finaleEnd = 0;
-    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_korean', o)) setTimeout(() => { try { AudioFX.ambient('finale_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleMusic = () => { try { bgmOff(1.5); const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_korean', o)) setTimeout(() => { try { AudioFX.ambient('finale_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
 
     /* 배경 그림 미리 불러오기: 첫 장면 그림만 기다리고(최대 2.5초) 나머지는 뒤에서. 없는 파일은 그레이박스로 */
@@ -864,7 +891,7 @@
     };
     const rClimb = async i => {
       const tree = rs.tree, gecko = !!(boy.P.art && artUrl('boy_gecko'));
-      yeongcha(T, i);
+      yeongcha(T, i); if (!rInst()) elfx('el_tree_climb', .6);
       const climbArt = gecko && i < 5;
       const by = i === 5 ? rTOP.b[1] : 560 - i * rCLIMB, gy = i === 5 ? rTOP.g[1] : by + (climbArt ? 96 : 80);
       if (climbArt) {
@@ -900,7 +927,7 @@
         el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': 34, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('삐걱… 삐걱…') }, svg);
         cutVoice('cut_creak', 500);
       }, { hold: 3300 }),
-      snap: () => (cutArt(T, 'cut_snap', 'pow', 2800, () => cutVoice('cut_snap', 250)) || T.cut(svg => {
+      snap: () => (cutArt(T, 'cut_snap', ropeSnap, 2800, () => cutVoice('cut_snap', 250)) || T.cut(svg => {
         const g = el('g', { transform: 'translate(200,320) scale(.85) rotate(12)' }, svg); const P = drawTiger(T, g); P.oMouth(); P.setBelly(2.4);
         el('text', { x: 200, y: 50, 'text-anchor': 'middle', 'font-size': 64, fill: C.bean, stroke: '#fff', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': "'Pretendard Variable', Pretendard, sans-serif", text: T.tr('뚝!') }, svg);
         cutVoice('cut_snap', 250);
@@ -1039,7 +1066,8 @@
       await tree.to(...rTREE_WIDE, .58, 900);
     };
     const READ_ACTS = {
-      set: key => { if (key === 'kitchen') amb('fire_crackle', .25, 3); else if (key === 'hill2') { amb('crickets_night_1', .25, 4); daeg(); } else if (key === 'backyard') amb('crickets_night_2', .25, 4); else stopAmb(); return rSet(key); },
+      set: key => { if (introDone) { if (key === 'door' || key === 'backyard' || key === 'tree' || key === 'wellTop') bgmFor('el_sunmoon_tense'); else if (key === 'sky' || key === 'sorghum' || key === 'heaven') bgmFor('el_sunmoon_bgm'); }
+        if (key === 'kitchen') amb('fire_crackle', .25, 3); else if (key === 'hill2') { amb('crickets_night_1', .25, 4); daeg(); } else if (key === 'backyard') amb('crickets_night_2', .25, 4); else stopAmb(); return rSet(key); },
       daeg: () => daeg(),
       cam: (a, b) => {
         if (a === 'wide') return rInst() ? camSnap(500, 280, 1) : camWide(600);
@@ -1111,7 +1139,7 @@
           if (eu) el('image', { href: eu, x: 300, y: 111, width: 400, height: 377, filter: 'url(#pp)' }, eye);
           else { el('ellipse', { cx: 500, cy: 300, rx: 190, ry: 180, fill: '#fff' }, eye); el('circle', { cx: 500, cy: 310, r: 110, fill: C.ink }, eye); el('circle', { cx: 548, cy: 256, r: 34, fill: '#fff' }, eye); }
           const rim = el('circle', { cx: 500, cy: 300, r: 0, fill: 'none', stroke: '#E9DCC0', 'stroke-width': 18, 'stroke-dasharray': '10 6' }, T.world);
-          AudioFX.poke(); T.pop(620, 180, '콕!', C.bean);
+          AudioFX.poke(); elfx('el_paper_poke', .9); T.pop(620, 180, '콕!', C.bean);
           for (let r = 10; r <= 200; r += 10) { circ.setAttribute('r', r); rim.setAttribute('r', r); if (!rInst()) await sleep(16); }
         })();
         if (verb === 'eye') return (async () => {
@@ -1158,7 +1186,7 @@
         T.pop(640, 110, '주르륵', C.gold);
       })(),
       rope: (verb) => {
-        if (verb === 'good') return (async () => { AudioFX.bell(); await T.anim(rs.ropeGood, [{ transform: 'translateY(-900px)' }, { transform: 'translateY(0)' }], { duration: 1500, easing: 'ease-out' }); rs.ropeGood.style.transform = 'translateY(0)'; AudioFX.jingle(); })();
+        if (verb === 'good') return (async () => { ropeDown(); await T.anim(rs.ropeGood, [{ transform: 'translateY(-900px)' }, { transform: 'translateY(0)' }], { duration: 1500, easing: 'ease-out' }); rs.ropeGood.style.transform = 'translateY(0)'; AudioFX.jingle(); })();
         if (verb === 'bad') return (async () => {   // 호랑이도 하늘에 빌자 낡은 줄이 스르르
           const g = rs.rrope = el('g', {}, T.world);
           if (!ropeArt(T, g, 'rope_bad', 500, 300, .35)) T.paper(g, [['path', { d: 'M500 -3400 V260 Q515 320 493 380', stroke: '#9A8466', 'stroke-width': 8, fill: 'none', 'stroke-dasharray': '40 7' }]]);
@@ -1184,7 +1212,7 @@
       },
       cut: k => (rCut[k] ? rCut[k]() : console.warn('[read] cut 모름', k)),
       fx: n => {
-        if (n === 'pop_out') return AudioFX.pop_out();
+        if (n === 'pop_out') { tigerSneak(); return AudioFX.pop_out(); }
         if (n === 'chomp') return AudioFX.chomp();
         if (n === 'whoosh') return AudioFX.whoosh();
         if (n === 'gulp') return AudioFX.gulp && AudioFX.gulp();
@@ -1201,7 +1229,7 @@
       shake: () => T.shake(),
     };
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(); return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); stopAmb(); bgmOff(2); return rr; }
 
     await T.curtain(true);
     intro.go(); // 시작 음악 (놀이)
@@ -1339,7 +1367,7 @@
       else await say('깜깜한 밤이 되었어요. 엄마가 셋째 고개를 넘어요.');
       await momWalk;
       await sleep(300);
-      AudioFX.pop_out();
+      AudioFX.pop_out(); tigerSneak();
       await tiger.move(TX, peekY, 380, 'ease-out');
       T.pop(T.portrait() ? Math.min(TX, 590) : TX, 190, n ? '또 왔어!' : '불쑥!', C.bean); // 호랑이가 다 솟은 뒤, 머리 위(250→190)에 띄워 귀를 덮지 않게
       await sleep(250);
@@ -1553,7 +1581,7 @@
       el('circle', { cx: 500, cy: 300, r: 16, fill: C.bark, opacity: .35 }, spot);
     });
     await T.ask('문밖에 누가 있는지 보고 싶어요. 창호지를 손가락으로 콕 뚫어 볼까요?', () => T.tap(spot, { prompt: '창호지를 톡 눌러서 콕 뚫어 봐요!' }));
-    AudioFX.poke(); T.pop(620, 180, '콕!', C.bean); spot.remove();
+    AudioFX.poke(); elfx('el_paper_poke', .9); T.pop(620, 180, '콕!', C.bean); spot.remove();
     for (let r = 10; r <= 200; r += 10) { peekCircle.setAttribute('r', r); rim.setAttribute('r', r); await sleep(16); }
     await sleep(400);
     for (let k = 0; k < 2; k++) { await T.anim(eye, [{ transform: 'scaleY(1)' }, { transform: 'scaleY(.08)' }, { transform: 'scaleY(1)' }], 320); await sleep(150); }
@@ -1695,7 +1723,7 @@
       { transform: `rotate(${-dir * 5}deg) scale(.96,1.05)` }, { transform: 'rotate(0deg) scale(1,1)' }], { duration: dur, easing: 'ease-in-out' });
     const gecko = !!(boy.P.art && artUrl('boy_gecko'));
     const climbTree = i => {
-      yeongcha(T, i);
+      yeongcha(T, i); elfx('el_tree_climb', .6);
       // 그림: 오르는 동안은 둘이 따로 기둥 앞면(x 640)에 도마뱀처럼 붙어 — 오빠가 먼저 한 칸, 동생이 조금 뒤에 따라 한 칸. 꼭대기에서 다시 선다
       const climbArt = gecko && i < 5;
       const by = i === 5 ? TOP.b[1] : 560 - i * CLIMB_STEP, gy = i === 5 ? TOP.g[1] : by + (climbArt ? 96 : 80);
@@ -1918,7 +1946,7 @@
       ropeGood.style.transform = 'translateY(-900px)'; ropeBad.style.transform = 'translateY(-900px)';
       ropeBad.style.transformBox = 'fill-box'; ropeBad.style.transformOrigin = '50% 100%'; // 삐걱 흔들림이 줄 아래끝 기준으로 (멀리 휘청이지 않게)
     });
-    AudioFX.bell();
+    ropeDown();
     await Promise.all([T.anim(ropeGood, [{ transform: 'translateY(-900px)' }, { transform: 'translateY(0)' }], { duration: 1500, easing: 'ease-out' }),
       T.anim(ropeBad, [{ transform: 'translateY(-900px)' }, { transform: 'translateY(0)' }], { duration: 1700, easing: 'ease-out' })]);
     await T.ask('하늘에서 줄이 두 개 내려왔어요! 어떤 줄을 잡을까요?', () => T.choose([{ el: ropeGood, ok: true },
@@ -1978,7 +2006,7 @@
       cutVoice('cut_creak', 500);
     }, { hold: 3300 });
     creak(T);
-    await (cutArt(T, 'cut_snap', 'pow', 2800, () => cutVoice('cut_snap', 250)) || T.cut(svg => {
+    await (cutArt(T, 'cut_snap', ropeSnap, 2800, () => cutVoice('cut_snap', 250)) || T.cut(svg => {
       el('path', { d: 'M200 0 V90 L190 100 M205 100 L212 92', stroke: '#9A8466', 'stroke-width': 7, fill: 'none' }, svg);
       const g = el('g', { transform: 'translate(200,320) scale(.85) rotate(12)' }, svg); const P = drawTiger(T, g); P.oMouth(); P.setBelly(2.4);
       cutText(svg, '뚝!', 64);
@@ -2102,6 +2130,7 @@
     finaleMusic();
     await say('해님 달님은 오늘도 하늘에서 우리를 환하게 비춰 준답니다.');
     await finaleWait();
+    bgmOff(2);
     return '해님 달님이 늘 우리를 비춰 줘요!';
   }
 

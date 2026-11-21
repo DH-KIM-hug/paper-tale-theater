@@ -24,13 +24,32 @@
   const NUM = ['하나!', '둘!', '셋!'];
 
   async function run(T) {
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       초가 마을 봄 곡(el_heungbu_bgm: 가야금·해금·장구)이 시작 음악(intro_korean_happy) 뒤에 깔려 끝까지 되풀이한다. 대금 동안 비켜 주고 끝 음악에서 끈다.
+       내레이션 동안 엔진이 낮추고(DUCK), 읽어 주기는 더 작게. 다른 음악(클래식·대금·노래) 동안은 dip 으로 비켜 주고, 끝 음악에서 끈다 */
+    const bgmRd = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    try { AudioFX.preloadMusic(['el_heungbu_bgm']); AudioFX.preloadSfx(['el_gourd_saw', 'el_swallow_chirp']); } catch (e) { /* 무시 */ }
+    const BGM_VOL = () => (bgmRd() ? 0.15 : 0.26);
+    let bgmTok = 0, bgmName = '', bgmDone = false, introDone = false;
+    const bgm = (n = 'el_heungbu_bgm') => { if (bgmDone) return; try { bgmName = n; const tok = ++bgmTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+      const go = () => { if (tok !== bgmTok) return; try { if (AudioFX.bgm(n, { vol: BGM_VOL(), fadeIn: 2.5, xfade: 2 })) return; } catch (e) { return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const bgmFor = n => { if (!introDone || bgmDone) return; if (n !== bgmName) bgm(n); }; // 시작 음악 전에는 바꾸지 않는다(끝나면 본 곡부터)
+    const bgmDip = (sec, level = 0) => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.dip(sec, level); } catch (e) { /* 무시 */ } };
+    const bgmUp = () => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } };
+    const bgmOff = (f = 2) => { bgmDone = true; bgmTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elfx = (n, v, alt) => { try { if (bgmRd()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
+    const afterIntro = () => { if (introDone) return; introDone = true; bgm(); }; // 시작 음악이 끝나면 한 번
+    { /* 엔진 가락(자장가·따라 연주) 동안 배경 음악은 비켜 준다 */
+      ['playMelody', 'holdMelody', 'followMelody'].forEach(k => { const f0 = T[k]; if (typeof f0 !== 'function' || f0.__bgm) return; const f = function (...a) { bgmDip(0); const p = f0.apply(this, a); Promise.resolve(p).then(bgmUp, bgmUp); return p; }; f.__bgm = 1; T[k] = f; });
+    }
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro(); } catch (e) { /* 무시 */ } }; // 시작 음악이 끝나면 배경 음악
       const go = (delay = 0) => {
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_korean_happy', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_korean_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
+        setTimeout(() => { try { afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
@@ -47,12 +66,12 @@
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
     /* 대금 한 소절(2026-10-29): 쓸쓸하거나 떠나보내는 순간에만. 놀이 .3, 읽기 ×0.8 */
-    const daeg = () => { try { const o = { vol: T.reading() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const daeg = () => { try { bgmDip(7); const o = { vol: T.reading() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const stopAmb = f => { try { AudioFX.stopAmbient(f); } catch (e) { /* 무시 */ } };
     /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 전래동화 끝 음악 finale_korean(9.5초, sounds/CREDITS.md). 내레이션이 읽히는 동안은 엔진이 자동으로 낮춘다(ambient 덕킹).
        끝 화면 전에 곡 끝(페이드)까지 기다린다. 읽어 주기도 같은 곡(화면을 꺼도 끝까지 재생) */
     let finaleEnd = 0;
-    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_korean', o)) setTimeout(() => { try { AudioFX.ambient('finale_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleMusic = () => { try { bgmOff(1.5); const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_korean', o)) setTimeout(() => { try { AudioFX.ambient('finale_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
     try { AudioFX.preloadSfx(['finale_korean', 'intro_korean_happy', 'birds_chirp_1', 'birds_chirp_2', 'stomach_growl', 'comic_brass', 'bonk', 'marimba_1', 'marimba_2', 'marimba_3', 'whistle_down', 'thud', 'harp_gliss', 'coins_1', 'party_horn', 'sad_trombone', 'surprise_sting', 'fall_crash', 'splash', 'pow', 'ding', 'pop', 'crash', 'daegeum']); } catch (e) { /* 무시 */ }
     { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stopAmb(.5); return sc0.apply(this, a); }; } // 장면이 바뀌면 배경 소리를 끈다
@@ -226,7 +245,7 @@
         async seed(op) {
           const sw = S.swallow_seed; if (!sw) return;
           const sd = spr('seed', 380, 70, 280); S.seed = sd; sd.place(sw.x, 280);
-          await sd.move(fx(560), 470, 600, 'ease-in'); sfx('ding'); sw.hop(16, 300);
+          await sd.move(fx(560), 470, 600, 'ease-in'); sfx('ding'); sw.hop(16, 300); elfx('el_swallow_chirp', .6); /* 박씨를 준 제비 짹짹 */
           sw.move(1150, 160, 1600, 'ease-in'); // 박씨를 주고 날아간다
         },
         vine(op) { const v = S.vine; if (v && op === 'grow') { v.hop(18, 360); sfx('pop'); } },
@@ -236,7 +255,7 @@
         },
         gourd(op, i) {
           const g = gourds[+i]; if (!g) return;
-          g.hop(18, 300); const s = sawer(); if (s) s.hop(14, 300); sfx('pop');
+          g.hop(18, 300); const s = sawer(); if (s) s.hop(14, 300); elfx('el_gourd_saw', .85, () => sfx('pop'));
           if (+i === 1) sacks.forEach(k => k.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 600, fill: 'forwards' }));
         },
         rice(op, n) {
@@ -297,7 +316,7 @@
       READ_ACTS.animal = (n, v) => { try { if (!T.readInstant()) AudioFX.animal(n, +v || .4); } catch (e) { /* 무시 */ } return null; };
     }
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS).finally(() => bgmOff(3)); await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } return rr; }
 
     /* 1. 봄 하늘 */
     scene('sky_spring');
@@ -354,7 +373,7 @@
     const shiver = setInterval(() => fallen.hop(5, 220), 800); /* 다리를 다쳐서 바들바들 */
     await T.ask('흥부를 톡! 눌러서 아기 제비를 받아 줘요.', () => T.tap(live(hc), { prompt: '흥부를 톡! 제비를 받아 줘요.' }));
     clearInterval(shiver);
-    await fallen.move(fx(425), 410, 500, 'ease-out'); hc.hop(20, 300); sfx('ding');
+    await fallen.move(fx(425), 410, 500, 'ease-out'); hc.hop(20, 300); sfx('ding'); setTimeout(() => elfx('el_swallow_chirp', .55), 350); /* 받은 아기 제비 짹짹 */
     await cut('bandage2', 'pop', 3600);
     await say('흥부는 아기 제비의 다친 다리에 천을 감아 주었어요. 아기 제비는 금방 나았어요.');
 
@@ -376,7 +395,7 @@
     await say('봄이 되자 제비가 돌아와서 박씨 하나를 떨어뜨렸어요.');
     await cut('seedback', 'pop', 3200);
     const seed = spr('seed', 380, 70, 280); seed.place(sw.x, 280);
-    await seed.move(fx(560), 470, 600, 'ease-in'); sfx('ding'); sw.hop(16, 300); falling('petal', 2, 22, { loop: false });
+    await seed.move(fx(560), 470, 600, 'ease-in'); sfx('ding'); sw.hop(16, 300); elfx('el_swallow_chirp', .6); /* 박씨를 준 제비 짹짹 */ falling('petal', 2, 22, { loop: false });
     sw.move(1150, 160, 1600, 'ease-in'); /* 박씨를 주고 날아간다 */
     await say('흥부는 박씨를 마당에 심었어요.');
     for (let i = 1; i <= 3; i++) { /* 저절로 물을 줘요 (2026-10-20 톡 조작 정리) */
@@ -396,10 +415,10 @@
     const open = async (g, word, guide) => {
       const tapIt = () => T.tap(live(g), { prompt: '박을 톡! 슬근슬근 타요.' });
       await (guide ? T.ask(guide, tapIt) : tapIt());
-      g.hop(18, 300); hs.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, word);
+      g.hop(18, 300); hs.hop(14, 300); elfx('el_gourd_saw', .85, () => sfx('pop')); T.pop(g.x, g.y - 170, word);
     };
     await open(gourds[0], '슬근슬근!', '흥부 부부는 톱으로 박을 탔어요. 박을 톡! 눌러서 슬근슬근 타 봐요.');
-    const autoOpen1 = async g => { await sleep(500); g.hop(18, 300); hs.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, '슬근슬근!'); };
+    const autoOpen1 = async g => { await sleep(500); g.hop(18, 300); hs.hop(14, 300); elfx('el_gourd_saw', .85, () => sfx('pop')); T.pop(g.x, g.y - 170, '슬근슬근!'); };
     await cutSay('rice_pour2', 'pop', '첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.');
     const sacks = [];
     await T.ask('쌀자루를 톡톡톡 눌러서 세어 봐요!', () => T.mash(live(gourds[0]), { count: 3, prompt: '쌀자루를 톡톡톡! 세어 봐요.', onStep: i => {
@@ -446,10 +465,10 @@
     const nopen = async (g, word, guide) => {
       const tapIt = () => T.tap(live(g), { prompt: '박을 톡! 슬근슬근 타요.' });
       await (guide ? T.ask(guide, tapIt) : tapIt());
-      g.hop(18, 300); ns.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, word);
+      g.hop(18, 300); ns.hop(14, 300); elfx('el_gourd_saw', .85, () => sfx('pop')); T.pop(g.x, g.y - 170, word);
     };
     await nopen(ng[0], '슬근슬근!', '첫 번째 박을 톡!');
-    const autoOpen = async g => { await sleep(500); g.hop(18, 300); ns.hop(14, 300); sfx('pop'); T.pop(g.x, g.y - 170, '슬근슬근!'); };
+    const autoOpen = async g => { await sleep(500); g.hop(18, 300); ns.hop(14, 300); elfx('el_gourd_saw', .85, () => sfx('pop')); T.pop(g.x, g.y - 170, '슬근슬근!'); };
     ns.set('nol_mud'); /* 컷이 걷히면 흙탕물에 젖은 놀부가 보이게 대사 전에 */
     await cutSay('mud2', 'sad_trombone', '콸콸콸! 박에서 흙탕물이 쏟아져서 놀부가 흠뻑 젖었어요.'); // 욕심쟁이 놀부가 흠뻑
     await autoOpen(ng[1]);

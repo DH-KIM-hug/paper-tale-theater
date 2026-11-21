@@ -281,6 +281,7 @@
     const bgm = k => {
       try {
         if (bgmH) { bgmH.stop(1.2); bgmH = null; }
+        elHold(!!k); if (afterIntro) afterIntro(); // ElevenLabs 배경 음악: 클래식이 나오는 동안은 비켜 준다
         if (!k) return;
         const o = { vol: T.reading() ? .12 : .16, loop: true, fadeIn: 1 };
         bgmH = AudioFX.ambient(BGM[k], o);
@@ -289,8 +290,28 @@
     };
     /* 맨 끝 축하 음악: 서양 명작 동화와 같은 finale_fairy(9.5초, 커밋 7ef85621). 곡 끝까지 기다렸다 끝 화면 */
     let finaleEnd = 0;
-    const finaleMusic = () => { try { bgm(null); const o = { vol: .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleMusic = () => { try { bgm(null); elOff(1.5); const o = { vol: .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
+    let afterIntro = null;
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       기타·피들·틴 휘슬 시골 농장 곡(el_red_hen_bgm). 시작 음악이 따로 없어 첫 bgm 부름(1장 바흐 첼로)과 함께 켜고, 클래식 세 곡(bach_cello_pizz·morning_mood_flute·vienna_march)이 나오는 동안은 0까지 낮췄다가(elHold) 그 곡이 꺼지면 다시 올린다. 방앗간은 맷돌 가는 소리(el_mill_grind).
+       끝까지 되풀이한다. 내레이션 동안은 엔진이 낮추고(DUCK), 읽어 주기는 더 작게(놀이 .24·읽어 주기 .14).
+       클래식 한 토막·대금 같은 다른 음악 동안은 비켜 주고(elDip), 크게 치는 소리 때 잠깐 낮추고(elHit), 끝 음악이 나오면 끈다(elOff) */
+    const EL_MAIN = 'el_red_hen_bgm';
+    try { AudioFX.preloadMusic(['el_red_hen_bgm']); AudioFX.preloadSfx(['el_mill_grind']); } catch (e) { /* 무시 */ }
+    const elVol = () => (T.reading() ? .14 : .24);
+    let elTok = 0, elName = '', elWant = EL_MAIN, elIntro = false, elDone = false, elDipTo = 0, elHeld = false;
+    const elNow = () => { try { return AudioFX.bgmNow && AudioFX.bgmNow(); } catch (e) { return null; } };
+    const elBgm = n => { try { elName = n; const tok = ++elTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번). 켜질 때 비켜 주는 중이면 그대로 낮춘다
+      const go = () => { if (tok !== elTok || elDone) return; let h = null; try { h = AudioFX.bgm(n, { vol: elVol(), fadeIn: 2.5, xfade: 2 }); } catch (e) { return; }
+        if (h) { const left = elDipTo - Date.now(); if (elHeld) h.dip(0); else if (left > 0) h.dip(left / 1000); return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const elDip = sec => { elDipTo = Math.max(elDipTo, Date.now() + sec * 1000); const h = elNow(); if (h && !elHeld) try { h.dip(sec); } catch (e) { /* 무시 */ } };
+    const elHit = (sec = 1.4) => { const h = elNow(); if (h && !elHeld && Date.now() > elDipTo) try { h.dip(sec, .3, .05); } catch (e) { /* 무시 */ } };
+    const elHold = on => { elHeld = !!on; const h = elNow(); if (!h) return; try { if (on) h.dip(0); else h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } };
+    const elOff = (f = 2) => { elDone = true; elTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elFor = n => { if (elDone) return; elWant = n; if (elIntro && n !== elName) elBgm(n); };
+    afterIntro = () => { if (elIntro || elDone) return; elIntro = true; elBgm(elWant); };
+    const elfx = (n, v, alt) => { try { if (T.reading()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
 
     const dishQ = QS.get('dish');
     let DISH = DISHES[dishQ] ? dishQ : Object.keys(DISHES)[Math.floor(Math.random() * 3)];
@@ -514,13 +535,13 @@
       for (const [x, y, s] of path) { const sc = hen.scale; const a = hen.pos.animate([{ transform: tfm(hen.x, hen.y, hen.flip, sc) }, { transform: tfm(x, y, hen.flip, s) }], { duration: 1100, easing: 'linear' }); await a.finished; hen.setScale(s); hen.place(x, y); }
       clearInterval(steps);
       /* 방앗간: 날개가 빨라지고 덜컹덜컹 */
-      S.spin.updatePlaybackRate(4); cue('drum', .4);
-      const thud = setInterval(() => cue(['knock', 'drum'], .3), 600);
+      S.spin.updatePlaybackRate(4); cue(['el_mill_grind', 'drum'], .75);
+      const thud = setInterval(() => cue(['knock', 'drum'], .3), 600), grind = setInterval(() => cue('el_mill_grind', .6), 2300); // 맷돌 가는 소리(2026-11-21 녹음)
       hen.look('stand', 'right');
       const bin = T.el('g', { 'pointer-events': 'none' }, T.world);
       stand(T, bin, 'hen_prop_flour_bin_empty', MILL.door[0] + 46, MILL.door[1] + 6, 46);
       await say('D3');
-      clearInterval(thud); cue('rattle', .5);
+      clearInterval(thud); clearInterval(grind); cue('rattle', .5);
       await cutPic('hen_cut_mill');
       bin.innerHTML = ''; stand(T, bin, 'hen_prop_flour_bin', MILL.door[0] + 46, MILL.door[1] + 6, 50);
       S.spin.updatePlaybackRate(1);
@@ -1061,8 +1082,8 @@
           }
           if (inst()) return null;
           if (cmd === 'grind') {
-            S.spin.updatePlaybackRate(4); cue('drum', .4);
-            every(() => cue(['knock', 'drum'], .3), 600);
+            S.spin.updatePlaybackRate(4); cue(['el_mill_grind', 'drum'], .6);
+            every(() => cue(['knock', 'drum'], .3), 600); every(() => cue('el_mill_grind', .5), 2300); // 맷돌 가는 소리(2026-11-21 녹음)
             hen.look('stand', 'right');
             S.bin = T.el('g', { 'pointer-events': 'none' }, T.world);
             stand(T, S.bin, 'hen_prop_flour_bin_empty', MILL.door[0] + 46, MILL.door[1] + 6, 46);
@@ -1285,7 +1306,7 @@
         if (nbg && KITCHEN.test(nbg) && KITCHEN.test(curBg) && !document.hidden) return cont(change);
         return T.sceneCard(label, change, focus);
       };
-      try { const rr = await T.readPlay.call(RW, R); await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } return rr; } finally { bgm(null); stopAll(); }
+      try { const rr = await T.readPlay.call(RW, R); await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } return rr; } finally { bgm(null); elOff(2); stopAll(); }
     }
 
     const from = Math.max(1, Math.min(10, +QS.get('from') || 1));
@@ -1295,13 +1316,13 @@
       if (n < from) continue;
       const set = await mkSet();
       window.__rh.scene = n;
-      if (first) { set(); await T.curtain(true); first = false; }
+      if (first) { set(); await T.curtain(true); first = false; if (n > 1) bgm(null); } // ?from= 로 중간부터: 배경 음악만 켠다
       else await next(tr(label), bg, set);
       window.__rh.ready = n;
       await play();
     }
     window.__rh.scene = 11;
-    bgm(null); try { AudioFX.stopAmbient(1); } catch (e) { /* */ }
+    bgm(null); elOff(2); try { AudioFX.stopAmbient(1); } catch (e) { /* */ }
     T.finale(); await sleep(1200);
     return '일할 때 같이 하면 먹을 때도 같이 먹어요.';
   }

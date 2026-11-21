@@ -597,12 +597,14 @@
   async function run(T) {
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
     /* 2026-11-02 사용자 지시: 시작 음악 intro_adventure(웅장한 모험 음악, 첫 장면에 안 맞음) → 클래식 슈만 〈즐거운 농부〉(방앗간 당나귀). 제목에 '피아노'라고 적힌 픽사베이 녹음 처음 12초, sounds/CREDITS.md */
+    let afterIntro = null; // 시작 음악이 끝나면 한 번 — 배경 음악 켜기 (아래에서 채운다)
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('classical_happy_farmer', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('classical_happy_farmer', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
+        setTimeout(() => { try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
@@ -620,7 +622,23 @@
     const cue = (n, v = .9) => { try { if (isRead()) v *= .8; if (AudioFX.sfx(n, v) === false) console.warn('[sfx] 아직 못 불러옴:', n); } catch (e) { /* 무시 */ } };
     const short = (n, vol = .6, dur = 2) => { try { if (isRead()) vol *= .8; AudioFX.ambient(n, { vol, loop: false, fadeIn: .05, dur }); } catch (e) { /* 무시 */ } }; // 긴 소리는 앞 몇 초만 (내레이션 밑에서 저절로 낮아지고 사라진다)
     const stopAmb = () => { ambTok++; try { AudioFX.stopAmbient(.5); } catch (e) { /* 무시 */ } };
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       배경 음악은 시작 음악(12초) 뒤에 깔려 끝까지 되풀이한다(장면이 바뀌어도 이어짐). 내레이션 동안 엔진이 낮추고(DUCK), 읽어 주기는 더 작게.
+       시골길 아코디언·클라리넷·튜바 곡(el_bremen_bgm), 캄캄한 숲부터 도둑 집·캄캄한 밤까지는 살금살금 변주(el_bremen_night), 우리 집에서 다시 본 곡.
+       빅밴드 녹음(음악 대폭발) 동안은 dip 으로 비켜 주고, 마지막 행진곡 전에 끈다. 놀이는 장면 카드 이름, 읽어 주기는 set 키로 고른다(읽어 주기 장면 카드는 이름이 없다). */
+    try { AudioFX.preloadMusic(['el_bremen_bgm', 'el_bremen_night']); AudioFX.preloadSfx(['el_tiger_sneak']); } catch (e) { /* 무시 */ }
+    const BGM_VOL = () => (T.reading() ? 0.15 : 0.26);
+    let bgmTok = 0, bgmName = '';
+    const bgm = (n = 'el_bremen_bgm') => { try { bgmName = n; const tok = ++bgmTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+      const go = () => { if (tok !== bgmTok) return; try { if (AudioFX.bgm(n, { vol: BGM_VOL(), fadeIn: 2.5, xfade: 2 })) return; } catch (e) { return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const bgmDip = (sec, level = 0) => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.dip(sec, level); } catch (e) { /* 무시 */ } };
+    const bgmOff = (f = 2) => { bgmTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elfx = (n, v, alt) => { try { if (T.reading()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
+    let introDone = false; afterIntro = () => { if (introDone) return; introDone = true; bgm(); };
+    const bgmFor = n => { if (!introDone) return; if (n !== bgmName) bgm(n); }; // 시작 음악 전에는 바꾸지 않는다(끝나면 본 곡부터)
     const pop0 = T.pop; T = { ...T, pop: (x, y, w, c) => pop0(clampX(x, 60 + [...T.tr(w)].length * 12), y, w, c) };
+    const NIGHT_SC = ['캄캄한 숲', '탑 쌓기', '창문 안', '음악 대폭발', '캄캄한 밤'], NIGHT_K = ['walk', 'walk_lb', 'house_low', 'house_pov', 'house_wide', 'dark'];
+    if (!isRead()) { const sc1 = T.sceneCard; T.sceneCard = function (label, ...a) { try { if (label) bgmFor(NIGHT_SC.includes(label) ? 'el_bremen_night' : 'el_bremen_bgm'); } catch (e) { /* 무시 */ } return sc1.call(this, label, ...a); }; } // 이름 없는 장면(도둑 보고)은 앞 곡 그대로
 
     /* 그림 미리 불러오기: 첫 장면(방앗간·당나귀·주인)과 네 친구를 기다리고(최대 4초) 나머지는 뒤에서. 못 불러온 그림은 그레이박스로 */
     const loads = {};
@@ -854,6 +872,10 @@
     warmMusic(); // 동화 시작에 미리
     // maxMs: 읽어 주기는 동사 하나를 8초까지만 기다리므로, 그 안에서 소리를 줄여 끝낸다(다음 낭독과 음악이 겹치지 않게)
     async function recordedMusic(name, fallback, onPhrase = musicHop, maxMs = 0) {
+      if (name === 'finale_march') bgmOff(1.5); else bgmDip(0); // 녹음 음악 동안 배경 음악은 비켜 준다(끝 행진곡 전에는 끈다)
+      try { return await recordedMusic0(name, fallback, onPhrase, maxMs); } finally { if (name !== 'finale_march') bgmDip(.05); }
+    }
+    async function recordedMusic0(name, fallback, onPhrase = musicHop, maxMs = 0) {
       const t0 = performance.now();
       let outcome = 'nostart';
       try {
@@ -1090,7 +1112,7 @@
         if (op === 'flap') { flap(a); T.pop(a.x, 40, '푸드덕!', C.persimmon); return; }
       };
       const acts = {
-        set(k) { if (k === 'house_pov' || k === 'house_wide' || k === 'morning') warmMusic(); if (k === 'mill') amb('birds_chirp_1', .25, 4); else if (k === 'walk') amb('crickets_night_1', .25, 4); else if (k === 'dark') amb('crickets_night_2', .25, 4); else if (k === 'morning') amb('birds_chirp_2', .25, 4); else stopAmb(); if (rI()) { build(k); return; } return T.sceneCard('', () => build(k)); },
+        set(k) { try { bgmFor(NIGHT_K.includes(k) ? 'el_bremen_night' : 'el_bremen_bgm'); } catch (e) { /* 무시 */ } if (k === 'house_pov' || k === 'house_wide' || k === 'morning') warmMusic(); if (k === 'mill') amb('birds_chirp_1', .25, 4); else if (k === 'walk') amb('crickets_night_1', .25, 4); else if (k === 'dark') amb('crickets_night_2', .25, 4); else if (k === 'morning') amb('birds_chirp_2', .25, 4); else stopAmb(); if (rI()) { build(k); return; } return T.sceneCard('', () => build(k)); },
         cam(a) { camW(); },
         bush(op) { if (bsh) bsh.animate([{ translate: '0 0' }, { translate: '-6px 0' }, { translate: '6px 0' }, { translate: '0 0' }], { duration: 400, iterations: 2 }); },
         window(op) { // 불빛이 켜진다 (오두막 창)
@@ -1214,7 +1236,7 @@
       return acts;
     })();
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
-    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); stopAmb(); return rr; }
+    if (T.reading()) { const rr = await T.readPlay(READ_ACTS); bgmOff(2); stopAmb(); return rr; }
 
     /* ---------- 1. 방앗간 당나귀 (와이드) ---------- */
     const millArt = millBG(T);
@@ -1549,7 +1571,7 @@
     short('coins_1', .5, 2.2);
     await say('창문 안을 들여다보니, 도둑 셋이 금화를 세며 맛있는 걸 먹고 있어요.');
     clearInterval(countC); // 두목 목소리와 짤랑 합성음이 겹치지 않게
-    T.pop(500, 170, '하하하!', C.bean);
+    T.pop(500, 170, '하하하!', C.bean); elfx('el_tiger_sneak', .6); // 도둑(악당) 살금 금관
     await say('도둑: "금화가 잔뜩이다! 하하하!"');
     await say('닭: "우리 음악을 크게 들려주자!"');
 

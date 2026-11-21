@@ -590,7 +590,7 @@
         return aft(a, () => { put(T, a, px(x), isNaN(y) ? FL : y); if (name === 'uni' && rTag === 'moon1') T.world.insertBefore(a.pos, cbush.pos); });   // 사박사박: 유니콘은 덤불 뒤에서 나온다
       }
       if (verb === 'turn') return aft(a, () => a.turn(a1));
-      if (verb === 'walk') { const [x, y, ms] = String(a1).split(',').map(num); return name === 'uni' ? rwalk(a, px(x), y, ms, 'ease-in-out') : rwalk(a, px(x), FL, y); }
+      if (verb === 'walk') { const [x, y, ms] = String(a1).split(',').map(num); if (name === 'uni' && !T.readInstant()) BGK.fx('el_hoof_trot', .45); return name === 'uni' ? rwalk(a, px(x), y, ms, 'ease-in-out') : rwalk(a, px(x), FL, y); }
       if (verb === 'hop') {
         if (inst()) return;
         if (name === 'sheep' && rTag === 'cloudland2' && !rSeen.baaHome) { rSeen.baaHome = 1; baa(.55, 300); }   // 집이 보여 신난 양
@@ -690,8 +690,49 @@
       if (CARDSET[label] && CARDSET[label] === curKey && (T.viewWidth() < 990) === P && !document.hidden) { rCont = true; if (change) change(); rCont = false; return Promise.resolve(); }
       return T.sceneCard(label, change, focus);
     };
+    /* ---------- 배경 음악 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       본 곡(el_unicorn_bgm)은 시작 음악이 끝나면(또는 첫 장면이 바뀌면) 깔려 끝까지 되풀이한다. 놀이 0.22·읽어 주기 0.13, 내레이션 동안은 엔진이 더 낮춘다(DUCK).
+       클래식 한 토막(classical_*)·다른 녹음 음악(AudioFX.music)이 나오는 동안은 비켜 주고(dip), 끝 축하 음악(finale_*)에서 끈다.
+       BGK.to(이름): 변주로 바꾸기(시작 음악 전이면 기다렸다가 그 곡으로), BGK.dip(초, 배율): 큰 타격음 동안 잠깐 낮추기, BGK.off(): 끄기 */
+    const BGK = (() => {
+      const rd = () => { try { return !!T.reading(); } catch (e) { return false; } };
+      const VOL = () => (rd() ? 0.13 : 0.22);
+      const INTRO = /^intro_/, END_MUSIC = null;
+      let tok = 0, cur = '', want = 'el_unicorn_bgm', held = 0, started = false, ended = false;
+      const now = () => { try { return AudioFX.bgmNow && AudioFX.bgmNow(); } catch (e) { return null; } };
+      const on = n => { if (ended) return; cur = n; started = true; const t = ++tok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+        const go = () => { if (t !== tok || ended) return; let h = null; try { h = AudioFX.bgm(n, { vol: VOL(), fadeIn: 2.5, xfade: 2 }); } catch (e) { return; } if (h) { if (held > 0) h.dip(0); return; } if (++k < 12) setTimeout(go, 1000); }; go(); };
+      const dip = (sec, lv = 0) => { const h = now(); if (h) try { h.dip(sec, lv); } catch (e) { /* 무시 */ } };
+      const hold = () => { held++; dip(0); };
+      const release = () => { if (held > 0 && --held === 0) { const h = now(); if (h) try { h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } } };
+      const once = f => { let d = false; return () => { if (!d) { d = true; f(); } }; };
+      const off = (f = 2) => { ended = true; tok++; held = 0; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+      const start = () => { if (!started) on(want); };
+      const to = n => { want = n; if (started && n !== cur) on(n); };
+      try {
+        AudioFX.preloadMusic(['el_unicorn_bgm']); AudioFX.preloadSfx(['el_hoof_trot']);
+        const amb0 = AudioFX.ambient, mus0 = AudioFX.music;
+        AudioFX.ambient = function (name, o) {
+          const h = amb0.apply(this, arguments);
+          try {
+            if (h && INTRO.test(name)) { const s0 = h.stop; h.stop = function () { start(); return s0.apply(this, arguments); }; }
+            else if (h && /^finale_/.test(name)) off(1.5);
+            else if (h && /^classical_/.test(name)) { hold(); const r = once(release); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; setTimeout(r, ((o && o.dur) || 18) * 1000); }
+          } catch (e) { /* 무시 */ }
+          return h;
+        };
+        AudioFX.music = function (name) {
+          const h = mus0.apply(this, arguments);
+          try { if (h) { if (END_MUSIC && END_MUSIC.test(name)) off(1.5); else { hold(); const r = once(release); h.done.then(r, r); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; } } } catch (e) { /* 무시 */ }
+          return h;
+        };
+      } catch (e) { /* 소리 없이도 진행 */ }
+      setTimeout(start, 16000); // 시작 음악을 못 불러왔어도 곧 깔린다
+      const fx = (n, v, alt) => { try { if (rd()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; }; // 새 효과음(못 불러왔으면 alt)
+      return { to, dip, off, start, fx, main: 'el_unicorn_bgm' };
+    })();
     if (R && typeof R === 'object') R.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
-    if (T.reading()) return T.readPlay.call(RW, R).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+    if (T.reading()) return T.readPlay.call(RW, R).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } BGK.off(2); });
 
     /* ===== 1. 설렘 (배움 놀이: 꽃 선물 색 고르기 — 첫 조작) — 멀리서 넓게 ===== */
     const ANS = Object.keys(FLOWER)[Math.floor(Math.random() * 7)];   // 오늘 유니콘에게 줄 꽃 색(7색 중 하나)
@@ -913,6 +954,7 @@
        "누가 왔을까요?" 뒤에 다현이가 옆모습으로 돌아서며 만남 컷. 유니콘은 덤불이 뒷다리를 가리게(z: 덤불 아래) 둘 사이를 띄워 선다 */
     uni.look('stand', 'left'); uni.place(X(930, 760), FL); T.world.insertBefore(uni.pos, cbush.pos);   // 덤불 바로 뒤(뿔 끝만 보임)에서 시작
     if (P) follow(545, 900);   // 세로: 덤불 왼쪽으로 나온 유니콘이 화면 안에
+    BGK.fx('el_hoof_trot', .5); // 유니콘 걸음 따각(2026-11-21)
     await uni.move(X(760, 640), FL, 1400, 'ease-in-out'); glow(uni, 1800);
     await say(S.L30);
     kid.look('walk', 'right'); kid.hop(10, 380); sfx('swish', .45);   // 휙 돌아선다(하프는 다음 장면 만남에)
@@ -977,7 +1019,7 @@
     await say(S.H2);
     kid.look('wave'); kid.hop(12, 360);
     await sleep(1500);
-    try { await finaleWait(); AudioFX.stopAmbient(); } catch (e) { /* */ }
+    try { await finaleWait(); AudioFX.stopAmbient(); } catch (e) { /* */ } BGK.off(1.5);
 
     /* ===== 12. 잠자리 (2026-11-01): 누르기 없음. 창밖 언덕에서 유니콘이 지켜보고, 뿔이 반짝·별 하나가 켜진다 ===== */
     await T.sceneCard('', () => bed.open());

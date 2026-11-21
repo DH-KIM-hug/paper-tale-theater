@@ -237,12 +237,14 @@
   }
   async function run(T) {
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
+    let afterIntro = null; // 시작 음악이 끝나면 한 번 — 배경 음악 켜기 (아래 ElevenLabs 배경 음악에서 채운다)
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } };
       const go = (delay = 0) => {
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_cozy', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_cozy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
+        setTimeout(() => { try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
@@ -259,10 +261,29 @@
     /* 맨 끝 축하 음악(2026-10-31 사용자 지시): 전래동화 끝 음악 finale_korean(9.5초, sounds/CREDITS.md). 내레이션이 읽히는 동안은 엔진이 자동으로 낮춘다(ambient 덕킹).
        끝 화면 전에 곡 끝(페이드)까지 기다린다. 읽어 주기도 같은 곡(화면을 꺼도 끝까지 재생) */
     let finaleEnd = 0;
-    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_korean', o)) setTimeout(() => { try { AudioFX.ambient('finale_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const finaleMusic = () => { try { elOff(1.5); const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_korean', o)) setTimeout(() => { try { AudioFX.ambient('finale_korean', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       가야금·대금 산골 곡(el_magpie_bgm). 대금 한 소절·끝 음악(finale_korean) 동안은 비켜 주고, 종을 칠 때·활을 쏠 때 잠깐 낮춘다.
+       시작 음악이 끝나면(첫 장면 넘김 또는 11초 뒤) 깔려 끝까지 되풀이한다. 내레이션 동안은 엔진이 낮추고(DUCK), 읽어 주기는 더 작게(놀이 .22·읽어 주기 .13).
+       클래식 한 토막·대금 같은 다른 음악 동안은 비켜 주고(elDip), 크게 치는 소리 때 잠깐 낮추고(elHit), 끝 음악이 나오면 끈다(elOff) */
+    const EL_MAIN = 'el_magpie_bgm';
+    try { AudioFX.preloadMusic(['el_magpie_bgm']); AudioFX.preloadSfx([]); } catch (e) { /* 무시 */ }
+    const elVol = () => (T.reading() ? .13 : .22);
+    let elTok = 0, elName = '', elWant = EL_MAIN, elIntro = false, elDone = false, elDipTo = 0, elHeld = false;
+    const elNow = () => { try { return AudioFX.bgmNow && AudioFX.bgmNow(); } catch (e) { return null; } };
+    const elBgm = n => { try { elName = n; const tok = ++elTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번). 켜질 때 비켜 주는 중이면 그대로 낮춘다
+      const go = () => { if (tok !== elTok || elDone) return; let h = null; try { h = AudioFX.bgm(n, { vol: elVol(), fadeIn: 2.5, xfade: 2 }); } catch (e) { return; }
+        if (h) { const left = elDipTo - Date.now(); if (elHeld) h.dip(0); else if (left > 0) h.dip(left / 1000); return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const elDip = sec => { elDipTo = Math.max(elDipTo, Date.now() + sec * 1000); const h = elNow(); if (h && !elHeld) try { h.dip(sec); } catch (e) { /* 무시 */ } };
+    const elHit = (sec = 1.4) => { const h = elNow(); if (h && !elHeld && Date.now() > elDipTo) try { h.dip(sec, .3, .05); } catch (e) { /* 무시 */ } };
+    const elHold = on => { elHeld = !!on; const h = elNow(); if (!h) return; try { if (on) h.dip(0); else h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } };
+    const elOff = (f = 2) => { elDone = true; elTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elFor = n => { if (elDone) return; elWant = n; if (elIntro && n !== elName) elBgm(n); };
+    afterIntro = () => { if (elIntro || elDone) return; elIntro = true; elBgm(elWant); };
+    const elfx = (n, v, alt) => { try { if (T.reading()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
     /* 대금 한 소절(2026-10-29): 밤이 내리는 순간과 까치의 희생에만. 놀이 .3, 읽기 ×0.8. 기다리지 않는다 */
-    const daeg = () => { try { const o = { vol: T.reading() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const daeg = () => { try { elDip(7); const o = { vol: T.reading() ? .24 : .3, loop: false, fadeIn: .3, dur: 6.5 }; if (!AudioFX.ambient('daegeum', o)) setTimeout(() => { try { AudioFX.ambient('daegeum', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const SCENE_AMB = { mg_bg_path: 'birds_chirp_1', mg_bg_night: 'crickets_night_1', mg_bg_dawn: 'birds_chirp_2' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); bgImage(T, key); dress(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     const P = T.viewWidth() < 990;
@@ -459,7 +480,7 @@
               sfx('whoosh', .4);
               await Promise.all(mv.map(([b, h]) => b.move(h, 300, 340, 'ease-in')));
               sfx('bonk', .7); mv.forEach(([b, h]) => T.pop(h, 232, tr('꽁!')));
-              swingBell(bell); bellSfx(T, .9); T.shake(); setTimeout(() => T.pop(500, 165, tr('댕—'), '#1F2A56'), 250);
+              swingBell(bell); elHit(3); bellSfx(T, .9); T.shake(); setTimeout(() => T.pop(500, 165, tr('댕—'), '#1F2A56'), 250);
               mv.forEach(([b]) => b.move(b === dad ? backL : backR, 300, 520, 'ease-out'));
               mv.forEach(([b]) => b.wiggle(6, 520));
               await sleep(600);
@@ -506,7 +527,7 @@
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) {
       try { AudioFX.preloadSfx(['surprise_sting', 'rustle_1', 'pull_pop', 'bow_arrow_1', 'marimba_1', 'marimba_2', 'marimba_3', 'wing_flap_1', 'party_horn', 'zip_away', 'whistle_down']); } catch (e) { /* */ }
-      return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+      return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { elOff(2); try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
     }
 
     /* ===== 1. 산길 (자동) ===== */
@@ -549,7 +570,7 @@
     sch.look('draw', 'right'); sfx('creak', .5);
     for (let i = 0; i < 3; i++) await sch.wiggle(1.5, 400);
     await sleep(300);
-    sch.look('release', 'right'); sfx('bow_arrow_1', .8, () => sfx('whoosh', .8)); T.pop(sch.x + 70, FL - 250, tr('쉬익!'));
+    sch.look('release', 'right'); elHit(); sfx('bow_arrow_1', .8, () => sfx('whoosh', .8)); T.pop(sch.x + 70, FL - 250, tr('쉬익!'));
     put(T, arrow, sch.x + 70, FL - 150, { to: 'right' });
     await arrow.move(snake.x - 60, snake.y - 70, 420, 'linear');
     sfx('thud', .6); T.pop(arrow.x, arrow.y - 40, tr('탁!'));
@@ -719,7 +740,7 @@
       sfx('whoosh', .4);
       await Promise.all(mv.map(([b, h]) => b.move(h, 300, 340, 'ease-in')));
       sfx('bonk', .7); mv.forEach(([b, h]) => T.pop(h, 232, tr('꽁!')));
-      swingBell(bell); bellSfx(T, .9); T.shake(); setTimeout(() => T.pop(500, 165, tr('댕—'), '#1F2A56'), 250);
+      swingBell(bell); elHit(3); bellSfx(T, .9); T.shake(); setTimeout(() => T.pop(500, 165, tr('댕—'), '#1F2A56'), 250);
       const back = Promise.all(mv.map(([b, , bk]) => b.move(bk, 300, 520, 'ease-out')));
       mv.forEach(([b]) => b.wiggle(6, 520));
       await sleep(600); await say(S['L' + (35 + k)]); await back;
@@ -814,7 +835,7 @@
     await say(S.L55);
     await say(S.L56);
     await finaleWait();
-    try { AudioFX.stopAmbient(.5); } catch (e) { /* */ }
+    elOff(2); try { AudioFX.stopAmbient(.5); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return '은혜를 잊지 않고 갚아요.';
   }

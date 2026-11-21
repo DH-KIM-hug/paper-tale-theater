@@ -375,6 +375,47 @@
     };
 
     /* ===== 읽어 주기 (docs/READ_MODE.md §10): 놀이판 연출 함수를 동사 이름으로 묶은 맵. 놀이판 흐름은 아래 그대로 ===== */
+    /* ---------- 배경 음악 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       본 곡(el_snow_white_bgm)은 시작 음악이 끝나면(또는 첫 장면이 바뀌면) 깔려 끝까지 되풀이한다. 놀이 0.26·읽어 주기 0.15, 내레이션 동안은 엔진이 더 낮춘다(DUCK).
+       클래식 한 토막(classical_*)·다른 녹음 음악(AudioFX.music)이 나오는 동안은 비켜 주고(dip), 끝 축하 음악(finale_*)에서 끈다.
+       BGK.to(이름): 변주로 바꾸기(시작 음악 전이면 기다렸다가 그 곡으로), BGK.dip(초, 배율): 큰 타격음 동안 잠깐 낮추기, BGK.off(): 끄기 */
+    const BGK = (() => {
+      const rd = () => { try { return !!T.reading(); } catch (e) { return false; } };
+      const VOL = () => (rd() ? 0.15 : 0.26);
+      const INTRO = /^intro_/, END_MUSIC = null;
+      let tok = 0, cur = '', want = 'el_snow_white_bgm', held = 0, started = false, ended = false;
+      const now = () => { try { return AudioFX.bgmNow && AudioFX.bgmNow(); } catch (e) { return null; } };
+      const on = n => { if (ended) return; cur = n; started = true; const t = ++tok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+        const go = () => { if (t !== tok || ended) return; let h = null; try { h = AudioFX.bgm(n, { vol: VOL(), fadeIn: 2.5, xfade: 2 }); } catch (e) { return; } if (h) { if (held > 0) h.dip(0); return; } if (++k < 12) setTimeout(go, 1000); }; go(); };
+      const dip = (sec, lv = 0) => { const h = now(); if (h) try { h.dip(sec, lv); } catch (e) { /* 무시 */ } };
+      const hold = () => { held++; dip(0); };
+      const release = () => { if (held > 0 && --held === 0) { const h = now(); if (h) try { h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } } };
+      const once = f => { let d = false; return () => { if (!d) { d = true; f(); } }; };
+      const off = (f = 2) => { ended = true; tok++; held = 0; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+      const start = () => { if (!started) on(want); };
+      const to = n => { want = n; if (started && n !== cur) on(n); };
+      try {
+        AudioFX.preloadMusic(['el_snow_white_bgm']); AudioFX.preloadSfx(['el_mirror_magic', 'el_carrot_crunch']);
+        const amb0 = AudioFX.ambient, mus0 = AudioFX.music;
+        AudioFX.ambient = function (name, o) {
+          const h = amb0.apply(this, arguments);
+          try {
+            if (h && INTRO.test(name)) { const s0 = h.stop; h.stop = function () { start(); return s0.apply(this, arguments); }; }
+            else if (h && /^finale_/.test(name)) off(1.5);
+            else if (h && /^classical_/.test(name)) { hold(); const r = once(release); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; setTimeout(r, ((o && o.dur) || 18) * 1000); }
+          } catch (e) { /* 무시 */ }
+          return h;
+        };
+        AudioFX.music = function (name) {
+          const h = mus0.apply(this, arguments);
+          try { if (h) { if (END_MUSIC && END_MUSIC.test(name)) off(1.5); else { hold(); const r = once(release); h.done.then(r, r); const s0 = h.stop; h.stop = function () { r(); return s0.apply(this, arguments); }; } } } catch (e) { /* 무시 */ }
+          return h;
+        };
+      } catch (e) { /* 소리 없이도 진행 */ }
+      setTimeout(start, 16000); // 시작 음악을 못 불러왔어도 곧 깔린다
+      const fx = (n, v, alt) => { try { if (rd()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; }; // 새 효과음(못 불러왔으면 alt)
+      return { to, dip, off, start, fx, main: 'el_snow_white_bgm' };
+    })();
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) {
       const inst = () => T.readInstant();
@@ -640,7 +681,7 @@
           else if (a === 'give') {
             return (async () => {
               apple.setScale(.5); await apple.move(WX + 6, SILL - 8, 800);
-              sfx(T, 'pop'); await sleep(400); apple.look('bitten');
+              sfx(T, 'pop'); await sleep(400); apple.look('bitten'); if (!T.readInstant()) BGK.fx('el_carrot_crunch', .8);
             })();
           }
           return null;
@@ -685,7 +726,7 @@
           if (w === 'snow') glow(snow, 1200); else if (w === 'prince') glow(prince, 1000); else if (w === 'bigbed') glow(bigBed, 1200);
         },
         sparkle: () => {
-          if (R.set === 'queen_room') { sfx(T, 'sparkle'); mirrorShine(); } else if (R.set === 'hill') wake();
+          if (R.set === 'queen_room') { BGK.fx('el_mirror_magic', .8, () => sfx(T, 'sparkle')); mirrorShine(); } else if (R.set === 'hill') wake();
           else cue('ding_glock', .7) || sfx(T, 'sparkle');
         },
         shake: () => { T.shake(); if (R.set === 'queen_room') chandJolt(); },
@@ -701,7 +742,7 @@
         pop: s => { const m = String(s).split(','); T.pop(+m[0], +m[1], tr(m.slice(2).join(','))); },
       };
       if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
-      READ_ACTS.finale = () => { finaleMusic(); return null; }; return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+      READ_ACTS.finale = () => { finaleMusic(); return null; }; return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } BGK.off(2); });
     }
 
     /* ===== 1. 거울 앞의 왕비 ===== */
@@ -715,7 +756,7 @@
     await say('옛날 어느 나라에 눈처럼 하얀 얼굴의 공주가 살았어요. 이름은 백설공주였어요.');
     await Promise.all([say('왕비에게는 무엇이든 대답하는 신기한 거울이 있었어요.'), fadeOut(T, snow, 600)]);
     await say('거울아, 거울아, 이 나라에서 누가 제일 예쁘니?');
-    sfx(T, 'sparkle'); mf.show(); mirrorShine();
+    BGK.fx('el_mirror_magic', .8, () => sfx(T, 'sparkle')); mf.show(); mirrorShine(); // 거울이 깨어나는 반짝(2026-11-21)
     await say('왕비님도 예쁘지만, 백설공주가 더 예뻐요.');
     queen.look('fist'); T.shake(); cue('surprise_sting', .7) || sfx(T, 'thud'); queen.hop(16, 320); chandJolt();
     await say('왕비는 샘이 나서 얼굴이 빨개졌어요.');
@@ -997,7 +1038,7 @@
     /* 다시 거울: 짧게 */
     await T.sceneCard(tr('다시 거울'), () => { mf = mirrorRoom(); queen.look('mirror'); }, mirror.pos);
     await say('거울아, 거울아, 이 나라에서 누가 제일 예쁘니?');
-    sfx(T, 'sparkle'); mf.show(); mirrorShine();
+    BGK.fx('el_mirror_magic', .8, () => sfx(T, 'sparkle')); mf.show(); mirrorShine(); // 거울이 깨어나는 반짝(2026-11-21)
     await say('숲속 일곱 난쟁이 집의 백설공주가 제일 예뻐요.');
     queen.look('fist'); T.shake(); cue('surprise_sting', .7) || sfx(T, 'thud'); queen.hop(14, 300); chandJolt();
     await sleep(500);
@@ -1028,7 +1069,7 @@
     apple.setScale(.5); await apple.move(WX + 6, SILL - 8, 800);
     sfx(T, 'pop');
     await sleep(400);
-    apple.look('bitten'); sfx(T, 'chomp', () => popSfx(T)); T.pop(WX, SILL - 60, tr('아삭!'));
+    apple.look('bitten'); BGK.fx('el_carrot_crunch', .9, () => sfx(T, 'chomp', () => popSfx(T))); // 사과 아삭(2026-11-21) T.pop(WX, SILL - 60, tr('아삭!'));
     const fall = (async () => {
       await sleep(1600);
       hide(apple);
@@ -1181,7 +1222,7 @@
     finaleMusic();
     T.confetti();
     await Promise.all([snow.hop(20, 460), crewE.hopAll(20, 460), prince.hop(14, 460)]);
-    await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* */ }
+    await finaleWait(); try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } BGK.off(1.5);
     T.finale();
     await sleep(1500);
     return '낯선 사람이 주는 것은 꼭 어른에게 먼저 물어봐요.';

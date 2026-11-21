@@ -343,13 +343,32 @@
   }
 
   async function run(T) {
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       바닷속 곡(el_little_mermaid_bgm: 하프·첼레스타·비브라폰·낮은 현)이 시작 음악(intro_magic) 뒤에 깔려 끝까지 되풀이한다. 클래식 한 토막 동안 비켜 주고, 폭풍에서 낮추고, 끝 음악에서 끈다.
+       내레이션 동안 엔진이 낮추고(DUCK), 읽어 주기는 더 작게. 다른 음악(클래식·대금·노래) 동안은 dip 으로 비켜 주고, 끝 음악에서 끈다 */
+    const bgmRd = () => { try { return !!T.reading(); } catch (e) { return false; } };
+    try { AudioFX.preloadMusic(['el_little_mermaid_bgm']); AudioFX.preloadSfx(['el_tiger_sneak']); } catch (e) { /* 무시 */ }
+    const BGM_VOL = () => (bgmRd() ? 0.14 : 0.24);
+    let bgmTok = 0, bgmName = '', bgmDone = false, introDone = false;
+    const bgm = (n = 'el_little_mermaid_bgm') => { if (bgmDone) return; try { bgmName = n; const tok = ++bgmTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+      const go = () => { if (tok !== bgmTok) return; try { if (AudioFX.bgm(n, { vol: BGM_VOL(), fadeIn: 2.5, xfade: 2 })) return; } catch (e) { return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const bgmFor = n => { if (!introDone || bgmDone) return; if (n !== bgmName) bgm(n); }; // 시작 음악 전에는 바꾸지 않는다(끝나면 본 곡부터)
+    const bgmDip = (sec, level = 0) => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.dip(sec, level); } catch (e) { /* 무시 */ } };
+    const bgmUp = () => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.setVol(h.vol(), 1.5); } catch (e) { /* 무시 */ } };
+    const bgmOff = (f = 2) => { bgmDone = true; bgmTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elfx = (n, v, alt) => { try { if (bgmRd()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
+    const afterIntro = () => { if (introDone) return; introDone = true; bgm(); }; // 시작 음악이 끝나면 한 번
+    { /* 엔진 가락(자장가·따라 연주) 동안 배경 음악은 비켜 준다 */
+      ['playMelody', 'holdMelody', 'followMelody'].forEach(k => { const f0 = T[k]; if (typeof f0 !== 'function' || f0.__bgm) return; const f = function (...a) { bgmDip(0); const p = f0.apply(this, a); Promise.resolve(p).then(bgmUp, bgmUp); return p; }; f.__bgm = 1; T[k] = f; });
+    }
     /* 시작 음악 (2026-10-28): 첫 장면 시작에 12초 깔고, 첫 장면 전환에서 끈다. 읽어 주기는 음량 .25 */
     const intro = (() => {
       let h = null, on = true;
-      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } };
+      const stop = () => { on = false; try { h && h.stop(.8); h = null; } catch (e) { /* 무시 */ } try { afterIntro(); } catch (e) { /* 무시 */ } }; // 시작 음악이 끝나면 배경 음악
       const go = (delay = 0) => {
         const f = () => { try { if (!on) return; const o = { vol: T.reading() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }; h = AudioFX.ambient('intro_magic', o); if (!h) setTimeout(() => { try { if (on) h = AudioFX.ambient('intro_magic', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
         if (delay) setTimeout(f, delay); else f();
+        setTimeout(() => { try { afterIntro(); } catch (e) { /* 무시 */ } }, delay + 11000); // 시작 음악이 끝날 무렵 배경 음악
       };
       try { const sc0 = T.sceneCard; if (sc0) T.sceneCard = function (...a) { stop(); return sc0.apply(this, a); }; } catch (e) { /* 무시 */ }
       return { go, stop };
@@ -360,14 +379,14 @@
     const amb = (name, v = .28, d = 4) => { try { const rd = T.reading(); AudioFX.ambient(name, { vol: rd ? Math.min(v, .18) : v, dur: rd ? Math.min(d, 4) : d }); } catch (e) { /* 소리 없이 */ } };
     /* 맨 끝 축하 음악(2026-10-31 사용자 지시): Pixabay 녹음 finale_fairy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹). 곡 끝까지 기다렸다가 끝 처리 */
     let finaleEnd = 0;
-    const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleMusic = () => { try { bgmOff(1.5); const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_fairy', o)) setTimeout(() => { try { AudioFX.ambient('finale_fairy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const finaleWait = () => (finaleEnd ? new Promise(r => setTimeout(r, Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600)))) : Promise.resolve());
     const cue = (name, v) => { try { return AudioFX.sfx(name, T.reading() ? v * .8 : v); } catch (e) { return false; } };
     const SCENE_AMB = { night_sea: 'waves', beach: 'seagull_1', garden: 'birds_chirp_2', deck: 'waves', dawn_sea: 'waves', morning_sea: 'seagull_2' };
     const scene = key => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } T.clear(); T._cover = null; bgImage(T, key); camSnap(500, 280, 1); if (SCENE_AMB[key]) amb(SCENE_AMB[key]); };
     try { AudioFX.preloadSfx(['intro_magic', 'finale_fairy', 'step_wood', 'step_grass', 'bubbles', 'sparkle', 'gulp', 'thud', 'splash', 'splash_big', 'whoosh', 'swish', 'tada', 'bell', 'doop', 'giggle_xylo', 'slide_up', 'blow_long', 'paper_down', 'pow', 'boom', 'waves', 'seagull_1', 'seagull_2', 'birds_chirp_2', 'thunder', 'whistle_down', 'ding_glock', 'pot_boil', 'shimmer', 'question', 'chime_up', 'party_horn']); } catch (e) { /* */ }
     /* 클래식 한 토막(2026-10-31 사용자 지시): sounds/sfx/classical_<곡>.mp3 18초, CREDITS.md. 내레이션 동안 엔진이 자동으로 낮춘다(ambient 덕킹). 장면이 바뀌면 이 동화의 배경 소리 정리가 같이 끈다 */
-    const classical = n => { try { const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
+    const classical = n => { try { bgmDip(18); const o = { vol: T.reading() ? .2 : .27, loop: false, fadeIn: .6, dur: 18 }; if (!AudioFX.ambient('classical_' + n, o)) setTimeout(() => { try { AudioFX.ambient('classical_' + n, o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     try { AudioFX.preloadSfx(['classical_aquarium', 'classical_clair_de_lune_piano']); } catch (e) { /* 무시 */ }
     const P = T.viewWidth() < 990;   /* 세로 화면: 가운데 일부만 보인다 → 카메라가 따라간다 */
     const X = (l, p) => (P ? p : l);
@@ -426,6 +445,8 @@
     const bob = (a, px, ms, n = Infinity) => a.pos.animate([{ translate: '0 0' }, { translate: `0 ${px}px` }, { translate: '0 0' }], { duration: ms, iterations: n, easing: 'ease-in-out' });
 
     /* ===== 읽어 주기 (docs/READ_MODE.md): 조작·배움 놀이 없이 같은 그림으로 읽어 준다. 놀이판 흐름은 아래 그대로 ===== */
+    /* 폭풍 장면은 배경 음악을 낮춰 천둥·파도 소리가 들리게, 다음 장면에서 되돌린다 */
+    let stormOn = false; const stormBgm = on => { if (on === stormOn) return; stormOn = on; if (on) bgmDip(0, .3); else bgmUp(); };
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) {
       let sn = 0;                       /* 몇 번째 장면(set 을 부른 횟수). 같은 배경이 두 번 나와도 구분 */
@@ -666,13 +687,15 @@
         }
       };
       const READ_ACTS = { ...R, set: R.set };
+      { let nsN = 0; const s0 = READ_ACTS.set; READ_ACTS.set = function (k, ...a) { try { if (k === 'night_sea') nsN++; stormBgm(k === 'night_sea' && nsN > 1); } catch (e) { /* 무시 */ } return s0.call(this, k, ...a); }; } // 두 번째 밤바다 = 폭풍
       Object.entries(NAMES).forEach(([nm, a]) => { READ_ACTS[nm] = AV(nm, a); });
       READ_ACTS.snd = (n, v = .7, d = 0) => { try { +d > 0 ? setTimeout(() => cue(n, +v), +d) : cue(n, +v); } catch (e) { /* */ } };
       READ_ACTS.amb = (n, v = .2, d = 4) => { try { AudioFX.ambient(n, { vol: +v, dur: Math.min(+d, 5) }); } catch (e) { /* */ } };
       if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
-      return T.readPlay(READ_ACTS).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
+      return T.readPlay(READ_ACTS).finally(() => bgmOff(3)).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(); } catch (e) { /* */ } });
     }
 
+    { const STORM = tr('폭풍'); const sc1 = T.sceneCard; T.sceneCard = function (label, ...a) { try { stormBgm(label === STORM); } catch (e) { /* 무시 */ } return sc1.call(this, label, ...a); }; }
     /* ===== 1. 바다 밑 궁전 (배움 놀이: 뜨고 가라앉기) ===== */
     scene('palace');
     palaceBack();
@@ -862,6 +885,7 @@
     put(T, mer, X(-150, 330), 520, { look: 'swim', to: 'right' }); sfx(T, 'bubbles'); front(L.coralB);
     await Promise.all([say('인어공주는 소용돌이 너머 바다 마녀를 찾아갔어요.'), mer.move(X(290, 490), 520, 1800)]);
     mer.look('worry', 'right');
+    elfx('el_tiger_sneak', .5); // 바다 마녀: 살금살금 악당 금관(2026-11-21)
     witch.look('hand');
     await say('다리를 갖고 싶다고? 좋아. 대신 네 고운 목소리를 다오.');
     witch.look('stand');

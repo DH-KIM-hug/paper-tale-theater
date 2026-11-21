@@ -212,20 +212,38 @@
     const sting = n => { try { if (AudioFX.hasSting && AudioFX.hasSting(n)) AudioFX.sting(n); } catch (e) { /* */ } };
     const animal = (n, v = .5, d = 0) => setTimeout(() => { try { AudioFX.animal(n, rd() ? v * .8 : v); } catch (e) { /* */ } }, d);
     const amb = (name, v = .22, d = 6) => { try { AudioFX.ambient(name, { vol: rd() ? Math.min(v, .18) : v, dur: rd() ? Math.min(d, 4) : d, fadeIn: .6 }); } catch (e) { /* */ } };
+    let afterIntro = null; // 시작 음악이 끝나면 한 번 — 배경 음악 켜기 (아래에서 채운다)
     const intro = () => {   // 여는 음악: 가야금 국악풍 12초(대사 밑으로 저절로 낮아짐). 장면이 바뀌면 scene() 의 stopAmbient 가 끈다
       const go = () => { try { return AudioFX.ambient('intro_korean', { vol: rd() ? .25 : .3, loop: false, fadeIn: .5, dur: 12 }); } catch (e) { return true; } };
       if (!go()) setTimeout(go, 900);
+      setTimeout(() => { try { afterIntro && afterIntro(); } catch (e) { /* 무시 */ } }, 11000); // 시작 음악이 끝날 무렵 배경 음악
     };
     /* 맨 끝 축하 음악(2026-10-30 사용자 지시): 팥죽과 같은 픽사베이 녹음 finale_happy(9.5초, sounds/CREDITS.md). 내레이션 동안은 엔진이 자동으로 낮춘다(ambient 덕킹).
        효과음 팡파르(sting win)·파티 나팔 대신. 끝 화면 전에 곡 끝(페이드)까지 기다렸다가 남은 소리를 0.5초에 걸쳐 끈다 */
     let finaleEnd = 0;
-    const finaleMusic = () => { try { const o = { vol: rd() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
+    const finaleMusic = () => { try { bgmOff(1.5); const o = { vol: rd() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* */ } }, 900); } catch (e) { /* */ } };
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
-    const daegeum = () => { try { AudioFX.ambient('daegeum', { vol: rd() ? .22 : .28, loop: false, fadeIn: .3, dur: 6.5 }); } catch (e) { /* */ } };   // 11장 바닷가 한숨(조용한 한 순간)
+    const daegeum = () => { try { bgmDip(7); AudioFX.ambient('daegeum', { vol: rd() ? .22 : .28, loop: false, fadeIn: .3, dur: 6.5 }); } catch (e) { /* */ } };   // 11장 바닷가 한숨(조용한 한 순간)
     AudioFX.preloadSfx(['intro_korean', 'daegeum', 'bubbles', 'waves', 'birds_chirp_1', 'birds_chirp_2', 'question', 'slide_up', 'slide_down', 'toot_kazoo', 'cork', 'pop_out', 'peek_pop', 'ding_glock', 'xylo_up', 'xylo_down',
       'broom_1', 'swish', 'paper_up', 'paper_down', 'seagull_1', 'seagull_2', 'tiptoe_pizz', 'knock', 'doop', 'boing', 'boing_steps', 'squeak', 'sparkle', 'spring', 'harp_gliss', 'splash', 'splash_big', 'whoosh',
       'door_heavy_1', 'door_heavy_2', 'marimba_1', 'marimba_3', 'marimba_5', 'tada', 'drum', 'giggle_xylo', 'whistle_down', 'zip_away', 'shimmer', 'chime_up', 'party_horn', 'surprise_sting', 'water_drip', 'magic_wand', 'pop', 'ding', 'finale_happy']);
 
+    /* ---------- 배경 음악·새 효과음 (2026-11-21 ElevenLabs, sounds/CREDITS.md 'ElevenLabs') ----------
+       배경 음악은 시작 음악(12초) 뒤에 깔려 끝까지 되풀이한다(장면이 바뀌어도 이어짐). 내레이션 동안 엔진이 낮추고(DUCK), 읽어 주기는 더 작게.
+       가야금·해금·장구의 밝은 국악 곡(el_byeoljubu_bgm), 용왕 앞에서 간을 내놓으라는 대목과 토끼의 꾀(throne·throneClose)는 거문고·장구 조심 변주(el_byeoljubu_palace).
+       장면 카드 이름은 영어 모드에서 바뀌므로 놀이·읽어 주기 모두 lay 키로 고른다. 대금 한숨 동안 dip, 끝 축하 음악 전에 끈다. */
+    try { AudioFX.preloadMusic(['el_byeoljubu_bgm', 'el_byeoljubu_palace']); AudioFX.preloadSfx([]); } catch (e) { /* 무시 */ }
+    const BGM_VOL = () => (T.reading() ? 0.15 : 0.26);
+    let bgmTok = 0, bgmName = '';
+    const bgm = (n = 'el_byeoljubu_bgm') => { try { bgmName = n; const tok = ++bgmTok; let k = 0; // 아직 못 불러왔으면 1초마다 다시(최대 12번)
+      const go = () => { if (tok !== bgmTok) return; try { if (AudioFX.bgm(n, { vol: BGM_VOL(), fadeIn: 2.5, xfade: 2 })) return; } catch (e) { return; } if (++k < 12) setTimeout(go, 1000); }; go(); } catch (e) { /* 무시 */ } };
+    const bgmDip = (sec, level = 0) => { try { const h = AudioFX.bgmNow && AudioFX.bgmNow(); if (h) h.dip(sec, level); } catch (e) { /* 무시 */ } };
+    const bgmOff = (f = 2) => { bgmTok++; try { AudioFX.stopBgm(f); } catch (e) { /* 무시 */ } };
+    const elfx = (n, v, alt) => { try { if (T.reading()) v *= .8; if (AudioFX.sfx(n, v)) return true; } catch (e) { /* 무시 */ } if (alt) try { alt(); } catch (e) { /* 무시 */ } return false; };
+    let introDone = false; afterIntro = () => { if (introDone) return; introDone = true; bgm(); };
+    const bgmFor = n => { if (!introDone) return; if (n !== bgmName) bgm(n); }; // 시작 음악 전에는 바꾸지 않는다(끝나면 본 곡부터)
+    const PALACE_K = ['throne', 'throneClose'];
+    const bgmLay = k => { try { if (k !== 'chamber' && afterIntro) afterIntro(); bgmFor(PALACE_K.includes(k) ? 'el_byeoljubu_palace' : 'el_byeoljubu_bgm'); } catch (e) { /* 무시 */ } }; // 첫 장면(침전)을 떠나면 시작 음악도 꺼지므로 바로 배경 음악
     /* ---------- 화면(view): lx = 화면 가운데에 올 월드 x, nw = 세로 화면에 보여야 할 월드 폭, vy = 아래로 내려간 양(바다 속) ---------- */
     let V = { lx: 500, nw: 1000, vy: 0 }, bgKey = null;
     /* nw = 세로 화면에 꼭 보여야 할 월드 폭. 보이는 폭(폰 세로 약 430, 아이패드 세로 약 640)에 맞춰 줄인다(최대 1) */
@@ -466,7 +484,7 @@
     LAY.meetClose = () => { LAY.meet(); T.camSnap(P ? 500 : 520, 300, P ? 1 : 1.12); };
     LAY.throneClose = () => { LAY.throne(); jara.look('stand', 'left'); T.camSnap(P ? 500 : 560, 300, P ? 1 : 1.1); };
     let curLay = null;
-    const lay = k => { curLay = k; LAY[k](); };
+    const lay = k => { curLay = k; LAY[k](); bgmLay(k); };
     /* 세로 화면에서 말하는 쪽으로 화면 가운데를 옮긴다(가로는 그대로) */
     const look = (lx, ms = 700) => (P ? view({ lx }, ms) : Promise.resolve());
 
@@ -704,7 +722,7 @@
         look(who, pose, dir) { const a = { rabbit, jara, king, octo, gull, squirrel, boar, sage }[who]; if (a) a.look(pose, dir); },
         view(lx, ms) { return view({ lx: +lx }, +ms || 800); },
       };
-      return T.readPlay(R).then(async r => { await finaleWait(); return r; }).finally(() => { try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } });
+      return T.readPlay(R).then(async r => { await finaleWait(); return r; }).finally(() => { bgmOff(2); try { AudioFX.stopAmbient(.5); } catch (e) { /* */ } });
     }
 
     /* ===== 1. 아픈 용왕님 — 용궁 침전, 가까이 눈높이 ===== */
@@ -954,7 +972,7 @@
     await B.cheer();
     await say(S.L58);
     await sleep(1500);
-    await finaleWait();
+    await finaleWait(); bgmOff(2);
     try { AudioFX.stopAmbient(.5); } catch (e) { /* */ }
     T.finale(); await sleep(1500);
     return MORAL;
