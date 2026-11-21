@@ -702,7 +702,7 @@
     gateCb = onPass;
     $('#gateTitle').textContent = L('어른이 확인해 주세요', 'Grown-ups, please check');
     $('#gateHow').textContent = L(...(GATE_WHY[why] || GATE_WHY.open));
-    $('#gateHint').textContent = L('정답을 1.5초 동안 꾹 눌러요.', 'Press and hold the right answer for 1.5 seconds.');
+    $('#gateHint').textContent = L('정답을 1.5초 동안 꾹 눌러 주세요.', 'Press and hold the right answer for 1.5 seconds.');
     $('#gateClose').textContent = L('닫기', 'Close');
     newGate();
     flowEl.classList.add('under');          // 잠김 쪽지 위에 뜰 때 뒤 쪽지는 숨긴다(쪽지 두 장이 겹쳐 보이지 않게)
@@ -721,7 +721,7 @@
     paper('down');
     gateLockUntil = Date.now() + GATE_LOCK;
     gateSheet.classList.add('fail');                         // 틀림: 쪽지가 40ms 에 6px 눌렸다 올라오고 닫힌다(흔들기 없음)
-    setTimeout(() => { gateSheet.classList.remove('fail'); hideModal(gateEl, gateSheet, () => { gateOff(); sheetClosed(); toast(L('틀렸어요. 30초 뒤에 다시 해 주세요.', 'Not quite. Please try again in 30 seconds.')); }); }, 100);
+    setTimeout(() => { gateSheet.classList.remove('fail'); hideModal(gateEl, gateSheet, () => { gateOff(); sheetClosed(); toast(L('틀렸습니다. 30초 뒤에 다시 해 주세요.', 'Not quite. Please try again in 30 seconds.')); }); }, 100);
   }
   function closeGate() { gateCb = null; hideModal(gateEl, gateSheet, () => gateOff(sheetClosed)); }
   $('#gateClose').addEventListener('click', closeGate);
@@ -815,14 +815,14 @@
       .map(c => `<button type="button" class="chip${c.key ? '' : ' all'}" data-row="${row}" data-key="${c.key}" aria-label="${c.label}">${icon(c.ic)}<span class="lb" aria-hidden="true">${letters(c.label)}</span></button>`).join('') + '</div></section>';
 
   function passHTML() {
-    const s = Entitlements.state(), names = ids => ids.length ? ids.map(title).join(', ') : L('없어요', 'None');
+    const s = Entitlements.state(), names = ids => ids.length ? ids.map(title).join(', ') : L('없음', 'None');
     const wait = Entitlements.waitAvailable(), left = Entitlements.waitDaysLeft(), stars = Entitlements.starBalance(), need = Entitlements.STAR_NEED;
     const opened = [...new Set([...s.starUnlocked, ...s.waitUnlocked])];
-    const waitTxt = wait ? L(`지금 ${wait}편을 열 수 있어요.`, `You can open ${wait} now.`) : left ? L(`${left}일 뒤에 한 편을 열 수 있어요.`, `One more can be opened in ${left} days.`) : L('기다무를 모두 썼어요.', 'All waiting passes are used.');
+    const waitTxt = wait ? L(`지금 ${wait}편을 열 수 있습니다.`, `You can open ${wait} now.`) : left ? L(`${left}일 뒤에 한 편을 열 수 있습니다.`, `One more can be opened in ${left} days.`) : L('기다무를 모두 썼습니다.', 'All waiting passes are used.');
     return `<h3>${L('이용권', 'Access')}</h3>
       <dl class="g-dl">
-        <dt>${L('이번 주 무료', 'Free this week')}</dt><dd>${names(Entitlements.freeThisWeek())}<small>${L('월요일마다 바뀌어요.', 'Changes every Monday.')}</small></dd>
-        <dt>${L('열어 둔 동화', 'Opened tales')}</dt><dd>${Entitlements.state().owned ? L('모든 동화가 열려 있어요.', 'Every tale is open.') : names(opened)}</dd>
+        <dt>${L('이번 주 무료', 'Free this week')}</dt><dd>${names(Entitlements.freeThisWeek())}<small>${L('월요일마다 바뀝니다.', 'Changes every Monday.')}</small></dd>
+        <dt>${L('열어 둔 동화', 'Opened tales')}</dt><dd>${Entitlements.state().owned ? L('모든 동화가 열려 있습니다.', 'Every tale is open.') : names(opened)}</dd>
         <dt>${L('기다무', 'Waiting pass')}</dt><dd>${waitTxt}${wait ? `<button type="button" class="ticket alt" data-act="g-wait">${L('한 편 고르기', 'Pick a tale')}</button>` : ''}</dd>
         <dt>${L('별 조각', 'Star pieces')}</dt><dd>${Math.min(stars, 99)} / ${need}${stars >= need && Entitlements.lockedChoices().length ? `<button type="button" class="ticket alt" data-act="g-star">${L('한 편 고르기', 'Pick a tale')}</button>` : ''}</dd>
       </dl>
@@ -831,7 +831,7 @@
         ${s.owned ? '' : `<button type="button" class="ticket alt" data-act="g-buy">${L(`모든 동화 열기 ${Entitlements.PRICE}`, `Unlock all ${Entitlements.PRICE}`)}</button>`}
         <button type="button" class="ticket alt" data-act="g-restore">${L('구매 복원', 'Restore purchase')}</button>
       </div>
-      <p class="how">${L('고르기·결제·복원 앞에서는 어른 확인을 한 번 더 해요.', 'A grown-up check comes before picking, buying or restoring.')}</p>`;
+      <p class="how">${L('고르기·결제·복원 앞에서는 어른 확인을 한 번 더 합니다.', 'A grown-up check comes before picking, buying or restoring.')}</p>`;
   }
   /* ── 우리 아이 이름 2판(docs/NAME_SETUP_V2_PLAN.md §2·§5-2, 확정 사항): 앱 모드 + 서버가 켜져 있을 때만. 보호자 화면 글은 소리로 읽지 않는다(녹음 없음) ──
      화면 셋: 동화 목록(nm.view='list') → 동화 한 편(아이 한 명) / 구름 공장(아이 셋 + 강아지). 동화마다 이름 + 주인공 모습(여자아이/남자아이).
@@ -840,26 +840,26 @@
   const namesOn = () => { try { return isApp && typeof Names !== 'undefined' && Names.supported(); } catch (e) { return false; } };
   const nm = { q: null, loading: false, err: '', msg: '', view: 'list', form: null, ask: '', prevBusy: false, enOpen: false };
   const NM_ERR = {
-    offline: ['서버에 닿지 않아요. 인터넷을 확인하고 다시 해 주세요.', 'Cannot reach the server. Check your connection and try again.'],
-    not_owned: ['전체 이용권을 사면 쓸 수 있어요.', 'Available after buying full access.'],
-    no_credit: ['이 동화의 첫 설정을 이미 썼어요. 다시 바꾸려면 이용권이 필요해요.', 'This tale\'s first setup is used. Changing again needs a pass.'],
-    name_invalid: ['이름을 다시 확인해 주세요. 한글 1~4글자, 영어는 영문자만 써요.', 'Please check the names: 1–4 Korean letters; English letters only.'],
+    offline: ['서버에 닿지 않습니다. 인터넷을 확인하고 다시 해 주세요.', 'Cannot reach the server. Check your connection and try again.'],
+    not_owned: ['전체 이용권을 사면 쓸 수 있습니다.', 'Available after buying full access.'],
+    no_credit: ['이 동화의 첫 설정을 이미 썼습니다. 다시 바꾸려면 이용권이 필요합니다.', 'This tale\'s first setup is used. Changing again needs a pass.'],
+    name_invalid: ['이름을 다시 확인해 주세요. 한글 1~4글자, 영어는 영문자만 쓸 수 있습니다.', 'Please check the names: 1–4 Korean letters; English letters only.'],
     look_invalid: ['주인공 모습을 다시 골라 주세요.', 'Please choose the look again.'],
     name_banned: ['다른 이름을 적어 주세요.', 'Please choose a different name.'],
     name_same: ['아이마다 다른 이름을 적어 주세요.', 'Please use a different name for each one.'],
     empty: ['이름을 적거나 주인공 모습을 바꿔 주세요.', 'Enter a name or change the look.'],
     need_agree: ['아래 동의에 먼저 체크해 주세요.', 'Please tick the agreement first.'],
-    run_invalid: ['녹음 받을 시간(48시간)이 지났어요. 지원 이메일(hello@ddoystory.com)로 알려 주세요.', 'The 48-hour recording window has passed. Please email hello@ddoystory.com.'],
-    quota_exceeded: ['오늘은 더 만들 수 없어요. 내일 다시 해 주세요.', 'The daily limit is reached. Please try again tomorrow.'],
-    tts_failed: ['녹음을 만들지 못했어요. 잠시 뒤 \'이어 받기\'를 눌러 주세요.', 'Recording failed. Please tap Continue a little later.'],
-    busy: ['지금은 만들 수 없어요. 나중에 다시 눌러 주세요.', 'Not available right now. Please try again later.'],
-    save_failed: ['기기에 저장하지 못했어요. 저장 공간을 확인해 주세요.', 'Could not save on this device. Please check free space.'],
-    stopped: ['멈췄어요. \'이어 받기\'로 이어서 받아요.', 'Paused. Tap Continue to go on.'],
-    cancelled: ['결제가 끝나지 않았어요.', 'The purchase did not go through.'],
-    no_store: ['이 기기에서는 결제할 수 없어요.', 'Purchases are not available on this device.'],
-    receipt_pending: ['결제는 됐지만 서버에 아직 닿지 않았어요. 잠시 뒤 다시 열어 주세요.', 'Purchased, but the server has not confirmed yet. Please reopen in a moment.']
+    run_invalid: ['녹음 받을 시간(48시간)이 지났습니다. 지원 이메일(hello@ddoystory.com)로 알려 주세요.', 'The 48-hour recording window has passed. Please email hello@ddoystory.com.'],
+    quota_exceeded: ['오늘은 더 만들 수 없습니다. 내일 다시 해 주세요.', 'The daily limit is reached. Please try again tomorrow.'],
+    tts_failed: ['녹음을 만들지 못했습니다. 잠시 뒤 \'이어 받기\'를 눌러 주세요.', 'Recording failed. Please tap Continue a little later.'],
+    busy: ['지금은 만들 수 없습니다. 나중에 다시 눌러 주세요.', 'Not available right now. Please try again later.'],
+    save_failed: ['기기에 저장하지 못했습니다. 저장 공간을 확인해 주세요.', 'Could not save on this device. Please check free space.'],
+    stopped: ['멈췄습니다. \'이어 받기\'로 이어서 받으세요.', 'Paused. Tap Continue to go on.'],
+    cancelled: ['결제가 끝나지 않았습니다.', 'The purchase did not go through.'],
+    no_store: ['이 기기에서는 결제할 수 없습니다.', 'Purchases are not available on this device.'],
+    receipt_pending: ['결제는 됐지만 서버에 아직 닿지 않았습니다. 잠시 뒤 다시 열어 주세요.', 'Purchased, but the server has not confirmed yet. Please reopen in a moment.']
   };
-  const nmErr = e => L(...(NM_ERR[e] || ['잘 되지 않았어요. 다시 해 주세요.', 'Something went wrong. Please try again.']));
+  const nmErr = e => L(...(NM_ERR[e] || ['잘 되지 않았습니다. 다시 해 주세요.', 'Something went wrong. Please try again.']));
   const nmEsc = x => String(x == null ? '' : x).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const nmOrig = s => { const o = NameForm.ORIGINAL[s]; return { ko: o.ko, en: o.en }; };   // 이름 칸·'지금은'에는 맨 이름(다현), 부르는 꼴(다현이)은 쓰지 않는다
   const nmLookName = l => (l === 'b' ? L('남자아이', 'Boy') : L('여자아이', 'Girl'));
@@ -928,12 +928,12 @@
   }
   function nmListHTML(name) {
     const q = nm.q, owned = !!(q && q.owned && Entitlements.owned()), run = nmTicketRun();
-    let h = `<h3>${name}</h3><p class="how nm-lead">${L('동화마다 주인공의 이름과 모습을 우리 아이로 바꿔요. 바꾸고 싶은 동화를 눌러요.', 'Make each tale\'s hero your child — name and look. Tap a tale to change it.')}</p>`;
+    let h = `<h3>${name}</h3><p class="how nm-lead">${L('동화마다 주인공의 이름과 모습을 우리 아이로 바꿉니다. 바꾸고 싶은 동화를 눌러 주세요.', 'Make each tale\'s hero your child — name and look. Tap a tale to change it.')}</p>`;
     if (nm.loading && !q) return h + `<p class="how">${L('불러오는 중…', 'Loading…')}</p>`;
     if (nm.err && !q) return h + `<p class="how buy-msg">${nmErr(nm.err)}</p><div class="g-btns"><button type="button" class="ticket alt" data-act="nm-reload">${L('다시 불러오기', 'Reload')}</button></div>`;
     h += `<div class="nm-tales">` + Names.TALES.filter(t => TALES.some(x => x.id === t)).map(t => `<button type="button" class="nm-card" data-act="nm-open" data-tale="${t}"${owned ? '' : ' disabled aria-disabled="true"'}>
         <img src="assets/thumbs/${t}_tile.webp" alt="" draggable="false"><span class="nm-ct"><span class="nm-t">${nmEsc(title(t))}</span><span class="nm-s">${nmCardState(t)}</span></span>${nmIco.chev}</button>`).join('') + `</div>`;
-    if (!owned) return h + `<p class="how buy-msg">${L('전체 이용권을 사면 쓸 수 있어요.', 'Available after buying full access.')}</p>`;
+    if (!owned) return h + `<p class="how buy-msg">${L('전체 이용권을 사면 쓸 수 있습니다.', 'Available after buying full access.')}</p>`;
     h += nm.msg ? `<p class="how buy-msg" id="nmMsg">${nmEsc(nm.msg)}</p>` : '';
     const left = (q.firstLeft || []).length, used = (q.first || []).length, tk = +q.tickets || 0;
     let foot = '';
@@ -941,11 +941,11 @@
     else if (used || tk) foot = L(`다시 바꾸기 이용권 ${tk}장 · 한 장으로 네 편 모두`, `Change-again passes: ${tk} · one pass covers all four tales`);
     h += nmAskTicket();
     if (!run && (used || tk) && nm.ask !== 'ticket') h += `<div class="g-btns nm-again">${nmAgainBtn()}</div>`;
-    h += `<p class="nm-foot">${foot ? `<b>${foot}</b><br>` : ''}${left ? L('동화마다 첫 설정 한 번은 전체 이용권에 들어 있어요. ', 'The first setup of each tale comes with full access. ') : ''}${L('이름은 녹음을 만들 때만 보내고 서버에 남기지 않아요.', 'Names are sent only to make the recordings and are not kept on the server.')}</p>`;
+    h += `<p class="nm-foot">${foot ? `<b>${foot}</b><br>` : ''}${left ? L('동화마다 첫 설정 한 번은 전체 이용권에 들어 있습니다. ', 'The first setup of each tale comes with full access. ') : ''}${L('이름은 녹음을 만들 때만 보내고 서버에 남기지 않습니다.', 'Names are sent only to make the recordings and are not kept on the server.')}</p>`;
     return h;
   }
   const nmAgainBtn = () => { const tk = +(nm.q && nm.q.tickets) || 0; return `<button type="button" class="ticket alt" data-act="nm-again">${tk ? L('다시 바꾸기 (이용권 1장 씀)', 'Change again (use 1 pass)') : L(`다시 바꾸기 (이용권 ${Entitlements.RENAME_PRICE})`, `Change again (pass ${Entitlements.RENAME_PRICE})`)}</button>`; };
-  const nmAskTicket = () => nm.ask === 'ticket' ? `<div class="g-ask"><p class="how">${L('이용권 한 장으로 48시간 동안 네 편을 모두 다시 바꿀 수 있어요. 지금 쓸까요?', 'One pass lets you change all four tales again for 48 hours. Use it now?')}</p><div class="g-btns"><button type="button" class="ticket alt" data-act="nm-no">${L('그만두기', 'Cancel')}</button><button type="button" class="ticket pri" data-act="nm-ticket">${L('이용권 쓰기', 'Use pass')}</button></div></div>` : '';
+  const nmAskTicket = () => nm.ask === 'ticket' ? `<div class="g-ask"><p class="how">${L('이용권 한 장으로 48시간 동안 네 편을 모두 다시 바꿀 수 있습니다. 지금 쓰시겠습니까?', 'One pass lets you change all four tales again for 48 hours. Use it now?')}</p><div class="g-btns"><button type="button" class="ticket alt" data-act="nm-no">${L('그만두기', 'Cancel')}</button><button type="button" class="ticket pri" data-act="nm-ticket">${L('이용권 쓰기', 'Use pass')}</button></div></div>` : '';
   /* 동화 화면 공통: 들어 보기 · 동의 · 1차 행동(또는 진행·완료) */
   function nmPrevLabel(t) {
     if (nm.prevBusy) return L('들려주는 중…', 'Playing…');
@@ -955,21 +955,21 @@
     return x ? L(`“${nmEsc(x)}” 들어 보기`, `Hear “${nmEsc(x)}”`) : L('들어 보기', 'Listen');
   }
   const nmPrevOff = t => nm.prevBusy || !Names.agree() || !(Names.TALE_SLOTS[t] || []).some(s => nm.form.names[s] || nm.form.names[s + '_en']) || !!nmValidate(nm.form) && nmValidate(nm.form) !== 'empty';
-  const nmAgreeHTML = (extra = '') => `<label class="nm-agree"><input type="checkbox" data-opt="nm-agree"${Names.agree() ? ' checked' : ''}><i aria-hidden="true"></i><span>${L('보호자인 제가 적은 이름을 녹음을 만드는 데만 써요. 저장하지 않아요.', 'As the parent, I let these names be used only to make the recordings. They are not stored.')}${extra}</span></label>`;
+  const nmAgreeHTML = (extra = '') => `<label class="nm-agree"><input type="checkbox" data-opt="nm-agree"${Names.agree() ? ' checked' : ''}><i aria-hidden="true"></i><span>${L('보호자인 제가 적은 이름을 녹음을 만드는 데만 쓰는 것에 동의합니다. 저장하지 않습니다.', 'As the parent, I let these names be used only to make the recordings. They are not stored.')}${extra}</span></label>`;
   function nmActions(t, m) {
     const c = Names.tale(t), p = nmProg(t), run = nmTicketRun();
     if (m === 'prog') {
       const live = Names.busy();
       return `<div class="nm-actions">${live ? `<button type="button" class="ticket alt" data-act="nm-stop">${L('멈추기', 'Pause')}</button>`
-        : `<button type="button" class="ticket pri" data-act="nm-resume">${L('이어 받기', 'Continue')}</button>`}<small>${live ? L('앱을 켠 채로 기다려 주세요. 다 받으면 이 동화부터 새 이름으로 나와요.', 'Keep the app open. The tale switches once everything is in.') : L('다 받기 전에는 원래 녹음으로 나와요.', 'Until finished, the tale plays the original recordings.')}</small></div>`;
+        : `<button type="button" class="ticket pri" data-act="nm-resume">${L('이어 받기', 'Continue')}</button>`}<small>${live ? L('앱을 켠 채로 기다려 주세요. 다 받으면 이 동화부터 새 이름으로 나옵니다.', 'Keep the app open. The tale switches once everything is in.') : L('다 받기 전에는 원래 녹음으로 나옵니다.', 'Until finished, the tale plays the original recordings.')}</small></div>`;
     }
     if (m === 'done' || m === 'need') {
       return `<div class="nm-actions">${m === 'done' ? `<span class="nm-tag done big">${L('완료', 'Done')}</span>` : ''}${nm.ask === 'ticket' ? '' : nmAgainBtn()}</div>${nmAskTicket()}
-        ${m === 'need' ? `<p class="how nm-note">${L('이 동화의 첫 설정은 이미 썼어요. 이용권 한 장으로 네 편을 모두 다시 바꿀 수 있어요.', 'This tale\'s first setup is used. One pass changes all four tales again.')}</p>` : ''}`;
+        ${m === 'need' ? `<p class="how nm-note">${L('이 동화의 첫 설정은 이미 썼습니다. 이용권 한 장으로 네 편을 모두 다시 바꿀 수 있습니다.', 'This tale\'s first setup is used. One pass changes all four tales again.')}</p>` : ''}`;
     }
     const err = nmValidate(nm.form);
-    if (nm.ask === 'make') return `<div class="g-ask"><p class="how">${run ? L('이 이름과 모습으로 새로 녹음할까요? 이용권 실행(48시간) 안에서 만들어요.', 'Record with this name and look? It is made within the pass window (48 h).') : L('이 이름과 모습으로 완성할까요? 다시 바꾸려면 이용권(0.99달러)이 필요해요.', 'Finish with this name and look? Changing again needs a $0.99 pass.')}</p><div class="g-btns"><button type="button" class="ticket alt" data-act="nm-no">${L('그만두기', 'Cancel')}</button><button type="button" class="ticket pri" data-act="nm-go">${L('완성하기', 'Finish')}</button></div></div>`;
-    return `<div class="nm-actions"><button type="button" class="ticket pri" data-act="nm-make"${!Names.agree() || err ? ' disabled' : ''}>${L('이렇게 완성', 'Finish')}</button><small>${run ? L('이용권 실행 중 · 네 편 모두 다시 바꿀 수 있어요', 'Pass active · all four tales can change') : L('이 동화의 첫 설정은 이용권에 포함 · 다시 바꾸기는 0.99달러', 'First setup included · changing again is $0.99')}</small></div>`;
+    if (nm.ask === 'make') return `<div class="g-ask"><p class="how">${run ? L('이 이름과 모습으로 새로 녹음하시겠습니까? 이용권 실행(48시간) 안에서 만듭니다.', 'Record with this name and look? It is made within the pass window (48 h).') : L('이 이름과 모습으로 완성하시겠습니까? 다시 바꾸려면 이용권(0.99달러)이 필요합니다.', 'Finish with this name and look? Changing again needs a $0.99 pass.')}</p><div class="g-btns"><button type="button" class="ticket alt" data-act="nm-no">${L('그만두기', 'Cancel')}</button><button type="button" class="ticket pri" data-act="nm-go">${L('완성하기', 'Finish')}</button></div></div>`;
+    return `<div class="nm-actions"><button type="button" class="ticket pri" data-act="nm-make"${!Names.agree() || err ? ' disabled' : ''}>${L('이렇게 완성', 'Finish')}</button><small>${run ? L('이용권 실행 중 · 네 편 모두 다시 바꿀 수 있습니다', 'Pass active · all four tales can change') : L('이 동화의 첫 설정은 이용권에 포함 · 다시 바꾸기는 0.99달러', 'First setup included · changing again is $0.99')}</small></div>`;
   }
   const nmSegHTML = (t, s, lk, dis) => `<div class="nm-seg" role="group" aria-label="${L('주인공 모습', 'Hero look')}">${['g', 'b'].map(v => `<button type="button" data-act="nm-look" data-slot="${s}" data-look="${v}" class="${lk === v ? 'on' : ''}" aria-pressed="${lk === v}"${dis ? ' disabled' : ''}>${nmLookName(v)}</button>`).join('')}</div>`;
   const nmInput = (s, dis, en) => { const o = nmOrig(s), v = nm.form.names[en ? s + '_en' : s] || ''; return en
@@ -995,7 +995,7 @@
           ${nmActions(t, m)}
         </div>
       </div>
-      ${c.on && m !== 'edit' ? switchHTML('nm-orig', c.original, L('원래 이름·모습으로 듣기', 'Play with the original name and look'), L('받은 녹음은 지우지 않고, 원래 녹음으로 들려줘요.', 'Keeps the new recordings and plays the original ones.')) : ''}`;
+      ${c.on && m !== 'edit' ? switchHTML('nm-orig', c.original, L('원래 이름·모습으로 듣기', 'Play with the original name and look'), L('받은 녹음은 지우지 않고, 원래 녹음으로 들려줍니다.', 'Keeps the new recordings and plays the original ones.')) : ''}`;
   }
   function nmFamilyHTML(t) {
     const m = nmMode(t), dis = m !== 'edit', c = Names.tale(t), en = nmEnShown(t), err = c.err;
@@ -1009,7 +1009,7 @@
         ${dis ? '' : `<button type="button" class="ticket alt nm-pbtn" data-act="nm-prev"${nmPrevOff(t) ? ' disabled' : ''}>${nmIco.play}<span>${nmPrevLabel(t)}</span></button>`}</div>
       ${nm.msg ? `<p class="how buy-msg" id="nmMsg">${nmEsc(nm.msg)}</p>` : m === 'prog' && err ? `<p class="how buy-msg">${nmErr(err)}</p>` : ''}
       <div class="nm-barrow">${dis ? '' : nmAgreeHTML(en || lang === 'en' ? '' : ` · <button type="button" class="nm-link" data-act="nm-en">${L('영어 이름 적기', 'Add English names')}</button>`)}${nmActions(t, m)}</div>
-      ${c.on && m !== 'edit' ? switchHTML('nm-orig', c.original, L('원래 이름·모습으로 듣기', 'Play with the original names and looks'), L('받은 녹음은 지우지 않고, 원래 녹음으로 들려줘요.', 'Keeps the new recordings and plays the original ones.')) : ''}`;
+      ${c.on && m !== 'edit' ? switchHTML('nm-orig', c.original, L('원래 이름·모습으로 듣기', 'Play with the original names and looks'), L('받은 녹음은 지우지 않고, 원래 녹음으로 들려줍니다.', 'Keeps the new recordings and plays the original ones.')) : ''}`;
   }
   function namesHTML(name) {
     const t = nm.view;
@@ -1030,7 +1030,7 @@
     const r = await Names.useTicket();
     nm.ask = '';
     if (!r.ok) { nm.msg = nmErr(r.error); drawGuardPane(); return; }
-    nm.msg = L('48시간 동안 네 편을 모두 다시 바꿀 수 있어요.', 'For 48 hours, all four tales can be changed again.');
+    nm.msg = L('48시간 동안 네 편을 모두 다시 바꿀 수 있습니다.', 'For 48 hours, all four tales can be changed again.');
     nm.form = null;
     await nmLoadQuiet();
   }
@@ -1071,7 +1071,7 @@
       const r = await p;
       nm.form = null;
       if (!r.ok) nm.msg = nmErr(r.error);
-      else nm.msg = L('새 녹음이 다 준비됐어요.', 'All new recordings are ready.');
+      else nm.msg = L('새 녹음이 다 준비됐습니다.', 'All new recordings are ready.');
       render({ anim: false });
       nmLoadQuiet();
       return;
@@ -1080,7 +1080,7 @@
       paper('tap');
       const p = Names.resume(); drawGuardPane();
       const r = await p;
-      nm.msg = r.ok ? L('새 녹음이 다 준비됐어요.', 'All new recordings are ready.') : nmErr(r.error);
+      nm.msg = r.ok ? L('새 녹음이 다 준비됐습니다.', 'All new recordings are ready.') : nmErr(r.error);
       render({ anim: false }); nmLoadQuiet();
     }
   }
@@ -1091,21 +1091,21 @@
     let h = '';
     if (k === 'sound') {
       h = `<h3>${name}</h3>
-        <p class="how">${L('탭 이름과 안내는 늘 소리로 읽어 줘요. 아이가 아직 글을 못 읽기 때문이에요.', 'Tab names and guidance are always read aloud, since young children cannot read yet.')}</p>
+        <p class="how">${L('탭 이름과 안내는 늘 소리로 읽어 줍니다. 아이가 아직 글을 읽지 못하기 때문입니다.', 'Tab names and guidance are always read aloud, since young children cannot read yet.')}</p>
         ${switchHTML('titlevoice', !titleVoiceOff(), L('동화 그림을 누르면 제목과 테마 소리 들려주기', 'Play the title and theme sound when a tale picture is tapped'))}
         ${switchHTML('caption', !captionsOff(), L('동화 속 글 상자(대사 자막) 보여 주기', 'Show story captions (speech text box)'))}`;
     } else if (k === 'time') {
       h = `<h3>${name}</h3>
         <div class="seg" id="timerOpts" role="group" aria-label="${name}">${TIMES.map(m => `<button type="button" class="${m === limitNow() ? 'on' : ''}" data-m="${m}" aria-pressed="${m === limitNow()}">${m ? m + L('분', ' min') : L('끄기', 'Off')}</button>`).join('')}</div>
-        <p class="how">${L('하루 기준이에요. 시간이 되면 소리 없이 조용한 쉬는 화면이 나와요. 놀이 시간은 화면을 보는 시간이라서, 잠자리 읽어 주기는 끝난 뒤에 적용돼요.', 'Counted per day. When time is up, a quiet rest screen appears — no alarm. It counts screen time, so Bedtime read-aloud finishes first.')}</p>`;
+        <p class="how">${L('하루 기준입니다. 시간이 되면 소리 없이 조용한 쉬는 화면이 나옵니다. 놀이 시간은 화면을 보는 시간이라서, 잠자리 읽어 주기는 끝난 뒤에 적용됩니다.', 'Counted per day. When time is up, a quiet rest screen appears — no alarm. It counts screen time, so Bedtime read-aloud finishes first.')}</p>`;
     } else if (k === 'lang') {
       h = `<h3>${name}</h3>
         <div class="seg" role="group" aria-label="${name}"><button type="button" class="${lang === 'ko' ? 'on' : ''}" data-lang="ko" aria-pressed="${lang === 'ko'}">한국어</button><button type="button" class="${lang === 'en' ? 'on' : ''}" data-lang="en" aria-pressed="${lang === 'en'}">English</button></div>
-        <p class="how">${L('바꾸면 글, 목소리, 동화 순서가 바뀌어요. 영어 자료가 없는 동화는 한국어로 나와요.', 'Text, voices and tale order change. Tales without English material appear in Korean.')}</p>`;
+        <p class="how">${L('바꾸면 글, 목소리, 동화 순서가 바뀝니다. 영어 자료가 없는 동화는 한국어로 나옵니다.', 'Text, voices and tale order change. Tales without English material appear in Korean.')}</p>`;
     } else if (k === 'find') {
       const list = TALES.filter(match);
       h = `<h3>${name}</h3>
-        <p class="how">${L('위 줄에서 <b>이야기 종류</b>, 아래 줄에서 <b>배우는 것</b>을 고르면 동화 탭에 그 동화만 나와요. 같은 줄에서 여러 개를 고르면 <b>하나라도</b> 맞는 이야기, 두 줄을 함께 고르면 <b>둘 다</b> 맞는 이야기예요. 공주 동화는 다른 종류와 겹쳐서 나와요.', 'Pick a kind of tale and/or what it teaches, and only those tales show in the Tales tab. Several picks in one row match <b>any</b>; picks in both rows must match <b>both</b>.')}</p>
+        <p class="how">${L('위 줄에서 <b>이야기 종류</b>, 아래 줄에서 <b>배우는 것</b>을 고르면 동화 탭에 그 동화만 나옵니다. 같은 줄에서 여러 개를 고르면 <b>하나라도</b> 맞는 이야기, 두 줄을 함께 고르면 <b>둘 다</b> 맞는 이야기가 나옵니다. 공주 동화는 다른 종류와 겹쳐서 나옵니다.', 'Pick a kind of tale and/or what it teaches, and only those tales show in the Tales tab. Several picks in one row match <b>any</b>; picks in both rows must match <b>both</b>.')}</p>
         ${chipRowHTML('origin')}${chipRowHTML('skill')}
         <div class="g-btns"><button type="button" class="ticket alt" data-act="g-clear">${L('필터 지우기', 'Clear filters')}</button></div>
         <h4 class="row-tab">${L(`동화 ${list.length}편`, `${list.length} tales`)}</h4>
@@ -1117,9 +1117,9 @@
     } else if (k === 'link') {
       const off = navigator.onLine === false;
       h = `<h3>${name}</h3>
-        <p class="how">${L('다른 기기에서도 같은 기록을 쓰려면, 한 기기에서 코드를 만들고 다른 기기에 넣어요. 코드는 10분 동안, 한 번만 쓸 수 있어요.', 'To share progress on another device, make a code on one device and enter it on the other. A code works once, for 10 minutes.')}</p>
+        <p class="how">${L('다른 기기에서도 같은 기록을 쓰려면, 한 기기에서 코드를 만들고 다른 기기에 넣으세요. 코드는 10분 동안, 한 번만 쓸 수 있습니다.', 'To share progress on another device, make a code on one device and enter it on the other. A code works once, for 10 minutes.')}</p>
         <div class="link-two"><button type="button" class="ticket alt" data-act="lk-make"${off ? ' disabled' : ''}>${L('이 기기에서 코드 만들기', 'Make a code here')}</button><button type="button" class="ticket alt" data-act="lk-in"${off ? ' disabled' : ''}>${L('다른 기기의 코드 넣기', 'Enter a code')}</button></div>
-        ${off ? `<p class="how buy-msg">${L('인터넷이 있어야 해요.', 'An internet connection is needed.')}</p>` : ''}
+        ${off ? `<p class="how buy-msg">${L('인터넷 연결이 필요합니다.', 'An internet connection is needed.')}</p>` : ''}
         <div id="lkView"></div>`;
     } else if (k === 'notice') {
       h = noticeHTML(name);
@@ -1129,11 +1129,11 @@
         ${deviceNoRow()}
         <dt>${L('문의', 'Contact')}</dt><dd style="user-select:text;-webkit-user-select:text">${FEEDBACK_TO}</dd></dl>
         <div class="g-btns"><button type="button" class="ticket alt" data-act="mail">${L('의견 보내기', 'Send feedback')}</button></div>
-        <p class="how g-note-how">${L('어른 확인 뒤 메일 앱이 열려요. 앱 버전과 기기 종류가 미리 적혀 있어요. 열리지 않으면 위 주소로 보내 주세요.', 'After a grown-up check, your mail app opens with the app version and device type filled in. If it does not open, write to the address above.')}</p>
+        <p class="how g-note-how">${L('어른 확인 뒤 메일 앱이 열립니다. 앱 버전과 기기 종류가 미리 적혀 있습니다. 열리지 않으면 위 주소로 보내 주세요.', 'After a grown-up check, your mail app opens with the app version and device type filled in. If it does not open, write to the address above.')}</p>
         <div class="g-btns"><button type="button" class="ticket alt" data-act="intro-again">${L('처음 안내 다시 보기', 'See the welcome guide again')}</button><button type="button" class="ticket alt" data-act="doc-privacy">${L('개인정보 처리방침', 'Privacy policy')}</button><button type="button" class="ticket alt" data-act="doc-credits">${L('그림·소리 출처', 'Credits')}</button></div>
         <div id="docView"></div>`;
     } else if (k === 'records') {
-      const ask = { progress: L('동화 진행 기록(마지막 본 동화, 오늘 놀이 시간)을 지울까요?', 'Erase play progress (last tale, today\'s play time)?'), all1: L('이 기기의 종이별·스티커·열어 둔 동화·기기 연결을 모두 초기화할까요?', 'Reset Paper Stars, stickers, opened tales and device link on this device?'), all2: L('마지막 확인이에요. 되돌릴 수 없어요. (구매는 \'구매 복원\'으로 다시 받을 수 있어요.)', 'Last check. This cannot be undone. (A purchase can be restored with Restore purchase.)') };
+      const ask = { progress: L('동화 진행 기록(마지막 본 동화, 오늘 놀이 시간)을 지우시겠습니까?', 'Erase play progress (last tale, today\'s play time)?'), all1: L('이 기기의 종이별·스티커·열어 둔 동화·기기 연결을 모두 초기화하시겠습니까?', 'Reset Paper Stars, stickers, opened tales and device link on this device?'), all2: L('마지막 확인입니다. 되돌릴 수 없습니다. (구매는 \'구매 복원\'으로 다시 받을 수 있습니다.)', 'Last check. This cannot be undone. (A purchase can be restored with Restore purchase.)') };
       h = `<h3>${name}</h3>
         <div class="g-btns"><button type="button" class="ticket alt danger" data-act="rec-progress">${L('동화 진행 기록 지우기', 'Erase play progress')}</button><button type="button" class="ticket alt danger" data-act="rec-all">${L('이 기기의 종이별·기록 초기화', 'Reset stars & records on this device')}</button></div>
         ${recAsk ? `<div class="g-ask"><p class="how">${ask[recAsk]}</p><div class="g-btns"><button type="button" class="ticket alt" data-act="rec-no">${L('그만두기', 'Cancel')}</button><button type="button" class="ticket" data-act="rec-yes">${recAsk === 'all1' ? L('다음', 'Next') : L('지우기', 'Erase')}</button></div></div>` : ''}`;
@@ -1154,21 +1154,21 @@
     if (all) keys.push('sync_state', 'sync_dirty', 'sync_receipt', 'sync_account', 'owned_all');
     try { keys.forEach(k => localStorage.removeItem(k)); } catch (e) { /* 저장소가 없으면 지울 것도 없다 */ }
     if (all) { closeGuard(); setTimeout(() => location.reload(), 250); }
-    else { recAsk = ''; drawGuardPane(); toast(L('지웠어요.', 'Erased.')); }
+    else { recAsk = ''; drawGuardPane(); toast(L('지웠습니다.', 'Erased.')); }
   }
   async function doPurchase(msgEl) {
     if (busyBuy) return;
     busyBuy = true; paper('tap');
     let ok = false;
     try { ok = await Entitlements.purchase(); } catch (err) { ok = false; }
-    afterBuy(ok, msgEl, '결제가 끝나지 않았어요. 다시 해 주세요.', 'The purchase did not go through. Please try again.');
+    afterBuy(ok, msgEl, '결제가 끝나지 않았습니다. 다시 해 주세요.', 'The purchase did not go through. Please try again.');
   }
   async function doRestore(msgEl) {
     if (busyBuy) return;
     busyBuy = true; paper('tap');
     let ok = false;
     try { ok = await Entitlements.restore(); } catch (err) { ok = false; }
-    afterBuy(ok, msgEl, '복원할 구매를 찾지 못했어요.', 'No purchase was found to restore.');
+    afterBuy(ok, msgEl, '복원할 구매를 찾지 못했습니다.', 'No purchase was found to restore.');
   }
   let busyBuy = false;
   function afterBuy(ok, msgEl, failKo, failEn) {
@@ -1242,10 +1242,10 @@
     if (which === 'privacy') { box.innerHTML = '<iframe class="g-doc" src="privacy.html" title="privacy"></iframe>'; return; }
     /* 출처는 짧게(사용자 결정 2026-11-07). 자세한 표는 저장소의 sounds/CREDITS.md 에 기록으로 남긴다 */
     const lines = [
-      ['그림: 이 앱을 위해 새로 만든 그림이에요(OpenAI 이미지 생성).', 'Art: made for this app (OpenAI image generation).'],
-      ['목소리: ElevenLabs·Typecast 로 녹음했어요.', 'Voices: recorded with ElevenLabs and Typecast.'],
-      ['소리·음악: Pixabay, Kenney(CC0), Wikimedia Commons(퍼블릭 도메인) 녹음을 다듬어 썼어요.', 'Sounds and music: edited from Pixabay, Kenney (CC0) and Wikimedia Commons (public domain) recordings.'],
-      ['클래식 곡은 작곡이 퍼블릭 도메인이에요.', 'Classical pieces are public-domain compositions.']
+      ['그림: 이 앱을 위해 새로 만든 그림입니다(OpenAI 이미지 생성).', 'Art: made for this app (OpenAI image generation).'],
+      ['목소리: ElevenLabs·Typecast 로 녹음했습니다.', 'Voices: recorded with ElevenLabs and Typecast.'],
+      ['소리·음악: Pixabay, Kenney(CC0), Wikimedia Commons(퍼블릭 도메인) 녹음을 다듬어 썼습니다.', 'Sounds and music: edited from Pixabay, Kenney (CC0) and Wikimedia Commons (public domain) recordings.'],
+      ['클래식 곡은 작곡이 퍼블릭 도메인입니다.', 'Classical pieces are public-domain compositions.']
     ];
     box.innerHTML = '<div class="g-doc credits" tabindex="0">' + lines.map(l => `<p>${L(l[0], l[1])}</p>`).join('') + '</div>';
   }
@@ -1292,7 +1292,7 @@
     const seen = noticeSeen();
     let h = `<h3>${name}</h3>`;
     if (!notices.length) {
-      h += `<p class="how g-empty">${noticeNet === 'loading' ? L('공지를 불러오고 있어요.', 'Loading notices.') : L('공지가 없어요.', 'No notices yet.')}</p>`;
+      h += `<p class="how g-empty">${noticeNet === 'loading' ? L('공지를 불러오고 있습니다.', 'Loading notices.') : L('공지가 없습니다.', 'No notices yet.')}</p>`;
       return h;
     }
     h += `<ul class="g-notes">${notices.map(n => {
@@ -1302,7 +1302,7 @@
           <svg class="nt-chev" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10l5 5 5-5"/></svg></button>
         ${open && body ? `<div class="nt-body">${body.split(/\n+/).map(p => `<p>${escHTML(p)}</p>`).join('')}</div>` : ''}</li>`;
     }).join('')}</ul>`;
-    if (noticeNet === 'cache' || noticeNet === 'fail') h += `<p class="how g-note-how">${L('인터넷에 닿지 않아 지난번에 받은 공지를 보여 드려요.', 'Offline: showing the notices received last time.')}</p>`;
+    if (noticeNet === 'cache' || noticeNet === 'fail') h += `<p class="how g-note-how">${L('인터넷에 닿지 않아 지난번에 받은 공지를 보여 드립니다.', 'Offline: showing the notices received last time.')}</p>`;
     return h;
   }
   function fetchNotices() {
@@ -1363,17 +1363,17 @@
 
   /* ── S11-2 기기 연결 (부품): 코드 만들기(8자리 크게 + 남은 시간) · 코드 넣기 ── */
   const MSG_LINK = {
-    offline: ['서버에 닿지 않아요. 인터넷을 확인하고 다시 해 주세요.', 'Cannot reach the server. Check your connection and try again.'],
-    code_invalid: ['없거나 시간이 지난 코드예요. 새 코드를 받아 주세요.', 'That code does not exist or has expired. Please get a new one.'],
-    code_self: ['이 기기에서 만든 코드예요. 다른 기기에서 입력해 주세요.', 'This code was made on this device. Enter it on another device.'],
-    rate_limited: ['너무 자주 눌렀어요. 잠시 뒤에 다시 해 주세요.', 'Too many tries. Please wait a little.'],
-    bad_request: ['코드는 8자리예요. 다시 확인해 주세요.', 'The code has 8 characters. Please check it.']
+    offline: ['서버에 닿지 않습니다. 인터넷을 확인하고 다시 해 주세요.', 'Cannot reach the server. Check your connection and try again.'],
+    code_invalid: ['없거나 시간이 지난 코드입니다. 새 코드를 받아 주세요.', 'That code does not exist or has expired. Please get a new one.'],
+    code_self: ['이 기기에서 만든 코드입니다. 다른 기기에서 입력해 주세요.', 'This code was made on this device. Enter it on another device.'],
+    rate_limited: ['너무 자주 눌렀습니다. 잠시 뒤에 다시 해 주세요.', 'Too many tries. Please wait a little.'],
+    bad_request: ['코드는 8자리입니다. 다시 확인해 주세요.', 'The code has 8 characters. Please check it.']
   };
-  const linkErr = e => L(...(MSG_LINK[e] || ['연결하지 못했어요. 다시 해 주세요.', 'Could not link. Please try again.']));
+  const linkErr = e => L(...(MSG_LINK[e] || ['연결하지 못했습니다. 다시 해 주세요.', 'Could not link. Please try again.']));
   function paintLeft(exp) {
     const sec = Math.max(0, Math.round((exp - Date.now()) / 1000)), el = $('#lkLeft'), code = $('#lkCode');
     if (!el) { clearInterval(linkTick); return; }
-    if (!sec) { clearInterval(linkTick); code.hidden = true; el.textContent = L('코드 시간이 지났어요. 새로 만들어 주세요.', 'The code has expired. Please make a new one.'); return; }
+    if (!sec) { clearInterval(linkTick); code.hidden = true; el.textContent = L('코드 시간이 지났습니다. 새로 만들어 주세요.', 'The code has expired. Please make a new one.'); return; }
     el.textContent = L(`남은 시간 ${Math.floor(sec / 60)}분 ${String(sec % 60).padStart(2, '0')}초`, `Time left ${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')}`);
   }
   async function linkMake() {
@@ -1390,7 +1390,7 @@
   function linkEnter() {
     clearInterval(linkTick);
     const v = $('#lkView');
-    v.innerHTML = `<div class="link-in"><label class="how" for="lkInput">${L('다른 기기의 코드를 넣어요', 'Enter the code from the other device')}</label>
+    v.innerHTML = `<div class="link-in"><label class="how" for="lkInput">${L('다른 기기의 코드를 넣어 주세요', 'Enter the code from the other device')}</label>
       <input id="lkInput" class="link-input" type="text" maxlength="9" autocomplete="off" autocapitalize="characters" spellcheck="false" inputmode="text">
       <button type="button" class="ticket" id="lkGo">${L('연결하기', 'Link')}</button></div><p class="how buy-msg" id="lkMsg" hidden></p>`;
     $('#lkInput').addEventListener('input', e => { e.target.value = Entitlements.cleanCode(e.target.value).slice(0, 8); });
@@ -1402,7 +1402,7 @@
       const r = await Entitlements.redeemLinkCode($('#lkInput').value);
       btn.disabled = false;
       msg.hidden = false;
-      if (r.ok) { msg.textContent = L('연결됐어요! 두 기기가 같은 기록을 써요.', 'Linked! Both devices now share the same progress.'); render({ anim: false }); paintTabBadge(); }
+      if (r.ok) { msg.textContent = L('연결됐습니다. 두 기기가 같은 기록을 씁니다.', 'Linked! Both devices now share the same progress.'); render({ anim: false }); paintTabBadge(); }
       else msg.textContent = linkErr(r.error);
     });
   }
@@ -1456,14 +1456,14 @@
       const wait = Entitlements.waitAvailable(), left = Entitlements.waitDaysLeft(), canStar = stars >= need && Entitlements.lockedChoices().length > 0;
       const names = Entitlements.freeThisWeek().map(title).join(', ');
       flowSheet.innerHTML = `<h2>${L('동화 열기', 'Open a tale')}</h2>
-        ${t ? `<div class="buy-head">${miniTile(id)}<p class="how">${L(`'${t}'은(는) 잠겨 있어요.`, `"${t}" is locked.`)}</p></div>` : ''}
+        ${t ? `<div class="buy-head">${miniTile(id)}<p class="how">${L(`'${t}'은(는) 잠겨 있습니다.`, `"${t}" is locked.`)}</p></div>` : ''}
         <div class="buy-cols">
-          <section class="col"><h3>${L('이번 주 기다리기', 'Wait for this week')}</h3><p class="how">${L(`매주 월요일에 무료 동화가 바뀌어요. 이번 주: ${names}`, `The free tales change every Monday. This week: ${names}`)}</p><button type="button" class="ticket alt" data-act="f-close">${L('기다릴게요', 'I will wait')}</button></section>
-          <section class="col"><h3>${L('기다무·종이별', 'Waiting pass / Stars')}</h3><p class="how">${wait ? L('기다무로 한 편을 열 수 있어요.', 'You can open one with a waiting pass.') : left ? L(`기다무는 ${left}일 뒤에 열려요.`, `A waiting pass opens in ${left} days.`) : L('기다무를 모두 썼어요.', 'All waiting passes are used.')} ${L(`완성한 별 ${Math.floor(stars / need)}개`, `${Math.floor(stars / need)} stars`)}</p>
+          <section class="col"><h3>${L('이번 주 기다리기', 'Wait for this week')}</h3><p class="how">${L(`매주 월요일에 무료 동화가 바뀝니다. 이번 주: ${names}`, `The free tales change every Monday. This week: ${names}`)}</p><button type="button" class="ticket alt" data-act="f-close">${L('기다리겠습니다', 'I will wait')}</button></section>
+          <section class="col"><h3>${L('기다무·종이별', 'Waiting pass / Stars')}</h3><p class="how">${wait ? L('기다무로 한 편을 열 수 있습니다.', 'You can open one with a waiting pass.') : left ? L(`기다무는 ${left}일 뒤에 열립니다.`, `A waiting pass opens in ${left} days.`) : L('기다무를 모두 썼습니다.', 'All waiting passes are used.')} ${L(`완성한 별 ${Math.floor(stars / need)}개`, `${Math.floor(stars / need)} stars`)}</p>
             ${wait ? `<button type="button" class="ticket alt" data-act="f-wait">${L('기다무로 열기', 'Open with waiting pass')}</button>` : ''}
             ${canStar ? `<button type="button" class="ticket alt" data-act="${id ? 'f-star1' : 'f-star'}">${L(`별로 열기 ×${Math.floor(stars / need)}`, `Open with a star ×${Math.floor(stars / need)}`)}</button>` : ''}
-            ${!wait && !canStar ? `<button type="button" class="ticket alt" disabled>${L('아직 열 수 없어요', 'Not yet')}</button>` : ''}</section>
-          <section class="col"><h3>${L('모든 동화 열기', 'Unlock all tales')}</h3><p class="how">${L(`${Entitlements.PRICE}를 한 번만 내면 모든 동화가 열려요. 새로 나오는 동화도 함께요.`, `Pay ${Entitlements.PRICE} once to unlock every tale, including new ones.`)}</p><button type="button" class="ticket alt" data-act="f-buy">${L(`모두 열기 ${Entitlements.PRICE}`, `Unlock all ${Entitlements.PRICE}`)}</button></section>
+            ${!wait && !canStar ? `<button type="button" class="ticket alt" disabled>${L('아직 열 수 없습니다', 'Not yet')}</button>` : ''}</section>
+          <section class="col"><h3>${L('모든 동화 열기', 'Unlock all tales')}</h3><p class="how">${L(`${Entitlements.PRICE}를 한 번만 내면 모든 동화가 열립니다. 새로 나오는 동화도 함께 열립니다.`, `Pay ${Entitlements.PRICE} once to unlock every tale, including new ones.`)}</p><button type="button" class="ticket alt" data-act="f-buy">${L(`모두 열기 ${Entitlements.PRICE}`, `Unlock all ${Entitlements.PRICE}`)}</button></section>
         </div>
         <p class="how buy-msg" id="flowMsg" hidden></p>
         <div class="sheet-btns"><button type="button" class="ticket txt" data-act="f-restore">${L('구매 복원', 'Restore purchase')}</button><button type="button" class="ticket alt f-first" data-act="f-close">${L('다음에', 'Not now')}</button></div>`;
@@ -1471,7 +1471,7 @@
       const star = pickKind === 'star', list = Entitlements.lockedChoices();
       flowSheet.innerHTML = `<h2>${star ? L('종이별로 동화 열기', 'Open a tale with Paper Stars') : L('기다무로 동화 열기', 'Open a tale with a waiting pass')}</h2>
         ${star ? `<div class="plate" aria-label="${L(`별 조각 ${Math.min(stars, need)}개`, `${Math.min(stars, need)} star pieces`)}">${starPieces(Math.min(stars, need))}</div>` : ''}
-        <p class="how">${list.length ? L('열고 싶은 동화를 하나 골라요. 같은 동화를 한 번 더 톡 하면 열려요.', 'Pick one tale. Tap it again to open.') : L('지금 열 수 있는 잠긴 동화가 없어요.', 'No locked tales to open right now.')}</p>
+        <p class="how">${list.length ? L('열고 싶은 동화를 하나 골라 주세요. 같은 동화를 한 번 더 누르면 열립니다.', 'Pick one tale. Tap it again to open.') : L('지금 열 수 있는 잠긴 동화가 없습니다.', 'No locked tales to open right now.')}</p>
         <div class="pick-list">${list.map(i => `<button type="button" class="pick${i === flowCtx.sel ? ' on' : ''}" data-id="${i}" aria-pressed="${i === flowCtx.sel}">${miniTile(i)}<span>${title(i)}</span></button>`).join('')}</div>
         <p class="how buy-msg" id="flowMsg" hidden></p>
         <div class="sheet-btns"><button type="button" class="ticket alt f-first" data-act="f-close">${L('닫기', 'Close')}</button>${list.length ? `<button type="button" class="ticket" data-act="f-open"${flowCtx.sel ? '' : ' disabled'}>${L('열기', 'Open')}</button>` : ''}</div>`;
@@ -1482,7 +1482,7 @@
     const ok = pickKind === 'star' ? Entitlements.starUnlock(id) : Entitlements.waitUnlock(id);
     if (!ok) {
       paper('down'); flowCtx.sel = null; renderFlow();
-      const m = $('#flowMsg'); if (m) { m.textContent = L('열지 못했어요. 다시 골라 주세요.', 'Could not open it. Please pick again.'); m.hidden = false; }
+      const m = $('#flowMsg'); if (m) { m.textContent = L('열지 못했습니다. 다시 골라 주세요.', 'Could not open it. Please pick again.'); m.hidden = false; }
       return;
     }
     paper('tap');
