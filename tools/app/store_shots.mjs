@@ -68,7 +68,7 @@ const SHOTS = [
     cap: { ko: ['영어 공부도 해요', '같은 동화를 영어로 듣고 읽어요'], en: ['Hear it in Korean, too', 'Every tale in Korean and English'] } },
   /* 8. 잠자리 이어 듣기 플레이어 */
   { id: 'bedtime', kind: 'page', url: '/bedtime.html?mode=random&ids=little_mermaid,sunmoon&count=2&auto=1', wait: 9000,
-    cap: { ko: ['잠자리 읽어 주기', '화면을 꺼도 이어서 들려줘요'], en: ['Bedtime listening', 'Keeps reading with the screen off'] } },
+    cap: { ko: ['잠자리 동화', '화면을 꺼도 이어서 들려줘요'], en: ['Bedtime listening', 'Keeps reading with the screen off'] } },
   /* 9. 동화 목록 — 창작 동화 줄(아이 캐릭터)이 안 보이게 '공주' 줄부터 */
   { id: 'library', kind: 'page', url: '/index.html?splash=0', wait: 2500, eval: HOME_SCROLL('/공주/'), en: { eval: HOME_SCROLL('/Princess/') },
     cap: { ko: ['명작 동화 30편', '이솝 우화, 우리 옛이야기, 세계 명작'], en: ['30 classic tales', "Aesop's fables, Korean and world folktales"] } },

@@ -5,10 +5,10 @@
 | 칸 | 내용 | 글자 수 / 한도 |
 |---|---|---|
 | 이름 (후보) | Toki Toki Tale | 14 / 30 |
-| 부제 | Interactive tales for ages 2-5 | 30 / 30 |
-| 홍보 문구 | Paper-cut fairy tales to tap and play by day, and read-aloud bedtime stories by night. No ads. Some tales are always free, and four more are free each week. | 156 / 170 |
+| 부제 | Stories & learning, ages 2-5 | 28 / 30 |
+| 홍보 문구 | Paper-cut storybooks for reading and learning. Bedtime read-aloud stories. Every tale in Korean and English. No ads. Some tales are free always; four more each week. | 165 / 170 |
 | 키워드 (쉼표, 공백 없이) | `toddler,preschool,kids,bedtime,read aloud,storybook,learning,folktale,aesop,princess,sticker,korean` | 99 / 100 |
-| 설명 | 아래 본문 | 2405 / 4000 (2026-11-22 사용자 요청으로 부모 시점·학습 중심 재작성) (2026-11-22 Child Name Change Pass $1.99·누구나 구매 반영 후 다시 센 값) |
+| 설명 | 아래 본문 | 2253 / 4000 |
 
 Words already in the name and subtitle (Tok, Tale, Theater, Interactive, ages) are left out of the keywords on purpose. Keywords are comma-separated with no spaces.
 
@@ -18,16 +18,16 @@ Words already in the name and subtitle (Tok, Tale, Theater, Interactive, ages) a
 Toki Toki Tale — storybook app for ages 2 to 5
 
 ■ About
-- Read paper-cut fairy tales and learn age-appropriate concepts together
-- A storybook for parents and children to share
+- Paper-cut fairy tales to read and learn age-appropriate concepts together
+- For parents and children to share
 - No ads / no sign-in
 
-■ Day: learn while reading
+■ Reading and learning
 - Follow the story by tapping, choosing and putting things in order on screen
 - Learning topics: counting, comparing sizes, putting things in order, matching colors, listening and choosing, understanding feelings
 - Every line is read aloud, with the words shown on screen
 
-■ Night: bedtime stories
+■ Bedtime stories
 - Keeps reading from start to finish with the screen off
 - Moves on to the next tale when one ends
 
@@ -63,7 +63,6 @@ Toki Toki Tale — storybook app for ages 2 to 5
 ■ For parents
 - Purchases, device linking, outside documents and name settings are behind a grown-up check (hold the right answer to a multiplication question for 1.5 seconds)
 - Grown-up menu: hold the gear at the top right for 1 second
-  · Sound and captions, play time, language, find tales, access status, device linking, child's name, notices, erase records
 - Privacy policy: https://paper-tale-sync.papertale.workers.dev/privacy
 - Contact: hello@ddoystory.com
 ```
