@@ -152,6 +152,7 @@
       a.pos.style.pointerEvents = 'auto'; return a.pos;
     };
     const latest = {}; // 배역마다 가장 최근에 만든 그림 배우(장면마다 새로 만든다)
+    T.faceArt({ dok: '../../assets/v3w/hb_dok_face.webp' }); // 말풍선 얼굴(2026-11-22): 도깨비는 컷 그림뿐이라 컷에서 얼굴만 오린 그림
     T.faces({ heung: () => latest.heung, nol: () => latest.nol, nwife: () => latest.nwife }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자). 도깨비는 컷 그림뿐이라 뺀다
     function spr(name, x, h, y = GROUND) {
       let im;

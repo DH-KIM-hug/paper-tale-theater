@@ -540,6 +540,7 @@
     let stageI = 0, misses = 0;
 
     /* 대사 연출: 목소리 주인에게 카메라가 가고, 말하는 쪽과 듣는 쪽이 서로 마주 본다 */
+    T.faceArt({ jeolgu: '../../assets/v3w/pj3_jeolgu_face.webp', jara: '../../assets/v3w/pj3_jara_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({
       cast: { halmi: granny, tiger, ...friends },
       listener: r => (r === 'halmi' ? 'tiger' : 'halmi'),

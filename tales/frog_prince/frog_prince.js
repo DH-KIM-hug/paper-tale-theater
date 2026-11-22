@@ -386,6 +386,7 @@
       }
     }
 
+    T.faceArt({ prin: '../../assets/v3w/fp_prin_face.webp', prince: '../../assets/v3w/fp_prince_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({ cast: { prin, frog, king, prince }, noFace: ['prin', 'frog', 'king', 'prince'] });
     const bounce = a => a.pos.animate([{ translate: '0 0' }, { translate: '0 -40px' }, { translate: '0 0' }], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
 

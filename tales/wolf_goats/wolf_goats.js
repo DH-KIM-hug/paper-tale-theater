@@ -159,6 +159,7 @@
     const finaleMusic = () => { try { const o = { vol: T.reading() ? .3 : .5, loop: false, fadeIn: .2, dur: 9.5 }; finaleEnd = Date.now() + 9500; if (!AudioFX.ambient('finale_happy', o)) setTimeout(() => { try { AudioFX.ambient('finale_happy', o); } catch (e) { /* 무시 */ } }, 900); } catch (e) { /* 무시 */ } };
     const finaleWait = () => (finaleEnd ? sleep(Math.max(0, Math.min(6000, finaleEnd - Date.now() - 600))) : Promise.resolve());
     const portrait = () => T.viewWidth() < 990;
+    T.faceArt({ wolf: '../../assets/v3w/wg_wolf_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.faces({ mom: () => LAST.mom, wolf: () => LAST.wolf, kid: () => LAST.kid }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자). 아기 염소는 가장 최근에 놓인 한 마리
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const scene = (label, fn) => T.sceneCard(label, () => { T.clear(); T.camSnap(500, 280, 1); fn(); });

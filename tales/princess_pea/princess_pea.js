@@ -357,6 +357,7 @@
     }
     const towerShake = () => { rig.style.transformBox = 'view-box'; rig.style.transformOrigin = `${TX}px ${FL}px`; rig.animate([{ rotate: '0deg' }, { rotate: '1deg' }, { rotate: '-1deg' }, { rotate: '0deg' }], 400); sparkleSfx(T); };
     hitBox(T, boat, 100, 100); hitBox(T, peaC, 100, 100); hitBox(T, pillow, 100, 100); hitBox(T, matC, 250, 100); hitBox(T, kase, 100, 150);
+    T.faceArt({ pea: '../../assets/v3w/pp_pea_face.webp', prince: '../../assets/v3w/pp_prince_face.webp', queen: '../../assets/v3w/pp_queen_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({ cast: { pea, prince, queen, king }, noFace: ['pea', 'prince', 'queen', 'king'] });
 
     /* 탑 한 채를 rig 안에 세운다(6·7·8장) */

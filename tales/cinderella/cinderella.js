@@ -326,6 +326,7 @@
       return g;
     };
     /* 세로 화면: 말하는 사람을 카메라가 잡는다 (방향은 장면에서 직접 정하므로 돌려세우지 않는다) */
+    T.faceArt({ cind: '../../assets/v3w/cd2_cind_face.webp', prince: '../../assets/v3w/cd2_prince_face.webp', step: '../../assets/v3w/cd2_step_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({ cast: { cind, step, sisa: sis1, sisb: sis2, fairy, prince }, noFace: ['cind', 'step', 'sisa', 'sisb', 'fairy', 'prince'] });
 
     /* ================= 읽어 주기 (docs/READ_MODE.md): read_script_el.json 의 동사 → 아래 놀이판 연출을 감싼 얇은 함수 =================

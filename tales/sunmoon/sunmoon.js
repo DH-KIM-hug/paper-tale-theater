@@ -627,6 +627,7 @@
     TIGERS.length = 0;
     const onWorld = a => (a && a.pos.parentNode === T.world ? a : null);
     const tigerNow = () => onWorld([...TIGERS].reverse().find(a => a.pos.isConnected));
+    T.faceArt({ mom: '../../assets/v3w/sm_mom_face.webp', tiger: '../../assets/v3w/sm_tiger_face.webp', boy: '../../assets/v3w/sm_boy_face.webp', girl: '../../assets/v3w/sm_girl_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({
       cast: { mom: () => onWorld(mom), boy: () => onWorld(boy), girl: () => onWorld(girl), tiger: tigerNow },
       listener: r => r === 'tiger' ? (onWorld(mom) ? 'mom' : 'boy') : r === 'mom' ? 'boy' : tigerNow() ? 'tiger' : r === 'boy' ? 'girl' : 'boy',

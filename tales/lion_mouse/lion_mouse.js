@@ -737,6 +737,7 @@
     const READ_ACTS = { set: k => { if (k === 'savanna' && !R.sawSav) { R.sawSav = 1; amb('birds_chirp_1'); } else if (k === 'night_net') amb('crickets_night_1', .25, 4); else if (k === 'morning') amb('birds_chirp_2', .25, 4); else stopAmb(); return R.set(k); }, lion: R.lion, mouse: R.mouse, bubble: R.bubble, board: R.board, net: R.net, scroll: R.scroll, cut: R.cut, vo: R.vo, fx: R.fx, pop: R.pop, cam: R.cam, finale: () => { finaleMusic(); return null; } }; // finale = 끝 음악(2026-10-31)
     if (T.reading()) intro.go(300); // 시작 음악 (읽어 주기)
     if (T.reading()) {
+      T.faceArt({ mouse: '../../assets/v3w/lm_mouse_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
       T.director({ cast: { lion: () => rLion, mouse: () => rMouse }, listener: r => (r === 'lion' ? 'mouse' : 'lion'), noFace: ['lion'] });
       if (READ_ACTS && typeof READ_ACTS === 'object') READ_ACTS.classical = n => { try { if (!T.readInstant()) classical(n); } catch (e) { /* 무시 */ } return null; }; // 클래식 읽기 동사 classical:<곡>
       const rr = await T.readPlay(READ_ACTS).finally(() => bgmOff(3)); await finaleWait(); stopAmb(); return rr; // 끝 음악이 끝날 때까지 기다림(화면을 꺼도 계속)
@@ -775,6 +776,7 @@
     /* --- 2. 생쥐 산책 (생쥐 눈높이) --- */
     let mouse, head;
     /* 대사 연출: 목소리 주인에게 카메라, 사자와 생쥐가 서로 마주 봄 */
+    T.faceArt({ mouse: '../../assets/v3w/lm_mouse_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({
       cast: {
         lion: () => lion,

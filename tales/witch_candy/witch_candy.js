@@ -335,6 +335,7 @@
     const FRS = Object.values(fr);
     const ALL = [kid, witch, cat, ...FRS];
     [kid, ...FRS].forEach(a => { const h0 = a.hop; a.hop = (h, d) => { const v = a.inv; if (v && v.pos.isConnected && v.pos.style.display !== 'none') v.hop(h, d); return h0(h, d); }; });   // 초대장을 든 채 뛰면 초대장도 같이
+    T.faceArt({ cat: '../../assets/v3w/wc_cat_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.faces({ kid, witch, cat, ...fr }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자)
     const loadBase = () => {
       ALL.forEach(a => { hide(a); a.pos.style.pointerEvents = 'none'; });

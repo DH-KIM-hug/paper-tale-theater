@@ -313,6 +313,7 @@
     const prince = prop(T, 'prince', 228);
     const mirror = prop(T, 'prop_mirror', 230);
     /* 말하는 인물 얼굴(세로 휴대폰 대사 상자). 난쟁이 일곱은 혼자 그림이 셋(망치·널빤지·웃음)뿐이라 돌려 쓴다 */
+    T.faceArt({ dwarfa: '../../assets/v3w/sw_dwarfa_face.webp', dwarfb: '../../assets/v3w/sw_dwarfb_face.webp', dwarfc: '../../assets/v3w/sw_dwarfc_face.webp', dwarfd: '../../assets/v3w/sw_dwarfa_face.webp', dwarfe: '../../assets/v3w/sw_dwarfb_face.webp', dwarff: '../../assets/v3w/sw_dwarfc_face.webp', dwarfg: '../../assets/v3w/sw_dwarfa_face.webp', queen: '../../assets/v3w/sw_queen_face.webp', snow: '../../assets/v3w/sw_snow_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.faces({ snow, queen, hunter, granny, prince, mirror,
       dwarfa: hammerD, dwarfb: plankD, dwarfc: smileD, dwarfd: hammerD, dwarfe: plankD, dwarff: smileD, dwarfg: hammerD });
     const door = makeDoor(T);

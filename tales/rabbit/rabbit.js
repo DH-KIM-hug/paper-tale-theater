@@ -711,6 +711,7 @@
     /* 대사 연출: 목소리 주인에게 카메라가 가고 서로 마주 본다.
        토끼·거북이 그림은 오른쪽을 보고 있으니, 연출에는 face 방향을 뒤집어 넘긴다 */
     const mirror = a => new Proxy(a, { get: (o, k) => (k === 'face' ? d => o.face(d === 'right' ? 'left' : 'right') : o[k]) });
+    T.faceArt({ rabbit: '../../assets/v3w/rab_rabbit_face.webp', turtle: '../../assets/v3w/rab_turtle_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({
       cast: { rabbit: mirror(rabbit), turtle: mirror(turtle), duck: aud.duck, cow: aud.cow, pig: aud.pig, dog: aud.dog, sheep: aud.sheep },
       listener: r => (r === 'rabbit' ? 'turtle' : r === 'turtle' ? 'rabbit' : null),

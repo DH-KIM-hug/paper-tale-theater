@@ -440,6 +440,7 @@
     };
     const palaceFront = () => { put(T, L.coralA, 40, 548); put(T, L.coralB, 1035, 548, { to: 'right' }); put(T, L.kelp, 975, 560);   /* 할머니(880) 꼬리를 덮지 않게 오른쪽 끝으로 */ front(L.coralA, L.coralB, L.kelp); };
     const waveS = () => 1100 / (110 * ASP.prop_wave);
+    T.faceArt({ granny: '../../assets/v3w/mer_granny_face.webp', lady: '../../assets/v3w/mer_lady_face.webp', mer: '../../assets/v3w/mer_mer_face.webp', prince: '../../assets/v3w/mer_prince_face.webp', witch: '../../assets/v3w/mer_witch_face.webp', sisa: '../../assets/v3w/mer_sisa_face.webp', sisb: '../../assets/v3w/mer_sisb_face.webp', sisc: '../../assets/v3w/mer_sisc_face.webp', sisd: '../../assets/v3w/mer_sisd_face.webp', sise: '../../assets/v3w/mer_sise_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({ cast: { mer, granny, prince, lady, witch }, noFace: ['mer', 'granny', 'prince', 'lady', 'witch'] });
     const drift = (a, dx, dy, ms) => a.pos.animate([{ translate: '0 0' }, { translate: `${dx}px ${dy}px` }], { duration: ms, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
     const bob = (a, px, ms, n = Infinity) => a.pos.animate([{ translate: '0 0' }, { translate: `0 ${px}px` }, { translate: '0 0' }], { duration: ms, iterations: n, easing: 'ease-in-out' });

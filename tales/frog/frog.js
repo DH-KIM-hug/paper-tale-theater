@@ -349,6 +349,7 @@
     });
     /* 대사 연출: 목소리 주인에게 카메라가 가고 서로 마주 본다. 개구리는 정면 그림이라 돌려세우지 않는다 */
     let oxActor = null, oxArt = null;
+    T.faceArt({ baby: '../../assets/v3w/frog_baby_face.webp', babyb: '../../assets/v3w/frog_baby_face.webp', babyc: '../../assets/v3w/frog_baby_face.webp', ox: '../../assets/v3w/frog_ox_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({
       cast: { mom, baby: babies[0], babyb: babies[1], babyc: babies[2], ox: () => oxActor },
       listener: r => (r === 'mom' ? 'baby' : 'mom'),
@@ -714,7 +715,7 @@
       T.tone([200 + i * 40, 420 + i * 40], .25, { type: 'sine', vol: .18 });
       mom.body.style.transition = 'transform .35s cubic-bezier(.3,1.6,.5,1)';
       mom.body.style.transform = `scale(${SIZES[i] * 1.08}, ${SIZES[i]})`;
-      if (cheer[i]) Narrator.speak(cheer[i]);
+      if (cheer[i]) Narrator.speak(cheer[i], { onSeg: T.faceSeg });   // 말풍선 얼굴(2026-11-22): 아기 개구리 얼굴
       if (i >= 5) momArt.set('puffed'); // 부푼 그림이 있으면 (없으면 기본 그림을 키운 채로)
     } }));
     await sleep(500);

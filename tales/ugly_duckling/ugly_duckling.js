@@ -744,6 +744,7 @@
     const onStage = (...fs) => fs.map(f => ref(f)()).find(a => a && a.pos.isConnected) || null;
     const vo = k => { const u = Narrator.voiceLine(k); return u && setTimeout(() => AudioFX.voice(u), 380); };
     const momNow = () => onStage(() => far._ducks[0], () => mom); // 마지막 장면: 멀리서 손 흔드는 엄마 오리
+    T.faceArt({ ducks: '../../assets/v3w/ud_duck_face.webp', mom: '../../assets/v3w/ud_duck_face.webp', geese: '../../assets/v3w/ud_goose_face.webp', hen: '../../assets/v3w/ud_hen_face.webp', cat: '../../assets/v3w/ud_cat_face.webp', rooster: '../../assets/v3w/ud_rooster_face.webp', farmer: '../../assets/v3w/ud_farmer_face.webp', swan: '../../assets/v3w/ud_swan_face.webp', hero: () => '../../assets/v3w/' + (hero.form === 'swan' ? 'ud_face_swan_happy' : 'ud_face_happy') + '.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({
       cast: {
         hero, mom: momNow,

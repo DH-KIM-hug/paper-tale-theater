@@ -196,6 +196,7 @@
     const pig = mk(T, pz('pig', ['stand', 'mud', 'peek', 'sniff', 'raise', 'run', 'stand_help', 'eat']));
     const FRS = [cat, dog, pig];
     const ALL = [hen, ...chicks, ...FRS];
+    T.faceArt({ dog: '../../assets/v3w/hen_dog_face.webp', hen: '../../assets/v3w/hen_hen_face.webp', pig: '../../assets/v3w/hen_pig_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.faces({ hen, chick: chicks[0], cat, dog, pig }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자). 병아리는 셋이 같은 그림이라 첫째
     ALL.forEach(hide);
     const cast = list => list.forEach(([a, x, y, o]) => put(T, a, x, y, o));

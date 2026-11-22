@@ -143,7 +143,7 @@ const Tale = (() => {
     try {
       showFace(null);   // 새 대사마다 얼굴을 지우고, 배역 대사면 연출(seg)이 다시 붙인다
       if (VERIFY) await vSay(text, d);
-      else await Narrator.speak(text, { ...options, ...(d ? { onSeg: d.seg } : faceMap ? { onSeg: faceSeg } : {}) });
+      else await Narrator.speak(text, { ...options, ...(d ? { onSeg: d.seg } : (faceMap || faceArtOn()) ? { onSeg: faceSeg } : {}) });
     }
     finally { if (d) d.end(); busy = was; }
   }
@@ -210,7 +210,7 @@ const Tale = (() => {
     vLine = text;
     const go = vGo();
     showFace(null);
-    Narrator.speak(text, d ? { onSeg: d.seg } : faceMap ? { onSeg: faceSeg } : {}).catch(() => { /* 소리 실패는 무시 */ });
+    Narrator.speak(text, d ? { onSeg: d.seg } : (faceMap || faceArtOn()) ? { onSeg: faceSeg } : {}).catch(() => { /* 소리 실패는 무시 */ });
     await go;
     Narrator.stop();
   }
@@ -230,20 +230,31 @@ const Tale = (() => {
      - 동화가 그 사이 카메라를 직접 움직이면 연출은 그 대사에서 손을 뗀다 */
   let dir = null;
   /* 말하는 인물 얼굴(2026-10-31 사용자): 배우 그림(첫 image)의 머리 쪽을 동그라미에 담아 대사 상자 왼쪽 위에 붙인다. CSS 가 세로 휴대폰에서만 보인다 */
-  function showFace(a) {
+  /* 얼굴 전용 그림(2026-11-22 사용자 신고: 해님 달님 엄마 말풍선에 꿀떡이 떴다): T.faceArt({배역: 그림 주소 | () => 그림 주소}) — 배우 첫 image 가 얼굴이 아닌 배역은
+     인물 기준 그림에서 머리만 오린 그림을 지정한다. 지정한 배역은 배우가 무대에 없어도(문밖 호랑이 등) 같은 얼굴을 띄우고, 뒤집지 않는다 */
+  let faceArts = {};
+  const faceArt = map => {
+    faceArts = Object.assign({}, faceArts, map || {});
+    Object.values(map || {}).forEach(v => { if (typeof v === 'string') try { new Image().src = v; } catch (e) { /* 미리 받기 실패는 무시 */ } });   // 첫 대사에서 빈 동그라미가 깜빡이지 않게
+  };
+  const faceArtOn = () => Object.keys(faceArts).length > 0;
+  function showFace(a, role) {
     const f = $('#bubbleFace'); if (!f) return;
     let href = '';
-    try { const im = a && a.body && a.body.querySelector('image'); href = im ? (im.getAttribute('href') || im.getAttributeNS('http://www.w3.org/1999/xlink', 'href') || '') : ''; } catch (e) { href = ''; }
+    try { const v = role && role !== 'nar' && faceArts[role]; href = (typeof v === 'function' ? v() : v) || ''; } catch (e) { href = ''; }
+    const own = !!href;
+    if (!own) try { const im = a && a.body && a.body.querySelector('image'); href = im ? (im.getAttribute('href') || im.getAttributeNS('http://www.w3.org/1999/xlink', 'href') || '') : ''; } catch (e) { href = ''; }
     const bub = $('#bubble');
     if (!href) { f.hidden = true; if (bub) bub.classList.remove('has-face'); return; }
     f.style.backgroundImage = `url("${href}")`;
-    f.classList.toggle('flip', (a.flip || 1) < 0);
+    f.classList.toggle('own', own);
+    f.classList.toggle('flip', !own && !!a && (a.flip || 1) < 0);
     f.hidden = false; if (bub) bub.classList.add('has-face');
   }
   /* 얼굴만(카메라·돌아보기 없이): T.faces({배역: actor | () => actor}) — 배역 표(director)가 없는 동화도 대사 상자에 말하는 인물 얼굴을 띄운다 */
   let faceMap = null;
   const faces = map => { faceMap = map || null; };
-  const faceSeg = role => { const a = faceMap && faceMap[role]; showFace(role === 'nar' || !a ? null : (typeof a === 'function' ? a() : a)); };
+  const faceSeg = role => { const a = faceMap && faceMap[role]; showFace(role === 'nar' || !a ? null : (typeof a === 'function' ? a() : a), role); };
   function director(cfg) {
     if (!cfg) { dir = null; return; }
     const moveCam = cfg.camTo || camTo;
@@ -292,7 +303,7 @@ const Tale = (() => {
         };
         return {
           seg(role) {
-            showFace(role === 'nar' || !cfg.cast[role] ? null : get(role));   // 세로 휴대폰: 대사 상자에 말하는 인물 얼굴
+            showFace(role === 'nar' || !cfg.cast[role] ? null : get(role), role);   // 세로 휴대폰: 대사 상자에 말하는 인물 얼굴
             if (!ours()) return;
             if (role === 'nar' || !cfg.cast[role]) { if (moved) go(base.x, base.y, base.z); return; }
             const a = get(role);
@@ -2265,7 +2276,7 @@ const Tale = (() => {
 
   const api = {
     finale, hz, semi, parseSong, timbre, playMelody, followMelody, holdMelody, lyric,
-    cardSpeed: k => { cardK = k; }, el, paper, anim, actor, sleep, say, ask, director, faces, tone, josa, tr, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
+    cardSpeed: k => { cardK = k; }, el, paper, anim, actor, sleep, say, ask, director, faces, faceArt, faceSeg, tone, josa, tr, camTo, camSnap, camWide, curtain, sceneCard, cut, cutImage, preload, shake, confetti, pop, clear,
     get camera() { return { ...camState }; },
     viewWidth,
     tap: autoInput('tap', tap), mash: autoInput('mash', mash), choose: autoInput('choose', choose), swipe: autoInput('swipe', swipe), hold: autoInput('hold', hold), fill: autoInput('fill', fill), free: autoInput('free', free),

@@ -533,6 +533,7 @@
     /* 대사 연출: 목소리 주인에게 카메라가 가고 화자·청자가 마주 본다 (그림은 모두 왼쪽을 본다 → face('left') = 원래 방향) */
     const onStage = k => cast[k].pos.isConnected && cast[k].x > -40;
     const HEAR = { grandpa: 'grandma', grandma: 'grandpa', girl: 'grandma', dog: 'girl', cat: 'dog', mouse: 'cat' };
+    T.faceArt({ cat: '../../assets/v3w/tn2_cat_face.webp', dog: '../../assets/v3w/tn2_dog_face.webp', grandma: '../../assets/v3w/tn2_grandma_face.webp', grandpa: '../../assets/v3w/tn2_grandpa_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({
       cast,
       listener: (r, last) => r === 'grandma' && onStage('girl') ? 'girl' : r === 'cat' && onStage('mouse') ? 'mouse'

@@ -473,6 +473,7 @@
     const water = prop(T, 'rc_prop_water', HT.rc_prop_water), hook = prop(T, 'rc_prop_hook', HT.rc_prop_hook);
     const CARS = [red, police, fire, amb, tow];
     [kid, ...CARS, thiefA, thiefB, bear, rabbit, bfly, block, duck, house, flame, flame2, flame3, smoke, smoke2, smoke3, water, hook].forEach(hide);
+    T.faceArt({ child: '../../assets/v3w/' + art('rc_child_face') + '.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({ cast: { child: kid, red, police, fire, amb, tow }, noFace: ['child', 'red', 'police', 'fire', 'amb', 'tow'] });
     /* 그림에서 잰 좌표(차 가운데 x·바닥 y 기준 오프셋, 2026-10-21): 서 있는 이현이 쥔 주먹(그림 왼쪽 손) · 식탁 윗면 · 누운 손 옆 · 호스 끝 · 견인차 사슬 끝(고리 꼭대기가 사슬과 겹치게) · 빨간 차 앞 범퍼(지침 / 걸림 자세) */
     const HAND = { stand: [-14, -80], eat: [38, -96], sleep: [-63, -22] };

@@ -712,6 +712,7 @@
     const ref = f => () => { try { return f(); } catch (e) { return null; } };
     const onStage = (...fs) => fs.map(f => ref(f)()).find(a => a && a.pos.isConnected) || null;
     const vo = k => { const u = Narrator.voiceLine(k); return u && setTimeout(() => AudioFX.voice(u), 380); };
+    T.faceArt({ ant: '../../assets/v3w/ag_ant_face.webp', ants: '../../assets/v3w/ag_ant_face.webp', baby: '../../assets/v3w/ag_baby_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({
       cast: {
         hop: () => hop,

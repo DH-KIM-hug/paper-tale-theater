@@ -774,6 +774,7 @@
     const ref = f => () => { try { return f(); } catch (e) { return null; } };
     const vo = k => { const u = Narrator.voiceLine(k); return u && setTimeout(() => AudioFX.voice(u), 380); };
     let lookout = false; // 나무 위 닭이 불빛을 볼 때: 청자 쪽으로 돌리지 않는다 (2026-11-02)
+    T.faceArt({ miller: '../../assets/v3w/br_miller_face.webp', donkey: '../../assets/v3w/br_donkey_face.webp', dog: '../../assets/v3w/br_dog_face.webp', rooster: '../../assets/v3w/br_rooster_face.webp', boss: '../../assets/v3w/br_boss_face.webp', robber: '../../assets/v3w/br_robber_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({
       cast: { ...cast, miller: ref(() => miller), robber: ref(() => rb[0]), boss: ref(() => rb[1]) },
       listener: (r, last) => {

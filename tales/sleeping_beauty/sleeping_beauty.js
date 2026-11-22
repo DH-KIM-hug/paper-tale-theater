@@ -516,6 +516,7 @@
     }
     [pr, king, queen, ...fairies, young, old, granny, prince, grandpa, maid, guardA, guardB, cook, kid].forEach(a => { a.big = 1; });
     const setBg = key => { SC = P ? 1 : SCN[key] || 1; bgAmb(key); T.clear(); bgImage(T, key); dress(key); };
+    T.faceArt({ fred: '../../assets/v3w/sb_fred_face.webp', forange: '../../assets/v3w/sb_forange_face.webp', fyellow: '../../assets/v3w/sb_fyellow_face.webp', fgreen: '../../assets/v3w/sb_fgreen_face.webp', fblue: '../../assets/v3w/sb_fblue_face.webp', fpurple: '../../assets/v3w/sb_fpurple_face.webp', prince: '../../assets/v3w/sb_prince_face.webp', princess: '../../assets/v3w/sb_princess_face.webp', young: '../../assets/v3w/sb_young_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({ cast: { king, queen, princess: pr, fred: fairies[0], forange: fairies[1], fyellow: fairies[2], fgreen: fairies[3], fblue: fairies[4], fpurple: fairies[5], young, old, granny, prince, grandpa },
                  noFace: ['king', 'queen', 'princess', 'fred', 'forange', 'fyellow', 'fgreen', 'fblue', 'fpurple', 'young', 'old', 'granny', 'prince', 'grandpa'] });
     const PEEK_DX = -(curtain.w / 2 + 25);

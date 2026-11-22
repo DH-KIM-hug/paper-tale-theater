@@ -312,6 +312,7 @@
     const rim = prop(T, 'mg2_prop_nest_rim', 100);
     const bell = prop(T, 'mg2_prop_bell', 170);
     [sch, lady, snake, mom, dad, ...friends, ...chicks, arrow, rim, bell].forEach(hide);
+    T.faceArt({ dad: '../../assets/v3w/mg_dad_face.webp', mom: '../../assets/v3w/mg_mom_face.webp', chick: '../../assets/v3w/mg_chick_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director({ cast: { sch, snake: lady, mom, dad }, noFace: ['sch', 'snake', 'mom', 'dad'] });
     const qn = +new URLSearchParams(location.search).get('n');
     const N = qn >= 1 && qn <= 5 ? qn : 1 + Math.floor(Math.random() * 5);

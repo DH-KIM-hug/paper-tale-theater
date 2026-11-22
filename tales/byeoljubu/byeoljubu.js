@@ -203,6 +203,7 @@
     let P = T.viewWidth() < 990;
     const refreshP = () => { P = T.viewWidth() < 990; };
     const X = (l, p) => (P ? p : l);
+    T.faceArt({ king: '../../assets/v3w/bj_king_face.webp', doctor: '../../assets/v3w/bj_doctor_face.webp', octo: '../../assets/v3w/bj_octo_face.webp', jara: '../../assets/v3w/bj_jara_face.webp', gull: '../../assets/v3w/bj_gull_face.webp', squirrel: '../../assets/v3w/bj_squirrel_face.webp', boar: '../../assets/v3w/bj_boar_face.webp', rabbit: '../../assets/v3w/bj_rabbit_face.webp', crab: '../../assets/v3w/bj_crab_face.webp', sage: '../../assets/v3w/bj_sage_face.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director(null);
     T.world.style.pointerEvents = 'none';   // 누르는 대상(hitBox)만 누름을 받는다 — 인물 그림·말풍선·효과 글자는 받지 않는다
     T.fx.style.pointerEvents = 'none';

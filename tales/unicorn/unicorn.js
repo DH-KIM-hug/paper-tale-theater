@@ -406,6 +406,7 @@
     const FG = Object.fromEntries(['grass_flowers', 'cloud_hill', 'cloud_bank', 'cloud_wisp', 'tree_trunk', 'pine_branch', 'spray2', 'bare_branch', 'fern_night'].map(k => [k, deco('fg_' + k)]));
     const ALL = [kid, uni, sheep, deer, horse, ...Object.values(flowers), cloud, bush, rainbow, basket, bands, ...thorns, home, cbush, halo, ...Object.values(FG)];
     ALL.forEach(hide);
+    T.faceArt({ sheep: '../../assets/v3w/uc_sheep_face.webp', deer: '../../assets/v3w/uc_deer_face.webp', horse: '../../assets/v3w/uc_horse_face.webp', uni: '../../assets/v3w/uc_uni_face.webp', kid: '../../assets/v3w/' + art('uc_kid2_face') + '.webp' }); // 말풍선 얼굴 전용 그림(2026-11-22): 첫 그림이 얼굴이 아니거나 무대에 없을 때도 같은 얼굴
     T.director(null);
     /* 같은 배경에서 다음 장면으로 이어 가기 (책장 넘김 없음). fn = 그 장면의 배치(scene() 포함).
        배치 전후를 견주어: 그대로인 것은 두고, 걷는 인물(walk)은 새 자리로 걸어가고, 사라질 것은 흐려지고, 새로 놓일 것은 나타난다.
