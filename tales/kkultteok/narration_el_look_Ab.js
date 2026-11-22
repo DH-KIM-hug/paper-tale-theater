@@ -15,7 +15,7 @@ window.NARRATION_LOOK_CLIPS = Object.assign(window.NARRATION_LOOK_CLIPS || {}, {
   "\"구름은 여기서 오는 거였어!\"": "audio/el/kkultteok/look/Ab/nuna_c682b80ee8.mp3",
   "\"잘 자, 아기 구름!\" 다현이와 이현이가 소곤소곤 말했어요.": [
    "audio/el/kkultteok/look/Ab/nuna_ec2be27899.mp3",
-   "audio/el/kkultteok/nar_e0fef1d27b.mp3"
+   "audio/el/kkultteok/name/4745418fce.mp3"
   ],
   "\"저 빨간 단추는 뭘까? 궁금해!\"": "audio/el/kkultteok/look/Ab/nuna_0affabc358.mp3",
   "\"또 놀러 와, 아기 구름아!\"": "audio/el/kkultteok/look/Ab/nuna_780c996ca3.mp3"
@@ -64,7 +64,7 @@ window.NARRATION_LOOK_CLIPS = Object.assign(window.NARRATION_LOOK_CLIPS || {}, {
    "t": "\"Good night, little cloud!\" Dahyun and Ihyun whispered.",
    "c": [
     "audio/el/kkultteok/look/Ab/en/nuna_39f32e0b47.mp3",
-    "audio/el/kkultteok/en/nar_183098b121.mp3"
+    "audio/el/kkultteok/en/name/355e4e71ef.mp3"
    ]
   },
   "\"저 빨간 단추는 뭘까? 궁금해!\"": {

@@ -20,7 +20,12 @@
    · 화면 글자: Names.view(글, 동화id) — 원래 이름을 받침 규칙으로 바꾸고, 영어 대명사 줄은 서버 템플릿(tplEn)을 모습으로 채운다
    · 서버 호출은 Entitlements.nameCall(인증 Bearer) 로만. 이름·모습은 요청 본문에만 실리고 서버에 남지 않는다
    · 이용권(2판): 4.99 구매에 동화마다 첫 설정 1번(run { tale }) · 그 뒤 아이 이름 변경권(1.99) 1장 = 네 편 한 번에(run { ticket: true }, 48시간)
-   · TTS 없음: 녹음이 다 받아지지 않은 동화는 원래 녹음을 그대로 쓴다 */
+   · TTS 없음: 녹음이 다 받아지지 않은 동화는 원래 녹음을 그대로 쓴다
+   · 이름 조각 + 고정 조각(2026-11-22 사용자 확정): 서버는 이름 조각(catalog pieces[n])만 녹음해 돌려준다. 고정 조각은 앱 묶음
+     (audio/el/<동화>/parts/, 다듬기 전)에 있고, 기기가 assemble() 로 한 파일로 합쳐(앞뒤 무음 자르기 → 이름 조각 음량을 고정 조각에 맞춤 →
+     조각 뒤 간격 gap → 다듬기) WAV 로 저장한다 — 화면을 끈 읽어 주기에서도 이음매 없이 한 클립으로 재생된다.
+     기본 이름은 앱 묶음에 미리 합친 완성본이 녹음 맵에 들어 있다(gen_name_split.py, 같은 규칙).
+   · 영어 대명사(he/she) 반대 벌은 앱 묶음(narration_el_pron_<자리><모습>.js, PRON_CLIPS) — 모습만 바꿔도 서버 녹음이 없다 */
 const Names = (() => {
   const K_SET = 'paperTheater.names', K_CAT = 'paperTheater.names.cat';
   const SLOTS = ['A', 'B', 'C', 'D'], KIDS = ['A', 'B', 'C'];
@@ -39,6 +44,9 @@ const Names = (() => {
   };
   /* 아이 본인 대사 반대 모습 녹음이 들어온 동화와 자리·모습(tales/<동화>/narration_el_look_<자리><모습>.js) */
   const LOOK_CLIPS = { red_car: ['Bg'], unicorn: ['Ab'], witch_candy: ['Ab'], kkultteok: ['Ab', 'Bg', 'Cg'] };
+  /* 영어 대명사 줄의 반대 모습 벌(tales/<동화>/narration_el_pron_<자리><모습>.js, gen_name_split.py apply) */
+  const MAPV = '20261122ns1';   // 반대 모습·대명사 맵 캐시 버전(맵을 다시 만들면 올린다)
+  const PRON_CLIPS = { red_car: ['Bg'], unicorn: ['Ab'], witch_candy: ['Ab'], kkultteok: ['Bg'] };
   /* 설정 화면 미리보기 그림(원래 모습 id). 반대 모습은 sprite() 규칙(…_stand → …b_stand / …g_stand) */
   const PREVIEW_ART = { unicorn: { A: 'uc_kid2_stand' }, witch_candy: { A: 'wc_kid_stand' }, red_car: { B: 'rc_child_stand' }, kkultteok: { A: 'cf4_nuna_wave', B: 'cf4_oppa_walk', C: 'cf4_agi_wave', D: 'cf4_dog_wag' } };
 
@@ -121,13 +129,20 @@ const Names = (() => {
     const t = lang === 'en' ? line.tplEn : line.tpl; if (!t || !NF()) return [];
     return NF().slotsIn(t).filter(k => (lang === 'en' ? /_en$/.test(k) : !/_en$|_g$/.test(k))).map(k => k[0]);
   };
-  /* 받아야 하는 줄: 이름을 넣은 자리가 든 줄 + 모습을 바꾼 자리가 g 에 든 줄(영어 대명사·모습별 목소리) */
+  /* 줄의 이름 조각(서버가 녹음하는 조각). 없으면 null(이름 없는 영어 대명사 줄 = 앱 묶음 두 벌) */
+  const piecesOf = (l, lang) => (lang === 'en' ? l.piecesEn : l.pieces) || null;
+  const nPiece = (l, lang) => { const ps = piecesOf(l, lang), n = lang === 'en' ? l.nEn : l.n; return ps && n != null ? ps[n] || null : null; };
+  /* 받아야 하는 줄: 이름 조각에 이름을 넣은 자리가 든 줄 + 이름 조각 안에 모습을 바꾼 자리(대명사)가 든 줄.
+     고정 조각에만 대명사가 있는 줄은 받지 않는다(앱 묶음 두 벌 PRON_CLIPS). 이름을 바꾼 줄은 기기가 모습에 맞는 고정 조각으로 합친다 */
   function neededFor(tale, lang, names, lk) {
     const c = cat(), t = c && c.tales && c.tales[tale]; if (!t) return [];
     const on = setSlots(names, lang), gs = changedLook(lk, owner(tale));
     if (!on.length && !gs.length) return [];
-    return (t.lines || []).filter(l => (lang === 'en' ? l.tplEn : l.tpl) && (!Array.isArray(l.langs) || l.langs.includes(lang))
-      && (slotsOf(l, lang).some(s => on.includes(s)) || (l.g || []).some(s => gs.includes(s))));
+    return (t.lines || []).filter(l => {
+      if (Array.isArray(l.langs) && !l.langs.includes(lang)) return false;
+      const p = nPiece(l, lang); if (!p) return false;
+      return (p.slots || []).some(s => on.includes(s)) || (p.g || []).some(s => gs.includes(s));
+    });
   }
   const needed = (tale, lang) => { const c = cfgOf(tale); return neededFor(tale, lang, c.names, c.look); };
   /* 받을 언어: 한국어는 늘, 영어는 영어 이름을 적었거나 설정할 때 영어 모드였을 때(c.en) */
@@ -185,8 +200,14 @@ const Names = (() => {
   const lookLoads = {};
   const loadLook = code => lookLoads[code] || (lookLoads[code] = new Promise(res => {
     const done = () => res((window.NARRATION_LOOK_CLIPS || {})[code] || null);
-    try { const s = document.createElement('script'); s.src = `narration_el_look_${code}.js`; s.onload = done; s.onerror = () => res(null); document.head.appendChild(s); } catch (e) { res(null); }
+    try { const s = document.createElement('script'); s.src = `narration_el_look_${code}.js?v=${MAPV}`; s.onload = done; s.onerror = () => res(null); document.head.appendChild(s); } catch (e) { res(null); }
   }));
+  const pronLoads = {};
+  const loadPron = code => pronLoads[code] || (pronLoads[code] = new Promise(res => {
+    const done = () => res((window.NARRATION_PRON_CLIPS || {})[code] || null);
+    try { const s = document.createElement('script'); s.src = `narration_el_pron_${code}.js?v=${MAPV}`; s.onload = done; s.onerror = () => res(null); document.head.appendChild(s); } catch (e) { res(null); }
+  }));
+  const sameVal = (a, b) => JSON.stringify(a) === JSON.stringify(b);
   /* 지금 페이지(동화 한 편 또는 홈)의 맵에 덮는다. 맵이 더 실린 뒤(읽어 주기 맵 등) 다시 불러도 된다 */
   async function apply() {
     restore();
@@ -210,6 +231,21 @@ const Names = (() => {
         });
       }
     }
+    /* ①-2 영어 대명사 반대 벌(앱 묶음). 항목의 o = 원래 맵 값 → 지금 맵(놀이/읽기)과 같은 쪽만 덮는다 */
+    if (en && cf.on && !cf.original && PRON_CLIPS[owner(here)]) {
+      for (const s of TALE_SLOTS[here] || []) {
+        const tag = lookTag(here, s), code = s + tag;
+        if (!tag || !PRON_CLIPS[owner(here)].includes(code)) continue;
+        const m = await loadPron(code); if (!m) continue;
+        ['read', 'play'].forEach(md => Object.keys(m[md] || {}).forEach(k => {
+          if (!(k in en)) return;
+          const e = m[md][k], cur = k in orig.en ? orig.en[k] : en[k];
+          if (!sameVal(cur && cur.c, e.o)) return;
+          if (!(k in orig.en)) orig.en[k] = en[k];
+          en[k] = Object.assign({}, en[k], { c: e.c }); n++;
+        }));
+      }
+    }
     /* ② 이름·모습으로 서버에서 받은 줄 */
     if (!c || !c.tales || !c.tales[here]) return n;
     for (const lang of ['ko', 'en']) {
@@ -221,10 +257,11 @@ const Names = (() => {
         if (lang === 'en') u += '#nm-en';   // audio.js 가 영어 0.9배로 늘린다(원래 영어 녹음과 같은 속도)
         /* 여러 배역 조각으로 된 줄(값이 배열)은 이름이 든 조각(seg·segEn 번째)만 바꾼다 */
         const put = (old, seg) => (seg != null && Array.isArray(old) ? old.map((x, i) => (i === seg ? u : x)) : u);
-        if (lang === 'ko' && ko && l.key in ko) { if (!(l.key in orig.ko)) orig.ko[l.key] = ko[l.key]; ko[l.key] = put(orig.ko[l.key], l.seg); n++; }
+        /* 지금 값(①에서 아이 반대 모습 조각으로 바뀌었을 수 있다)에서 이름 조각 칸만 바꾼다 */
+        if (lang === 'ko' && ko && l.key in ko) { if (!(l.key in orig.ko)) orig.ko[l.key] = ko[l.key]; ko[l.key] = put(ko[l.key], l.seg); n++; }
         if (lang === 'en' && en) {
           const k = [l.keyEn, l.key, l.en].find(x => x && x in en);   // 홈 맵은 영어 글(keyEn)이 열쇠다
-          if (k) { if (!(k in orig.en)) orig.en[k] = en[k]; en[k] = Object.assign({}, orig.en[k], { c: put(orig.en[k].c, l.segEn) }); n++; }
+          if (k) { if (!(k in orig.en)) orig.en[k] = en[k]; en[k] = Object.assign({}, en[k], { c: put(en[k].c, l.segEn) }); n++; }
         }
       }
     }
@@ -261,7 +298,7 @@ const Names = (() => {
     const c = cat(); if (!c || !c.tales || !c.tales[tale]) return text;
     const names = {};
     (TALE_SLOTS[tale] || SLOTS).forEach(s => { if (active(tale, 'ko') && cf.names[s]) names[s] = cf.names[s]; if (active(tale, 'en') && cf.names[s + '_en']) names[s + '_en'] = cf.names[s + '_en']; });
-    if (active(tale, 'en') && changedLook(cf.look, owner(tale)).length) {
+    if (changedLook(cf.look, owner(tale)).length) {   // 대명사는 앱 묶음 두 벌이라 영어 녹음을 받지 않아도 늘 모습대로
       const l = enLine(tale, text);
       if (l && /_g[:}]|>/.test(l.tplEn)) return NF().fill(l.tplEn, names, cf.look);
     }
@@ -322,9 +359,9 @@ const Names = (() => {
     for (let i = 0; i < d.length; i++) out.setInt16(44 + i * 2, Math.max(-1, Math.min(1, d[i])) * 0x7fff, true);
     return out.buffer;
   }
-  async function polish(mp3) {
-    const C = OAC(); if (!C) throw new Error('no-offline-audio');
-    const buf = await new C(1, SR, SR).decodeAudioData(mp3.slice(0));
+  const decode = async bytes => { const C = OAC(); if (!C) throw new Error('no-offline-audio'); return new C(1, SR, SR).decodeAudioData(bytes.slice(0)); };
+  async function polish(mp3) { return polishBuf(await decode(mp3)); }
+  async function polishBuf(buf) {
     const mid = await render(buf, o => {
       const c = o.createDynamicsCompressor(); c.threshold.value = -20; c.ratio.value = 2.5; c.attack.value = .008; c.release.value = .12; c.knee.value = 4;
       const mk = o.createGain(); mk.gain.value = Math.pow(10, 2 / 20);
@@ -334,6 +371,41 @@ const Names = (() => {
     const d = mid.getChannelData(0), LIM = .8;
     for (let i = 0; i < d.length; i++) { const x = d[i] * g, a = Math.abs(x); d[i] = a <= .65 ? x : Math.sign(x) * (.65 + (LIM - .65) * Math.tanh((a - .65) / (LIM - .65))); }   // 0.65 위로는 부드럽게 0.8 에 닿는 리미터(polish.py 0.84 보다 조금 낮게: 실제 봉우리가 −1dB 아래로)
     return wav(d);
+  }
+
+  /* ───────── 조각 합치기(tools/elevenlabs/gen_name_split.py build 와 같은 규칙) ─────────
+     조각마다 앞뒤 무음 자르기(-45dB, 20ms 창 RMS, 앞 15ms·뒤 30ms 남김) → 이름 조각만 고정 조각 평균 RMS(dB)에 맞춤(±6dB) →
+     6ms 페이드 인·12ms 페이드 아웃 → 조각 뒤 간격(gap 초) → 이어 붙이기 → 다듬기 → WAV */
+  const ROOT = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? s.replace(/engine\/names\.js(\?.*)?$/, '') : ''; } catch (e) { return ''; } })();
+  const bundleCache = {};
+  const bundle = url => bundleCache[url] || (bundleCache[url] = fetch(ROOT + url).then(r => { if (!(r.ok || r.status === 0)) throw new Error('part-missing'); return r.arrayBuffer(); }).catch(e => { delete bundleCache[url]; throw e; }));
+  function trimBuf(d) {
+    const W = Math.round(SR * .02), thr = Math.pow(10, -45 / 20);
+    const loud = i => { let s = 0, n = 0; for (let j = i; j < Math.min(d.length, i + W); j++) { s += d[j] * d[j]; n++; } return n && Math.sqrt(s / n) > thr; };
+    let a = 0; while (a < d.length && !loud(a)) a += Math.round(W / 4);
+    let b = d.length; while (b > a && !loud(Math.max(0, b - W))) b -= Math.round(W / 4);
+    return d.subarray(Math.max(0, a - Math.round(SR * .015)), Math.min(d.length, b + Math.round(SR * .03)));
+  }
+  const rmsDb = d => { let s = 0; for (let i = 0; i < d.length; i++) s += d[i] * d[i]; return 20 * Math.log10(Math.sqrt(s / Math.max(1, d.length)) || 1e-9); };
+  /* line 의 lang 녹음: 이름 조각 bytes(서버 mp3) + 고정 조각(앱 묶음, 모습 lk 에 맞는 벌) → 다듬은 WAV. 통째 줄은 다듬기만 */
+  async function assemble(line, lang, nBytes, lk, tale) {
+    const ps = (piecesOf(line, lang) || []).filter(p => p.k !== 'K');
+    if (ps.length <= 1) return polish(nBytes);
+    const lkOf = s => (lk && (lk[s] === 'b' || lk[s] === 'g') ? lk[s] : look(tale || here, s) || OLOOK()[s]);
+    const pick = p => { if (!p.urls) return p.url; const m = /\{([A-D])_g:/.exec(p.tpl || ''); return (m && p.urls[lkOf(m[1])]) || p.url; };
+    const parts = await Promise.all(ps.map(async p => ({ p, d: trimBuf((await decode(p.k === 'N' ? nBytes : await bundle(pick(p)))).getChannelData(0)) })));
+    const S = parts.filter(x => x.p.k === 'S').map(x => rmsDb(x.d)), ref = S.length ? S.reduce((a, b) => a + b, 0) / S.length : null;
+    const gapN = (x, i) => (i < parts.length - 1 ? Math.round(SR * (Number(x.p.gap) || 0)) : 0);
+    const total = parts.reduce((t, x, i) => t + x.d.length + gapN(x, i), 0);
+    const C = OAC(), out = new C(1, Math.max(1, total), SR).createBuffer(1, Math.max(1, total), SR), o = out.getChannelData(0);
+    let at = 0;
+    parts.forEach((x, i) => {
+      const g = x.p.k === 'N' && ref != null ? Math.pow(10, Math.max(-6, Math.min(6, ref - rmsDb(x.d))) / 20) : 1;
+      const fi = Math.round(SR * .006), fo = Math.round(SR * .012), L = x.d.length;
+      for (let j = 0; j < L; j++) { let v = x.d[j] * g; if (j < fi) v *= j / fi; if (j > L - fo) v *= Math.max(0, (L - j) / fo); o[at + j] = v; }
+      at += L + gapN(x, i);
+    });
+    return polishBuf(out);
   }
 
   /* ───────── 만들기 · 이어 받기 ───────── */
@@ -386,10 +458,15 @@ const Names = (() => {
               const cf = cfgOf(t);
               if (cf.dir !== dir) continue;   // 받는 사이 그 동화를 다시 설정했다 → 다음 바퀴에서 새 설정으로
               const kids = (TALE_SLOTS[owner(t)] || []).filter(s => KIDS.includes(s));
-              const r = await fetchLine({ runId: run.runId, tale: t, id: x.id, lang: l, names: clean(cf.names, TALE_SLOTS[owner(t)]), look: cleanLook(cf.look, kids) });
+              const lk = cleanLook(cf.look, kids);
+              const r = await fetchLine({ runId: run.runId, tale: t, id: x.id, lang: l, piece: l === 'en' ? x.nEn : x.n, names: clean(cf.names, TALE_SLOTS[owner(t)]), look: lk });
               if (!r.ok) { if (!error) error = r.error || 'server_error'; break; }
               let bytes = r.bytes, ext = 'mp3', type = 'audio/mpeg';
-              try { bytes = await polish(r.bytes); ext = 'wav'; type = 'audio/wav'; } catch (e) { bytes = r.bytes; }   // 다듬기 실패 → 받은 mp3 그대로
+              try { bytes = await assemble(x, l, r.bytes, lk, t); ext = 'wav'; type = 'audio/wav'; }
+              catch (e) {   // 합치기 실패: 통째 줄이면 받은 mp3 그대로, 나눈 줄이면 고정 조각 없이 쓸 수 없다 → 이 줄은 원래 녹음으로(다음 바퀴에 다시)
+                if ((piecesOf(x, l) || []).filter(p => p.k !== 'K').length > 1) { if (!error) error = 'assemble_failed'; break; }
+                bytes = r.bytes;
+              }
               if (cfgOf(t).dir !== dir) continue;
               try { await putFile(pathOf(dir, l, x.id, ext), bytes, type); } catch (e) { if (!error) error = 'save_failed'; break; }
               const c = S.tales[t]; if (!c || c.dir !== dir) continue;
@@ -463,10 +540,14 @@ const Names = (() => {
   async function preview(tale, form, lang = 'ko') {
     const p = previewLine(tale, lang); if (!p) return { ok: false, error: 'no_line' };
     const kids = (TALE_SLOTS[tale] || []).filter(s => KIDS.includes(s));
-    const r = await call('POST', '/name/line', { preview: true, tale: p.tale, id: p.id, lang, names: clean(form && form.names, TALE_SLOTS[tale]), look: cleanLook(form && form.look, kids) }, { binary: true });
+    const lk = cleanLook(form && form.look, kids);
+    const line = (cat().tales[p.tale].lines || []).find(l => l.id === p.id);
+    const r = await call('POST', '/name/line', { preview: true, tale: p.tale, id: p.id, lang, piece: line ? (lang === 'en' ? line.nEn : line.n) : undefined, names: clean(form && form.names, TALE_SLOTS[tale]), look: lk }, { binary: true });
     if (!r.ok) return r;
+    let blob = new Blob([r.bytes], { type: 'audio/mpeg' });
+    try { if (line) blob = new Blob([await assemble(line, lang, r.bytes, Object.assign({}, OLOOK(), lk), p.tale)], { type: 'audio/wav' }); } catch (e) { /* 이름 조각만이라도 들려준다 */ }
     if (prevUrl) URL.revokeObjectURL(prevUrl);
-    prevUrl = URL.createObjectURL(new Blob([r.bytes], { type: 'audio/mpeg' }));
+    prevUrl = URL.createObjectURL(blob);
     try { if (typeof Narrator !== 'undefined') Narrator.stop(); await AudioFX.playUrl(prevUrl); } catch (e) { return { ok: false, error: 'play_failed' }; }
     return { ok: true };
   }
@@ -483,7 +564,7 @@ const Names = (() => {
     SLOTS, KIDS, TALES, TALE_SLOTS, LOOK_ART, LOOK_CLIPS, supported, settings, tale, catalog: cat, fetchCatalog, quota, lastQuota: () => lastQ, check,
     preview, previewText, previewLine, previewArt, start, resume, useTicket, progress, needed, setOriginal, setAgree, agree: () => !!S.agree,
     look, looks, lookTag, sprite, art, apply, view, templatize, active, ready, busy: () => busy, stop: () => { stopReq = true; },
-    onChange: f => { listeners.add(f); return () => listeners.delete(f); }, _polish: polish, _native: !!FS
+    onChange: f => { listeners.add(f); return () => listeners.delete(f); }, _polish: polish, _assemble: assemble, _native: !!FS, PRON_CLIPS
   };
 })();
 if (typeof window !== 'undefined') window.Names = Names;

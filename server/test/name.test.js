@@ -1,9 +1,9 @@
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import { fill, hasBatchim, valid, validLook, slotsIn, ORIGINAL, ORIGINAL_LOOK } from '../src/name_form.js';
 import { NAME_LINES, NAME_LINES_VERSION } from '../src/name_lines.js';
-import { _resetZeroRetention, _setHistoryRetryDelays, nameState, voiceFor } from '../src/name.js';
+import { _resetZeroRetention, _setHistoryRetryDelays, nameState, voiceFor, MAX_PIECE_CHARS, NAME_STATS } from '../src/name.js';
 import { isBanned } from '../src/banned_names.js';
 import { handle } from '../src/app.js';
 import { goodPayload, makeChain, signTransaction } from './helpers/pki.js';
@@ -153,13 +153,14 @@ describe('템플릿 파일: 모습(look) 줄', () => {
   it('영어 대명사 줄 = 29줄 중 주인공 줄(놀이·읽기를 한 줄로 합친 개수) + 영어에만 있는 새 줄 10', () => {
     const only = withG.filter(([, l]) => !l.ko);
     expect(only.length).toBe(10);
-    for (const [, l] of only) { expect(l.ko).toBeNull(); expect(l.enRec.send).toMatch(/_g:/); expect(l.g.length).toBeGreaterThan(0); }
+    // 2026-11-22: 이름 없는 대명사 줄은 두 벌을 앱 묶음에 미리 녹음했다 → 서버가 녹음할 이름 조각이 없다(n null)
+    for (const [, l] of only) { expect(l.ko).toBeNull(); expect(l.enRec.n).toBeNull(); expect(l.enRec.send).toBeNull(); expect(l.enRec.pieces[0].tpl).toMatch(/_g:/); expect(l.g.length).toBeGreaterThan(0); }
     expect(withG.filter(([t]) => t === 'witch_candy').length).toBe(9);
     expect(withG.filter(([t]) => t === 'kkultteok').length).toBe(1);
   });
   it('g 는 줄에 나온 _g 자리와 같다, 한국어에는 성별 단어 자리가 없다', () => {
     for (const [t, l] of all) {
-      const inTpl = new Set([...(l.tplEn + (l.ko ? l.ko.send : '') + (l.enRec ? l.enRec.send : '')).matchAll(/\{([A-D])_g:/g)].map((m) => m[1]));
+      const inTpl = new Set([...(l.tplEn + (l.ko ? l.ko.send : '') + (l.enRec ? JSON.stringify(l.enRec.pieces) : '')).matchAll(/\{([A-D])_g:/g)].map((m) => m[1]));
       for (const x of inTpl) expect(l.g, t + l.id).toContain(x);
       expect(l.tpl).not.toMatch(/_g:/);
       if (l.ko) expect(l.ko.send).not.toMatch(/_g:/);
@@ -194,10 +195,30 @@ describe('템플릿 파일', () => {
     expect(Object.keys(NAME_LINES).sort()).toEqual(['home', 'kkultteok', 'red_car', 'unicorn', 'witch_candy']);
     const counts = Object.fromEntries(Object.entries(NAME_LINES).map(([t, l]) => [t, l.length]));
     expect(counts).toEqual({ kkultteok: 45, red_car: 23, unicorn: 38, witch_candy: 34, home: 3 });
-    expect(NAME_LINES_VERSION).toMatch(/^nl2-[0-9a-f]{10}$/);
+    expect(NAME_LINES_VERSION).toMatch(/^nl3-[0-9a-f]{10}$/);
     // 강아지를 뺀 아이 이름 한국어 녹음 줄 = 부록 A 95줄 + 홈 3줄
     const kids = Object.values(NAME_LINES).flat().filter((l) => l.ko && /\{[ABC][:}]/.test(l.ko.send)).length;
     expect(kids).toBe(98);
+  });
+  it('조각(2026-11-22): 이름 조각은 줄마다 하나 이하, 고정 조각에는 이름이 없고 앱 묶음 파일이 있다, 긴 이름도 글자 상한 안', () => {
+    const long = { A: '가나다라', B: '가나다라', C: '가나다라', D: '가나다라', A_en: 'Abcdefghijkl', B_en: 'Abcdefghijkl', C_en: 'Abcdefghijkl', D_en: 'Abcdefghijkl' };
+    let n = 0;
+    for (const [t, ls] of Object.entries(NAME_LINES)) for (const l of ls) for (const p of [l.ko, l.enRec].filter(Boolean)) {
+      expect(p.pieces.filter((x) => x.k === 'N').length, t + l.id).toBeLessThanOrEqual(1);
+      if (p.n != null) { expect(p.pieces[p.n].k).toBe('N'); n++; expect(fill(p.send, long, { A: 'b', B: 'g', C: 'g' }).length).toBeLessThanOrEqual(MAX_PIECE_CHARS); }
+      for (const x of p.pieces) {
+        if (x.k !== 'K') expect(typeof x.gap).toBe('number');
+        if (x.k !== 'S') continue;
+        expect(x.tpl, t + l.id).not.toMatch(/\{[A-D](_en)?[:}]/);
+        if (p.whole) continue;
+        for (const u of [x.url, ...Object.values(x.urls || {})]) {
+          expect(u).toMatch(new RegExp(`^audio/el/${t}/parts/(ko|en)_[0-9a-f]{12}\\.mp3$`));
+          expect(existsSync(new URL('../../' + u, import.meta.url)), u).toBe(true);
+        }
+      }
+      expect(existsSync(new URL('../../' + p.url, import.meta.url)), p.url).toBe(true);
+    }
+    expect(NAME_STATS.recordings).toBe(n);
   });
   it('줄마다 녹음 값이 다 있다', () => {
     for (const l of Object.values(NAME_LINES).flat()) {
@@ -206,7 +227,8 @@ describe('템플릿 파일', () => {
         expect(p.model).toBe('eleven_v4');
         expect(p.settings.similarity_boost).toBe(0.75);
         expect(typeof p.settings.stability).toBe('number');
-        expect(p.send).toMatch(/\{[A-D]/);
+        if (p.n != null) expect(p.send).toMatch(/\{[A-D]/);
+        else expect(p.send).toBeNull();
       }
     }
   });
@@ -280,7 +302,7 @@ describe('GET /v1/name/catalog·quota', () => {
     expect(l).toMatchObject({ seg: 1, segEn: 1, langs: ['ko', 'en'], g: [] });
     expect(r.json.originalLook).toEqual({ A: 'g', B: 'b', C: 'b' });
     const g = r.json.tales.witch_candy.lines.find((x) => x.tplEn.startsWith('{A_g:He/She} melted'));
-    expect(g).toMatchObject({ langs: ['en'], g: ['A'], seg: null });
+    expect(g).toMatchObject({ langs: [], g: ['A'], seg: null, nEn: null }); // 대명사 두 벌은 앱 묶음(서버 녹음 없음)
     const first = r.json.tales.unicorn.lines[0];
     expect(Object.keys(first)).toEqual(expect.arrayContaining(['id', 'key', 'tpl', 'en', 'tplEn']));
     expect(first).not.toHaveProperty('voice'); // 녹음 내부 값은 내보내지 않는다
@@ -482,7 +504,7 @@ describe('POST /v1/name/line', () => {
     const a = await newAccount(env, deps);
     await own(env, a);
     const run = await firstRun(env, a, deps);
-    const r = await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, ...LINE, lang: 'ko', names: NAMES }, deps, origin: 'capacitor://localhost' });
+    const r = await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, ...LINE, lang: 'ko', piece: 0, names: NAMES }, deps, origin: 'capacitor://localhost' });
     expect(r.status).toBe(200);
     expect(r.headers.get('content-type')).toBe('audio/mpeg');
     expect(r.headers.get('x-name-version')).toBe(NAME_LINES_VERSION);
@@ -492,41 +514,72 @@ describe('POST /v1/name/line', () => {
     const c = fetch.calls[0];
     expect(c.url).toBe(`https://api.elevenlabs.io/v1/text-to-speech/${line.ko.voice}?output_format=mp3_44100_128&enable_logging=false`);
     expect(c.headers['xi-api-key']).toBe(KEY);
-    expect(c.body).toEqual({ text: fill(line.ko.send, NAMES), model_id: 'eleven_v4', voice_settings: line.ko.settings });
-    expect(c.body.text).toContain('서아가');
-    expect(c.body.text.startsWith('[')).toBe(true); // 연기 지시 태그
+    // 이름 조각만 보낸다. 말투 태그는 앞 문맥(previous_text), 뒤 조각 글은 next_text(차감 없음)
+    expect(line.ko.n).toBe(0);
+    expect(c.body).toEqual({ text: '언덕 위에 서아가', model_id: 'eleven_v4', voice_settings: line.ko.settings, previous_text: line.ko.tag, next_text: '서 있어요. 하늘을 올려다보고 있어요.' });
+    expect(line.ko.tag.startsWith('[')).toBe(true);
   });
-  it('look: 영어 대명사가 모습대로 채워지고, 잘못된 값은 400 look_invalid, 서버에 저장하지 않는다', async () => {
+  it('look: 대명사 줄은 서버가 녹음하지 않고(앱 묶음 두 벌), 이름 줄의 문맥 대명사는 모습대로, 잘못된 값은 400, 저장 안 함', async () => {
     const { env, deps, fetch } = setup();
     const a = await newAccount(env, deps);
     await own(env, a);
     const run = await firstRun(env, a, deps, 'witch_candy');
-    const l = NAME_LINES.witch_candy.find((x) => x.tplEn.startsWith('{A_g:He/She} melted'));
-    expect(l.ko).toBeNull();
-    const send = (look, lang = 'en') => raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, tale: 'witch_candy', id: l.id, lang, names: { A_en: 'Seoa' }, ...(look === undefined ? {} : { look }) }, deps });
+    const pron = NAME_LINES.witch_candy.find((x) => x.tplEn.startsWith('{A_g:He/She} melted'));
+    expect(pron.ko).toBeNull();
+    for (const body of [{ runId: run.runId, tale: 'witch_candy', id: pron.id, lang: 'en', names: { A_en: 'Seoa' }, look: { A: 'b' } }, { preview: true, tale: 'witch_candy', id: pron.id, lang: 'en', names: {} }]) {
+      expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body, deps })).status).toBe(400);
+    }
+    expect(fetch.calls.length).toBe(0);
+    const l = NAME_LINES.witch_candy[0]; // Dahyun ‖ and {A_g:his/her} friends …
+    expect(l.enRec.pieces[1].tpl).toMatch(/\{A_g:his\/her\}/);
+    const send = (look) => raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, tale: 'witch_candy', id: l.id, lang: 'en', piece: l.enRec.n, names: { A_en: 'Seoa' }, ...(look === undefined ? {} : { look }) }, deps });
     expect((await send({ A: 'b' })).status).toBe(200);
-    expect(fetch.calls[0].body.text).toMatch(/He melted!$/);
+    expect(fetch.calls[0].body).toMatchObject({ text: 'Seoa', language_code: 'en' });
+    expect(fetch.calls[0].body.next_text).toMatch(/^and his friends/);
     expect((await send({ A: 'g' })).status).toBe(200);
-    expect(fetch.calls[1].body.text).toMatch(/She melted!$/);
-    // 줄은 2번까지라 나머지는 미리 듣기로: look 이 없으면 원래 모습(A 여자아이)
-    const pvOf = (look) => raw(env, 'POST', '/v1/name/line', { auth: a, body: { preview: true, tale: 'witch_candy', id: l.id, lang: 'en', names: {}, ...(look ? { look } : {}) }, deps });
-    expect((await pvOf()).status).toBe(200);
-    expect(fetch.calls[2].body.text).toMatch(/She melted!$/);
+    expect(fetch.calls[1].body.next_text).toMatch(/^and her friends/);
     for (const bad of [{ A: 'boy' }, { A: 'x' }, { D: 'b' }, 'b', ['b']]) {
       const r = await send(bad);
       expect(r.status, JSON.stringify(bad)).toBe(400);
       expect(r.json.error).toBe('look_invalid');
     }
-    expect(fetch.calls.length).toBe(3);
-    // 한국어에는 이 줄이 없다
-    expect((await send({ A: 'b' }, 'ko')).status).toBe(400);
-    // 미리 듣기도 같은 규칙
-    const pv = await pvOf({ A: 'b' });
-    expect(pv.status).toBe(200);
-    expect(fetch.calls[3].body.text).toMatch(/He melted!$/);
-    // 모습은 KV 에 남지 않는다
+    expect(fetch.calls.length).toBe(2);
     const dump = [...env.ACCOUNTS.map.values()].join('\n');
     expect(dump).not.toMatch(/"look"|"A":"b"/);
+  });
+  it('통째 줄(구름 공장 이름 셋)은 줄 전체를 문맥 없이, 조각 번호가 다르면 400', async () => {
+    const { env, deps, fetch } = setup();
+    const a = await newAccount(env, deps);
+    await own(env, a);
+    const run = await firstRun(env, a, deps, 'kkultteok');
+    const l = NAME_LINES.kkultteok.find((x) => x.key.startsWith('다현이는 성큼성큼'));
+    expect(l.ko.whole).toBe(true);
+    const r = await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, tale: 'kkultteok', id: l.id, lang: 'ko', piece: l.ko.n, names: { A: '서아', B: '지민', C: '하늘' } }, deps });
+    expect(r.status).toBe(200);
+    expect(fetch.calls[0].body).toEqual({ text: '서아는 성큼성큼, 지민이는 씩씩하게, 하늘이는 아장아장 따라가요.', model_id: 'eleven_v4', voice_settings: l.ko.settings });
+    const bad = await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, tale: 'kkultteok', id: l.id, lang: 'ko', piece: 3, names: { A: '서아' } }, deps });
+    expect(bad.status).toBe(400);
+    // 나눈 줄: 다른 배역 조각(K, "퐁!")도 앞 문맥으로
+    const k = NAME_LINES.kkultteok.find((x) => x.key.startsWith('"퐁!"'));
+    await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, tale: 'kkultteok', id: k.id, lang: 'ko', piece: k.ko.n, names: { C: '하늘' } }, deps });
+    expect(fetch.calls[1].body).toMatchObject({ text: '하늘이가', previous_text: '"퐁!"', next_text: '따라 해요.' });
+  });
+  it('옛 앱 호환: 조각 번호(piece) 없는 요청은 줄 전체(말투 태그 + 이름·고정 조각 글, 다른 배역 조각 제외)를 녹음한다', async () => {
+    const { env, deps, fetch } = setup();
+    const a = await newAccount(env, deps);
+    await own(env, a);
+    const run = await firstRun(env, a, deps, 'red_car');
+    const l = NAME_LINES.red_car[0];
+    expect(l.ko.whole).toBe(false);
+    const r = await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, tale: 'red_car', id: l.id, lang: 'ko', names: { B: '서아' } }, deps });
+    expect(r.status).toBe(200);
+    expect(fetch.calls[0].body).toEqual({ text: l.ko.tag + ' 서아는 빨간 자동차를 참 좋아했어요.', model_id: 'eleven_v4', voice_settings: l.ko.settings });
+    // 미리 듣기도 같은 규칙, 대명사 줄(이름 조각 없음)은 옛 앱도 요청하지 않아(langs 에 없음) 400
+    const pv = await raw(env, 'POST', '/v1/name/line', { auth: a, body: { preview: true, tale: 'red_car', id: l.id, lang: 'ko', names: { B: '서아' } }, deps });
+    expect(pv.status).toBe(200);
+    expect(fetch.calls[1].body.text).toBe(fetch.calls[0].body.text);
+    const pron = NAME_LINES.witch_candy.find((x) => x.tplEn.startsWith('{A_g:He/She} melted'));
+    expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body: { preview: true, tale: 'witch_candy', id: pron.id, lang: 'en', names: {} }, deps })).status).toBe(400);
   });
   it('look 이 든 한국어 줄은 영향 없음(성별 단어 없음), 구름 공장 아이 목소리는 표대로(지금은 원래 목소리)', async () => {
     const { env, deps, fetch } = setup();

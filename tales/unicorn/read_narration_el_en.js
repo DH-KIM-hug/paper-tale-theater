@@ -2,7 +2,7 @@
 Object.assign(NARRATION_CLIPS_EN, {
  "언덕 위에 다현이가 서 있어요. 하늘을 올려다보고 있어요.": {
   "t": "On a hill stands Dahyun, looking up at the sky.",
-  "c": "audio/el/unicorn/en/nar_4cf8bbc119.mp3"
+  "c": "audio/el/unicorn/en/name/33e24938b1.mp3"
  },
  "파란 하늘에 하얀 구름이 두둥실 떠가고, 풀잎은 살랑살랑 흔들렸어요.": {
   "t": "White clouds drifted, drifted across the blue sky, and the grass swayed softly, swish, swish.",
@@ -10,7 +10,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다현이가 혼잣말을 했어요.": {
   "t": "Dahyun said to herself.",
-  "c": "audio/el/unicorn/en/nar_817b81df5b.mp3"
+  "c": "audio/el/unicorn/en/name/e71e716c05.mp3"
  },
  "진짜 유니콘을 만나고 싶어요.": {
   "t": "I want to meet a real unicorn.",
@@ -18,19 +18,19 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다현이는 바람에 떨어진 꽃 한 송이를 살며시 주워 바구니에 쏙 넣었어요.": {
   "t": "Dahyun gently picked up a flower the wind had dropped and popped it into her basket.",
-  "c": "audio/el/unicorn/en/nar_460bb92e32.mp3"
+  "c": "audio/el/unicorn/en/name/ad5b45976b.mp3"
  },
  "다현이는 구름 나라로 올라가 보기로 했어요.": {
   "t": "Dahyun decided to climb up to the cloud country.",
-  "c": "audio/el/unicorn/en/nar_6bd104d5cb.mp3"
+  "c": "audio/el/unicorn/en/name/4cb15c0d31.mp3"
  },
  "다현이는 간식 바구니를 들고 사뿐사뿐 언덕을 올라갔어요.": {
   "t": "Dahyun picked up her snack basket and tiptoed lightly, step, step, up the hill.",
-  "c": "audio/el/unicorn/en/nar_c62876a0ec.mp3"
+  "c": "audio/el/unicorn/en/name/cfc078a520.mp3"
  },
- "언덕을 오른 다현이가 구름 나라에 다다랐어요.": {
+ "다현이가 언덕을 올라 구름 나라에 다다랐어요.": {
   "t": "Dahyun climbed the hill and reached cloudland.",
-  "c": "audio/el/unicorn/en/nar_70e0172e35.mp3"
+  "c": "audio/el/unicorn/en/name/b299c1a284.mp3"
  },
  "구름 섬에 양 한 마리가 혼자 앉아 있어요.": {
   "t": "On a cloud island, a little sheep sat all alone.",
@@ -46,7 +46,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다현이가 양 아래에서 두 팔을 벌렸어요.": {
   "t": "Dahyun opened her arms below the sheep.",
-  "c": "audio/el/unicorn/en/nar_8a73b90725.mp3"
+  "c": "audio/el/unicorn/en/name/c3a828337f.mp3"
  },
  "괜찮아, 내가 받아 줄게!": {
   "t": "It's okay, I'll catch you!",
@@ -56,9 +56,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The sheep hopped right down!",
   "c": "audio/el/unicorn/en/nar_ae63dede0a.mp3"
  },
- "양은 폭신폭신 구름을 미끄러져 다현이 품에 폭, 안겼어요.": {
-  "t": "The sheep slid down the soft, fluffy cloud and landed, plop, right in Dahyun's arms.",
-  "c": "audio/el/unicorn/en/nar_21bf3538d1.mp3"
+ "양은 폭신폭신 구름을 미끄러져, 다현이 품에 폭, 안겼어요.": {
+  "t": "The sheep slid down the soft, fluffy cloud, and plop! Right into Dahyun's arms!",
+  "c": "audio/el/unicorn/en/name/1d806b40b2.mp3"
  },
  "같이 가자!": {
   "t": "Let's go together!",
@@ -66,7 +66,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다현이와 양은 손을 잡고 구름 길을 걸었어요.": {
   "t": "Dahyun and the sheep walked the cloud path hand in hand.",
-  "c": "audio/el/unicorn/en/nar_0bc0eecf28.mp3"
+  "c": "audio/el/unicorn/en/name/58329dff9c.mp3"
  },
  "구름 길은 폭신폭신, 걸을 때마다 발밑이 통통 튀었어요.": {
   "t": "The cloud path was soft and fluffy, and it bounced, boing, boing, under their feet with every step.",
@@ -86,7 +86,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "밤이 되자, 다현이는 별빛 숲으로 들어갔어요.": {
   "t": "When night came, Dahyun walked into the starlight forest.",
-  "c": "audio/el/unicorn/en/nar_5b107dfeba.mp3"
+  "c": "audio/el/unicorn/en/name/a5511463a5.mp3"
  },
  "별빛이 반짝반짝, 나뭇잎 사이로 쏟아져 내렸어요.": {
   "t": "Starlight came twinkling, twinkle, twinkle, down through the leaves.",
@@ -94,7 +94,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다현이는 숲속에서 아픈 사슴을 만났어요.": {
   "t": "In the forest, Dahyun met a deer who was hurt.",
-  "c": "audio/el/unicorn/en/nar_b7d17e0be8.mp3"
+  "c": "audio/el/unicorn/en/name/b3b730ef44.mp3"
  },
  "아야, 아야…": {
   "t": "Ouch, ouch...",
@@ -106,7 +106,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다현이는 살살, 조심조심 가시를 하나씩 뽑았어요. 쏙, 쏙, 쏙!": {
   "t": "Gently, ever so carefully, Dahyun pulled out the thorns one by one. Pop, pop, pop!",
-  "c": "audio/el/unicorn/en/nar_a35bf3912c.mp3"
+  "c": "audio/el/unicorn/en/name/b5bdd14204.mp3"
  },
  "가시 세 개를 모두 뺐어요!": {
   "t": "All three thorns are out!",
@@ -116,13 +116,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Thank you! It doesn't hurt at all now.",
   "c": "audio/el/unicorn/en/deer_88fb6b83ee.mp3"
  },
- "가시를 뺀 뒤에도 다현이는 숲에서 사슴 곁에 있었어요.": {
+ "가시를 뺀 뒤에도, 다현이는 숲에서 사슴 곁에 있었어요.": {
   "t": "After pulling out the thorns, Dahyun stayed beside the deer in the forest.",
-  "c": "audio/el/unicorn/en/nar_38bfb02831.mp3"
+  "c": "audio/el/unicorn/en/name/f3eb515e0f.mp3"
  },
  "다현이는 사슴의 작은 뿔을 가만히 보았어요.": {
   "t": "Dahyun looked quietly at the deer's little antlers.",
-  "c": "audio/el/unicorn/en/nar_b6525af233.mp3"
+  "c": "audio/el/unicorn/en/name/b34318ac4f.mp3"
  },
  "유니콘은… 아니구나.": {
   "t": "You're... not a unicorn.",
@@ -134,11 +134,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "쏴아아, 커다란 폭포 소리가 들려왔어요.": {
   "t": "Whoosh, splash! Dahyun heard the sound of a great big waterfall.",
-  "c": "audio/el/unicorn/en/nar_bef7abeef3.mp3"
+  "c": "audio/el/unicorn/en/name/a1d9864fcd.mp3"
  },
- "숲을 떠난 다현이는 폭포 앞에 다다랐어요.": {
+ "다현이는 숲을 떠나 폭포 앞에 다다랐어요.": {
   "t": "Dahyun left the forest and reached the waterfall.",
-  "c": "audio/el/unicorn/en/nar_99afabf39a.mp3"
+  "c": "audio/el/unicorn/en/name/abca9e9ecc.mp3"
  },
  "폭포 위에 무지개가 떠 있어요. 말 한 마리가 서 있어요.": {
   "t": "A rainbow hangs over the waterfall. A horse is standing there.",
@@ -160,9 +160,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The horse was looking at Dahyun's snack basket.",
   "c": "audio/el/unicorn/en/nar_5b6a16052a.mp3"
  },
- "폭포 앞에서 다현이가 배고픈 말에게 말했어요.": {
+ "폭포 앞에서, 다현이가 배고픈 말에게 말했어요.": {
   "t": "By the waterfall, Dahyun spoke to the hungry horse.",
-  "c": "audio/el/unicorn/en/nar_68ab05a942.mp3"
+  "c": "audio/el/unicorn/en/name/b7c6078011.mp3"
  },
  "자, 같이 먹자.": {
   "t": "Here, let's share.",
@@ -170,7 +170,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다현이는 바구니를 열어 간식을 반으로 똑 나누었어요.": {
   "t": "Dahyun opened the basket and broke the snack, snap, right in half.",
-  "c": "audio/el/unicorn/en/nar_b9f0799db7.mp3"
+  "c": "audio/el/unicorn/en/name/06cf61b822.mp3"
  },
  "말은 간식을 냠냠 맛있게 먹었어요.": {
   "t": "The horse munched the snack happily.",
@@ -188,9 +188,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The horse neighed goodbye, neigh, and galloped away, clip-clop, clip-clop, over the rainbow.",
   "c": "audio/el/unicorn/en/nar_3f9a4ce939.mp3"
  },
- "말과 헤어진 다현이가 혼자 길로 나왔어요.": {
+ "다현이는 말과 헤어져 혼자 길로 나왔어요.": {
   "t": "After saying goodbye to the horse, Dahyun came out onto the road alone.",
-  "c": "audio/el/unicorn/en/nar_9054f6d563.mp3"
+  "c": "audio/el/unicorn/en/name/f79cb45649.mp3"
  },
  "해가 지고, 길은 텅 비었어요.": {
   "t": "The sun went down, and the road was empty.",
@@ -206,7 +206,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다현이는 땅만 보며 터벅터벅 걸었어요.": {
   "t": "Dahyun trudged along, looking only at the ground.",
-  "c": "audio/el/unicorn/en/nar_812765a19f.mp3"
+  "c": "audio/el/unicorn/en/name/6fbf3c4399.mp3"
  },
  "다리는 무겁고, 눈은 자꾸 깜빡깜빡 감겼어요.": {
   "t": "Her legs felt heavy, and her eyes kept drooping, blink, blink.",
@@ -218,7 +218,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다현이는 그 길을 계속 걷고 있었어요.": {
   "t": "Dahyun was still walking along the road.",
-  "c": "audio/el/unicorn/en/nar_1c6123bcb7.mp3"
+  "c": "audio/el/unicorn/en/name/96acd51066.mp3"
  },
  "그때, 뒤에서 작은 소리가 났어요.": {
   "t": "Just then, a small sound came from behind.",
@@ -258,19 +258,19 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다현이의 눈이 반짝반짝 빛났어요. 가슴이 콩닥콩닥 뛰었지요.": {
   "t": "Dahyun's eyes shone, sparkle, sparkle. Her heart went thump, thump, thump.",
-  "c": "audio/el/unicorn/en/nar_a09c36971d.mp3"
+  "c": "audio/el/unicorn/en/name/53bf70550e.mp3"
  },
  "다현이는 유니콘을 꼭 안았어요.": {
   "t": "Dahyun hugged the unicorn tight.",
-  "c": "audio/el/unicorn/en/nar_042efac988.mp3"
+  "c": "audio/el/unicorn/en/name/25f0f32410.mp3"
  },
  "다음 날 아침, 다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.": {
   "t": "The next morning, Dahyun came back to the hill by her home with the unicorn.",
-  "c": "audio/el/unicorn/en/nar_ff0d8ed59c.mp3"
+  "c": "audio/el/unicorn/en/name/c70fb4ccb2.mp3"
  },
  "다현이는 바구니 속 빨간 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.": {
   "t": "Dahyun gently tucked the red flower from her basket into the unicorn's mane.",
-  "c": "audio/el/unicorn/en/nar_0a5fc08422.mp3"
+  "c": "audio/el/unicorn/en/name/8a390743da.mp3"
  },
  "유니콘이 다현이에게 고맙다고 말했어요.": {
   "t": "The unicorn thanked Dahyun.",
@@ -286,7 +286,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "그날 밤, 다현이는 포근한 이불 속에 누웠어요.": {
   "t": "That night, Dahyun lay down under her cozy blanket.",
-  "c": "audio/el/unicorn/en/nar_2217a15a7c.mp3"
+  "c": "audio/el/unicorn/en/name/047cef7a51.mp3"
  },
  "\"유니콘, 내일도 거기 있을 거지?\"": {
   "t": "Unicorn, will you be there tomorrow too?",
@@ -302,7 +302,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "다현이는 친절한 마음을 꼭 안고 스르르 잠이 들었어요.": {
   "t": "Holding her kind heart close, Dahyun drifted off to sleep.",
-  "c": "audio/el/unicorn/en/nar_213896438f.mp3"
+  "c": "audio/el/unicorn/en/name/e45ca3cf75.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {});

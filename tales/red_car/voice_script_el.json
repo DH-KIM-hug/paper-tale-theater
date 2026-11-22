@@ -67,7 +67,8 @@
      null,
      "[calm, warm storytelling, slow, unhurried]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "빨간 것은 어디 있을까요? 찾아봐요.",
@@ -122,7 +123,8 @@
      null,
      "[warm, playful rhythm, slow, a small pause before 잠잘 때도]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "그러던 어느 날, 밖에서 놀고 있었어요.",
@@ -133,7 +135,8 @@
      null,
      "[calm, light, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "어! 나비다!",
@@ -155,7 +158,8 @@
      null,
      "[gentle, a tiny pause before 톡]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "정신을 차려 보니… 어라? 빨간 자동차가 보이지 않아요!",
@@ -180,15 +184,16 @@
    ]
   },
   {
-   "text": "홀로 남은 빨간 자동차는 이현이를 찾기로 했어요. 용기 있게 출발!",
+   "text": "빨간 자동차는 홀로 남았어요. 이현이를 찾기로 했어요. 용기 있게 출발!",
    "segs": [
     [
      "nar",
-     "홀로 남은 빨간 자동차는 이현이를 찾기로 했어요. 용기 있게 출발!",
+     "빨간 자동차는 홀로 남았어요. 이현이를 찾기로 했어요. 용기 있게 출발!",
      null,
      "[warm, building courage, slow then bright at 출발]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "부릉부릉! 이현이를 찾아 장난감 세상으로 가자!",
@@ -199,7 +204,8 @@
      "happy",
      "[small brave voice, cheerful, determined, clear]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "조금 가다 보니, 삐뽀삐뽀 우렁찬 소리가 들렸어요.",
@@ -243,18 +249,20 @@
      "toneup",
      "[small voice, surprised, delighted]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
-   "text": "우리 같이 이현이한테 가자!",
+   "text": "이현이한테 우리 같이 가자!",
    "segs": [
     [
      "red",
-     "우리 같이 이현이한테 가자!",
+     "이현이한테 우리 같이 가자!",
      "happy",
      "[small voice, eager, inviting]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "좋아! 도둑을 다 잡았으니 같이 가자!",
@@ -323,15 +331,16 @@
    ]
   },
   {
-   "text": "어? 소방차 이모! 우리 같이 이현이 만나러 가요!",
+   "text": "어? 소방차 이모! 이현이 만나러 우리 같이 가요!",
    "segs": [
     [
      "red",
-     "어? 소방차 이모! 우리 같이 이현이 만나러 가요!",
+     "어? 소방차 이모! 이현이 만나러 우리 같이 가요!",
      "happy",
      "[small voice, excited, polite]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "그래그래! 불을 다 껐으니 같이 가자!",
@@ -378,26 +387,28 @@
    ]
   },
   {
-   "text": "구급차 삼촌! 우리랑 같이 이현이한테 가요!",
+   "text": "구급차 삼촌! 이현이한테 우리랑 같이 가요!",
    "segs": [
     [
      "red",
-     "구급차 삼촌! 우리랑 같이 이현이한테 가요!",
+     "구급차 삼촌! 이현이한테 우리랑 같이 가요!",
      "happy",
      "[small voice, eager, polite]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
-   "text": "오냐오냐, 아픈 친구들을 다 데려다주었으니 이제 이현이에게 가자!",
+   "text": "오냐오냐, 아픈 친구들을 다 데려다주었으니, 이제 이현이에게 가자!",
    "segs": [
     [
      "amb",
-     "오냐오냐, 아픈 친구들을 다 데려다주었으니 이제 이현이에게 가자!",
+     "오냐오냐, 아픈 친구들을 다 데려다주었으니, 이제 이현이에게 가자!",
      "happy",
      "[kind uncle voice, deep, reassuring, unhurried]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "구급차 삼촌도 든든하게 따라나섰어요.",
@@ -422,15 +433,16 @@
    ]
   },
   {
-   "text": "자, 다 같이 이현이한테 가자!",
+   "text": "자, 이현이한테 다 같이 가자!",
    "segs": [
     [
      "red",
-     "자, 다 같이 이현이한테 가자!",
+     "자, 이현이한테 다 같이 가자!",
      "happy",
      "[small voice, leading, cheerful]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "하지만 너무 오래 달린 빨간 자동차는 그만 툭, 멈춰 서고 말았어요.",
@@ -496,7 +508,8 @@
      "toneup",
      "[bright, glad reveal]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "견인차가 튼튼한 고리로 빨간 자동차를 찰칵! 걸어 주었어요.",
@@ -760,7 +773,8 @@
      "toneup",
      "[bright, relieved, joyful]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "와아! 내 빨간 자동차다!",
@@ -793,7 +807,8 @@
      "happy",
      "[warm, joyful, storybook ending tone]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "이제 모두 함께 집으로 출발!",
@@ -859,7 +874,8 @@
      null,
      "[calm, warm storytelling, slow, unhurried, sleepy, soft]"
     ]
-   ]
+   ],
+   "name_split": true
   }
  ],
  "extra": {

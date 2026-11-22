@@ -68,7 +68,8 @@
 - 연결 화면(코드 만들기·코드 입력)은 부모 확인 뒤에만 열린다.
 
 ## 이름 바꾸기 (2026-11-06, 기획 docs/NAME_CHANGE_PLAN.md · 2판 2026-11-07 docs/NAME_SETUP_V2_PLAN.md)
-창작 동화의 아이·강아지 이름을 보호자가 바꾸면, 이름이 든 대사를 서버가 ElevenLabs 로 줄 하나씩 새로 녹음해 mp3 로 돌려준다. **서버는 이름을 저장하지도 로그에 쓰지도 않는다**(요청 처리 중 메모리에만). KV 에는 숫자·동화 id·실행 id 만 둔다.
+창작 동화의 아이·강아지 이름을 보호자가 바꾸면, 이름이 든 대사를 서버가 ElevenLabs 로 줄 하나씩 새로 녹음해 mp3 로 돌려준다.
+**2026-11-22 이름 조각 + 고정 조각(사용자 확정):** 서버는 줄 전체가 아니라 **이름 조각**(카탈로그 `pieces[n]`, 예 '다현이랑')만 녹음한다. 앞뒤 조각 글은 ElevenLabs `previous_text`·`next_text` 문맥으로 보낸다(차감 없음, 나눈 줄은 말투 태그도 `previous_text` 맨 앞). 영어는 `language_code: en`. 고정 조각은 앱 묶음(`audio/el/<동화>/parts/`)에 있고 기기(engine/names.js `assemble`)가 한 파일로 합친다. 줄 통째가 이름 조각인 줄(`whole`, 예 구름 공장 '다현이는 성큼성큼, …' · 홈 스티커 이름)은 줄 전체를 문맥 없이. 이름 없는 영어 대명사 줄(`n: null`)은 he/she 두 벌을 앱 묶음에 미리 녹음했으므로 서버가 녹음하지 않는다(`line` 은 `bad_request`). 상한은 모두 조각 단위(`PER_PIECE_LIMIT` 2, 전체 하루 상한·실행 예약도 이름 조각 수). **서버는 이름을 저장하지도 로그에 쓰지도 않는다**(요청 처리 중 메모리에만). KV 에는 숫자·동화 id·실행 id 만 둔다.
 
 ### 자리와 템플릿
 - 자리 4개(네 편 공통): `A` 다현(여자아이), `B` 이현(남자아이), `C` 은우(막내), `D` 꿀떡(강아지, 원문 '꿀떡이' = 꿀떡 + 이). 영어 원래 이름 Dahyun·Ihyun·Eunwoo·Kkulddeok.
@@ -95,7 +96,7 @@
 | `GET /v1/name/quota` | 인증 | - | `{ owned, first: [taleId], firstLeft: [taleId], tickets, activeRun: { runId, tales, kind, expiresAt } \| null, previewsLeftToday }` |
 | `POST /v1/name/run` | owned | `{ tale: "<taleId>" }` | `{ runId, tales: [taleId] (witch_candy 는 + 'home'), kind: 'first', expiresAt }` — 무료 첫 설정(동화마다 1번) |
 | `POST /v1/name/run` | tickets ≥ 1 (owned 불필요) | `{ ticket: true }` | `{ runId, tales: [kkultteok, red_car, unicorn, witch_candy, home], kind: 'ticket', expiresAt }` — 이용권 1장 소모. 도는 중이면 `resumed: true` 로 같은 실행 |
-| `POST /v1/name/line` | 실행 범위 안(첫 설정 실행은 owned 도) | `{ runId, tale, id, lang: "ko"\|"en", names, look? }` | `audio/mpeg` 바이트, 헤더 `X-Name-Version` |
+| `POST /v1/name/line` | 실행 범위 안(첫 설정 실행은 owned 도) | `{ runId, tale, id, lang: "ko"\|"en", piece?, names, look? }` (piece = 이름 조각 번호, 주면 카탈로그 `n`·`nEn` 과 같아야 함) | `audio/mpeg` 바이트, 헤더 `X-Name-Version` |
 | `POST /v1/name/line` | owned 또는 이용권(남음·실행 중) | `{ preview: true, tale, id, lang, names, look? }` | 미리 듣기 mp3 |
 | `POST /v1/name/check` | 인증 | `{ names, look? }` | `{ ok, errors: { A: "banned"\|"invalid", look: "invalid", … } }` — 형식·금칙어(`server/src/banned_names.js`), 저장 없음 |
 | `POST /v1/receipt/apple` | 인증 | 이용권 JWS | 이용권이면 `{ owned, state, quota }` — `owned` 는 계정의 실제 전체 구매 여부(이용권이 전체 구매를 열지 않는다) (같은 계정이 같은 거래를 다시 보내면 `duplicate: true` 로 횟수 그대로) |
@@ -104,7 +105,8 @@
 - 카탈로그 줄: `key` = 녹음 맵 열쇠(한국어 원문, `NARRATION_CLIPS[key]`·`NARRATION_CLIPS_EN[keyEn]`). `keyEn` 은 동화에서는 `key` 와 같고, `home`(스티커 이름 3줄)만 영어 글(`NARRATION_CLIPS_EN` 이 영어 글을 열쇠로 쓴다). `tpl`·`tplEn` 은 화면 글 템플릿, `en` 은 영어 원문.
 - `mode`: `both`(놀이·읽어 주기 같은 클립) / `play` / `read` / `home`. 놀이와 읽어 주기에서 같은 열쇠가 다른 클립을 쓰는 줄은 없다(2026-11-06 확인).
 - `seg`·`segEn`: 녹음 맵 값이 클립 배열(여러 배역이 이어 읽는 줄)이면 이름이 든 조각의 번호, 한 클립이면 `null`. 받은 mp3 는 그 번호 자리만 바꾼다(지금 구름 공장 5줄).
-- `langs`: 그 언어 녹음에 이름이 들어 있는 언어. 영어에만 이름·대명사가 있는 줄이 있다(한국어 원문은 이름·성별 단어를 생략, `langs: ['en']`). 없는 언어로 `line` 을 부르면 `bad_request`.
+- `pieces`·`piecesEn`: 그 언어 녹음 조각 `[{k:'S', tpl, gap, url|urls{b,g}}, {k:'N', tpl, gap, slots, g}, {k:'K', tpl}]` (S 고정 조각 = 앱 묶음 주소, urls 는 영어 대명사가 든 조각의 모습별 벌, N 이름 조각, K 다른 배역 조각 = 문맥만). `gap` = 그 조각 뒤 쉼(초). `n`·`nEn` = 이름 조각 번호(없으면 null).
+- `langs`: 서버가 이름 조각을 녹음하는 언어(2026-11-22부터 대명사만 있는 줄은 빈 목록). 영어에만 이름·대명사가 있는 줄이 있다(한국어 원문은 이름·성별 단어를 생략, `langs: ['en']`). 없는 언어로 `line` 을 부르면 `bad_request`.
 - `g`(2판): 주인공 모습(look)에 따라 결과가 달라지는 자리 목록(예 `['A']`). 영어 `{A_g:…}` 대명사가 든 줄, 또는 모습별 목소리가 실제로 다른 줄. 비면 모습과 무관. 모습만 바뀐 앱은 `g` 가 있는 줄을 다시 받는다(실행 안에서만 만들 수 있다).
 - 모습별 목소리(2판): 이름이 든 아이 대사(구름 공장 첫째 nuna=A·둘째 oppa=B·막내 agi=C 배역 줄)는 `look` 으로 그 아이의 모습에 맞는 목소리 id 로 만든다. 표는 `tools/elevenlabs/build_name_lines.py` 의 `LOOK_VOICE` 한 곳(지금은 모두 원래 목소리 — 목소리 id 를 정하면 표만 바꾸고 다시 만든다). 줄 데이터에는 `look: { slot, voices: { b, g } }` 로 들어가며, 앱에는 내보내지 않는다.
 - 영어에서 영어 이름을 비우면 원래 녹음과 같은 발음 표기(예: 빨간 자동차의 `Ee-hyun`)로 만든다.

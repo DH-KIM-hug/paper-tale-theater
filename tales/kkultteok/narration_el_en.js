@@ -2,7 +2,7 @@
 Object.assign(NARRATION_CLIPS_EN, {
  "해가 쨍쨍한 날, 다현이와 이현이와 은우는 꿀떡이랑 산책을 나가요.": {
   "t": "On a sunny day, Dahyun, Ihyun, and Eunwoo go for a walk with Kkulddeok.",
-  "c": "audio/el/kkultteok/en/nar_c704802da6.mp3"
+  "c": "audio/el/kkultteok/en/name/df5946597e.mp3"
  },
  "하늘에 구름이 둥실둥실.": {
   "t": "Clouds float across the sky.",
@@ -14,19 +14,19 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "꿀떡이를 톡! 같이 킁킁해 봐요.": {
   "t": "Tap Kkulddeok! Let's sniff together.",
-  "c": "audio/el/kkultteok/en/nar_c3f025f882.mp3"
+  "c": "audio/el/kkultteok/en/name/44121ac4a7.mp3"
  },
  "꿀떡이는 땅에 코를 대고 킁킁.": {
   "t": "Kkulddeok puts his nose to the ground. Sniff, sniff.",
-  "c": "audio/el/kkultteok/en/nar_11835e33e6.mp3"
+  "c": "audio/el/kkultteok/en/name/2ef909ef7c.mp3"
  },
  "킁킁킁! 꿀떡이가 무슨 냄새를 맡았어요.": {
   "t": "Sniff sniff sniff! Kkulddeok smells something.",
-  "c": "audio/el/kkultteok/en/nar_2e6654626e.mp3"
+  "c": "audio/el/kkultteok/en/name/33656d7a1d.mp3"
  },
  "꿀떡이를 톡! 냄새를 따라가요.": {
   "t": "Tap Kkulddeok! Follow the smell.",
-  "c": "audio/el/kkultteok/en/nar_bb3e83e90d.mp3"
+  "c": "audio/el/kkultteok/en/name/22df1f71a1.mp3"
  },
  "냄새를 따라 쪼르르 달려가요.": {
   "t": "He runs off, following the smell.",
@@ -36,7 +36,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Wait for us!",
   "c": "audio/el/kkultteok/en/nuna_4b663e49b7.mp3"
  },
- "삼남매는 영차, 영차 언덕을 올라요.": {
+ "아이들은 영차, 영차 언덕을 올라요.": {
   "t": "Heave-ho, heave-ho! The three kids climb the hill.",
   "c": "audio/el/kkultteok/en/nar_0597e25c70.mp3"
  },
@@ -64,7 +64,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Pong! Eunwoo says it too.",
   "c": [
    "audio/el/kkultteok/en/agi_ba6f09856a.mp3",
-   "audio/el/kkultteok/en/nar_7975e0fb27.mp3"
+   "audio/el/kkultteok/en/name/573c28f3f6.mp3"
   ]
  },
  "하늘의 구름을 톡! 무엇이 될까요?": {
@@ -85,7 +85,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "꿀떡이가 문틈에 코를 쏙 밀어 넣어요.": {
   "t": "Kkulddeok pokes his nose into the gap in the door.",
-  "c": "audio/el/kkultteok/en/nar_23d16d3219.mp3"
+  "c": "audio/el/kkultteok/en/name/b833dbaf87.mp3"
  },
  "문틈을 톡!": {
   "t": "Tap the gap in the door!",
@@ -95,7 +95,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Creeeak... the door swings open.",
   "c": "audio/el/kkultteok/en/nar_8c63af71da.mp3"
  },
- "삼남매는 살금살금 따라 들어가요.": {
+ "아이들은 살금살금 따라 들어가요.": {
   "t": "The three kids tiptoe in after him.",
   "c": "audio/el/kkultteok/en/nar_5907722165.mp3"
  },
@@ -109,11 +109,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "이현이가 물방울에 손을 살짝 대 봐요.": {
   "t": "Ihyun gently touches a water drop.",
-  "c": "audio/el/kkultteok/en/nar_ec09279a1e.mp3"
+  "c": "audio/el/kkultteok/en/name/656bcd015f.mp3"
  },
  "다현이는 후우— 바람을 불어 줘요.": {
   "t": "Dahyun blows a big breath. Whoooo!",
-  "c": "audio/el/kkultteok/en/nar_5ea8a3e5c9.mp3"
+  "c": "audio/el/kkultteok/en/name/c947ef3ba0.mp3"
  },
  "바람 나팔을 톡!": {
   "t": "Tap the wind horn!",
@@ -129,7 +129,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "이현이가 모양 틀을 꾹! 눌러요.": {
   "t": "Ihyun pushes the shape press. Push!",
-  "c": "audio/el/kkultteok/en/nar_2ad775f73f.mp3"
+  "c": "audio/el/kkultteok/en/name/929ddb812f.mp3"
  },
  "모양 틀을 톡톡톡!": {
   "t": "Tap the shape press, tap tap tap!",
@@ -145,7 +145,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "꿀떡이가 강아지 구름과 코를 맞대요.": {
   "t": "Kkulddeok touches noses with the puppy cloud.",
-  "c": "audio/el/kkultteok/en/nar_7f47d3f83f.mp3"
+  "c": "audio/el/kkultteok/en/name/c2d66eadcf.mp3"
  },
  "에취! 구름 조각이 사르르 날려요.": {
   "t": "Achoo! Little bits of cloud float away.",
@@ -165,7 +165,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "은우가 꾹! 눌렀어요.": {
   "t": "Eunwoo presses it. Push!",
-  "c": "audio/el/kkultteok/en/nar_090171ad1a.mp3"
+  "c": "audio/el/kkultteok/en/name/19e8bd31f5.mp3"
  },
  "슈웅— 강아지 구름이 굴뚝으로 올라가요.": {
   "t": "Whoosh! The puppy cloud zooms up the chimney.",
@@ -197,7 +197,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "꿀떡이는 축축한 바닥을 킁킁.": {
   "t": "Kkulddeok sniffs the wet floor.",
-  "c": "audio/el/kkultteok/en/nar_c597e18330.mp3"
+  "c": "audio/el/kkultteok/en/name/6ee0296d3b.mp3"
  },
  "종을 톡!": {
   "t": "Tap the bell!",
@@ -233,11 +233,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "꿀떡이가 살금살금 다가가요.": {
   "t": "Kkulddeok tiptoes closer.",
-  "c": "audio/el/kkultteok/en/nar_9f6f39067c.mp3"
+  "c": "audio/el/kkultteok/en/name/ec1904f546.mp3"
  },
  "은우가 아기 먹구름을 살살 쓰다듬어요.": {
   "t": "Eunwoo gently pats the baby rain cloud.",
-  "c": "audio/el/kkultteok/en/nar_4734e6bc8b.mp3"
+  "c": "audio/el/kkultteok/en/name/2fa96e54c8.mp3"
  },
  "아기 먹구름을 톡톡톡 쓰다듬어 줘요!": {
   "t": "Pat the baby rain cloud, tap tap tap!",
@@ -251,12 +251,12 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Splash, splash! Ihyun jumps too.",
   "c": [
    "audio/el/kkultteok/en/oppa_7e8be57cee.mp3",
-   "audio/el/kkultteok/en/nar_18fc001aab.mp3"
+   "audio/el/kkultteok/en/name/3e744ce7c9.mp3"
   ]
  },
  "꿀떡이는 아기 먹구름 볼을 할짝.": {
   "t": "Kkulddeok licks the baby cloud's cheek. Lick!",
-  "c": "audio/el/kkultteok/en/nar_932239228f.mp3"
+  "c": "audio/el/kkultteok/en/name/d03d642397.mp3"
  },
  "아기 먹구름 눈이 동그래졌어요.": {
   "t": "The baby rain cloud's eyes go big and round.",
@@ -274,13 +274,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Whoosh! The baby rain cloud zooms up the chimney. Pong!",
   "c": "audio/el/kkultteok/en/nar_a65e148b32.mp3"
  },
- "삼남매도 손을 흔들며 밖으로 달려 나가요.": {
+ "아이들도 손을 흔들며 밖으로 달려 나가요.": {
   "t": "The three kids wave and run outside.",
   "c": "audio/el/kkultteok/en/nar_16e73f7293.mp3"
  },
  "꿀떡이는 하늘을 보고 멍! 멍!": {
   "t": "Kkulddeok looks up at the sky. Woof! Woof!",
-  "c": "audio/el/kkultteok/en/nar_8420e41afa.mp3"
+  "c": "audio/el/kkultteok/en/name/d93ade3784.mp3"
  },
  "하늘에서 아기 먹구름이 큰 먹구름과 쿵!": {
   "t": "Up in the sky, the baby rain cloud bumps into a big rain cloud. Bump!",
@@ -294,7 +294,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Flash! Rumble, BOOM!",
   "c": "audio/el/kkultteok/en/nar_4a820ff223.mp3"
  },
- "\"으악!\" 삼남매는 서로 꼭 껴안아요.": {
+ "\"으악!\" 아이들은 서로 꼭 껴안아요.": {
   "t": "Eek! The three kids hug each other tight.",
   "c": [
    "audio/el/kkultteok/en/oppa_faecc0678a.mp3",
@@ -307,7 +307,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "꿀떡이는 꼬리를 살랑살랑 흔들어요.": {
   "t": "Kkulddeok wags his tail, wiggle wiggle.",
-  "c": "audio/el/kkultteok/en/nar_17dda6a748.mp3"
+  "c": "audio/el/kkultteok/en/name/24204c378c.mp3"
  },
  "빗방울을 톡!": {
   "t": "Tap the raindrop!",
@@ -321,15 +321,15 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap the puddles, tap tap tap! Splash, splash!",
   "c": "audio/el/kkultteok/en/nar_a262693f9b.mp3"
  },
- "삼남매는 꿀떡이랑 물웅덩이에서 첨벙첨벙!": {
+ "아이들은 꿀떡이랑 물웅덩이에서 첨벙첨벙!": {
   "t": "The three kids and Kkulddeok splash in the puddles!",
-  "c": "audio/el/kkultteok/en/nar_6e9acd0948.mp3"
+  "c": "audio/el/kkultteok/en/name/b3f0efa240.mp3"
  },
  "\"첨벙!\" 은우가 제일 높이 뛰어요.": {
   "t": "Splash! Eunwoo jumps the highest.",
   "c": [
    "audio/el/kkultteok/en/agi_65b388ec29.mp3",
-   "audio/el/kkultteok/en/nar_883fdea03e.mp3"
+   "audio/el/kkultteok/en/name/4c164570bf.mp3"
   ]
  },
  "땅을 톡!": {
@@ -338,7 +338,7 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "꿀떡이는 딸기 냄새를 킁킁.": {
   "t": "Kkulddeok sniffs the strawberry.",
-  "c": "audio/el/kkultteok/en/nar_02028ea811.mp3"
+  "c": "audio/el/kkultteok/en/name/06cc031efe.mp3"
  },
  "아기 먹구름이 내려다봐요. \"어? 다들 웃고 있네!\"": {
   "t": "The baby rain cloud looks down. Oh? Everyone is smiling!",
@@ -376,11 +376,11 @@ Object.assign(NARRATION_CLIPS_EN, {
  },
  "꿀떡이는 젖은 흙에 코를 대고 킁킁.": {
   "t": "Kkulddeok puts his nose to the wet dirt. Sniff, sniff.",
-  "c": "audio/el/kkultteok/en/nar_5385756cc9.mp3"
+  "c": "audio/el/kkultteok/en/name/683a98dbea.mp3"
  },
- "삼남매는 꿀떡이랑 왔던 길로 집에 가요.": {
+ "아이들은 꿀떡이랑 왔던 길로 집에 가요.": {
   "t": "The three kids and Kkulddeok walk home the way they came.",
-  "c": "audio/el/kkultteok/en/nar_32754b979d.mp3"
+  "c": "audio/el/kkultteok/en/name/e648c1648a.mp3"
  },
  "굴뚝을 톡! 안녕!": {
   "t": "Tap the chimney! Bye-bye!",
@@ -393,13 +393,13 @@ Object.assign(NARRATION_CLIPS_EN, {
  "은우가 뒤를 돌아보며 손을 흔들어요. \"퐁!\"": {
   "t": "Eunwoo looks back and waves. Pong!",
   "c": [
-   "audio/el/kkultteok/en/nar_416ffbea21.mp3",
+   "audio/el/kkultteok/en/name/bda1de0a54.mp3",
    "audio/el/kkultteok/en/agi_ba6f09856a.mp3"
   ]
  },
  "꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.": {
   "t": "Kkulddeok takes one last sniff of the wind from the chimney.",
-  "c": "audio/el/kkultteok/en/nar_389af75978.mp3"
+  "c": "audio/el/kkultteok/en/name/87c70f1ef6.mp3"
  },
  "톡.": {
   "t": "Plip.",
@@ -453,7 +453,7 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Purple!",
   "c": "audio/el/kkultteok/en/nar_95712b3358.mp3"
  },
- "밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.": {
+ "밤이 되었어요. 아이들은 이불 속에 쏙 들어갔어요.": {
   "t": "Night came. The three kids snuggled under the blanket.",
   "c": "audio/el/kkultteok/en/nar_0825164a26.mp3"
  },
@@ -469,12 +469,12 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "\"Good night, little cloud!\" Dahyun and Ihyun whispered.",
   "c": [
    "audio/el/kkultteok/en/nuna_19868c4bf3.mp3",
-   "audio/el/kkultteok/en/nar_183098b121.mp3"
+   "audio/el/kkultteok/en/name/355e4e71ef.mp3"
   ]
  },
  "꿀떡이도 새근새근, 모두 꿈나라로 갔어요.": {
   "t": "Kkulddeok breathed softly too, and everyone drifted off to dreamland.",
-  "c": "audio/el/kkultteok/en/nar_0b8bfe9a4e.mp3"
+  "c": "audio/el/kkultteok/en/name/d32c4f373b.mp3"
  }
 });
 Object.assign(VOICE_LINES_EN, {});

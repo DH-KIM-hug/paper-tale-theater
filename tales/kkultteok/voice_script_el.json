@@ -59,7 +59,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "하늘에 구름이 둥실둥실.",
@@ -92,7 +93,8 @@
      null,
      "[gentle, encouraging, cheerful]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "꿀떡이는 땅에 코를 대고 킁킁.",
@@ -103,7 +105,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "킁킁킁! 꿀떡이가 무슨 냄새를 맡았어요.",
@@ -114,7 +117,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "꿀떡이를 톡! 냄새를 따라가요.",
@@ -125,7 +129,8 @@
      null,
      "[gentle, encouraging, cheerful]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "냄새를 따라 쪼르르 달려가요.",
@@ -150,11 +155,11 @@
    ]
   },
   {
-   "text": "삼남매는 영차, 영차 언덕을 올라요.",
+   "text": "아이들은 영차, 영차 언덕을 올라요.",
    "segs": [
     [
      "nar",
-     "삼남매는 영차, 영차 언덕을 올라요.",
+     "아이들은 영차, 영차 언덕을 올라요.",
      null,
      "[gentle, warm storyteller]"
     ]
@@ -230,7 +235,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "하늘의 구름을 톡! 무엇이 될까요?",
@@ -285,7 +291,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "문틈을 톡!",
@@ -310,11 +317,11 @@
    ]
   },
   {
-   "text": "삼남매는 살금살금 따라 들어가요.",
+   "text": "아이들은 살금살금 따라 들어가요.",
    "segs": [
     [
      "nar",
-     "삼남매는 살금살금 따라 들어가요.",
+     "아이들은 살금살금 따라 들어가요.",
      null,
      "[gentle, warm storyteller]"
     ]
@@ -351,7 +358,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 후우— 바람을 불어 줘요.",
@@ -362,7 +370,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "바람 나팔을 톡!",
@@ -406,7 +415,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "모양 틀을 톡톡톡!",
@@ -450,7 +460,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "에취! 구름 조각이 사르르 날려요.",
@@ -505,7 +516,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "슈웅— 강아지 구름이 굴뚝으로 올라가요.",
@@ -593,7 +605,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "종을 톡!",
@@ -692,7 +705,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "은우가 아기 먹구름을 살살 쓰다듬어요.",
@@ -703,7 +717,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "아기 먹구름을 톡톡톡 쓰다듬어 줘요!",
@@ -742,7 +757,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "꿀떡이는 아기 먹구름 볼을 할짝.",
@@ -753,7 +769,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "아기 먹구름 눈이 동그래졌어요.",
@@ -800,11 +817,11 @@
    ]
   },
   {
-   "text": "삼남매도 손을 흔들며 밖으로 달려 나가요.",
+   "text": "아이들도 손을 흔들며 밖으로 달려 나가요.",
    "segs": [
     [
      "nar",
-     "삼남매도 손을 흔들며 밖으로 달려 나가요.",
+     "아이들도 손을 흔들며 밖으로 달려 나가요.",
      null,
      "[gentle, warm storyteller]"
     ]
@@ -819,7 +836,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "하늘에서 아기 먹구름이 큰 먹구름과 쿵!",
@@ -855,7 +873,7 @@
    ]
   },
   {
-   "text": "\"으악!\" 삼남매는 서로 꼭 껴안아요.",
+   "text": "\"으악!\" 아이들은 서로 꼭 껴안아요.",
    "segs": [
     [
      "oppa",
@@ -865,7 +883,7 @@
     ],
     [
      "nar",
-     "삼남매는 서로 꼭 껴안아요.",
+     "아이들은 서로 꼭 껴안아요.",
      null,
      "[gentle, warm storyteller]"
     ]
@@ -891,7 +909,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "빗방울을 톡!",
@@ -927,15 +946,16 @@
    ]
   },
   {
-   "text": "삼남매는 꿀떡이랑 물웅덩이에서 첨벙첨벙!",
+   "text": "아이들은 꿀떡이랑 물웅덩이에서 첨벙첨벙!",
    "segs": [
     [
      "nar",
-     "삼남매는 꿀떡이랑 물웅덩이에서 첨벙첨벙!",
+     "아이들은 꿀떡이랑 물웅덩이에서 첨벙첨벙!",
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "\"첨벙!\" 은우가 제일 높이 뛰어요.",
@@ -952,7 +972,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "땅을 톡!",
@@ -974,7 +995,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "아기 먹구름이 내려다봐요. \"어? 다들 웃고 있네!\"",
@@ -1074,18 +1096,20 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
-   "text": "삼남매는 꿀떡이랑 왔던 길로 집에 가요.",
+   "text": "아이들은 꿀떡이랑 왔던 길로 집에 가요.",
    "segs": [
     [
      "nar",
-     "삼남매는 꿀떡이랑 왔던 길로 집에 가요.",
+     "아이들은 꿀떡이랑 왔던 길로 집에 가요.",
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "굴뚝을 톡! 안녕!",
@@ -1124,7 +1148,8 @@
      null,
      "[baby voice]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.",
@@ -1135,7 +1160,8 @@
      null,
      "[gentle, warm storyteller]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "톡.",
@@ -1281,11 +1307,11 @@
    ]
   },
   {
-   "text": "밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.",
+   "text": "밤이 되었어요. 아이들은 이불 속에 쏙 들어갔어요.",
    "segs": [
     [
      "nar",
-     "밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.",
+     "밤이 되었어요. 아이들은 이불 속에 쏙 들어갔어요.",
      null,
      "[gentle, warm storyteller, slow, sleepy, soft]"
     ]
@@ -1328,7 +1354,8 @@
      null,
      "[gentle, warm storyteller, slow, sleepy, soft]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "꿀떡이도 새근새근, 모두 꿈나라로 갔어요.",
@@ -1339,7 +1366,8 @@
      null,
      "[gentle, warm storyteller, slow, sleepy, soft, fading]"
     ]
-   ]
+   ],
+   "name_split": true
   }
  ]
 }

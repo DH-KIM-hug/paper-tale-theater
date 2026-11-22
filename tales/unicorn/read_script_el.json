@@ -45,7 +45,8 @@
        null,
        "[calm, warm storytelling, slow, unhurried]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "파란 하늘에 하얀 구름이 두둥실 떠가고, 풀잎은 살랑살랑 흔들렸어요.",
@@ -70,7 +71,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "진짜 유니콘을 만나고 싶어요.",
@@ -97,7 +99,8 @@
        null,
        "[warm, playful, light, storybook tone]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "다현이는 구름 나라로 올라가 보기로 했어요.",
@@ -112,7 +115,8 @@
      ],
      "before": [
       "kid:hop"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "다현이는 간식 바구니를 들고 사뿐사뿐 언덕을 올라갔어요.",
@@ -128,7 +132,8 @@
      "before": [
       "kid:look:walk:right",
       "kid:walk:520,1800"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -150,17 +155,18 @@
    ],
    "lines": [
     {
-     "text": "언덕을 오른 다현이가 구름 나라에 다다랐어요.",
+     "text": "다현이가 언덕을 올라 구름 나라에 다다랐어요.",
      "src": "new",
      "needs_audio": true,
      "segs": [
       [
        "nar",
-       "언덕을 오른 다현이가 구름 나라에 다다랐어요.",
+       "다현이가 언덕을 올라 구름 나라에 다다랐어요.",
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "구름 섬에 양 한 마리가 혼자 앉아 있어요.",
@@ -213,7 +219,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "괜찮아, 내가 받아 줄게!",
@@ -254,12 +261,12 @@
      ]
     },
     {
-     "text": "양은 폭신폭신 구름을 미끄러져 다현이 품에 폭, 안겼어요.",
+     "text": "양은 폭신폭신 구름을 미끄러져, 다현이 품에 폭, 안겼어요.",
      "src": "new",
      "segs": [
       [
        "nar",
-       "양은 폭신폭신 구름을 미끄러져 다현이 품에 폭, 안겼어요.",
+       "양은 폭신폭신 구름을 미끄러져, 다현이 품에 폭, 안겼어요.",
        null,
        "[calm, warm storytelling, slow, unhurried]"
       ]
@@ -268,7 +275,8 @@
       "sheep:look:happy:left",
       "sheep:hop",
       "kid:hop"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "같이 가자!",
@@ -315,7 +323,8 @@
       "follow:660",
       "kid:walk:560,2500",
       "sheep:walk:700,2500"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "구름 길은 폭신폭신, 걸을 때마다 발밑이 통통 튀었어요.",
@@ -424,7 +433,8 @@
      ],
      "before": [
       "kid:walk:400,1200"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "별빛이 반짝반짝, 나뭇잎 사이로 쏟아져 내렸어요.",
@@ -449,7 +459,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "아야, 아야…",
@@ -498,7 +509,8 @@
      ],
      "after": [
       "thorns:pull"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "가시 세 개를 모두 뺐어요!",
@@ -552,17 +564,18 @@
    ],
    "lines": [
     {
-     "text": "가시를 뺀 뒤에도 다현이는 숲에서 사슴 곁에 있었어요.",
+     "text": "가시를 뺀 뒤에도, 다현이는 숲에서 사슴 곁에 있었어요.",
      "src": "new",
      "needs_audio": true,
      "segs": [
       [
        "nar",
-       "가시를 뺀 뒤에도 다현이는 숲에서 사슴 곁에 있었어요.",
+       "가시를 뺀 뒤에도, 다현이는 숲에서 사슴 곁에 있었어요.",
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "다현이는 사슴의 작은 뿔을 가만히 보았어요.",
@@ -574,7 +587,8 @@
        null,
        "[soft, slow, a thoughtful pause]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "유니콘은… 아니구나.",
@@ -641,20 +655,22 @@
      "before": [
       "kid:walk:250,800",
       "basket:show"
-     ]
+     ],
+     "name_split": true
     },
     {
-     "text": "숲을 떠난 다현이는 폭포 앞에 다다랐어요.",
+     "text": "다현이는 숲을 떠나 폭포 앞에 다다랐어요.",
      "src": "new",
      "needs_audio": true,
      "segs": [
       [
        "nar",
-       "숲을 떠난 다현이는 폭포 앞에 다다랐어요.",
+       "다현이는 숲을 떠나 폭포 앞에 다다랐어요.",
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "폭포 위에 무지개가 떠 있어요. 말 한 마리가 서 있어요.",
@@ -726,7 +742,8 @@
        null,
        "[gentle, a little playful, slow]"
       ]
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -749,17 +766,18 @@
    ],
    "lines": [
     {
-     "text": "폭포 앞에서 다현이가 배고픈 말에게 말했어요.",
+     "text": "폭포 앞에서, 다현이가 배고픈 말에게 말했어요.",
      "src": "new",
      "needs_audio": true,
      "segs": [
       [
        "nar",
-       "폭포 앞에서 다현이가 배고픈 말에게 말했어요.",
+       "폭포 앞에서, 다현이가 배고픈 말에게 말했어요.",
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "자, 같이 먹자.",
@@ -790,7 +808,8 @@
      "before": [
       "fx:paper_up",
       "basket:move:310,1000"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "말은 간식을 냠냠 맛있게 먹었어요.",
@@ -876,17 +895,18 @@
    ],
    "lines": [
     {
-     "text": "말과 헤어진 다현이가 혼자 길로 나왔어요.",
+     "text": "다현이는 말과 헤어져 혼자 길로 나왔어요.",
      "src": "new",
      "needs_audio": true,
      "segs": [
       [
        "nar",
-       "말과 헤어진 다현이가 혼자 길로 나왔어요.",
+       "다현이는 말과 헤어져 혼자 길로 나왔어요.",
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "해가 지고, 길은 텅 비었어요.",
@@ -941,7 +961,8 @@
      "before": [
       "follow:430,3000",
       "kid:walk:430,3000"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "다리는 무겁고, 눈은 자꾸 깜빡깜빡 감겼어요.",
@@ -953,7 +974,8 @@
        null,
        "[calm, warm storytelling, slow, unhurried]"
       ]
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -994,7 +1016,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "그때, 뒤에서 작은 소리가 났어요.",
@@ -1056,7 +1079,8 @@
       "snd:swish:.45",
       "cut:uc_cut2_turn"
      ],
-     "needs_audio": true
+     "needs_audio": true,
+     "name_split": true
     }
    ]
   },
@@ -1102,7 +1126,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "나는 계속 여기 있었어.",
@@ -1172,7 +1197,8 @@
       "fx:sparkle",
       "pop:uni,반짝!",
       "snd:shimmer:.7:500"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "다현이는 유니콘을 꼭 안았어요.",
@@ -1194,7 +1220,8 @@
       "kid:hop",
       "uni:hop",
       "snd:chime_up:.5:500"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -1221,7 +1248,8 @@
        null,
        "[warm, calm, gentle storybook ending tone, slow]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "다현이는 바구니 속 빨간 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -1233,7 +1261,8 @@
        "happy",
        "[warm, tender, joyful, slow]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "유니콘이 다현이에게 고맙다고 말했어요.",
@@ -1249,7 +1278,8 @@
      ],
      "before": [
       "finale"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "고마워, 정말 예뻐!",
@@ -1294,7 +1324,8 @@
        null,
        "[calm, warm storytelling, slow, unhurried, sleepy, soft]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "\"유니콘, 내일도 거기 있을 거지?\"",
@@ -1351,7 +1382,8 @@
      ],
      "after": [
       "bed:end"
-     ]
+     ],
+     "name_split": true
     }
    ]
   }

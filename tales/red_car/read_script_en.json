@@ -41,7 +41,8 @@
        null,
        "[calm, warm, gentle storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "이현이는 빨간 자동차를 참 좋아했어요.",
@@ -50,10 +51,11 @@
      "segs": [
       [
        "nar",
-       "Ee-hyun loved the little red car very much.",
+       "Ihyun loved the little red car very much.",
        null
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "방 안에는 파란 블록, 노란 오리, 그리고 반짝반짝 빨간 자동차가 있었지요.",
@@ -64,31 +66,33 @@
        "nar",
        "In his room were a blue block, a yellow duck, and a shiny, sparkly little red car."
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "부릉부릉! 이현이는 날마다 자동차를 씽씽 굴리며 놀았어요.",
      "src": "new",
-     "en": "Vroom, vroom! Every day Ihyun played with the car, zooming it all around.",
+     "en": "Vroom, vroom! Ihyun played with the car every day, zooming it all around.",
      "segs": [
       [
        "nar",
-       "Vroom, vroom! Every day Ihyun played with the car, zooming it all around."
+       "Vroom, vroom! Ihyun played with the car every day, zooming it all around."
       ]
      ],
      "before": [
       "vo:vroom",
       "car:red:hop"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "밥 먹을 때도 냠냠, 잠잘 때도 쌔근, 언제나 손에 꼭 쥐고 있었지요.",
      "src": "reuse",
-     "en": "Munch munch at mealtime, snore snore at bedtime, the red car was always in Ihyun's hand.",
+     "en": "Munch munch at mealtime, snore snore at bedtime, Ihyun always held the red car tight.",
      "segs": [
       [
        "nar",
-       "Munch munch at mealtime, snore snore at bedtime, the red car was always in Ee-hyun's hand.",
+       "Munch munch at mealtime, snore snore at bedtime, Ihyun always held the red car tight.",
        null
       ]
      ],
@@ -101,7 +105,8 @@
       "kid:look:sleep",
       "hand:sleep",
       "pop:380,170,쌔근"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -124,10 +129,11 @@
      "segs": [
       [
        "nar",
-       "Then one day, Ee-hyun was playing outside.",
+       "Then one day, Ihyun was playing outside.",
        null
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "이현이는 빨간 자동차를 손에 들고 나비를 보았어요.",
@@ -141,7 +147,8 @@
        null,
        "[calm, warm, gentle storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "어! 나비다!",
@@ -173,7 +180,8 @@
       "kid:look:run:right",
       "bfly:fly:900,250",
       "kid:walk:800,470,1500"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "노느라 그만 빨간 자동차를 톡, 놓고 말았어요.",
@@ -182,7 +190,7 @@
      "segs": [
       [
        "nar",
-       "Ee-hyun was so busy playing that the red car slipped out, plop, onto the grass.",
+       "Ihyun was so busy playing that the red car slipped out, plop, onto the grass.",
        null
       ]
      ],
@@ -190,7 +198,8 @@
       "car:red:look:tired:right",
       "pop:420,400,톡!",
       "snd:whistle_down:.5"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "나비는 훨훨, 저 멀리 꽃밭 너머로 날아가 버렸어요.",
@@ -235,7 +244,8 @@
        null,
        "[calm, warm, gentle storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "잉잉, 내 빨간 자동차 어디 갔지?",
@@ -278,22 +288,24 @@
        null,
        "[calm, warm, gentle storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
-     "text": "홀로 남은 빨간 자동차는 이현이를 찾기로 했어요. 용기 있게 출발!",
+     "text": "빨간 자동차는 홀로 남았어요. 이현이를 찾기로 했어요. 용기 있게 출발!",
      "src": "reuse",
      "en": "The little red car, all alone, decided to go and find Ihyun. Off it went, brave and bold!",
      "segs": [
       [
        "nar",
-       "The little red car, all alone, decided to go and find Ee-hyun. Off it went, brave and bold!",
+       "The little red car, all alone, decided to go and find Ihyun. Off it went, brave and bold!",
        null
       ]
      ],
      "before": [
       "car:red:hop"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "작은 바퀴가 덜덜 떨렸지만, 씩씩하게 데굴데굴 굴러갔어요.",
@@ -312,11 +324,11 @@
     {
      "text": "부릉부릉! 이현이를 찾아 장난감 세상으로 가자!",
      "src": "reuse",
-     "en": "Vroom vroom! Let's go to Toy Land and find Ihyun!",
+     "en": "Vroom vroom! To find Ihyun, let's go to Toy Land!",
      "segs": [
       [
        "red",
-       "Vroom vroom! Let's go to Toy Land and find Ee-hyun!",
+       "Vroom vroom! To find Ihyun, let's go to Toy Land!",
        "happy"
       ]
      ],
@@ -326,7 +338,8 @@
      "after": [
       "set:gate",
       "car:red:at:200,470"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "끼이익, 장난감 세상의 커다란 문이 열렸어요.",
@@ -462,11 +475,11 @@
     {
      "text": "어? 너는 이현이가 잃어버렸던 경찰차 형아?!",
      "src": "reuse",
-     "en": "Huh? You're the police car Ihyun lost! Big brother police car!",
+     "en": "Huh? Ihyun's lost police car? Big brother police car!",
      "segs": [
       [
        "red",
-       "Huh? You're the police car Ee-hyun lost! Big brother police car!",
+       "Huh? Ihyun's lost police car? Big brother police car!",
        "toneup"
       ]
      ],
@@ -474,22 +487,24 @@
       "car:red:look:run",
       "car:red:at:-120,470",
       "car:red:drive:200,1500"
-     ]
+     ],
+     "name_split": true
     },
     {
-     "text": "우리 같이 이현이한테 가자!",
+     "text": "이현이한테 우리 같이 가자!",
      "src": "reuse",
      "en": "Let's go find Ihyun together!",
      "segs": [
       [
        "red",
-       "Let's go find Ee-hyun together!",
+       "Let's go find Ihyun together!",
        "happy"
       ]
      ],
      "before": [
       "car:red:hop"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "좋아! 도둑을 다 잡았으니 같이 가자!",
@@ -626,13 +641,13 @@
      ]
     },
     {
-     "text": "어? 소방차 이모! 우리 같이 이현이 만나러 가요!",
+     "text": "어? 소방차 이모! 이현이 만나러 우리 같이 가요!",
      "src": "reuse",
-     "en": "Oh? Auntie fire truck! Come with us to find Ihyun!",
+     "en": "Oh? Auntie fire truck! Let's find Ihyun! Come with us!",
      "segs": [
       [
        "red",
-       "Oh? Auntie fire truck! Come with us to find Ee-hyun!",
+       "Oh? Auntie fire truck! Let's find Ihyun! Come with us!",
        "happy"
       ]
      ],
@@ -644,7 +659,8 @@
       "car:red:at:-120,470",
       "car:police:drive:250,1500",
       "car:red:drive:330,1500"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "그래그래! 불을 다 껐으니 같이 가자!",
@@ -752,13 +768,13 @@
      ]
     },
     {
-     "text": "구급차 삼촌! 우리랑 같이 이현이한테 가요!",
+     "text": "구급차 삼촌! 이현이한테 우리랑 같이 가요!",
      "src": "reuse",
-     "en": "Uncle ambulance! Come with us to find Ihyun!",
+     "en": "Uncle ambulance! Let's find Ihyun! Come with us!",
      "segs": [
       [
        "red",
-       "Uncle ambulance! Come with us to find Ee-hyun!",
+       "Uncle ambulance! Let's find Ihyun! Come with us!",
        "happy"
       ]
      ],
@@ -772,16 +788,17 @@
       "car:police:drive:300,1500",
       "car:red:drive:420,1500",
       "car:fire:drive:180,1500"
-     ]
+     ],
+     "name_split": true
     },
     {
-     "text": "오냐오냐, 아픈 친구들을 다 데려다주었으니 이제 이현이에게 가자!",
+     "text": "오냐오냐, 아픈 친구들을 다 데려다주었으니, 이제 이현이에게 가자!",
      "src": "reuse",
      "en": "All right, all right! I've brought the sick friends to the hospital, so now let's go to Ihyun!",
      "segs": [
       [
        "amb",
-       "All right, all right! I've brought the sick friends to the hospital, so now let's go to Ee-hyun!",
+       "All right, all right! I've brought the sick friends to the hospital, so now let's go to Ihyun!",
        "happy"
       ]
      ],
@@ -791,7 +808,8 @@
      ],
      "after": [
       "car:amb:look:run"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "구급차 삼촌도 든든하게 따라나섰어요.",
@@ -866,20 +884,21 @@
      ]
     },
     {
-     "text": "자, 다 같이 이현이한테 가자!",
+     "text": "자, 이현이한테 다 같이 가자!",
      "src": "reuse",
      "en": "Come on, everyone, let's go to Ihyun!",
      "segs": [
       [
        "red",
-       "Come on, everyone, let's go to Ee-hyun!",
+       "Come on, everyone, let's go to Ihyun!",
        "happy"
       ]
      ],
      "before": [
       "vo:vroom",
       "car:red:hop"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "친구 넷은 씽씽, 바람을 가르며 신나게 달렸어요.",
@@ -1010,14 +1029,15 @@
     {
      "text": "바로 이현이가 전에 잃어버렸던 주황색 견인차였어요!",
      "src": "reuse",
-     "en": "It was the orange tow truck Ihyun had lost long ago!",
+     "en": "It was the orange tow truck! Ihyun had lost it long ago!",
      "segs": [
       [
        "nar",
-       "It was the orange tow truck Ee-hyun had lost long ago!",
+       "It was the orange tow truck! Ihyun had lost it long ago!",
        "toneup"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "견인차가 튼튼한 고리로 빨간 자동차를 찰칵! 걸어 주었어요.",
@@ -1175,14 +1195,15 @@
      "segs": [
       [
        "nar",
-       "At last, they found Ee-hyun at the playground!",
+       "At last, they found Ihyun at the playground!",
        "toneup"
       ]
      ],
      "before": [
       "convoy:drive",
       "kid:look:turn"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "와아! 내 빨간 자동차다!",
@@ -1219,7 +1240,7 @@
      "segs": [
       [
        "nar",
-       "Ee-hyun hugged all the precious toy cars and jumped for joy.",
+       "Ihyun hugged all the precious toy cars and jumped for joy.",
        "happy"
       ]
      ],
@@ -1227,7 +1248,8 @@
       "kid:look:hug",
       "kid:hop",
       "confetti"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "자동차 친구들도 빵빵! 부릉부릉! 신이 나서 소리쳤어요.",
@@ -1345,7 +1367,7 @@
      "segs": [
       [
        "nar",
-       "Ee-hyun held the red car tight and fell fast asleep.",
+       "Ihyun held the red car tight and fell fast asleep.",
        null
       ]
      ],
@@ -1354,7 +1376,8 @@
      ],
      "after": [
       "bed:end"
-     ]
+     ],
+     "name_split": true
     }
    ]
   }

@@ -62,7 +62,8 @@
      "Dahyun and her friends scurried right into the candy shop.",
      null
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "오늘은 핼러윈 특별 사탕을 만들 거야. 먼저 솥을 끓여야지.",
@@ -472,7 +473,7 @@
    ]
   },
   {
-   "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+   "text": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
    "en": "Dahyun, you put them in. One or lots, it's all good.",
    "segs": [
     [
@@ -480,7 +481,8 @@
      "Dahyun, you put them in. One or lots, it's all good.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "세 가지는 맨 마지막에!",
@@ -1074,7 +1076,8 @@
      "Poof! Dahyun turned into a red strawberry!",
      "toneup"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이 발이 오리발이 됐어요!",
@@ -1085,7 +1088,8 @@
      "Poof! Dahyun's feet turned into duck feet!",
      "toneup"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이한테 물고기 꼬리가 생겼어요!",
@@ -1096,7 +1100,8 @@
      "Poof! Dahyun grew a fish tail!",
      "toneup"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!",
@@ -1107,18 +1112,20 @@
      "Poof! Dahyun's cheeks and tummy glowed like a pumpkin!",
      "toneup"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이 등에 박쥐 날개가 돋았어요!",
-   "en": "Poof! Bat wings sprouted on Dahyun's back!",
+   "en": "Poof! On Dahyun's back, bat wings sprouted!",
    "segs": [
     [
      "nar",
-     "Poof! Bat wings sprouted on Dahyun's back!",
+     "Poof! On Dahyun's back, bat wings sprouted!",
      "toneup"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이 입에 초콜릿 수염이 났어요!",
@@ -1129,7 +1136,8 @@
      "Poof! Dahyun grew a chocolate moustache!",
      "toneup"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "데굴데굴, 멈춰 줘요~!",
@@ -1228,7 +1236,8 @@
      "She rolled and rolled down the street and bonked into a pumpkin lantern!",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뒤뚱뒤뚱, 호박이도 뒤뚱뒤뚱.",
@@ -1250,7 +1259,8 @@
      "She swam, bubble bubble, all around the full moon.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "폴짝, 폴짝, 폴짝! 지붕 위에서 손을 흔들었어요.",
@@ -1261,18 +1271,20 @@
      "Hop, hop, hop! She waved from up on the roof.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
-   "text": "깜깜한 길이 다현이 덕분에 환해졌어요.",
-   "en": "The dark street grew bright, all thanks to Dahyun.",
+   "text": "다현이 덕분에 깜깜한 길이 환해졌어요.",
+   "en": "Thanks to Dahyun, the dark street grew bright.",
    "segs": [
     [
      "nar",
-     "The dark street grew bright, all thanks to Dahyun.",
+     "Thanks to Dahyun, the dark street grew bright.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "박쥐 친구들이랑 달 앞을 빙글 돌았어요.",
@@ -1283,7 +1295,8 @@
      "She circled in front of the moon with her bat friends.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "납작해졌다가… 뿅!",
@@ -1294,7 +1307,8 @@
      "She went flat as a pancake... then poof!",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "어디 가!",
@@ -1316,7 +1330,8 @@
      "She melted!",
      "toneup"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
@@ -1327,7 +1342,8 @@
      "Poof! Dahyun was back to normal.",
      null
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "이번엔 다른 색으로 해 볼까?",
@@ -1569,7 +1585,8 @@
      "Thanks to Dahyun, we have candy galore! Let's mix again next year.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "네! 다음엔 다른 색으로요!",
@@ -1646,7 +1663,8 @@
      "Poof! Dahyun turned into a round lime-green kiwi!",
      "toneup"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "보송보송… 간지러워! 히히!",
@@ -1668,7 +1686,8 @@
      "Boing, boing, boing! She bounced down the street like a kiwi ball.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
@@ -1679,7 +1698,8 @@
      "Poof! Dahyun grew a green crocodile tail!",
      "toneup"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "앙! 앙! 나는 악어다!",
@@ -1701,7 +1721,8 @@
      "She crawled along, creep, creep... then SNAP! Pumpkin the cat jumped in surprise.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이가 청록 개구리가 됐어요!",
@@ -1712,7 +1733,8 @@
      "Poof! Dahyun turned into a teal frog!",
      "toneup"
     ]
-   ]
+   ],
+   "name_split": true
   }
  ],
  "extra": {

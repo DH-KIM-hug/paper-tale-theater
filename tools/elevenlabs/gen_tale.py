@@ -98,11 +98,19 @@ def main():
         else: c = next((x for x in elsegs if x[0] == role), None)
         return lead(c[3]) if c and len(c) > 3 else None
     ELL = {l['text']: l['segs'] for l in EL['lines'] if l.get('segs')}
+    # 이름 조각 + 고정 조각으로 나눠 녹음한 줄(name_split, tools/elevenlabs/gen_name_split.py)은 여기서 만들지 않고 지금 맵 값을 그대로 둔다
+    mapf = os.path.join(td, ('read_' if read else '') + ('narration_el_en.js' if en else 'narration_el.js'))
+    m0 = re.search(r'Object\.assign\(NARRATION_CLIPS(?:_EN)?, (\{.*?\n\})\);', open(mapf).read(), re.S) if os.path.exists(mapf) else None
+    OLDMAP = json.loads(m0.group(1)) if m0 else {}
     clips, seen = {}, set()
     for ni, ln in enumerate(spec['lines']):
         text = ln['text']
         if text in seen: continue
         seen.add(text)
+        if ln.get('name_split'):
+            if text in OLDMAP: clips[text] = OLDMAP[text]
+            else: errs += 1; print('ERR 이름 조각 줄이 맵에 없음(gen_name_split.py apply 먼저)', text)
+            continue
         shown = ln['en'] if en else text
         segs = [s + [None] * (4 - len(s)) for s in ln.get('segs') or [['nar', shown]]]
         if en: segs = [[role, s, emo, en_dir(ELL.get(text), role, si)] for si, (role, s, emo, dr) in enumerate(segs)]

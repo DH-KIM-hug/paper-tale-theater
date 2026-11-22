@@ -111,7 +111,8 @@
      null,
      "[warm, playful storytelling, slow, clear, cosy Halloween night, never scary]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "오늘은 핼러윈 특별 사탕을 만들 거야. 먼저 솥을 끓여야지.",
@@ -521,15 +522,16 @@
    ]
   },
   {
-   "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+   "text": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
    "segs": [
     [
      "witch",
-     "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
      "happy",
      "[kind quirky witch, warm, giggly, a little silly, never scary]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "세 가지는 맨 마지막에!",
@@ -1121,9 +1123,10 @@
      "nar",
      "뿅! 다현이가 빨간 딸기가 됐어요!",
      "toneup",
-     "[bright, magical, excited storytelling, a pop on 뿅]"
+     "[bright, magical, excited storytelling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이 발이 오리발이 됐어요!",
@@ -1132,9 +1135,10 @@
      "nar",
      "뿅! 다현이 발이 오리발이 됐어요!",
      "toneup",
-     "[bright, magical, excited storytelling, a pop on 뿅]"
+     "[bright, magical, excited storytelling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이한테 물고기 꼬리가 생겼어요!",
@@ -1143,9 +1147,10 @@
      "nar",
      "뿅! 다현이한테 물고기 꼬리가 생겼어요!",
      "toneup",
-     "[bright, magical, excited storytelling, a pop on 뿅]"
+     "[bright, magical, excited storytelling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!",
@@ -1154,9 +1159,10 @@
      "nar",
      "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!",
      "toneup",
-     "[bright, magical, excited storytelling, a pop on 뿅]"
+     "[bright, magical, excited storytelling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이 등에 박쥐 날개가 돋았어요!",
@@ -1165,9 +1171,10 @@
      "nar",
      "뿅! 다현이 등에 박쥐 날개가 돋았어요!",
      "toneup",
-     "[bright, magical, excited storytelling, a pop on 뿅]"
+     "[bright, magical, excited storytelling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이 입에 초콜릿 수염이 났어요!",
@@ -1176,9 +1183,10 @@
      "nar",
      "뿅! 다현이 입에 초콜릿 수염이 났어요!",
      "toneup",
-     "[bright, magical, excited storytelling, a pop on 뿅]"
+     "[bright, magical, excited storytelling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "데굴데굴, 멈춰 줘요~!",
@@ -1277,7 +1285,8 @@
      "happy",
      "[playful storytelling, rhythmic on the sound words, smiling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뒤뚱뒤뚱, 호박이도 뒤뚱뒤뚱.",
@@ -1299,7 +1308,8 @@
      "happy",
      "[playful storytelling, rhythmic on the sound words, smiling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "폴짝, 폴짝, 폴짝! 지붕 위에서 손을 흔들었어요.",
@@ -1310,18 +1320,20 @@
      "happy",
      "[playful storytelling, rhythmic on the sound words, smiling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
-   "text": "깜깜한 길이 다현이 덕분에 환해졌어요.",
+   "text": "다현이 덕분에 깜깜한 길이 환해졌어요.",
    "segs": [
     [
      "nar",
-     "깜깜한 길이 다현이 덕분에 환해졌어요.",
+     "다현이 덕분에 깜깜한 길이 환해졌어요.",
      "happy",
      "[playful storytelling, rhythmic on the sound words, smiling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "박쥐 친구들이랑 달 앞을 빙글 돌았어요.",
@@ -1332,7 +1344,8 @@
      "happy",
      "[playful storytelling, rhythmic on the sound words, smiling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "납작해졌다가… 뿅!",
@@ -1343,7 +1356,8 @@
      "happy",
      "[playful storytelling, rhythmic on the sound words, smiling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "어디 가!",
@@ -1365,7 +1379,8 @@
      "toneup",
      "[kind quirky witch, surprised, giggling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
@@ -1374,9 +1389,10 @@
      "nar",
      "뿅! 다현이는 다시 원래대로 돌아왔어요.",
      null,
-     "[warm, settling, a pop on 뿅, gentle]"
+     "[warm, settling, gentle]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "이번엔 다른 색으로 해 볼까?",
@@ -1618,7 +1634,8 @@
      "happy",
      "[kind quirky witch, grateful, warm, smiling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "네! 다음엔 다른 색으로요!",
@@ -1693,9 +1710,10 @@
      "nar",
      "뿅! 다현이가 동그란 연두 키위가 됐어요!",
      "toneup",
-     "[bright, magical, excited storytelling, a pop on 뿅]"
+     "[bright, magical, excited storytelling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "보송보송… 간지러워! 히히!",
@@ -1717,7 +1735,8 @@
      "happy",
      "[playful storytelling, rhythmic on the sound words, smiling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
@@ -1726,9 +1745,10 @@
      "nar",
      "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
      "toneup",
-     "[bright, magical, excited storytelling, a pop on 뿅]"
+     "[bright, magical, excited storytelling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "앙! 앙! 나는 악어다!",
@@ -1750,7 +1770,8 @@
      "happy",
      "[playful storytelling, slow creeping then a sudden snap, smiling]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "뿅! 다현이가 청록 개구리가 됐어요!",
@@ -1759,9 +1780,10 @@
      "nar",
      "뿅! 다현이가 청록 개구리가 됐어요!",
      "toneup",
-     "[bright, magical, excited storytelling, a pop on 뿅]"
+     "[bright, magical, excited storytelling]"
     ]
-   ]
+   ],
+   "name_split": true
   }
  ],
  "extra": {

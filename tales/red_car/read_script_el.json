@@ -40,7 +40,8 @@
        null,
        "[calm, warm, gentle storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "이현이는 빨간 자동차를 참 좋아했어요.",
@@ -52,7 +53,8 @@
        null,
        "[calm, warm storytelling, slow, unhurried]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "방 안에는 파란 블록, 노란 오리, 그리고 반짝반짝 빨간 자동차가 있었지요.",
@@ -64,7 +66,8 @@
        null,
        "[calm, warm storytelling, slow, unhurried]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "부릉부릉! 이현이는 날마다 자동차를 씽씽 굴리며 놀았어요.",
@@ -80,7 +83,8 @@
      "before": [
       "vo:vroom",
       "car:red:hop"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "밥 먹을 때도 냠냠, 잠잘 때도 쌔근, 언제나 손에 꼭 쥐고 있었지요.",
@@ -102,7 +106,8 @@
       "kid:look:sleep",
       "hand:sleep",
       "pop:380,170,쌔근"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -128,7 +133,8 @@
        null,
        "[calm, light, slow]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "이현이는 빨간 자동차를 손에 들고 나비를 보았어요.",
@@ -141,7 +147,8 @@
        null,
        "[calm, warm, gentle storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "어! 나비다!",
@@ -174,7 +181,8 @@
       "kid:look:run:right",
       "bfly:fly:900,250",
       "kid:walk:800,470,1500"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "노느라 그만 빨간 자동차를 톡, 놓고 말았어요.",
@@ -191,7 +199,8 @@
       "car:red:look:tired:right",
       "pop:420,400,톡!",
       "snd:whistle_down:.5"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "나비는 훨훨, 저 멀리 꽃밭 너머로 날아가 버렸어요.",
@@ -236,7 +245,8 @@
        null,
        "[calm, warm, gentle storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "잉잉, 내 빨간 자동차 어디 갔지?",
@@ -278,22 +288,24 @@
        null,
        "[calm, warm, gentle storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
-     "text": "홀로 남은 빨간 자동차는 이현이를 찾기로 했어요. 용기 있게 출발!",
+     "text": "빨간 자동차는 홀로 남았어요. 이현이를 찾기로 했어요. 용기 있게 출발!",
      "src": "reuse",
      "segs": [
       [
        "nar",
-       "홀로 남은 빨간 자동차는 이현이를 찾기로 했어요. 용기 있게 출발!",
+       "빨간 자동차는 홀로 남았어요. 이현이를 찾기로 했어요. 용기 있게 출발!",
        null,
        "[warm, building courage, slow then bright at 출발]"
       ]
      ],
      "before": [
       "car:red:hop"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "작은 바퀴가 덜덜 떨렸지만, 씩씩하게 데굴데굴 굴러갔어요.",
@@ -327,7 +339,8 @@
      "after": [
       "set:gate",
       "car:red:at:200,470"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "끼이익, 장난감 세상의 커다란 문이 열렸어요.",
@@ -474,22 +487,24 @@
       "car:red:look:run",
       "car:red:at:-120,470",
       "car:red:drive:200,1500"
-     ]
+     ],
+     "name_split": true
     },
     {
-     "text": "우리 같이 이현이한테 가자!",
+     "text": "이현이한테 우리 같이 가자!",
      "src": "reuse",
      "segs": [
       [
        "red",
-       "우리 같이 이현이한테 가자!",
+       "이현이한테 우리 같이 가자!",
        "happy",
        "[small voice, eager, inviting]"
       ]
      ],
      "before": [
       "car:red:hop"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "좋아! 도둑을 다 잡았으니 같이 가자!",
@@ -625,12 +640,12 @@
      ]
     },
     {
-     "text": "어? 소방차 이모! 우리 같이 이현이 만나러 가요!",
+     "text": "어? 소방차 이모! 이현이 만나러 우리 같이 가요!",
      "src": "reuse",
      "segs": [
       [
        "red",
-       "어? 소방차 이모! 우리 같이 이현이 만나러 가요!",
+       "어? 소방차 이모! 이현이 만나러 우리 같이 가요!",
        "happy",
        "[small voice, excited, polite]"
       ]
@@ -643,7 +658,8 @@
       "car:red:at:-120,470",
       "car:police:drive:250,1500",
       "car:red:drive:330,1500"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "그래그래! 불을 다 껐으니 같이 가자!",
@@ -751,12 +767,12 @@
      ]
     },
     {
-     "text": "구급차 삼촌! 우리랑 같이 이현이한테 가요!",
+     "text": "구급차 삼촌! 이현이한테 우리랑 같이 가요!",
      "src": "reuse",
      "segs": [
       [
        "red",
-       "구급차 삼촌! 우리랑 같이 이현이한테 가요!",
+       "구급차 삼촌! 이현이한테 우리랑 같이 가요!",
        "happy",
        "[small voice, eager, polite]"
       ]
@@ -771,15 +787,16 @@
       "car:police:drive:300,1500",
       "car:red:drive:420,1500",
       "car:fire:drive:180,1500"
-     ]
+     ],
+     "name_split": true
     },
     {
-     "text": "오냐오냐, 아픈 친구들을 다 데려다주었으니 이제 이현이에게 가자!",
+     "text": "오냐오냐, 아픈 친구들을 다 데려다주었으니, 이제 이현이에게 가자!",
      "src": "reuse",
      "segs": [
       [
        "amb",
-       "오냐오냐, 아픈 친구들을 다 데려다주었으니 이제 이현이에게 가자!",
+       "오냐오냐, 아픈 친구들을 다 데려다주었으니, 이제 이현이에게 가자!",
        "happy",
        "[kind uncle voice, deep, reassuring, unhurried]"
       ]
@@ -790,7 +807,8 @@
      ],
      "after": [
       "car:amb:look:run"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "구급차 삼촌도 든든하게 따라나섰어요.",
@@ -865,12 +883,12 @@
      ]
     },
     {
-     "text": "자, 다 같이 이현이한테 가자!",
+     "text": "자, 이현이한테 다 같이 가자!",
      "src": "reuse",
      "segs": [
       [
        "red",
-       "자, 다 같이 이현이한테 가자!",
+       "자, 이현이한테 다 같이 가자!",
        "happy",
        "[small voice, leading, cheerful]"
       ]
@@ -878,7 +896,8 @@
      "before": [
       "vo:vroom",
       "car:red:hop"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "친구 넷은 씽씽, 바람을 가르며 신나게 달렸어요.",
@@ -1017,7 +1036,8 @@
        "toneup",
        "[bright, glad reveal]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "견인차가 튼튼한 고리로 빨간 자동차를 찰칵! 걸어 주었어요.",
@@ -1183,7 +1203,8 @@
      "before": [
       "convoy:drive",
       "kid:look:turn"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "와아! 내 빨간 자동차다!",
@@ -1228,7 +1249,8 @@
       "kid:look:hug",
       "kid:hop",
       "confetti"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "자동차 친구들도 빵빵! 부릉부릉! 신이 나서 소리쳤어요.",
@@ -1356,7 +1378,8 @@
      ],
      "after": [
       "bed:end"
-     ]
+     ],
+     "name_split": true
     }
    ]
   }

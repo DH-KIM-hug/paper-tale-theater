@@ -8,8 +8,12 @@ import { NAME_LINES, NAME_LINES_VERSION } from './name_lines.js';
 
 export const RUN_TTL_MS = 48 * 3600 * 1000;
 export const PREVIEWS_PER_DAY = 10;
-export const PER_LINE_LIMIT = 2;            // 실행 하나에서 한 줄·한 언어를 만들 수 있는 횟수(재시도 여유) → 실행당 상한 = 줄 수 × 언어 수 × 2
-export const DEFAULT_DAILY_LINE_CAP = 30000; // 서버 전체 하루 상한(줄). 넘으면 busy. env.NAME_DAILY_LINE_CAP 으로 바꾼다
+// 2026-11-22 이름 조각 + 고정 조각: 서버는 줄 전체가 아니라 이름 조각(pieces[n])만 녹음한다. 상한은 모두 조각 단위.
+export const PER_PIECE_LIMIT = 2;           // 실행 하나에서 이름 조각 하나·한 언어를 만들 수 있는 횟수(재시도 여유) → 실행당 상한 = 이름 조각 수 × 언어 수 × 2
+export const PER_LINE_LIMIT = PER_PIECE_LIMIT; // 옛 이름(줄마다 이름 조각은 하나뿐이라 같은 값)
+export const MAX_LEGACY_CHARS = 600;        // 옛 앱 요청(조각 번호 없음): 줄 전체 글 상한
+export const MAX_PIECE_CHARS = 160;         // 이름 조각 보낼 글 상한(통째 줄 포함, 긴 이름 4자·12자를 넣어도 넘지 않는 값)
+export const DEFAULT_DAILY_LINE_CAP = 30000; // 서버 전체 하루 상한(이름 조각 녹음 수). 넘으면 busy. env.NAME_DAILY_LINE_CAP 으로 바꾼다
 export const MAX_NAME_BODY = 1024;
 const NAME_KEYS = ['A', 'B', 'C', 'D', 'A_en', 'B_en', 'C_en', 'D_en'];
 const EL_URL = 'https://api.elevenlabs.io/v1/text-to-speech/';
@@ -34,7 +38,11 @@ for (const [tale, lines] of Object.entries(NAME_LINES)) for (const l of lines) I
 export const NAME_TALES = Object.keys(NAME_LINES);
 const TALE_IDS = NAME_TALES.filter((t) => t !== 'home');
 const HOME_TALE = 'witch_candy'; // 홈 스티커 이름 줄(home)은 이 동화의 아이 이름이다. 이 동화를 설정할 때 함께 만든다
-const RECORDINGS = NAME_TALES.reduce((n, t) => n + NAME_LINES[t].reduce((m, l) => m + (l.ko ? 1 : 0) + (l.enRec ? 1 : 0), 0), 0);
+const hasPiece = (p) => !!(p && p.n != null && p.pieces && p.pieces[p.n]);
+const piecesOf = (t) => NAME_LINES[t].reduce((m, l) => m + (hasPiece(l.ko) ? 1 : 0) + (hasPiece(l.enRec) ? 1 : 0), 0);
+const RECORDINGS = NAME_TALES.reduce((n, t) => n + piecesOf(t), 0);
+// 앱에 내보낼 조각 모양(목소리 등 녹음 내부 값은 빼고): 고정 조각 주소(앱 묶음)·간격·이름 조각 자리
+const pubPieces = (p) => (p ? p.pieces.map((x) => ({ k: x.k, tpl: x.tpl, ...(x.gap != null ? { gap: x.gap } : {}), ...(x.url ? { url: x.url } : {}), ...(x.urls ? { urls: x.urls } : {}), ...(x.slots ? { slots: x.slots, g: x.g || [] } : {}) })) : null);
 
 let catalogCache = null;
 export function catalog() {
@@ -45,7 +53,9 @@ export function catalog() {
       lines: NAME_LINES[t].map((l) => ({
         id: l.id, key: l.key, keyEn: l.keyEn, tpl: l.tpl, en: l.en, tplEn: l.tplEn, mode: l.mode,
         seg: l.ko ? l.ko.seg : null, segEn: l.enRec ? l.enRec.seg : null,
-        langs: [...(l.ko ? ['ko'] : []), ...(l.enRec ? ['en'] : [])],
+        langs: [...(hasPiece(l.ko) ? ['ko'] : []), ...(hasPiece(l.enRec) ? ['en'] : [])], // 서버가 이름 조각을 녹음하는 언어
+        pieces: pubPieces(l.ko), piecesEn: pubPieces(l.enRec),
+        n: l.ko ? l.ko.n : null, nEn: l.enRec ? l.enRec.n : null,
         g: l.g || [], // 주인공 모습(look)에 따라 결과가 달라지는 자리(영어 대명사·모습별 목소리)
       })),
     };
@@ -182,13 +192,18 @@ async function deleteHistory(env, fetchFn, id) {
   }
 }
 
-async function elevenlabs(env, fetchFn, rec, text, waitUntil) {
+async function elevenlabs(env, fetchFn, rec, text, waitUntil, ctx) {
   const key = env.ELEVENLABS_API_KEY;
   if (!key) {
     console.error('name_tts: ELEVENLABS_API_KEY 없음');
     throw NE.tts();
   }
-  const body = JSON.stringify({ text, model_id: rec.model, voice_settings: rec.settings });
+  const c = ctx || {};
+  if (typeof text !== 'string' || !text || text.length > (c.legacy ? MAX_LEGACY_CHARS : MAX_PIECE_CHARS)) throw E.badRequest();
+  const body = JSON.stringify({
+    text, model_id: rec.model, voice_settings: rec.settings,
+    ...(c.prev ? { previous_text: c.prev } : {}), ...(c.next ? { next_text: c.next } : {}), ...(c.lang === 'en' ? { language_code: 'en' } : {}),
+  });
   for (let attempt = 0; attempt < 3; attempt++) {
     const url = EL_URL + encodeURIComponent(rec.voice) + '?output_format=mp3_44100_128' + (zeroRetention ? '&enable_logging=false' : '');
     let res;
@@ -229,13 +244,35 @@ async function elevenlabs(env, fetchFn, rec, text, waitUntil) {
   throw NE.tts();
 }
 
-// 줄 하나의 보낼 글. 영어에서 이름이 비면 그 녹음에 썼던 발음 표기(예: Ee-hyun)를 쓴다. look 은 {A_g:he/she} 같은 모습 자리를 채운다.
+// 줄 하나의 이름 조각 보낼 글. 영어에서 이름이 비면 그 녹음에 썼던 발음 표기(예: Ee-hyun)를 쓴다. look 은 {A_g:he/she} 같은 모습 자리를 채운다.
+const withOrig = (part, names) => { const n = { ...names }; for (const [k, v] of Object.entries(part.orig || {})) if (!n[k]) n[k] = v; return n; };
 export function sendText(line, lang, names, look) {
   const part = lang === 'ko' ? line.ko : line.enRec;
-  if (!part) return null;
-  const n = { ...names };
-  for (const [k, v] of Object.entries(part.orig || {})) if (!n[k]) n[k] = v;
-  return fill(part.send, n, look);
+  if (!hasPiece(part)) return null;
+  return fill(part.send, withOrig(part, names), look);
+}
+
+// 이름 조각의 앞뒤 문맥(차감 없음): 나눈 줄은 [말투 태그] + 앞 조각 글 → previous_text, 뒤 조각 글 → next_text. 통째 줄은 문맥 없음.
+// K(다른 배역 조각)도 글을 문맥으로 넣는다(녹음 때와 같게).
+export function contextOf(line, lang, names, look) {
+  const part = lang === 'ko' ? line.ko : line.enRec;
+  if (!hasPiece(part)) return null;
+  if (part.whole) return { lang };
+  const n = withOrig(part, names);
+  const txt = (x) => (x.k === 'K' ? x.tpl : fill(x.tpl, n, look));
+  const before = part.pieces.slice(0, part.n).map(txt).join(' ');
+  const after = part.pieces.slice(part.n + 1).map(txt).join(' ');
+  return { prev: [part.tag, before].filter(Boolean).join(' ').trim() || null, next: after || null, lang };
+}
+
+// 옛 앱 호환(2026-11-22): 조각 번호(piece)가 없는 요청은 이름 조각 나눔 이전 앱 빌드다. 그 앱은 받은 녹음 한 개를 줄 전체로 쓰므로
+// 줄 전체(말투 태그 + 이름 조각·고정 조각 글, 다른 배역 조각 제외)를 한 번에 녹음해 돌려준다. 옛 sendText 와 같은 글.
+export function legacyText(line, lang, names, look) {
+  const part = lang === 'ko' ? line.ko : line.enRec;
+  if (!hasPiece(part)) return null;
+  const n = withOrig(part, names);
+  if (part.whole) return fill(part.send, n, look);
+  return [part.tag, ...part.pieces.filter((x) => x.k !== 'K').map((x) => fill(x.tpl, n, look))].filter(Boolean).join(' ').trim();
 }
 
 // 보낼 목소리. 이름이 든 아이 대사는 그 아이의 모습(part.look.slot)에 맞는 목소리 id(part.look.voices) 로 만든다. 없으면 원래 목소리.
@@ -278,7 +315,7 @@ export async function nameRun(env, me, body, now, putAccount) {
     if (cur && cur.kind === 'ticket') return runOut(cur, { resumed: true }); // 이미 도는 이용권 실행은 이어서 쓴다(이용권을 또 쓰지 않음)
     if (n.tickets < 1) throw NE.noCredit();
     const tales = [...TALE_IDS, 'home'];
-    await reserveGlobal(env, now, tales.reduce((s, t) => s + NAME_LINES[t].length, 0));
+    await reserveGlobal(env, now, tales.reduce((s, t) => s + piecesOf(t), 0));
     const run = { id: randomToken().slice(0, 22), tales, exp: now + RUN_TTL_MS, kind: 'ticket' };
     rec.name = { ...n, tickets: n.tickets - 1, run };
     await putAccount(env, me.id, rec);
@@ -294,7 +331,7 @@ export async function nameRun(env, me, body, now, putAccount) {
     if (cur && cur.kind === 'first' && cur.tales.includes(tale)) return runOut(cur, { resumed: true });
     throw NE.noCredit();
   }
-  await reserveGlobal(env, now, tales.reduce((s, t) => s + NAME_LINES[t].length, 0));
+  await reserveGlobal(env, now, tales.reduce((s, t) => s + piecesOf(t), 0));
   // 진행 중인 첫 설정 실행이 있으면 같은 실행에 동화를 보태 옛 동화의 줄 받기가 끊기지 않게 한다. 그 밖에는 새 실행이 옛 실행을 대신한다.
   const run = cur && cur.kind === 'first'
     ? { id: cur.id, tales: [...new Set([...cur.tales, ...tales])], exp: now + RUN_TTL_MS, kind: 'first' }
@@ -312,7 +349,11 @@ export async function nameLine(env, me, body, now, deps, cors, getAccount, putAc
   const { names } = checkNames(body.names);
   const look = checkLook(body.look);
   const part = lang === 'ko' ? line.ko : line.enRec;
-  if (!part) throw E.badRequest(); // 이 언어 녹음에는 이름이 없다(원래 녹음을 그대로 쓴다)
+  if (!hasPiece(part)) throw E.badRequest(); // 이 언어에는 이름 조각이 없다(원래 녹음·앱 묶음 대명사 두 벌을 쓴다)
+  if (body.piece !== undefined && body.piece !== part.n) throw E.badRequest(); // 조각 번호를 주면 이름 조각 번호와 같아야 한다
+  const legacy = body.piece === undefined; // 옛 앱 빌드: 줄 전체를 녹음해 돌려준다(legacyText)
+  const textOf = () => (legacy ? legacyText(line, lang, names, look) : sendText(line, lang, names, look));
+  const ctxOf = () => (legacy ? { legacy: true } : contextOf(line, lang, names, look));
   const rec = me.rec;
   const n = nameState(rec);
   const fetchFn = deps.fetch || globalThis.fetch;
@@ -325,7 +366,7 @@ export async function nameLine(env, me, body, now, deps, cors, getAccount, putAc
     const used = n.pv && n.pv.d === today ? n.pv.n : 0;
     if (used >= PREVIEWS_PER_DAY) throw NE.quota();
     await reserveGlobal(env, now, 1);
-    const buf = await elevenlabs(env, fetchFn, { ...part, voice: voiceFor(part, look) }, sendText(line, lang, names, look), deps.waitUntil);
+    const buf = await elevenlabs(env, fetchFn, { ...part, voice: voiceFor(part, look) }, textOf(), deps.waitUntil, ctxOf());
     rec.name = { ...n, pv: { d: today, n: used + 1 } };
     await putAccount(env, me.id, rec);
     return audio(buf, cors);
@@ -335,11 +376,11 @@ export async function nameLine(env, me, body, now, deps, cors, getAccount, putAc
   if (n.run.exp <= now) throw NE.runExpired();
   if (!n.run.tales.includes(tale)) throw NE.runMissing();
   if (n.run.kind !== 'ticket' && !rec.state.owned) throw NE.notOwned(); // 첫 설정 실행은 구매가 있어야 한다(환불 등)
-  // 줄·언어마다 카운터 키를 따로 둔다(같은 키 초당 1회 쓰기 제한을 피하고, 계정 기록을 줄마다 쓰지 않게)
-  const ck = `nl:${n.run.id}:${tale}:${id}:${lang}`;
+  // 이름 조각·언어마다 카운터 키를 따로 둔다(같은 키 초당 1회 쓰기 제한을 피하고, 계정 기록을 조각마다 쓰지 않게)
+  const ck = `nl:${n.run.id}:${tale}:${id}:${lang}:${part.n}`;
   const count = Number(await env.ACCOUNTS.get(ck)) || 0;
-  if (count >= PER_LINE_LIMIT) throw NE.quota();
-  const buf = await elevenlabs(env, fetchFn, { ...part, voice: voiceFor(part, look) }, sendText(line, lang, names, look), deps.waitUntil);
+  if (count >= PER_PIECE_LIMIT) throw NE.quota();
+  const buf = await elevenlabs(env, fetchFn, { ...part, voice: voiceFor(part, look) }, textOf(), deps.waitUntil, ctxOf());
   await env.ACCOUNTS.put(ck, String(count + 1), { expirationTtl: Math.max(60, Math.ceil((n.run.exp - now) / 1000) + 3600) });
   return audio(buf, cors);
 }
@@ -367,4 +408,4 @@ export async function applyRenameReceipt(env, me, txKey, now, putAccount) {
   return { owned, state: me.rec.state, quota: quota(me.rec, now) };
 }
 
-export const NAME_STATS = { tales: NAME_TALES.length, recordings: RECORDINGS };
+export const NAME_STATS = { tales: NAME_TALES.length, recordings: RECORDINGS }; // recordings = 이름 조각 수(언어별)

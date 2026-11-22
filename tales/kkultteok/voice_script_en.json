@@ -10,7 +10,8 @@
  "lines": [
   {
    "text": "해가 쨍쨍한 날, 다현이와 이현이와 은우는 꿀떡이랑 산책을 나가요.",
-   "en": "On a sunny day, Dahyun, Ihyun, and Eunwoo go for a walk with Kkulddeok."
+   "en": "On a sunny day, Dahyun, Ihyun, and Eunwoo go for a walk with Kkulddeok.",
+   "name_split": true
   },
   {
    "text": "하늘에 구름이 둥실둥실.",
@@ -28,19 +29,23 @@
   },
   {
    "text": "꿀떡이를 톡! 같이 킁킁해 봐요.",
-   "en": "Tap Kkulddeok! Let's sniff together."
+   "en": "Tap Kkulddeok! Let's sniff together.",
+   "name_split": true
   },
   {
    "text": "꿀떡이는 땅에 코를 대고 킁킁.",
-   "en": "Kkulddeok puts his nose to the ground. Sniff, sniff."
+   "en": "Kkulddeok puts his nose to the ground. Sniff, sniff.",
+   "name_split": true
   },
   {
    "text": "킁킁킁! 꿀떡이가 무슨 냄새를 맡았어요.",
-   "en": "Sniff sniff sniff! Kkulddeok smells something."
+   "en": "Sniff sniff sniff! Kkulddeok smells something.",
+   "name_split": true
   },
   {
    "text": "꿀떡이를 톡! 냄새를 따라가요.",
-   "en": "Tap Kkulddeok! Follow the smell."
+   "en": "Tap Kkulddeok! Follow the smell.",
+   "name_split": true
   },
   {
    "text": "냄새를 따라 쪼르르 달려가요.",
@@ -57,7 +62,7 @@
    ]
   },
   {
-   "text": "삼남매는 영차, 영차 언덕을 올라요.",
+   "text": "아이들은 영차, 영차 언덕을 올라요.",
    "en": "Heave-ho, heave-ho! The three kids climb the hill."
   },
   {
@@ -98,7 +103,8 @@
      "nar",
      "Eunwoo says it too."
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "하늘의 구름을 톡! 무엇이 될까요?",
@@ -118,7 +124,8 @@
   },
   {
    "text": "꿀떡이가 문틈에 코를 쏙 밀어 넣어요.",
-   "en": "Kkulddeok pokes his nose into the gap in the door."
+   "en": "Kkulddeok pokes his nose into the gap in the door.",
+   "name_split": true
   },
   {
    "text": "문틈을 톡!",
@@ -129,7 +136,7 @@
    "en": "Creeeak... the door swings open."
   },
   {
-   "text": "삼남매는 살금살금 따라 들어가요.",
+   "text": "아이들은 살금살금 따라 들어가요.",
    "en": "The three kids tiptoe in after him."
   },
   {
@@ -142,11 +149,13 @@
   },
   {
    "text": "이현이가 물방울에 손을 살짝 대 봐요.",
-   "en": "Ihyun gently touches a water drop."
+   "en": "Ihyun gently touches a water drop.",
+   "name_split": true
   },
   {
    "text": "다현이는 후우— 바람을 불어 줘요.",
-   "en": "Dahyun blows a big breath. Whoooo!"
+   "en": "Dahyun blows a big breath. Whoooo!",
+   "name_split": true
   },
   {
    "text": "바람 나팔을 톡!",
@@ -168,7 +177,8 @@
   },
   {
    "text": "이현이가 모양 틀을 꾹! 눌러요.",
-   "en": "Ihyun pushes the shape press. Push!"
+   "en": "Ihyun pushes the shape press. Push!",
+   "name_split": true
   },
   {
    "text": "모양 틀을 톡톡톡!",
@@ -184,7 +194,8 @@
   },
   {
    "text": "꿀떡이가 강아지 구름과 코를 맞대요.",
-   "en": "Kkulddeok touches noses with the puppy cloud."
+   "en": "Kkulddeok touches noses with the puppy cloud.",
+   "name_split": true
   },
   {
    "text": "에취! 구름 조각이 사르르 날려요.",
@@ -210,7 +221,8 @@
   },
   {
    "text": "은우가 꾹! 눌렀어요.",
-   "en": "Eunwoo presses it. Push!"
+   "en": "Eunwoo presses it. Push!",
+   "name_split": true
   },
   {
    "text": "슈웅— 강아지 구름이 굴뚝으로 올라가요.",
@@ -248,7 +260,8 @@
   },
   {
    "text": "꿀떡이는 축축한 바닥을 킁킁.",
-   "en": "Kkulddeok sniffs the wet floor."
+   "en": "Kkulddeok sniffs the wet floor.",
+   "name_split": true
   },
   {
    "text": "종을 톡!",
@@ -290,11 +303,13 @@
   },
   {
    "text": "꿀떡이가 살금살금 다가가요.",
-   "en": "Kkulddeok tiptoes closer."
+   "en": "Kkulddeok tiptoes closer.",
+   "name_split": true
   },
   {
    "text": "은우가 아기 먹구름을 살살 쓰다듬어요.",
-   "en": "Eunwoo gently pats the baby rain cloud."
+   "en": "Eunwoo gently pats the baby rain cloud.",
+   "name_split": true
   },
   {
    "text": "아기 먹구름을 톡톡톡 쓰다듬어 줘요!",
@@ -322,11 +337,13 @@
      "nar",
      "Ihyun jumps too."
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "꿀떡이는 아기 먹구름 볼을 할짝.",
-   "en": "Kkulddeok licks the baby cloud's cheek. Lick!"
+   "en": "Kkulddeok licks the baby cloud's cheek. Lick!",
+   "name_split": true
   },
   {
    "text": "아기 먹구름 눈이 동그래졌어요.",
@@ -351,12 +368,13 @@
    "en": "Whoosh! The baby rain cloud zooms up the chimney. Pong!"
   },
   {
-   "text": "삼남매도 손을 흔들며 밖으로 달려 나가요.",
+   "text": "아이들도 손을 흔들며 밖으로 달려 나가요.",
    "en": "The three kids wave and run outside."
   },
   {
    "text": "꿀떡이는 하늘을 보고 멍! 멍!",
-   "en": "Kkulddeok looks up at the sky. Woof! Woof!"
+   "en": "Kkulddeok looks up at the sky. Woof! Woof!",
+   "name_split": true
   },
   {
    "text": "하늘에서 아기 먹구름이 큰 먹구름과 쿵!",
@@ -371,7 +389,7 @@
    "en": "Flash! Rumble, BOOM!"
   },
   {
-   "text": "\"으악!\" 삼남매는 서로 꼭 껴안아요.",
+   "text": "\"으악!\" 아이들은 서로 꼭 껴안아요.",
    "en": "Eek! The three kids hug each other tight.",
    "segs": [
     [
@@ -396,7 +414,8 @@
   },
   {
    "text": "꿀떡이는 꼬리를 살랑살랑 흔들어요.",
-   "en": "Kkulddeok wags his tail, wiggle wiggle."
+   "en": "Kkulddeok wags his tail, wiggle wiggle.",
+   "name_split": true
   },
   {
    "text": "빗방울을 톡!",
@@ -411,8 +430,9 @@
    "en": "Tap the puddles, tap tap tap! Splash, splash!"
   },
   {
-   "text": "삼남매는 꿀떡이랑 물웅덩이에서 첨벙첨벙!",
-   "en": "The three kids and Kkulddeok splash in the puddles!"
+   "text": "아이들은 꿀떡이랑 물웅덩이에서 첨벙첨벙!",
+   "en": "The three kids and Kkulddeok splash in the puddles!",
+   "name_split": true
   },
   {
    "text": "\"첨벙!\" 은우가 제일 높이 뛰어요.",
@@ -426,7 +446,8 @@
      "nar",
      "Eunwoo jumps the highest."
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "땅을 톡!",
@@ -434,7 +455,8 @@
   },
   {
    "text": "꿀떡이는 딸기 냄새를 킁킁.",
-   "en": "Kkulddeok sniffs the strawberry."
+   "en": "Kkulddeok sniffs the strawberry.",
+   "name_split": true
   },
   {
    "text": "아기 먹구름이 내려다봐요. \"어? 다들 웃고 있네!\"",
@@ -492,11 +514,13 @@
   },
   {
    "text": "꿀떡이는 젖은 흙에 코를 대고 킁킁.",
-   "en": "Kkulddeok puts his nose to the wet dirt. Sniff, sniff."
+   "en": "Kkulddeok puts his nose to the wet dirt. Sniff, sniff.",
+   "name_split": true
   },
   {
-   "text": "삼남매는 꿀떡이랑 왔던 길로 집에 가요.",
-   "en": "The three kids and Kkulddeok walk home the way they came."
+   "text": "아이들은 꿀떡이랑 왔던 길로 집에 가요.",
+   "en": "The three kids and Kkulddeok walk home the way they came.",
+   "name_split": true
   },
   {
    "text": "굴뚝을 톡! 안녕!",
@@ -518,11 +542,13 @@
      "agi",
      "Pong!"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "꿀떡이는 굴뚝 쪽 바람을 마지막으로 킁킁.",
-   "en": "Kkulddeok takes one last sniff of the wind from the chimney."
+   "en": "Kkulddeok takes one last sniff of the wind from the chimney.",
+   "name_split": true
   },
   {
    "text": "톡.",
@@ -577,7 +603,7 @@
    "en": "Purple!"
   },
   {
-   "text": "밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.",
+   "text": "밤이 되었어요. 아이들은 이불 속에 쏙 들어갔어요.",
    "en": "Night came. The three kids snuggled under the blanket."
   },
   {
@@ -606,15 +632,17 @@
      "nar",
      "Dahyun and Ihyun whispered."
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "꿀떡이도 새근새근, 모두 꿈나라로 갔어요.",
-   "en": "Kkulddeok breathed softly too, and everyone drifted off to dreamland."
+   "en": "Kkulddeok breathed softly too, and everyone drifted off to dreamland.",
+   "name_split": true
   }
  ],
  "ui": {
- "톡!": "Tap!",
+  "톡!": "Tap!",
   "강아지!": "Puppy!",
   "고래!": "Whale!",
   "꿀꺽!": "Gulp!",

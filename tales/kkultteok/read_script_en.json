@@ -38,7 +38,8 @@
        "nar",
        "On a sunny day, Dahyun, Ihyun, and Eunwoo go for a walk with Kkulddeok."
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하늘에 구름이 둥실둥실.",
@@ -91,10 +92,11 @@
      "before": [
       "dog:look:nose",
       "fx:sniff"
-     ]
+     ],
+     "name_split": true
     },
     {
-     "text": "삼남매와 꿀떡이는 작은 언덕 아래에 왔어요.",
+     "text": "아이들과 꿀떡이는 작은 언덕 아래에 왔어요.",
      "src": "new",
      "needs_audio": true,
      "en": "The three children and Kkulddeok came to a little hill.",
@@ -105,7 +107,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "킁킁킁! 꿀떡이가 무슨 냄새를 맡았어요.",
@@ -121,7 +124,8 @@
       "set:02_hill",
       "kids:look:walk",
       "dog:look:nose"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "꿀떡이 꼬리가 살랑살랑, 귀가 쫑긋!",
@@ -135,7 +139,8 @@
      ],
      "before": [
       "dog:look:wag"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "냄새를 따라 쪼르르 달려가요.",
@@ -167,7 +172,7 @@
      ]
     },
     {
-     "text": "삼남매는 영차, 영차 언덕을 올라요.",
+     "text": "아이들은 영차, 영차 언덕을 올라요.",
      "src": "reuse",
      "en": "Heave-ho, heave-ho! The three kids climb the hill.",
      "segs": [
@@ -190,7 +195,8 @@
        "nar",
        "Dahyun takes big strides, Ihyun marches bravely, and Eunwoo toddles along behind."
       ]
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -206,7 +212,7 @@
    ],
    "lines": [
     {
-     "text": "언덕 꼭대기에 오른 삼남매와 꿀떡이가 걸음을 멈췄어요.",
+     "text": "언덕 꼭대기에 올라, 아이들과 꿀떡이가 걸음을 멈췄어요.",
      "src": "new",
      "needs_audio": true,
      "en": "At the top of the hill, the children and Kkulddeok stopped.",
@@ -217,7 +223,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "언덕 너머에 커다란 굴뚝 하나.",
@@ -245,7 +252,7 @@
      ]
     },
     {
-     "text": "삼남매는 눈을 동그랗게 뜨고 굴뚝을 올려다봐요.",
+     "text": "아이들은 눈을 동그랗게 뜨고 굴뚝을 올려다봐요.",
      "src": "new",
      "en": "The three kids look up at the chimney with big, round eyes.",
      "segs": [
@@ -304,7 +311,8 @@
      "before": [
       "kid:agi:look:jump",
       "kid:agi:hop"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "구름이 쏙! 토끼, 물고기, 자동차로 바뀌어요.",
@@ -334,7 +342,8 @@
      "before": [
       "dog:look:lookup",
       "fx:woof"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -349,7 +358,7 @@
    ],
    "lines": [
     {
-     "text": "삼남매와 꿀떡이는 굴뚝 아래로 내려갔어요.",
+     "text": "아이들과 꿀떡이는 굴뚝 아래로 내려갔어요.",
      "src": "new",
      "needs_audio": true,
      "en": "The children and Kkulddeok went down to the foot of the chimney.",
@@ -360,7 +369,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "굴뚝 아래 커다란 문.",
@@ -396,7 +406,8 @@
      ],
      "before": [
       "dog:look:nose:right"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "꿀떡이 코가 문틈에서 킁킁, 꼬리가 흔들흔들.",
@@ -407,7 +418,8 @@
        "nar",
        "Kkulddeok's nose goes sniff, sniff at the gap, and his tail wags back and forth."
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "스르르… 문이 열려요.",
@@ -424,7 +436,7 @@
      ]
     },
     {
-     "text": "삼남매는 살금살금 따라 들어가요.",
+     "text": "아이들은 살금살금 따라 들어가요.",
      "src": "reuse",
      "en": "The three kids tiptoe in after him.",
      "segs": [
@@ -462,7 +474,7 @@
    ],
    "lines": [
     {
-     "text": "공장 안으로 들어온 삼남매와 꿀떡이는 벨트 앞에 섰어요.",
+     "text": "공장 안으로 들어와, 아이들과 꿀떡이는 벨트 앞에 섰어요.",
      "src": "new",
      "needs_audio": true,
      "en": "Inside the factory, the children and Kkulddeok stood by a long belt.",
@@ -473,7 +485,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "기다란 벨트 위로 물방울이 똑, 똑, 똑.",
@@ -512,7 +525,8 @@
      ],
      "before": [
       "kid:oppa:look:reach"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "\"앗, 차가워! 진짜 물방울이야!\"",
@@ -541,7 +555,8 @@
      "before": [
       "kid:nuna:look:blow",
       "horn:blow"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "뭉게, 뭉게뭉게, 뭉게뭉게뭉게! 퐁!",
@@ -599,7 +614,7 @@
    ],
    "lines": [
     {
-     "text": "삼남매와 꿀떡이는 구름 모양을 만드는 기계 앞으로 갔어요.",
+     "text": "아이들과 꿀떡이는 구름 모양을 만드는 기계 앞으로 갔어요.",
      "src": "new",
      "needs_audio": true,
      "en": "The children and Kkulddeok went to a machine that made cloud shapes.",
@@ -610,7 +625,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "이현이가 모양 틀을 힘껏, 쿵! 내리찍어요.",
@@ -625,7 +641,8 @@
      "before": [
       "kid:oppa:look:press",
       "press:rabbit"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "퐁! 토끼 구름. 퐁! 고래 구름.",
@@ -693,7 +710,8 @@
      "before": [
       "dog:look:nose:left",
       "dog:walk:640,470,900"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "에취! 구름 조각이 사르르 날려요.",
@@ -724,7 +742,7 @@
    ],
    "lines": [
     {
-     "text": "강아지 구름을 따라 삼남매와 꿀떡이가 공장 구석으로 갔어요.",
+     "text": "강아지 구름을 따라, 아이들과 꿀떡이가 공장 구석으로 갔어요.",
      "src": "new",
      "needs_audio": true,
      "en": "The children and Kkulddeok followed the puppy cloud to a corner.",
@@ -735,7 +753,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "구석에 커다란 빨간 단추가 있어요.",
@@ -771,7 +790,8 @@
      ],
      "before": [
       "kid:agi:look:press:left"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "은우가 꾹! 눌렀어요.",
@@ -786,7 +806,8 @@
      "before": [
       "button:push",
       "pop:300,300,쿵!"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "슈웅— 강아지 구름이 굴뚝으로 올라가요.",
@@ -821,7 +842,7 @@
      ]
     },
     {
-     "text": "삼남매는 짝짝짝, 손뼉을 쳤어요.",
+     "text": "아이들은 짝짝짝, 손뼉을 쳤어요.",
      "src": "new",
      "en": "The three kids clapped and clapped. Clap, clap, clap!",
      "segs": [
@@ -923,10 +944,11 @@
      "before": [
       "dog:look:sniff",
       "fx:sniff"
-     ]
+     ],
+     "name_split": true
     },
     {
-     "text": "삼남매와 꿀떡이는 종이 있는 방으로 갔어요.",
+     "text": "아이들과 꿀떡이는 종이 있는 방으로 갔어요.",
      "src": "new",
      "needs_audio": true,
      "en": "The children and Kkulddeok went into the room with the bell.",
@@ -937,7 +959,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "땡, 땡, 땡! 종이 울려요.",
@@ -995,7 +1018,7 @@
    ],
    "lines": [
     {
-     "text": "먹구름들이 떠난 방에 삼남매와 꿀떡이는 잠깐 남아 있었어요.",
+     "text": "아이들과 꿀떡이는 먹구름들이 떠난 방에 잠깐 남아 있었어요.",
      "src": "new",
      "needs_audio": true,
      "en": "The children and Kkulddeok stayed in the room after the rain clouds left.",
@@ -1006,7 +1029,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "구석에 아기 먹구름 하나가 혼자 웅크리고 있어요.",
@@ -1084,7 +1108,8 @@
      "before": [
       "dog:look:sniff:left",
       "dog:walk:600,470,1600"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "은우가 아기 먹구름을 살살 쓰다듬어요.",
@@ -1100,7 +1125,8 @@
       "set:10_corner_close",
       "kid:agi:look:pet",
       "baby:pet"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "토닥토닥, 쓰담쓰담. 아기 먹구름이 조금씩 고개를 들어요.",
@@ -1145,7 +1171,8 @@
      "before": [
       "kid:oppa:look:splash:left",
       "kid:oppa:hop"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "꿀떡이는 아기 먹구름 볼을 할짝.",
@@ -1160,7 +1187,8 @@
      "before": [
       "dog:look:lick:left",
       "pop:560,320,할짝!"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "아기 먹구름 눈이 동그래졌어요.",
@@ -1232,7 +1260,7 @@
      ]
     },
     {
-     "text": "삼남매도 손을 흔들며 밖으로 달려 나가요.",
+     "text": "아이들도 손을 흔들며 밖으로 달려 나가요.",
      "src": "reuse",
      "en": "The three kids wave and run outside.",
      "segs": [
@@ -1247,7 +1275,7 @@
      ]
     },
     {
-     "text": "꿀떡이도 삼남매를 따라 공장 밖으로 나왔어요.",
+     "text": "꿀떡이도 아이들을 따라 공장 밖으로 나왔어요.",
      "src": "new",
      "needs_audio": true,
      "en": "Kkulddeok followed the children outside the factory.",
@@ -1258,7 +1286,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "꿀떡이는 하늘을 보고 멍! 멍!",
@@ -1275,7 +1304,8 @@
       "kids:look:lookup",
       "dog:look:lookup",
       "fx:woof"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하늘에서 아기 먹구름이 큰 먹구름과 쿵!",
@@ -1308,7 +1338,7 @@
      ]
     },
     {
-     "text": "하늘은 우르릉, 삼남매 가슴은 두근두근.",
+     "text": "하늘은 우르릉, 아이들은 가슴이 두근두근.",
      "src": "new",
      "en": "The sky goes rumble, rumble, and the kids' hearts go thump, thump.",
      "segs": [
@@ -1319,7 +1349,7 @@
      ]
     },
     {
-     "text": "\"으악!\" 삼남매는 서로 꼭 껴안아요.",
+     "text": "\"으악!\" 아이들은 서로 꼭 껴안아요.",
      "src": "reuse",
      "en": "Eek! The three kids hug each other tight.",
      "segs": [
@@ -1338,7 +1368,7 @@
      ]
     },
     {
-     "text": "하늘의 먹구름이 삼남매에게 말했어요.",
+     "text": "하늘의 먹구름이 아이들에게 말했어요.",
      "src": "new",
      "needs_audio": true,
      "en": "A rain cloud in the sky spoke to the children.",
@@ -1363,7 +1393,7 @@
      ]
     },
     {
-     "text": "삼남매는 휴우, 가슴을 쓸어내리고 까르르 웃었어요.",
+     "text": "아이들은 휴우, 가슴을 쓸어내리고 까르르 웃었어요.",
      "src": "new",
      "en": "The three kids let out a big sigh, phew, and then burst out giggling.",
      "segs": [
@@ -1388,7 +1418,8 @@
      ],
      "before": [
       "dog:look:wag"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -1404,18 +1435,19 @@
    ],
    "lines": [
     {
-     "text": "공장 밖에 선 삼남매와 꿀떡이에게 빗방울이 떨어졌어요.",
+     "text": "공장 밖에 나오자, 아이들과 꿀떡이에게 빗방울이 떨어졌어요.",
      "src": "new",
      "needs_audio": true,
-     "en": "Raindrops fell on the children and Kkulddeok outside the factory.",
+     "en": "Outside the factory, the children and Kkulddeok felt raindrops fall.",
      "segs": [
       [
        "nar",
-       "Raindrops fell on the children and Kkulddeok outside the factory.",
+       "Outside the factory, the children and Kkulddeok felt raindrops fall.",
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "톡.",
@@ -1472,7 +1504,7 @@
      ]
     },
     {
-     "text": "삼남매는 꿀떡이랑 물웅덩이에서 첨벙첨벙!",
+     "text": "아이들은 꿀떡이랑 물웅덩이에서 첨벙첨벙!",
      "src": "reuse",
      "en": "The three kids and Kkulddeok splash in the puddles!",
      "segs": [
@@ -1486,7 +1518,8 @@
       "dog:look:run:left",
       "puddle:splash",
       "pop:500,420,첨벙!"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "\"첨벙!\" 은우가 제일 높이 뛰어요.",
@@ -1504,7 +1537,8 @@
      ],
      "before": [
       "kid:agi:hop"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "장화 속까지 철벅철벅, 그래도 신이 나요.",
@@ -1590,7 +1624,8 @@
      "before": [
       "dog:look:sniff",
       "fx:sniff"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "아기 먹구름이 내려다봐요. \"어? 다들 웃고 있네!\"",
@@ -1622,7 +1657,7 @@
    ],
    "lines": [
     {
-     "text": "비가 그치자 삼남매와 꿀떡이는 하늘을 올려다봤어요.",
+     "text": "비가 그치자, 아이들과 꿀떡이는 하늘을 올려다봤어요.",
      "src": "new",
      "needs_audio": true,
      "en": "When the rain stopped, the children and Kkulddeok looked up.",
@@ -1633,7 +1668,8 @@
        null,
        "[calm, warm storytelling]"
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하늘에 커다란 무지개! \"우와!\"",
@@ -1723,10 +1759,11 @@
      "before": [
       "dog:look:nose",
       "fx:sniff"
-     ]
+     ],
+     "name_split": true
     },
     {
-     "text": "삼남매는 꿀떡이랑 왔던 길로 집에 가요.",
+     "text": "아이들은 꿀떡이랑 왔던 길로 집에 가요.",
      "src": "reuse",
      "en": "The three kids and Kkulddeok walk home the way they came.",
      "segs": [
@@ -1740,7 +1777,8 @@
       "kids:look:walk:left",
       "dog:look:run:left",
       "kids:walk:200,2500"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "멀리 굴뚝에서 작은 구름이 퐁! 퐁!",
@@ -1774,7 +1812,8 @@
      "before": [
       "kid:agi:look:lookback",
       "kid:agi:look:wave"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "\"또 놀러 와, 아기 구름아!\"",
@@ -1803,7 +1842,8 @@
      "before": [
       "dog:look:nose:right",
       "finale"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "비 오는 날도, 해 뜨는 날도 모두 소중하답니다.",
@@ -1826,7 +1866,7 @@
    ],
    "lines": [
     {
-     "text": "밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.",
+     "text": "밤이 되었어요. 아이들은 이불 속에 쏙 들어갔어요.",
      "src": "new",
      "en": "Night came. The three kids snuggled under the blanket.",
      "segs": [
@@ -1879,7 +1919,8 @@
        "Dahyun and Ihyun whispered.",
        null
       ]
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "꿀떡이도 새근새근, 모두 꿈나라로 갔어요.",
@@ -1897,7 +1938,8 @@
      ],
      "after": [
       "bed:end"
-     ]
+     ],
+     "name_split": true
     }
    ]
   }

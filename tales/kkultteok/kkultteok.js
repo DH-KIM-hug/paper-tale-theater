@@ -738,7 +738,7 @@
       await run1;
       await say('"같이 가자!"');
       const climb = Promise.all(kids.map(k => k.move(k.x + 200, G - 40, 2600, 'linear')));
-      await say('삼남매는 영차, 영차 언덕을 올라요.');
+      await say('아이들은 영차, 영차 언덕을 올라요.');
       await climb;
     });
     /* --- 3. 굴뚝에서 퐁! 굴뚝 김이 바람을 따라 왼쪽 위로 휘어 오르고, 톡 할 때마다 큰 김 덩이가 그 길 끝에서 종이 구름이 된다.
@@ -821,7 +821,7 @@
         hide(k);
       };
       const inn = Promise.all([enter(dog, DX - 10, 0), ...kids.map((k, i) => enter(k, DX - 25 + i * 22, 900 + i * 450))]);
-      await say('삼남매는 살금살금 따라 들어가요.');
+      await say('아이들은 살금살금 따라 들어가요.');
       await inn;
     });
     /* --- 5. 물방울과 바람 --- */
@@ -1047,7 +1047,7 @@
       await say('슈웅— 아기 먹구름이 굴뚝으로 올라가요. 퐁!');
       await up.finished.catch(() => {}); hide(baby); popSfx(T); T.pop(FLX, 110, tr('퐁!'));
       nuna.look('run'); agi.look('run'); oppa.look('run');
-      await say('삼남매도 손을 흔들며 밖으로 달려 나가요.');
+      await say('아이들도 손을 흔들며 밖으로 달려 나가요.');
       for (let k = 0; k < 2; k++) { dog.hop(10, 260); T.pop(dog.x, dog.y - 260, tr('멍!')); await sleep(420); }
       await say('꿀떡이는 하늘을 보고 멍! 멍!');
     });
@@ -1075,7 +1075,7 @@
       await say('번쩍! 우르릉 쾅!');
       await T.cutImage([{ src: jsrc('cut_hug'), sfx: 'swish', hold: 3000 }], { hold: 3000 });
       put(T, nuna, X(440, 450), G, { look: 'hug', to: 'right' }); put(T, oppa, X(520, 510), G, { look: 'hug', to: 'left' }); put(T, agi, X(480, 480), G + 6, { look: 'hug', to: 'right' });
-      await say('"으악!" 삼남매는 서로 꼭 껴안아요.');
+      await say('"으악!" 아이들은 서로 꼭 껴안아요.');
       await say('"미안, 미안! 인사한 거야!"');
       dog.wiggle && dog.wiggle(8, 700);
       await say('꿀떡이는 꼬리를 살랑살랑 흔들어요.');
@@ -1106,7 +1106,7 @@
       };
       await sleep(400); // 저절로 (2026-10-20 톡 조작 정리)
       for (let i = 1; i <= 3; i++) { splashStep(i); await sleep(600); }
-      await say('삼남매는 꿀떡이랑 물웅덩이에서 첨벙첨벙!');
+      await say('아이들은 꿀떡이랑 물웅덩이에서 첨벙첨벙!');
       agi.hop(46, 520); ring(agi.x, G + 4); AudioFX.sfx('splash_big') || popSfx(T);
       await say('"첨벙!" 은우가 제일 높이 뛰어요.');
     });
@@ -1237,7 +1237,7 @@
       const C0 = [ch.x + 6, ch.y - 124], tgt = [[X(720, 600), 150], [X(600, 520), 120]];
       chimneyLoop(C0, [C0[0], C0[1] - 40], [C0[0] - 160, C0[1] - 70], { s0: .25, s1: .9 });
       const home = Promise.all([dog.move(X(105, 300), G, 3800, 'linear'), nuna.move(X(225, 370), G, 4200, 'linear'), oppa.move(X(325, 430), G, 4200, 'linear')]); // 2026-11-02 싱크: 꿀떡이가 화면 밖(-60)으로 나가 버려 마지막 킁킁 대사 때 없던 것 → 화면 안에서 멈춘다
-      await say('삼남매는 꿀떡이랑 왔던 길로 집에 가요.');
+      await say('아이들은 꿀떡이랑 왔던 길로 집에 가요.');
       await T.ask('굴뚝을 톡! 안녕!', () => T.tap(ch.pos, { prompt: '굴뚝을 톡! 안녕!' }));
       for (let k = 0; k < 2; k++) { smokeToCloud(c2[k], C0, [C0[0], C0[1] - 50], tgt[k], 2400, P ? .75 : 1); T.pop(C0[0] + 40, C0[1] - 30, tr('퐁!')); await sleep(700); }
       await say('멀리 굴뚝에서 작은 구름이 퐁! 퐁!');
@@ -1251,7 +1251,7 @@
     /* --- 17. 잠자리 (2026-11-01): 누르기 없음. 삼남매·꿀떡이가 잠들고 아기 구름이 달 앞에 눕는다 --- */
     S(async () => {
       await T.sceneCard('', () => bed.open());
-      await say('밤이 되었어요. 삼남매는 이불 속에 쏙 들어갔어요.');
+      await say('밤이 되었어요. 아이들은 이불 속에 쏙 들어갔어요.');
       await say('"아기 구름도 자?"');
       bed.cloud();
       await say('창밖에서 하얀 아기 구름이 둥실 날아와 달님 앞에 폭신하게 누웠어요.');

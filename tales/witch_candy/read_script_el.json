@@ -158,7 +158,8 @@
      ],
      "after": [
       "all:walk:right"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -205,7 +206,8 @@
      ],
      "after": [
       "fire:light"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "화르륵! 불이 활활, 솥이 뽀글뽀글 끓기 시작했어요.",
@@ -327,16 +329,17 @@
    ],
    "lines": [
     {
-     "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "text": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
      "segs": [
       [
        "witch",
-       "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+       "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
        "happy",
        "[kind quirky witch, warm, giggly, a little silly, never scary]"
       ]
      ],
-     "src": "reuse"
+     "src": "reuse",
+     "name_split": true
     },
     {
      "text": "다현이는 아기 용 콧물이랑 빨간 소방차를 솥에 넣었어요. 뚝, 삐뽀삐뽀!",
@@ -354,7 +357,8 @@
      ],
      "after": [
       "pot:drop:snot,firetruck"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "으엑! 콧물이요?",
@@ -490,7 +494,7 @@
        "nar",
        "뿅! 다현이가 빨간 딸기가 됐어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -499,7 +503,8 @@
      ],
      "after": [
       "kid:tf:strawberry"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "데굴데굴, 멈춰 줘요~!",
@@ -544,7 +549,8 @@
      "src": "reuse",
      "before": [
       "kid:act:strawberry"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "어디 가!",
@@ -565,13 +571,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -596,16 +603,17 @@
    ],
    "lines": [
     {
-     "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "text": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
      "segs": [
       [
        "witch",
-       "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+       "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
        "happy",
        "[kind quirky witch, warm, giggly, a little silly, never scary]"
       ]
      ],
-     "src": "reuse"
+     "src": "reuse",
+     "name_split": true
     },
     {
      "text": "다현이는 병아리 방귀랑 고무 오리를 솥에 넣었어요. 뿡, 꽥!",
@@ -623,7 +631,8 @@
      ],
      "after": [
       "pot:drop:fart,duck"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
@@ -741,7 +750,7 @@
        "nar",
        "뿅! 다현이 발이 오리발이 됐어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -750,7 +759,8 @@
      ],
      "after": [
       "kid:tf:duck"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "꽥꽥… 어? 내 발이!",
@@ -804,13 +814,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -835,16 +846,17 @@
    ],
    "lines": [
     {
-     "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "text": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
      "segs": [
       [
        "witch",
-       "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+       "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
        "happy",
        "[kind quirky witch, warm, giggly, a little silly, never scary]"
       ]
      ],
-     "src": "reuse"
+     "src": "reuse",
+     "name_split": true
     },
     {
      "text": "다현이는 괴물 응가랑 파란 생선을 솥에 넣었어요. 퐁, 첨벙!",
@@ -862,7 +874,8 @@
      ],
      "after": [
       "pot:drop:poo,fish"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "으엑! 응가요?",
@@ -998,7 +1011,7 @@
        "nar",
        "뿅! 다현이한테 물고기 꼬리가 생겼어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -1007,7 +1020,8 @@
      ],
      "after": [
       "kid:tf:fish"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하늘에서 수영이다!",
@@ -1052,7 +1066,8 @@
      "src": "reuse",
      "before": [
       "kid:act:fish"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
@@ -1061,13 +1076,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -1092,16 +1108,17 @@
    ],
    "lines": [
     {
-     "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "text": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
      "segs": [
       [
        "witch",
-       "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+       "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
        "happy",
        "[kind quirky witch, warm, giggly, a little silly, never scary]"
       ]
      ],
-     "src": "reuse"
+     "src": "reuse",
+     "name_split": true
     },
     {
      "text": "다현이는 초록 개구리랑 파란 파도를 솥에 넣었어요. 개굴, 철썩!",
@@ -1119,7 +1136,8 @@
      ],
      "after": [
       "pot:drop:frog,wave"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
@@ -1237,7 +1255,7 @@
        "nar",
        "뿅! 다현이가 청록 개구리가 됐어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -1246,7 +1264,8 @@
      ],
      "after": [
       "kid:tf:frog"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "개굴! 지붕까지 폴짝!",
@@ -1291,7 +1310,8 @@
      "src": "reuse",
      "before": [
       "kid:act:frog"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
@@ -1300,13 +1320,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -1331,16 +1352,17 @@
    ],
    "lines": [
     {
-     "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "text": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
      "segs": [
       [
        "witch",
-       "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+       "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
        "happy",
        "[kind quirky witch, warm, giggly, a little silly, never scary]"
       ]
      ],
-     "src": "reuse"
+     "src": "reuse",
+     "name_split": true
     },
     {
      "text": "다현이는 아기 용 콧물이랑 노란 호박 등을 솥에 넣었어요. 뚝, 퐁!",
@@ -1358,7 +1380,8 @@
      ],
      "after": [
       "pot:drop:snot,lantern"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "으엑! 콧물이요?",
@@ -1494,7 +1517,7 @@
        "nar",
        "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -1503,7 +1526,8 @@
      ],
      "after": [
       "kid:tf:pumpkin"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "내 배가 등불이 됐어!",
@@ -1536,11 +1560,11 @@
      ]
     },
     {
-     "text": "깜깜한 길이 다현이 덕분에 환해졌어요.",
+     "text": "다현이 덕분에 깜깜한 길이 환해졌어요.",
      "segs": [
       [
        "nar",
-       "깜깜한 길이 다현이 덕분에 환해졌어요.",
+       "다현이 덕분에 깜깜한 길이 환해졌어요.",
        "happy",
        "[playful storytelling, rhythmic on the sound words, smiling]"
       ]
@@ -1548,7 +1572,8 @@
      "src": "reuse",
      "before": [
       "kid:act:pumpkin"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
@@ -1557,13 +1582,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -1588,16 +1614,17 @@
    ],
    "lines": [
     {
-     "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "text": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
      "segs": [
       [
        "witch",
-       "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+       "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
        "happy",
        "[kind quirky witch, warm, giggly, a little silly, never scary]"
       ]
      ],
-     "src": "reuse"
+     "src": "reuse",
+     "name_split": true
     },
     {
      "text": "다현이는 무당벌레랑 파란 생선을 솥에 넣었어요. 붕, 첨벙!",
@@ -1615,7 +1642,8 @@
      ],
      "after": [
       "pot:drop:ladybug,fish"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
@@ -1733,7 +1761,7 @@
        "nar",
        "뿅! 다현이 등에 박쥐 날개가 돋았어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -1742,7 +1770,8 @@
      ],
      "after": [
       "kid:tf:bat"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "파닥파닥, 달님 안녕!",
@@ -1787,7 +1816,8 @@
      "src": "reuse",
      "before": [
       "kid:act:bat"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
@@ -1796,13 +1826,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -1827,16 +1858,17 @@
    ],
    "lines": [
     {
-     "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "text": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
      "segs": [
       [
        "witch",
-       "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+       "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
        "happy",
        "[kind quirky witch, warm, giggly, a little silly, never scary]"
       ]
      ],
-     "src": "reuse"
+     "src": "reuse",
+     "name_split": true
     },
     {
      "text": "다현이는 빨간 소방차랑 초록 공룡을 솥에 넣었어요. 삐뽀삐뽀, 크앙!",
@@ -1854,7 +1886,8 @@
      ],
      "after": [
       "pot:drop:firetruck,dino"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
@@ -1972,7 +2005,7 @@
        "nar",
        "뿅! 다현이 입에 초콜릿 수염이 났어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -1981,7 +2014,8 @@
      ],
      "after": [
       "kid:tf:choco"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "주르륵… 나 녹아요~",
@@ -2026,7 +2060,8 @@
      "src": "reuse",
      "before": [
       "kid:act:choco"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "녹았다!",
@@ -2038,7 +2073,8 @@
        "[kind quirky witch, surprised, giggling]"
       ]
      ],
-     "src": "reuse"
+     "src": "reuse",
+     "name_split": true
     },
     {
      "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
@@ -2047,13 +2083,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -2078,16 +2115,17 @@
    ],
    "lines": [
     {
-     "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "text": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
      "segs": [
       [
        "witch",
-       "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+       "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
        "happy",
        "[kind quirky witch, warm, giggly, a little silly, never scary]"
       ]
      ],
-     "src": "reuse"
+     "src": "reuse",
+     "name_split": true
     },
     {
      "text": "다현이는 병아리 방귀랑 구운 초록 대파를 솥에 넣었어요. 뿡, 지글지글!",
@@ -2105,7 +2143,8 @@
      ],
      "after": [
       "pot:drop:fart,leek"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
@@ -2223,7 +2262,7 @@
        "nar",
        "뿅! 다현이가 동그란 연두 키위가 됐어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -2232,7 +2271,8 @@
      ],
      "after": [
       "kid:tf:kiwi"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "보송보송… 간지러워! 히히!",
@@ -2277,7 +2317,8 @@
      "src": "reuse",
      "before": [
       "kid:act:kiwi"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
@@ -2286,13 +2327,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -2317,16 +2359,17 @@
    ],
    "lines": [
     {
-     "text": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+     "text": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
      "segs": [
       [
        "witch",
-       "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
+       "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
        "happy",
        "[kind quirky witch, warm, giggly, a little silly, never scary]"
       ]
      ],
-     "src": "reuse"
+     "src": "reuse",
+     "name_split": true
     },
     {
      "text": "다현이는 초록 공룡이랑 구운 초록 대파를 솥에 넣었어요. 쿵, 지글지글!",
@@ -2344,7 +2387,8 @@
      ],
      "after": [
       "pot:drop:dino,leek"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
@@ -2462,7 +2506,7 @@
        "nar",
        "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -2471,7 +2515,8 @@
      ],
      "after": [
       "kid:tf:croc"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "앙! 앙! 나는 악어다!",
@@ -2516,7 +2561,8 @@
      "src": "reuse",
      "before": [
       "kid:act:croc"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "뿅! 다현이는 다시 원래대로 돌아왔어요.",
@@ -2525,13 +2571,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -2598,7 +2645,8 @@
      ],
      "after": [
       "pot:drop:snot,firetruck"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "으엑! 콧물이요?",
@@ -2719,7 +2767,7 @@
        "nar",
        "뿅! 다현이가 빨간 딸기가 됐어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -2729,7 +2777,8 @@
      "after": [
       "kid:tf:strawberry",
       "kid:act:strawberry:short"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "데굴데굴, 멈춰 줘요~!",
@@ -2750,13 +2799,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -2823,7 +2873,8 @@
      ],
      "after": [
       "pot:drop:fart,duck"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
@@ -2926,7 +2977,7 @@
        "nar",
        "뿅! 다현이 발이 오리발이 됐어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -2936,7 +2987,8 @@
      "after": [
       "kid:tf:duck",
       "kid:act:duck:short"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "꽥꽥… 어? 내 발이!",
@@ -2957,13 +3009,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -3030,7 +3083,8 @@
      ],
      "after": [
       "pot:drop:poo,fish"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "으엑! 응가요?",
@@ -3151,7 +3205,7 @@
        "nar",
        "뿅! 다현이한테 물고기 꼬리가 생겼어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -3161,7 +3215,8 @@
      "after": [
       "kid:tf:fish",
       "kid:act:fish:short"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하늘에서 수영이다!",
@@ -3182,13 +3237,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -3255,7 +3311,8 @@
      ],
      "after": [
       "pot:drop:frog,wave"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
@@ -3358,7 +3415,7 @@
        "nar",
        "뿅! 다현이가 청록 개구리가 됐어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -3368,7 +3425,8 @@
      "after": [
       "kid:tf:frog",
       "kid:act:frog:short"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "개굴! 지붕까지 폴짝!",
@@ -3389,13 +3447,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -3462,7 +3521,8 @@
      ],
      "after": [
       "pot:drop:snot,lantern"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "으엑! 콧물이요?",
@@ -3583,7 +3643,7 @@
        "nar",
        "뿅! 다현이의 볼이랑 배가 호박처럼 환해졌어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -3593,7 +3653,8 @@
      "after": [
       "kid:tf:pumpkin",
       "kid:act:pumpkin:short"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "내 배가 등불이 됐어!",
@@ -3614,13 +3675,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -3687,7 +3749,8 @@
      ],
      "after": [
       "pot:drop:ladybug,fish"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
@@ -3790,7 +3853,7 @@
        "nar",
        "뿅! 다현이 등에 박쥐 날개가 돋았어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -3800,7 +3863,8 @@
      "after": [
       "kid:tf:bat",
       "kid:act:bat:short"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "파닥파닥, 달님 안녕!",
@@ -3821,13 +3885,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -3894,7 +3959,8 @@
      ],
      "after": [
       "pot:drop:firetruck,dino"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
@@ -3997,7 +4063,7 @@
        "nar",
        "뿅! 다현이 입에 초콜릿 수염이 났어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -4007,7 +4073,8 @@
      "after": [
       "kid:tf:choco",
       "kid:act:choco:short"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "주르륵… 나 녹아요~",
@@ -4028,13 +4095,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -4101,7 +4169,8 @@
      ],
      "after": [
       "pot:drop:fart,leek"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
@@ -4204,7 +4273,7 @@
        "nar",
        "뿅! 다현이가 동그란 연두 키위가 됐어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -4214,7 +4283,8 @@
      "after": [
       "kid:tf:kiwi",
       "kid:act:kiwi:short"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "보송보송… 간지러워! 히히!",
@@ -4235,13 +4305,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -4308,7 +4379,8 @@
      ],
      "after": [
       "pot:drop:dino,leek"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하나, 둘! 솥 물이 빙글빙글 돌며 색이 변했어요.",
@@ -4411,7 +4483,7 @@
        "nar",
        "뿅! 다현이한테 초록 악어 꼬리가 생겼어요!",
        "toneup",
-       "[bright, magical, excited storytelling, a pop on 뿅]"
+       "[bright, magical, excited storytelling]"
       ]
      ],
      "src": "reuse",
@@ -4421,7 +4493,8 @@
      "after": [
       "kid:tf:croc",
       "kid:act:croc:short"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "앙! 앙! 나는 악어다!",
@@ -4442,13 +4515,14 @@
        "nar",
        "뿅! 다현이는 다시 원래대로 돌아왔어요.",
        null,
-       "[warm, settling, a pop on 뿅, gentle]"
+       "[warm, settling, gentle]"
       ]
      ],
      "src": "reuse",
      "before": [
       "kid:tf:none"
-     ]
+     ],
+     "name_split": true
     }
    ]
   },
@@ -4509,7 +4583,8 @@
      ],
      "after": [
       "pot:drop:snot,fart,poo"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "하나, 둘, 셋! 색을 전부 섞으면…",
@@ -4810,7 +4885,8 @@
        "[kind quirky witch, grateful, warm, smiling]"
       ]
      ],
-     "src": "reuse"
+     "src": "reuse",
+     "name_split": true
     },
     {
      "text": "네! 다음엔 다른 색으로요!",
@@ -4844,7 +4920,8 @@
      ],
      "before": [
       "finale"
-     ]
+     ],
+     "name_split": true
     },
     {
      "text": "해피 핼러윈! 오~우~!",

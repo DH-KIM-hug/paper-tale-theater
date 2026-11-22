@@ -47,11 +47,15 @@ def _job(p):
 def main():
     base = os.path.join(ROOT, sys.argv[1]) if len(sys.argv) > 1 else os.path.join(ROOT, 'audio', 'el')
     done = json.load(open(LOG)) if os.path.exists(LOG) else {}
+    extra = os.path.join(ROOT, 'audio', 'el', 'polished_name_split.json')   # 이름 조각 나눠 녹음(gen_name_split.py)이 다듬은 완성본
+    other = json.load(open(extra)) if os.path.exists(extra) else {}
     todo = []
     for d, _, fs in os.walk(base):
+        if os.path.basename(d) == 'parts': continue   # 고정 조각은 다듬기 전 원본(앱이 합친 뒤 다듬는다)
         for f in fs:
             if not f.endswith('.mp3'): continue
             p = os.path.join(d, f); k = os.path.relpath(p, ROOT)
+            if other.get(k) == os.path.getsize(p): continue
             if done.get(k) != os.path.getsize(p): todo.append(p)  # 크기가 다르면 새로 녹음된 것
     print(f'다듬을 파일 {len(todo)}개', flush=True)
     fail = 0

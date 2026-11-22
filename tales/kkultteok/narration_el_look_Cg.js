@@ -3,14 +3,14 @@ window.NARRATION_LOOK_CLIPS = Object.assign(window.NARRATION_LOOK_CLIPS || {}, {
  "ko": {
   "\"퐁!\" 은우가 따라 해요.": [
    "audio/el/kkultteok/look/Cg/agi_f8d78cb8a7.mp3",
-   "audio/el/kkultteok/nar_9331384ee7.mp3"
+   "audio/el/kkultteok/name/2aaf69451d.mp3"
   ],
   "\"첨벙!\" 은우가 제일 높이 뛰어요.": [
    "audio/el/kkultteok/look/Cg/agi_2cd6138e84.mp3",
-   "audio/el/kkultteok/nar_4fbc560c23.mp3"
+   "audio/el/kkultteok/name/c7bc898899.mp3"
   ],
   "은우가 뒤를 돌아보며 손을 흔들어요. \"퐁!\"": [
-   "audio/el/kkultteok/nar_0029de923a.mp3",
+   "audio/el/kkultteok/name/39ed91c347.mp3",
    "audio/el/kkultteok/look/Cg/agi_f8d78cb8a7.mp3"
   ],
   "\"아기 구름도 자?\"": "audio/el/kkultteok/look/Cg/agi_12c9973915.mp3"
@@ -20,20 +20,20 @@ window.NARRATION_LOOK_CLIPS = Object.assign(window.NARRATION_LOOK_CLIPS || {}, {
    "t": "Pong! Eunwoo says it too.",
    "c": [
     "audio/el/kkultteok/look/Cg/en/agi_fa5cb5fdbe.mp3",
-    "audio/el/kkultteok/en/nar_7975e0fb27.mp3"
+    "audio/el/kkultteok/en/name/573c28f3f6.mp3"
    ]
   },
   "\"첨벙!\" 은우가 제일 높이 뛰어요.": {
    "t": "Splash! Eunwoo jumps the highest.",
    "c": [
     "audio/el/kkultteok/look/Cg/en/agi_fd6165f915.mp3",
-    "audio/el/kkultteok/en/nar_883fdea03e.mp3"
+    "audio/el/kkultteok/en/name/4c164570bf.mp3"
    ]
   },
   "은우가 뒤를 돌아보며 손을 흔들어요. \"퐁!\"": {
    "t": "Eunwoo looks back and waves. Pong!",
    "c": [
-    "audio/el/kkultteok/en/nar_416ffbea21.mp3",
+    "audio/el/kkultteok/en/name/bda1de0a54.mp3",
     "audio/el/kkultteok/look/Cg/en/agi_fa5cb5fdbe.mp3"
    ]
   },

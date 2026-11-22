@@ -17,7 +17,8 @@
      "On a hill stands Dahyun, looking up at the sky.",
      null
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "진짜 유니콘을 만나고 싶어요.",
@@ -193,7 +194,8 @@
      "Dahyun gently picked up a flower the wind had dropped and popped it into her basket.",
      null
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 구름 나라로 올라가 보기로 했어요.",
@@ -204,7 +206,8 @@
      "Dahyun decided to climb up to the cloud country.",
      null
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "구름 섬에 양 한 마리가 혼자 앉아 있어요.",
@@ -270,7 +273,8 @@
      "Dahyun and the sheep walked the cloud path hand in hand.",
      null
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "고마워! 이제 집이 보여!",
@@ -303,7 +307,8 @@
      "When night came, Dahyun walked into the starlight forest.",
      null
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "아야, 아야…",
@@ -358,7 +363,8 @@
      "Dahyun looked quietly at the deer's little antlers.",
      null
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "유니콘은… 아니구나.",
@@ -402,7 +408,8 @@
      "The horse was looking at Dahyun's snack basket.",
      null
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "자, 같이 먹자.",
@@ -479,7 +486,8 @@
      "Dahyun trudged along, looking only at the ground.",
      null
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "그때, 뒤에서 작은 소리가 났어요.",
@@ -501,7 +509,8 @@
      "Who came up behind Dahyun?",
      null
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "달빛 아래, 하얀 유니콘이 서 있었어요.",
@@ -567,7 +576,8 @@
      "Dahyun hugged the unicorn tight.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다음 날 아침, 다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.",
@@ -578,7 +588,8 @@
      "The next morning, Dahyun came back to the hill by her home with the unicorn.",
      null
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 빨간 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -589,7 +600,8 @@
      "Dahyun gently tucked the red flower from her basket into the unicorn's mane.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 주황 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -600,7 +612,8 @@
      "Dahyun gently tucked the orange flower from her basket into the unicorn's mane.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 노란 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -611,7 +624,8 @@
      "Dahyun gently tucked the yellow flower from her basket into the unicorn's mane.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 분홍 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -622,7 +636,8 @@
      "Dahyun gently tucked the pink flower from her basket into the unicorn's mane.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 보라 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -633,7 +648,8 @@
      "Dahyun gently tucked the purple flower from her basket into the unicorn's mane.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 파란 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -644,7 +660,8 @@
      "Dahyun gently tucked the blue flower from her basket into the unicorn's mane.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 하얀 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -655,7 +672,8 @@
      "Dahyun gently tucked the white flower from her basket into the unicorn's mane.",
      "happy"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "고마워, 정말 예뻐!",
@@ -670,7 +688,8 @@
   },
   {
    "text": "그날 밤, 다현이는 포근한 이불 속에 누웠어요.",
-   "en": "That night, Dahyun lay down under her cozy blanket."
+   "en": "That night, Dahyun lay down under her cozy blanket.",
+   "name_split": true
   },
   {
    "text": "\"유니콘, 내일도 거기 있을 거지?\"",
@@ -698,7 +717,8 @@
   },
   {
    "text": "다현이는 친절한 마음을 꼭 안고 스르르 잠이 들었어요.",
-   "en": "Holding her kind heart close, Dahyun drifted off to sleep."
+   "en": "Holding her kind heart close, Dahyun drifted off to sleep.",
+   "name_split": true
   }
  ],
  "extra": {

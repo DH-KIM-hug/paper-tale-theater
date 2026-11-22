@@ -60,7 +60,8 @@
      null,
      "[calm, warm storytelling, slow, unhurried]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "진짜 유니콘을 만나고 싶어요.",
@@ -236,7 +237,8 @@
      null,
      "[warm, playful, light, storybook tone]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 구름 나라로 올라가 보기로 했어요.",
@@ -247,7 +249,8 @@
      null,
      "[hopeful, brightening, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "구름 섬에 양 한 마리가 혼자 앉아 있어요.",
@@ -313,7 +316,8 @@
      null,
      "[warm, steady, walking rhythm, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "고마워! 이제 집이 보여!",
@@ -346,7 +350,8 @@
      null,
      "[hushed, calm, a little mysterious, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "아야, 아야…",
@@ -401,7 +406,8 @@
      null,
      "[soft, slow, a thoughtful pause]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "유니콘은… 아니구나.",
@@ -445,7 +451,8 @@
      null,
      "[gentle, a little playful, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "자, 같이 먹자.",
@@ -522,7 +529,8 @@
      null,
      "[slow, soft, trudging rhythm]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "그때, 뒤에서 작은 소리가 났어요.",
@@ -544,7 +552,8 @@
      null,
      "[soft, hushed, playful suspense, a question to the listener]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "달빛 아래, 하얀 유니콘이 서 있었어요.",
@@ -610,7 +619,8 @@
      "happy",
      "[warm, joyful, storybook ending tone, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다음 날 아침, 다현이는 유니콘과 함께 집 앞 언덕으로 돌아왔어요.",
@@ -621,7 +631,8 @@
      null,
      "[warm, calm, gentle storybook ending tone, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 빨간 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -632,7 +643,8 @@
      "happy",
      "[warm, tender, joyful, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 주황 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -643,7 +655,8 @@
      "happy",
      "[warm, tender, joyful, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 노란 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -654,7 +667,8 @@
      "happy",
      "[warm, tender, joyful, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 분홍 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -665,7 +679,8 @@
      "happy",
      "[warm, tender, joyful, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 보라 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -676,7 +691,8 @@
      "happy",
      "[warm, tender, joyful, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 파란 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -687,7 +703,8 @@
      "happy",
      "[warm, tender, joyful, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "다현이는 바구니 속 하얀 꽃을 유니콘 갈기에 살며시 꽂아 주었어요.",
@@ -698,7 +715,8 @@
      "happy",
      "[warm, tender, joyful, slow]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "고마워, 정말 예뻐!",
@@ -720,7 +738,8 @@
      null,
      "[calm, warm storytelling, slow, unhurried, sleepy, soft]"
     ]
-   ]
+   ],
+   "name_split": true
   },
   {
    "text": "\"유니콘, 내일도 거기 있을 거지?\"",
@@ -764,7 +783,8 @@
      null,
      "[calm, warm storytelling, slow, unhurried, sleepy, soft]"
     ]
-   ]
+   ],
+   "name_split": true
   }
  ],
  "extra": {
