@@ -217,7 +217,14 @@
 
   /* 화면 언어: 영어 자료(t.en)가 있는 동화만 영어로 보인다 */
   let lang = 'ko';
-  try { if (localStorage.getItem('lang') === 'en') lang = 'en'; } catch (e) { /* 저장소를 못 쓰면 한국어 */ }
+  try {
+    /* 처음 실행(저장된 언어 없음): 기기 언어가 한국어가 아니면 영어로 시작하고 저장한다 */
+    if (localStorage.getItem('lang') == null) {
+      const dev = String((navigator.languages && navigator.languages[0]) || navigator.language || 'ko').toLowerCase();
+      localStorage.setItem('lang', dev.startsWith('ko') ? 'ko' : 'en');
+    }
+    if (localStorage.getItem('lang') === 'en') lang = 'en';
+  } catch (e) { /* 저장소를 못 쓰면 한국어 */ }
   /* 이름 바꾸기(engine/names.js): 창작 동화 제목·소개 글의 아이·강아지 이름. 꺼져 있으면 그대로 */
   const nameView = (x, id) => { try { return typeof Names !== 'undefined' && x ? Names.view(x, id) : x; } catch (e) { return x; } };
   const shown = t => { const s = (lang === 'en' && t.en) ? { ...t, ...t.en } : t; return s.origin === 'original' ? { ...s, title: nameView(s.title, t.id), line: nameView(s.line, t.id) } : s; };
@@ -1548,7 +1555,7 @@
             : L('소리와 자막, 놀이 시간, 언어를 정하고 이용권도 볼 수 있습니다.', 'Set sound and captions, play time and language, and see your access.'))
       : L('소리와 자막, 놀이 시간, 언어를 정할 수 있습니다.', 'Set sound and captions, play time and language.');
     return [
-      { pic: 'assets/banner/rabbit.webp', chip: 'assets/ui/hand.webp', t: L('낮에는 톡톡 놀이도 읽으면서 개념배우기', 'Daytime: tap, play and learn while reading'),
+      { pic: 'assets/banner/rabbit.webp', chip: 'assets/ui/hand.webp', t: L('낮에는 톡톡, 동화 읽으며 개념 배우기', 'Daytime: tap, read and learn'),
         d: [L('\'동화 놀이\'에서 톡 누르고, 고르고, 차례대로 놓으며 이야기를 이어 갑니다.', 'In Tale Play, children tap, choose and put things in order to keep the story going.')] },
       { pic: 'assets/banner/sunmoon.webp', chip: 'assets/ui/tab_night.webp', t: L('밤에는 읽어 주기', 'Nighttime: Read to Me'),
         d: [L('\'읽어 주기\'를 고르면 이야기를 처음부터 끝까지 읽어 줍니다. 화면을 꺼도 멈추지 않습니다.', 'Choose Read to Me and a tale is read from start to finish. It keeps playing with the screen off.')] },
