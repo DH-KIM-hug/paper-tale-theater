@@ -1548,7 +1548,7 @@
             : L('소리와 자막, 놀이 시간, 언어를 정하고 이용권도 볼 수 있습니다.', 'Set sound and captions, play time and language, and see your access.'))
       : L('소리와 자막, 놀이 시간, 언어를 정할 수 있습니다.', 'Set sound and captions, play time and language.');
     return [
-      { pic: 'assets/banner/rabbit.webp', chip: 'assets/ui/hand.webp', t: L('낮에는 톡톡 놀이', 'Daytime: tap and play'),
+      { pic: 'assets/banner/rabbit.webp', chip: 'assets/ui/hand.webp', t: L('낮에는 톡톡 놀이도 읽으면서 개념배우기', 'Daytime: tap, play and learn while reading'),
         d: [L('\'동화 놀이\'에서 톡 누르고, 고르고, 차례대로 놓으며 이야기를 이어 갑니다.', 'In Tale Play, children tap, choose and put things in order to keep the story going.')] },
       { pic: 'assets/banner/sunmoon.webp', chip: 'assets/ui/tab_night.webp', t: L('밤에는 읽어 주기', 'Nighttime: Read to Me'),
         d: [L('\'읽어 주기\'를 고르면 이야기를 처음부터 끝까지 읽어 줍니다. 화면을 꺼도 멈추지 않습니다.', 'Choose Read to Me and a tale is read from start to finish. It keeps playing with the screen off.')] },
