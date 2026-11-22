@@ -897,6 +897,284 @@ const Tale = (() => {
       requestAnimationFrame(f);
     });
   }
+  /* ── 책 열기 2판(시안 2026-11-22, startSeq=book2): 홈에서 누른 카드가 커져 표지가 되고(home.js openBook2) → 이 페이지는 같은 표지 모습으로
+     시작해 → 표지가 책등(왼쪽) 쪽으로 넘어가고 → 제목 쪽(큰 레터링)에서 한 박자 쉬고 → 제목 쪽이 넘어가며 첫 장면. 극장 커튼·시작 화면 없음.
+     평평한 종이: 원근·기울임 없이 가로로만 접히듯 넘어간다(정사영 rotateY = scaleX(cosθ)). 누르면 건너뛴다. 움직임 줄이기면 제목 쪽 → 짧은 페이드.
+     켜기: localStorage startSeq='book2' 또는 ?start=book2 (홈 주소에 붙이면 기억). 끄면 지금 방식(커튼 + 8판) 그대로 */
+  /* 2026-11-22 사용자 승인: 기본 = book4(홈 카드가 책이 되는 9판). 'curtain'(?start=curtain 또는 기억된 값)일 때만 옛 극장 커튼 + 8판 */
+  const startSeq = () => { const ok = v => (v === 'book2' || v === 'book3' || v === 'book4') ? v : v === 'curtain' ? '' : 'book4'; try { const q = new URLSearchParams(location.search).get('start'); if (q) return ok(q); return ok(localStorage.getItem('startSeq')); } catch (e) { return 'book4'; } };   // book3 = 책 한 권 3판
+  /* 표지 배치: home.js b2Geo 와 똑같아야 한다(페이지가 바뀌어도 그림이 한 픽셀도 안 움직이게) */
+  function b2Geo(W, H, ltAr) {
+    const pt = H > W, aAr = pt ? 3 / 4 : 16 / 9;
+    const lh = Math.min(H * (pt ? .2 : .25), W * (pt ? .62 : .36) / ltAr), lw = lh * ltAr;
+    const maxH = H * (pt ? .72 : .8);
+    let aw = W, ah = W / aAr; if (ah > maxH) { ah = maxH; aw = ah * aAr; }
+    const top = Math.max(0, (H - ah - lh * .8) * .45);
+    return { pt, art: { x: (W - aw) / 2, y: top, w: aw, h: ah }, lt: { x: (W - lw) / 2, y: top + ah - lh * .2, w: lw, h: lh } };
+  }
+  const B2_MASK = 'linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent), linear-gradient(transparent, #000 3%, #000 86%, transparent)';
+  const b2Box = (r, extra = '') => `position:absolute;left:${r.x.toFixed(1)}px;top:${r.y.toFixed(1)}px;width:${r.w.toFixed(1)}px;height:${r.h.toFixed(1)}px;${extra}`;
+  /* 홈이 넘겨준 표지(sessionStorage startSeqHandoff: 같은 동화·8초 안). 한 번 읽으면 지운다 */
+  function b2Handoff() {
+    try {
+      const raw = sessionStorage.getItem('startSeqHandoff'); sessionStorage.removeItem('startSeqHandoff');
+      const h = raw && JSON.parse(raw);
+      if (!h || h.folder !== taleId() || !(Date.now() - h.t < 8000) || !h.art || !h.lt) return null;
+      const q = new URLSearchParams(location.search); if (q.get('endpreview') || q.get('skipto')) return null;
+      return h;
+    } catch (e) { return null; }
+  }
+  let b2 = null;
+  /* cover: 'handoff'(홈과 같은 표지 그림) | 'start'(시작 화면을 표지로) | null(움직임 줄이기: 제목 쪽만) */
+  function b2Make({ cover, art, lt, ltAr }) {
+    const W = innerWidth, H = innerHeight, calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const PAPER = '#F5EFE9', LEAF = '#F3EBDD', SH = '46,36,28';
+    const ov = document.createElement('div'); ov.id = 'b2Book';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:96;overflow:hidden;touch-action:none;-webkit-tap-highlight-color:transparent';
+    // 제목 쪽: 안쪽 책장 종이 + 가운데 큰 레터링 + 책등 쪽 얕은 그늘
+    const tp = document.createElement('div'); tp.className = 'b2p';
+    tp.style.cssText = `position:absolute;inset:0;background:${LEAF};transform-origin:0 50%;will-change:transform`;
+    const th = Math.min(H * .42, W * .72 / ltAr), tw = th * ltAr;
+    tp.innerHTML = `<img alt="" draggable="false" decoding="sync" src="${lt}" style="${b2Box({ x: (W - tw) / 2, y: H * .47 - th / 2, w: tw, h: th }, 'object-fit:contain;transform-origin:50% 50%;transition:transform 1.6s cubic-bezier(.3,.6,.4,1)')}">`
+      + `<i style="position:absolute;left:0;top:0;bottom:0;width:4%;background:linear-gradient(90deg,rgba(${SH},.16),rgba(${SH},0));pointer-events:none"></i>`
+      + `<i class="sh" style="position:absolute;inset:0;background:rgb(${SH});opacity:0;pointer-events:none"></i>`;
+    ov.appendChild(tp);
+    // 넘어가는 장 끝이 아래 장에 드리우는 그림자(장 끝을 따라 움직인다)
+    const edge = document.createElement('i');
+    edge.style.cssText = `position:absolute;top:0;bottom:0;left:0;width:${Math.round(Math.max(24, W * .05))}px;background:linear-gradient(90deg,rgba(${SH},.28),rgba(${SH},0));opacity:0;pointer-events:none;z-index:3;will-change:transform,opacity`;
+    ov.appendChild(edge);
+    let cv = null, ss = null, ssHome = null, ssNext = null;
+    if (cover && !calm) {
+      cv = document.createElement('div'); cv.className = 'b2p';
+      cv.style.cssText = `position:absolute;inset:0;z-index:2;background:${PAPER};transform-origin:0 50%;will-change:transform`;
+      if (cover === 'handoff') {
+        const g = b2Geo(W, H, ltAr);
+        cv.innerHTML = `<img alt="" draggable="false" decoding="sync" src="${art}" style="${b2Box(g.art, `object-fit:contain;-webkit-mask:${B2_MASK};-webkit-mask-composite:source-in;mask:${B2_MASK};mask-composite:intersect`)}">`
+          + `<img alt="" draggable="false" decoding="sync" src="${lt}" style="${b2Box(g.lt, 'object-fit:contain')}">`;
+      } else {   // 시작 화면을 그대로 표지로(단추·집 아이콘은 숨김 — 8판과 같은 asCover)
+        ss = $('#startScreen'); ssHome = ss.parentNode; ssNext = ss.nextSibling;
+        ss.classList.add('asCover'); cv.appendChild(ss);
+      }
+      cv.insertAdjacentHTML('beforeend', `<i class="sh" style="position:absolute;inset:0;z-index:70;background:rgb(${SH});opacity:0;pointer-events:none"></i>`);
+      ov.appendChild(cv);
+    }
+    document.body.appendChild(ov);
+    let skip = false, shownAt = 0, coverP = Promise.resolve(), gone = false;
+    const skipNow = e => { if (e) { e.preventDefault(); e.stopPropagation(); } skip = true; };
+    ov.addEventListener('pointerdown', skipNow); ov.addEventListener('click', skipNow);
+    const anim = (ms, f) => new Promise(res => {
+      const t0 = performance.now();
+      const step = now => { const k = skip ? 1 : Math.min(1, (now - t0) / ms); f(k); if (k < 1) requestAnimationFrame(step); else res(); };
+      requestAnimationFrame(step); setTimeout(() => { f(1); res(); }, ms + 700);   // rAF 가 멈춰도(화면 꺼짐) 끝난다
+    });
+    const wait = ms => new Promise(res => { const t0 = performance.now(); const tick = () => (skip || performance.now() - t0 >= ms) ? res() : setTimeout(tick, 30); tick(); });
+    const ease = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+    /* 한 장 넘기기: 책등(왼쪽)을 축으로 0 → 90°. 평평하게 보이도록 원근 없이 가로 폭만 cosθ 로 줄고, 등을 돌릴수록 어두워진다 */
+    const turn = (page, k) => {
+      const a = ease(k) * Math.PI / 2, c = Math.cos(a), s = Math.sin(a);
+      page.style.transform = `scaleX(${Math.max(0.0001, c).toFixed(4)})`;
+      page.querySelector('.sh').style.opacity = (s * .38).toFixed(3);
+      edge.style.transform = `translateX(${(c * W).toFixed(1)}px)`; edge.style.opacity = (k > 0 && k < 1 ? Math.sin(Math.PI * k) : 0).toFixed(3);
+    };
+    const restoreSS = () => { if (ss) { ss.classList.remove('asCover'); ss.hidden = true; ssHome.insertBefore(ss, ssNext); ss = null; } };
+    const done = () => { if (gone) return; gone = true; restoreSS(); ov.remove(); if (b2 === api) b2 = null; };
+    const pushTitle = () => { const im = tp.querySelector('img'); if (!calm && im) requestAnimationFrame(() => { im.style.transform = 'scale(1.04)'; }); };
+    const api = {
+      cover: !!cv,
+      /* 표지 넘기기(바로 시작): 홈에서 막 도착한 표지를 잠깐 그대로 두었다가 넘긴다 */
+      flipCover() {
+        if (!cv) { shownAt = performance.now(); pushTitle(); return coverP; }
+        coverP = (async () => {
+          await wait(cover === 'handoff' ? 90 : 0);
+          try { AudioFX.sfx('page_turn_big', .9) || paperTurn(); } catch (e) { /* 소리 없이 */ }
+          pushTitle();
+          await anim(560, k => turn(cv, k));
+          restoreSS(); cv.remove(); shownAt = performance.now();
+        })();
+        return coverP;
+      },
+      /* 첫 장면이 막을 열 때(curtain(true) → bookCover): 제목 쪽에서 0.65초는 쉬고 넘긴다 */
+      arm() { bookCover = () => api.finish(); },
+      async finish() {
+        await coverP;
+        await wait(Math.max(0, 650 - (performance.now() - shownAt)));
+        if (calm) await anim(260, k => { ov.style.opacity = (1 - k).toFixed(3); });
+        else {
+          try { AudioFX.sfx('page_turn', .6) || paperTurn(); } catch (e) { /* 소리 없이 */ }
+          await anim(560, k => turn(tp, k));
+        }
+        done();
+      },
+      /* 소리를 못 여는 브라우저(아이폰 사파리 웹 등): 표지에서 지금 시작 화면으로 살짝 바뀌고 '이야기 시작'을 기다린다 */
+      fallback() {
+        const ssEl = $('#startScreen'); ssEl.hidden = false;
+        anim(280, k => { ov.style.opacity = (1 - k).toFixed(3); }).then(done);
+      },
+      done
+    };
+    b2 = api;
+    return api;
+  }
+  /* ── 책 열기 3판(시안 2026-11-22, startSeq=book3): 팝업 동화처럼 '책 한 권'이 물건으로 보인다.
+     홈이 크림 종이로 걷히면(home.js openBook3) 이 페이지는 같은 크림 종이에서 시작 → 책(표지·책등·책장 단면·그림자)이 화면 높이 2/3쯤으로 내려앉고
+     → 표지가 책등 경첩을 축으로 입체로 열린다(이 순간만 원근 허용 — 사용자 요청) → 오른쪽 제목 쪽(큰 레터링)에서 한 박자 → 카메라가 제목 쪽으로 다가가
+     화면을 채우면 첫 장면으로 걷힌다. 탁자 사진 재질 없이 평평한 종이 바탕. 누르면 건너뛴다. 움직임 줄이기는 2판의 제목 쪽 → 페이드를 쓴다 */
+  function b3Make({ art, lt, ltAr, board }) {
+    const W = innerWidth, H = innerHeight, pt = H > W;
+    const PAPER = '#F5EFE9', LEAF = '#F3EBDD', SH = '46,36,28', EDGE = '#EFE6D4', LINE = 'rgba(120,95,60,.28)';
+    board = board || (window.BACKACCENT || {})[taleId()] || '#A93B32';
+    // 책 크기: 가로 화면 = 가로로 긴 그림책(4:3), 세로 화면 = 세로로 긴 그림책(3:4). 높이 2/3 쯤, 폭은 화면의 80% 안
+    const pa = pt ? 3 / 4 : 4 / 3;
+    let bh = H * (pt ? .6 : .64), bw = bh * pa; if (bw > W * .8) { bw = W * .8; bh = bw / pa; }
+    const S = bh * .05, T = bh * .028, B = bh * .016;   // 책등 폭, 책장 단면 두께, 뒤표지 판지 두께
+    const bx = (W - bw) / 2 + S / 2, by = (H - bh - T - B) / 2;
+    // 쪽 안 그림은 '다 다가갔을 때의 화면 크기'로 그리고 줄여 둔다 → 다가가도 흐려지지 않는다
+    const zf = Math.max(W / bw, H / bh), VW = bw * zf, VH = bh * zf;
+    const ov = document.createElement('div'); ov.id = 'b2Book';
+    ov.style.cssText = `position:fixed;inset:0;z-index:96;overflow:hidden;background:${PAPER};touch-action:none;-webkit-tap-highlight-color:transparent`;
+    const virt = html => `<div style="position:absolute;left:0;top:0;width:${VW.toFixed(1)}px;height:${VH.toFixed(1)}px;transform-origin:0 0;transform:scale(${(1 / zf).toFixed(5)})">${html}</div>`;
+    // 제목 쪽 레터링: 다 다가갔을 때 실제로 보이는 화면(W×H, 쪽 가운데)에 맞춘 크기 — 세로 화면은 쪽 양옆이 잘리므로 쪽 폭이 아니라 화면 폭 기준
+    const g = b2Geo(VW, VH, ltAr), th = Math.min(H * .42, W * .74 / ltAr), tw = th * ltAr;
+    const coverHTML = `<img alt="" draggable="false" decoding="sync" src="${art}" style="${b2Box(g.art, `object-fit:contain;-webkit-mask:${B2_MASK};-webkit-mask-composite:source-in;mask:${B2_MASK};mask-composite:intersect`)}">`
+      + `<img alt="" draggable="false" decoding="sync" src="${lt}" style="${b2Box(g.lt, 'object-fit:contain')}">`;
+    const titleHTML = `<img alt="" draggable="false" decoding="sync" src="${lt}" style="${b2Box({ x: (VW - tw) / 2, y: VH / 2 - H * .02 - th / 2, w: tw, h: th }, 'object-fit:contain')}">`;
+    const lines = (x, y, w, h, vert) => [.2, .38, .55, .72, .88].map(f => vert
+      ? `<rect x="${(x + w * f).toFixed(1)}" y="${y}" width="1" height="${h}" fill="${LINE}"/>` : `<rect x="${x}" y="${(y + h * f).toFixed(1)}" width="${w}" height="1" fill="${LINE}"/>`).join('');
+    const endpaper = `radial-gradient(circle at 22% 28%, #F2C230 0 3px, transparent 4px) 0 0 / 64px 64px, radial-gradient(circle at 68% 72%, #F6ECD8 0 2.5px, transparent 3.5px) 0 0 / 64px 64px, radial-gradient(circle at 80% 20%, #E8703A 0 2px, transparent 3px) 0 0 / 64px 64px, #1F2A56`;
+    ov.innerHTML = `<div class="cam" style="position:absolute;left:0;top:0;width:${W}px;height:${H}px;transform-origin:0 0;will-change:transform">
+      <div class="book" style="position:absolute;left:${bx.toFixed(1)}px;top:${by.toFixed(1)}px;width:${bw.toFixed(1)}px;height:${bh.toFixed(1)}px;opacity:0;will-change:transform,opacity">
+        <i class="drop" style="position:absolute;left:${(-S).toFixed(1)}px;top:0;width:${(bw + S + T).toFixed(1)}px;height:${(bh + T + B).toFixed(1)}px;border-radius:${(S * .5).toFixed(1)}px 4px 4px ${(S * .5).toFixed(1)}px;box-shadow:0 ${(bh * .035).toFixed(1)}px ${(bh * .07).toFixed(1)}px rgba(${SH},.32),0 ${(bh * .008).toFixed(1)}px ${(bh * .012).toFixed(1)}px rgba(${SH},.22)"></i>
+        <svg style="position:absolute;left:${(-S).toFixed(1)}px;top:0;overflow:visible" width="${(bw + S + T).toFixed(1)}" height="${(bh + T + B).toFixed(1)}" viewBox="${(-S).toFixed(1)} 0 ${(bw + S + T).toFixed(1)} ${(bh + T + B).toFixed(1)}">
+          <rect x="0" y="${(bh + T).toFixed(1)}" width="${(bw + T).toFixed(1)}" height="${B.toFixed(1)}" fill="${board}"/>
+          <rect x="${bw.toFixed(1)}" y="${(T * .4).toFixed(1)}" width="${T.toFixed(1)}" height="${(bh + T * .6).toFixed(1)}" fill="${EDGE}"/>${lines(bw, T * .4, T, bh + T * .6, true)}
+          <rect x="0" y="${bh.toFixed(1)}" width="${(bw + T).toFixed(1)}" height="${T.toFixed(1)}" fill="${EDGE}"/>${lines(0, bh, bw + T, T, false)}
+          <rect x="${(-S).toFixed(1)}" y="0" width="${(S + 3).toFixed(1)}" height="${(bh + T + B).toFixed(1)}" rx="${(S * .5).toFixed(1)}" fill="${board}"/>
+          <rect x="${(-S * .42).toFixed(1)}" y="0" width="1.5" height="${(bh + T + B).toFixed(1)}" fill="rgba(${SH},.22)"/>
+        </svg>
+        <div class="tp" style="position:absolute;inset:0;overflow:hidden;background:${LEAF}">${virt(titleHTML)}
+          <i style="position:absolute;left:0;top:0;bottom:0;width:6%;background:linear-gradient(90deg,rgba(${SH},.18),rgba(${SH},0))"></i>
+          <i class="cast" style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(${SH},.45),rgba(${SH},0) 70%);opacity:0"></i></div>
+        <div class="cv" style="position:absolute;inset:0;transform-origin:0 50%;transform-style:preserve-3d;will-change:transform">
+          <div style="position:absolute;inset:0;overflow:hidden;background:${PAPER};backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:inset 0 0 0 1px rgba(${SH},.12)">${virt(coverHTML)}
+            <i style="position:absolute;left:3.2%;top:0;bottom:0;width:3px;background:linear-gradient(90deg,rgba(${SH},.28) 0 1.5px,rgba(255,255,255,.35) 1.5px 3px)"></i>
+            <i class="sf" style="position:absolute;inset:0;background:rgb(${SH});opacity:0"></i></div>
+          <div style="position:absolute;inset:0;overflow:hidden;background:${endpaper};transform:rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden">
+            <i class="sb" style="position:absolute;inset:0;background:rgb(${SH});opacity:0"></i></div>
+        </div>
+      </div></div>`;
+    document.body.appendChild(ov);
+    const cam = ov.querySelector('.cam'), book = ov.querySelector('.book'), cv = ov.querySelector('.cv'), sf = ov.querySelector('.sf'), sb = ov.querySelector('.sb'), cast = ov.querySelector('.cast');
+    let skip = false, coverP = Promise.resolve(), openAt = 0, gone = false;
+    const skipNow = e => { if (e) { e.preventDefault(); e.stopPropagation(); } skip = true; };
+    ov.addEventListener('pointerdown', skipNow); ov.addEventListener('click', skipNow);
+    const anim = (ms, f) => new Promise(res => {
+      const t0 = performance.now();
+      const step = now => { const k = skip ? 1 : Math.min(1, (now - t0) / ms); f(k); if (k < 1) requestAnimationFrame(step); else res(); };
+      requestAnimationFrame(step); setTimeout(() => { f(1); res(); }, ms + 700);
+    });
+    const wait = ms => new Promise(res => { const t0 = performance.now(); const tick = () => (skip || performance.now() - t0 >= ms) ? res() : setTimeout(tick, 30); tick(); });
+    const eio = k => k < .5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2, eo = k => 1 - Math.pow(1 - k, 3), lerp = (a, b, k) => a + (b - a) * k;
+    // 카메라: 닫힌 책 = 그대로(1배). 펼칠 때 = 두 쪽이 화면에 들어오게 살짝 물러나며 가운데로. 다가갈 때 = 제목 쪽이 화면을 채울 때까지
+    const camAt = (s, cx, cy, fx, fy) => { cam.style.transform = `translate(${(cx - fx * s).toFixed(2)}px, ${(cy - fy * s).toFixed(2)}px) scale(${s.toFixed(5)})`; };
+    // 세로 화면은 두 쪽을 다 넣으면 책이 너무 작아져서(폰 약 0.57배) 조금만 물러나고 오른쪽(제목) 쪽에 무게를 둔다 — 왼쪽 면지는 일부만 보인다
+    const sOpen = pt ? Math.max(.8, Math.min(1, (W - 64) / (2 * bw + S))) : Math.min(1, (W - 64) / (2 * bw + S)), spreadX = pt ? bx + bw * .3 : bx, midY = by + bh / 2;
+    let camOpenK = 0;
+    const camOpen = k => { const s = lerp(1, sOpen, k), fx = lerp(W / 2, spreadX, k); camAt(s, W / 2, H / 2, fx, lerp(H / 2, midY, k)); };
+    const setOpen = k => {   // 표지 0 → 180°: 앞으로 살짝 떠서(들림) 넘어가고, 빛을 등지면 어두워진다. 제목 쪽에 표지 그늘이 졌다가 걷힌다
+      const a = eio(k) * 180, r = a * Math.PI / 180, lift = Math.sin(r);
+      cv.style.transform = `perspective(${(bw * 2.6).toFixed(0)}px) translateZ(${(lift * bw * .03).toFixed(1)}px) rotateY(${(-a).toFixed(2)}deg)`;
+      sf.style.opacity = (Math.min(1, a / 90) * .35).toFixed(3); sb.style.opacity = (a > 90 ? Math.sin(r) * .4 : .4).toFixed(3);
+      cast.style.opacity = (a < 90 ? lift * .5 : lift * .25).toFixed(3);
+    };
+    const done = () => { if (gone) return; gone = true; ov.remove(); if (b2 === api) b2 = null; };
+    const api = {
+      cover: true,
+      flipCover() {
+        coverP = (async () => {
+          camOpen(0);
+          await anim(380, k => { const e = eo(k); book.style.opacity = Math.min(1, k * 1.6).toFixed(3); book.style.transform = `translateY(${(-(1 - e) * H * .035).toFixed(1)}px) scale(${(1 + (1 - e) * .03).toFixed(4)})`; });
+          await wait(120);
+          try { AudioFX.sfx('page_turn_big', .9) || paperTurn(); } catch (e) { /* 소리 없이 */ }
+          await anim(800, k => { setOpen(k); camOpenK = eio(k); camOpen(camOpenK); });
+          openAt = performance.now();
+        })();
+        return coverP;
+      },
+      arm() { bookCover = () => api.finish(); },
+      async finish() {
+        await coverP;
+        await wait(Math.max(0, 420 - (performance.now() - openAt)));
+        // 다가가기: 제목 쪽 가운데를 화면 가운데로, 크기는 쪽이 화면을 덮을 때까지(배율은 곱으로 늘려 일정한 속도로 다가가는 느낌)
+        const s0 = sOpen, s1 = zf, f0x = spreadX, f0y = midY, f1x = bx + bw / 2;
+        await anim(620, k => { const e = eio(k), s = s0 * Math.pow(s1 / s0, e); camAt(s, W / 2, H / 2, lerp(f0x, f1x, e), f0y); });
+        try { AudioFX.sfx('page_turn', .5); } catch (e) { /* 소리 없이 */ }
+        await anim(240, k => { ov.style.opacity = (1 - k).toFixed(3); });
+        done();
+      },
+      fallback() { const ssEl = $('#startScreen'); ssEl.hidden = false; anim(280, k => { ov.style.opacity = (1 - k).toFixed(3); }).then(done); },
+      done
+    };
+    b2 = api;
+    return api;
+  }
+  /* ── 책 열기 4판(시안 2026-11-22, startSeq=book4): 홈 카드가 그 자리에서 책 한 권이 되어 다가오고(home.js openBook4, 그림·시각표는 engine/book4.js),
+     이 페이지는 같은 책(window.__b4, <head> 에서 누른 순간 t0 의 시계로 이미 그리는 중)을 이어받는다 — 다가오기·펼치기·제목 쪽으로 다가가기는 시계가 하고,
+     여기서는 제목 쪽이 화면을 채운 뒤(TL.Z1) 첫 장면이 준비되면 그 쪽을 한 장 넘긴다. 누르면 건너뛴다 */
+  function b4Make(b, hand) {
+    const ctl = b.ctl, TL = PTBook.TL;
+    const ov = b.root; ov.id = 'b2Book'; ov.style.zIndex = '96';
+    let skip = false, taps = 0, gone = false;
+    const skipNow = e => { if (e) { e.preventDefault(); e.stopPropagation(); } skip = true; taps++; ctl.skip(); };
+    ov.addEventListener('pointerdown', skipNow);   // 누름 한 번 = 한 번만 센다(click 은 pointerdown 뒤에 또 오므로 세지 않는다)
+    ov.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); if (!window.PointerEvent) skipNow(); });
+    /* 움직임 하나: 시작한 뒤 새로 누르면 끝으로(시작 전의 누름은 길이를 줄이는 데만 쓴다 — 다가오는 도중 누르면 제목 쪽으로 건너뛴 뒤 짧게라도 넘어가는 모습이 보이게) */
+    const anim = (ms, f) => new Promise(res => {
+      const t0 = performance.now(), base = taps;
+      const step = now => { const k = taps > base ? 1 : Math.min(1, (now - t0) / ms); f(k); if (k < 1) requestAnimationFrame(step); else res(); };
+      requestAnimationFrame(step); setTimeout(() => { f(1); res(); }, ms + 700);
+    });
+    const done = () => { if (gone) return; gone = true; ctl.stop(); ov.remove(); window.__b4 = null; if (b2 === api) b2 = null; };
+    const api = {
+      cover: true,
+      flipCover() { return ctl.reached; },
+      arm() { bookCover = () => api.finish(); },
+      async finish() {   // 첫 장면이 막을 열 때: 제목 쪽이 화면을 채운 뒤 최소 HOLD 만큼 읽히고(누르면 바로) 그 쪽이 넘어가며 아래에 깔린 첫 장면이 드러난다
+        await ctl.reached;
+        const left = (TL.Z1 + TL.HOLD - ctl.tNow()) * 1000;
+        if (!skip && left > 0) await anim(left, () => {});
+        ctl.stop();
+        try { AudioFX.sfx('page_turn', .6); } catch (e) { /* 소리 없이 */ }
+        const io = k => k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        /* 쪽이 들리기 시작하면(약 35°) 첫 장면에 막을 열었다고 알린다 → 동화 첫 장면의 첫 카메라 이동(예: 아기 돼지 세로 화면 look(300) 300ms)이 아직 넘어가는 쪽 아래에서
+           끝나, 쪽이 다 넘어갔을 때 이미 마지막 구도다(2026-11-22 사용자 '폰 세로 마지막에 급 화면 전환'). 넘김 자체는 끝까지 이어진다 */
+        let lift = null; const lifted = new Promise(r => { lift = r; });
+        /* 첫 대사·말풍선은 쪽이 다 넘어간 뒤에(2026-11-22 34편 점검: 35° 신호에 첫 대사가 바로 붙어 넘김 도중 말풍선이 떴다).
+           카메라는 35° 에 먼저 움직이게 두고, 말(Narrator.speak·AudioFX.voice)만 넘김이 끝날 때까지 미룬다. 넘김이 끝나면 원래 함수로 되돌린다 */
+        let turned = null; const turnDone = new Promise(r => { turned = r; });
+        const gate = (o, k) => { const f = o && o[k]; if (typeof f !== 'function') return () => {}; const w = function (...a) { return turnDone.then(() => f.apply(this, a)); }; o[k] = w; return () => { if (o[k] === w) o[k] = f; }; };
+        const ungate = [gate(typeof Narrator !== 'undefined' ? Narrator : null, 'speak'), gate(typeof AudioFX !== 'undefined' ? AudioFX : null, 'voice')];
+        const opened = () => { ungate.forEach(u => u()); turned(); };
+        anim((skip ? .4 : TL.TURN) * 1000, k => { const a = 90 * io(k); b.leafTurn(a); if (lift && a >= 35) { lift(); lift = null; } })   // 건너뛴 뒤에는 짧게(.4초) 넘긴다
+          .then(() => { if (lift) { lift(); lift = null; } done(); opened(); });
+        await lifted;
+      },
+      fallback() { ctl.stop(); const ssEl = $('#startScreen'); ssEl.hidden = false; anim(280, k => { ov.style.opacity = (1 - k).toFixed(3); }).then(done); },
+      done
+    };
+    b2 = api;
+    return api;
+  }
+  /* 처음 소리를 낼 수 있는지(누름 없이): 앱(WKWebView, 누름 필요 없음)·이전 페이지 누름이 이어지는 크롬은 true, 사파리 웹은 보통 false */
+  const b2SoundOk = () => new Promise(res => {
+    try { if (window.Capacitor && (!Capacitor.isNativePlatform || Capacitor.isNativePlatform())) return res(true); } catch (e) { /* 웹 */ }
+    try { if (navigator.userActivation && navigator.userActivation.hasBeenActive) return res(true); } catch (e) { /* 모름 */ }
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return res(true);
+    let c = null; try { c = new AC(); } catch (e) { return res(true); }
+    let fin = false; const end = ok => { if (fin) return; fin = true; try { c.close(); } catch (e) { /* 무시 */ } res(ok); };
+    if (c.state === 'running') return end(true);
+    setTimeout(() => end(c.state === 'running'), 220);
+    try { c.resume().then(() => { if (c.state === 'running') end(true); }, () => {}); } catch (e) { /* 무시 */ }
+  });
   /* 동그라미 장면 전환 (옛날 만화식 아이리스). focus: 동그라미가 모일 요소(주인공). 없으면 가운데
      닫힘 → 주인공 둘레에서 잠깐 멈춤 → 완전히 닫힘 → 장면 이름(오린 종이 글자) → change() → 톡 튀며 열림 */
   let cardK = 1;   /* 장면 카드 속도 배율 (cardSpeed 로 동화마다 조절, 1 = 기본) */
@@ -1626,7 +1904,23 @@ const Tale = (() => {
       });
       window.__taleLeave = leave;   // 검수용
     }
-    const heroesP = heroes(); arrive(heroesP);
+    /* 책 열기 2판(시안): 홈이 카드를 표지로 키워 넘겨주었으면 커튼 없이 같은 표지로 시작한다. 2판을 켠 채 바로 들어온 경우도 커튼은 뺀다 */
+    const hand = VERIFY ? null : b2Handoff();
+    let b2Shown = Promise.resolve();
+    if (hand) {
+      $('#startScreen').hidden = true;
+      const calm3 = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (hand.seq === 'book4' && window.__b4 && window.__b4.ctl && !calm3) b4Make(window.__b4, hand);   // 4판: 홈 카드가 된 책을 같은 자리에서 이어받는다
+      else if (hand.seq === 'book3' && !calm3) b3Make({ art: hand.art, lt: hand.lt, ltAr: +hand.ltAr || 1.5, board: hand.board });   // 3판: 크림 종이에서 책 한 권이 내려앉아 열린다
+      else b2Make({ cover: 'handoff', art: hand.art, lt: hand.lt, ltAr: +hand.ltAr || 1.5 });
+      /* 표지 그림이 풀리기 전의 첫 화면(빈 크림 종이)이 한 번 비치지 않게: 그림이 다 풀릴 때까지(최대 0.6초) 페이지를 숨겨 둔다 — 그림 없는 빈 표지가 몇 장면 비치는 대신 그림과 함께 나타난다 */
+      const de = document.documentElement, plain = (hand.seq === 'book3' || (hand.seq === 'book4' && window.__b4)) && !calm3;   // 3판은 첫 화면이 빈 크림 종이(홈이 걷힌 모습과 같다)라 숨기지 않는다
+      if (!plain) de.style.visibility = 'hidden';
+      const ims = [...document.querySelectorAll('#b2Book img')].map(im => im.decode ? im.decode().catch(() => {}) : Promise.resolve());
+      b2Shown = Promise.race([Promise.all(ims), sleep(plain ? 800 : 600)]).then(() => { de.style.visibility = ''; });
+    }
+    if (window.__b4 && !(b2 && hand && hand.seq === 'book4')) { try { if (window.__b4.ctl) window.__b4.ctl.stop(); window.__b4.root.remove(); } catch (e) { /* 무시 */ } window.__b4 = null; }   // 이어받지 않은 책은 걷는다
+    const heroesP = heroes(); if (!hand && !startSeq()) arrive(heroesP);
     // 세로 화면: 무대를 크게 키워 양옆을 자른다(slice), 가로: 전체를 맞춘다(meet)
     const portraitMQ = window.matchMedia('(orientation: portrait)');
     const fitStage = () => { stage.setAttribute('preserveAspectRatio', portraitMQ.matches ? 'xMidYMid slice' : 'xMidYMid meet'); fitFrame(portraitMQ.matches); };
@@ -1690,7 +1984,17 @@ const Tale = (() => {
       PT.run(true);
       if (typeof Names !== 'undefined') await Promise.race([Names.ready, sleep(1500)]).catch(() => {});   // 이름 바꾸기 녹음으로 맵을 덮은 뒤에 미리 받기(덮기는 페이지를 열 때 시작해 보통 이미 끝나 있다)
       AudioFX.prefetchClips && AudioFX.prefetchClips(); // 이 동화의 녹음을 미리 받아 둔다 (대사가 늦게 나오지 않게)
-      if (!$('#startScreen').hidden && bookWanted()) bookArm();   // 시작 화면이 표지가 되어 첫 장면 위를 덮는다
+      if (b2) { b2.arm(); $('#startScreen').hidden = true; }   // 책 열기 2판: 표지는 이미 넘어가는 중, 첫 장면이 막을 열면 제목 쪽을 넘긴다
+      else if (!$('#startScreen').hidden && bookWanted()) {   // 시작 화면이 표지가 되어 첫 장면 위를 덮는다
+        const sq = startSeq();
+        if (sq) {   // 2판: 시작 화면 표지 → 제목 쪽 → 첫 장면 (책장 4장·물러남 없음). 3판: 시작 화면이 걷히고 책 한 권이 내려앉아 열린다
+          const li = $('#startScreen .ttl-lt'), ar = li && li.naturalWidth ? li.naturalWidth / li.naturalHeight : 1.5;
+          const ltU = ROOT_URL + 'assets/thumbs/' + taleId() + '_lt' + (englishOn() ? '_en' : '') + '.webp?v=c2', ki = $('#startScreen .keyimg');
+          if ((sq === 'book3' || sq === 'book4') && ki && ki.getAttribute('src')) { b3Make({ art: ki.currentSrc || ki.src, lt: ltU, ltAr: ar }); $('#startScreen').hidden = true; b2.flipCover(); }
+          else b2Make({ cover: 'start', lt: ltU, ltAr: ar }).flipCover();
+          b2.arm();
+        } else bookArm();
+      }
       else $('#startScreen').hidden = true;
       $('#endScreen').hidden = true;
       clear(); camSnap(500, 280, 1); shutVeil();
@@ -1824,6 +2128,16 @@ const Tale = (() => {
       const ss = $('#startScreen');
       /* 제목 읽기: 시작 화면이 열리고 0.5초 뒤 한 번 (자동 재생·검수 회차는 제외) */
       setTimeout(() => { if (!AUTO() && !VERIFY && !ss.hidden && !launching && !running) { const tt = $('#startScreen .ttl'); if (tt) tt.click(); } }, 500);
+    }
+    /* 책 열기 2판: 홈에서 이어 온 표지 → 소리를 열 수 있으면 바로 넘기며 시작(읽어 주기 주소면 읽어 주기로). 못 열면 시작 화면으로 */
+    if (hand && b2) {
+      Promise.all([b2SoundOk(), b2Shown]).then(([ok]) => {
+        if (!b2) return;
+        let due = false; try { due = PT.due(); } catch (e) { /* 무시 */ }
+        if (!ok || due) { b2.fallback(); return; }
+        try { AudioFX.unlock(); } catch (e) { /* 무시 */ }
+        launching = true; b2.flipCover(); start();
+      });
     }
   }
 

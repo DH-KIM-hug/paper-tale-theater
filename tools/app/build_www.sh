@@ -14,6 +14,8 @@ for d in fonts home icons thumbs thumb ui v3w stickers banner stage; do   # stag
 rm -f www/.v3w_exclude www/.v3w_raw
 # 이름 바꾸기(2026-11-06, docs/NAME_CHANGE_PLAN.md): engine/name_form.js(받침 함수)·engine/names.js(기기 파일 덮어쓰기·보호자 화면 도우미)는 위 engine 복사와 아래 engine/*.js 줄이기에 함께 들어간다. 빠지면 앱에서 이름 바꾸기가 조용히 꺼지므로 확인한다. 녹음 파일은 기기(Filesystem Directory.Data/names)에만 생기고 www 에는 없다
 for f in engine/name_form.js engine/names.js; do [ -f "www/$f" ] || { echo "빠짐: www/$f"; exit 1; }; done
+# 책 열기(2026-11-22 기본 시작 장면 book4): engine/book4.js 는 홈(index.html)과 모든 동화 <head> 가 읽는다. 빠지면 홈은 3판으로, 동화 쪽은 표지 페이드로 떨어지므로 확인한다
+[ -f www/engine/book4.js ] || { echo "빠짐: www/engine/book4.js"; exit 1; }
 # 출처 화면은 home.js 에 짧게 들어 있다(2026-11-07). CREDITS.md 는 저장소 기록용
 # 녹음: el = 기본 목소리(ElevenLabs), tc = Typecast(el 에 없는 줄만), bremen = 브레멘 음악대 소리
 mkdir -p www/audio && node tools/app/used_audio.mjs > www/.audio_list && rsync -a --files-from=www/.audio_list audio/ www/audio/ && rm www/.audio_list && python3 tools/app/shrink_audio.py www/audio   # 64kbps 모노로 다시 압축(원본 128~320k, ~/.paper-tale/cache/audio64 에 보관). 녹음은 실제로 쓰는 것만(2026-11-02): ElevenLabs 에 덮인 Typecast 클립·오디션·옛 곡은 빠진다. 목록 기준은 tools/app/used_audio.mjs

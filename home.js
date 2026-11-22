@@ -474,6 +474,164 @@
     document.body.appendChild(c); return c;
   };
   try { addEventListener('load', () => setTimeout(() => ['assets/ui/ui_curtain_panel.webp', 'assets/v3w/cd2_layer_curtain_swag.webp'].forEach(u => { new Image().src = u; }), 1500)); } catch (e) { /* 무시 */ }   // 막 그림 미리(동화 쪽은 캐시로)
+  /* ── 책 열기 2판(시안 2026-11-22, startSeq=book2): 극장 커튼 대신, 누른 카드가 그 자리에서 커지며 동화 표지(키아트 + 제목 레터링)가 된다.
+     레터링은 카드의 것이 그대로 날아가 표지 자리에 앉고(같은 그림 파일), 카드 그림은 커지는 동안 표지 그림으로 바뀐다.
+     다 커지면 표지 모습을 넘겨주고(sessionStorage startSeqHandoff) 동화 페이지로 — 동화 쪽(engine/tale.js b2Make)이 같은 표지로 시작해 넘긴다.
+     켜기: ?start=book2 (기억됨) 또는 localStorage startSeq='book2'. ?start=curtain 이면 끄고 지금 방식. 누르면 바로 넘어간다 ── */
+  /* 2026-11-22 사용자 승인("나머지도 다 적용"): 기본 = book4(9판 책 열기). 극장 커튼은 ?start=curtain(기억됨)으로만 켠다. 그 밖의 값은 기억을 지우고 기본으로 */
+  const START_SEQ = (() => {
+    const DEF = 'book4';
+    try {
+      const q = new URLSearchParams(location.search).get('start');
+      const OK = ['book2', 'book3', 'book4', 'curtain'];   // book3 = 책 한 권 3판, book4 = 카드가 그 자리에서 책이 되는 4판, curtain = 옛 극장 커튼
+      if (OK.includes(q)) localStorage.setItem('startSeq', q); else if (q) localStorage.removeItem('startSeq');
+      const v = localStorage.getItem('startSeq'), s = OK.includes(v) ? v : DEF; return s === 'curtain' ? '' : s;
+    } catch (e) { return DEF; }
+  })();
+  /* 표지 배치: engine/tale.js b2Geo 와 똑같아야 한다 */
+  function b2Geo(W, H, ltAr) {
+    const pt = H > W, aAr = pt ? 3 / 4 : 16 / 9;
+    const lh = Math.min(H * (pt ? .2 : .25), W * (pt ? .62 : .36) / ltAr), lw = lh * ltAr;
+    const maxH = H * (pt ? .72 : .8);
+    let aw = W, ah = W / aAr; if (ah > maxH) { ah = maxH; aw = ah * aAr; }
+    const top = Math.max(0, (H - ah - lh * .8) * .45);
+    return { pt, art: { x: (W - aw) / 2, y: top, w: aw, h: ah }, lt: { x: (W - lw) / 2, y: top + ah - lh * .2, w: lw, h: lh } };
+  }
+  const B2_MASK = 'linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent), linear-gradient(transparent, #000 3%, #000 86%, transparent)';
+  const b2Img = src => new Promise(res => { const im = new Image(); im.decoding = 'async'; im.onload = () => (im.decode ? im.decode().catch(() => {}) : Promise.resolve()).then(() => res(im)); im.onerror = () => res(null); im.src = src; });
+  /* 이 카드로 2판을 할 수 있으면 넘겨줄 자료 */
+  function b2Plan(card) {
+    if (!START_SEQ) return null;
+    const id = card.dataset.id, m = (card.getAttribute('href') || '').match(/tales\/([^/]+)\//);
+    if (!id || !m || !(window.THUMBSKEY || []).includes(id)) return null;
+    const pt = innerHeight > innerWidth, abs = u => new URL(u, location.href).href;
+    return { seq: START_SEQ, board: (window.BACKACCENT || {})[id] || '', id, folder: m[1], art: abs(`assets/thumbs/${id}_key_${pt ? 'tall' : 'wide'}.webp`), lt: abs(`assets/thumbs/${id}_lt${lang === 'en' ? '_en' : ''}.webp?v=c2`) };
+  }
+  const b2Give = (h, ltAr) => { try { sessionStorage.setItem('startSeqHandoff', JSON.stringify({ ...h, ltAr, t: Date.now() })); } catch (e) { /* 넘겨주지 못하면 동화 쪽은 지금 시작 화면 */ } };
+  async function openBook2(card, h, go) {
+    const W = innerWidth, H = innerHeight;
+    const box = card.querySelector('.thumb') || card, r0 = box.getBoundingClientRect(), rad = parseFloat(getComputedStyle(box).borderTopLeftRadius) || 0;
+    const cardArt = card.querySelector('.thumb .art'), cardLt = card.querySelector('.thumb .lt');
+    const artP = b2Img(h.art);
+    const same = cardLt && cardLt.complete && cardLt.naturalWidth && cardLt.currentSrc === h.lt;   // 카드 레터링 = 표지 레터링(같은 파일)이면 기다리지 않는다
+    const ltIm = same ? cardLt : await Promise.race([b2Img(h.lt), new Promise(r => setTimeout(() => r(null), 400))]);
+    const ltAr = ltIm && ltIm.naturalWidth ? ltIm.naturalWidth / ltIm.naturalHeight : 1.5;
+    const g = b2Geo(W, H, ltAr);
+    const ov = document.createElement('div'); ov.className = 'b2fly';
+    ov.style.cssText = `position:fixed;left:0;top:0;z-index:300;overflow:hidden;background:#F5EFE9;box-shadow:0 10px 30px rgba(0,0,0,.12),0 0 0 1px rgba(0,0,0,.04);touch-action:none`;
+    const comp = document.createElement('div');
+    comp.style.cssText = `position:absolute;left:0;top:0;width:${W}px;height:${H}px;transform-origin:0 0;background:#F5EFE9`;
+    const ab = g.art;
+    comp.innerHTML = `<img alt="" draggable="false" src="${h.art}" style="position:absolute;left:${ab.x.toFixed(1)}px;top:${ab.y.toFixed(1)}px;width:${ab.w.toFixed(1)}px;height:${ab.h.toFixed(1)}px;object-fit:contain;-webkit-mask:${B2_MASK};-webkit-mask-composite:source-in;mask:${B2_MASK};mask-composite:intersect">`;
+    ov.appendChild(comp);
+    let ca = null;
+    if (cardArt && cardArt.currentSrc) {
+      ca = document.createElement('img'); ca.alt = ''; ca.src = cardArt.currentSrc;
+      ca.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover';
+      ov.appendChild(ca);
+    }
+    // 레터링: 카드 위 자리(없으면 카드 가운데 작게) → 표지 자리
+    const lr0 = cardLt && cardLt.getBoundingClientRect().width ? cardLt.getBoundingClientRect() : { left: r0.left + r0.width * .3, top: r0.top + r0.height * .05, width: r0.width * .4, height: r0.width * .4 / ltAr };
+    const fl = document.createElement('img'); fl.alt = ''; fl.className = 'b2fly'; fl.src = h.lt;
+    fl.style.cssText = `position:fixed;left:0;top:0;width:${g.lt.w}px;height:${g.lt.h}px;z-index:301;transform-origin:0 0;object-fit:contain;pointer-events:none`;
+    document.body.append(ov, fl);
+    if (cardLt) cardLt.style.visibility = 'hidden';
+    let gone = false;
+    const leave = () => {
+      if (gone) return; gone = true; b2Give(h, ltAr); go();
+    };
+    const fallback = setTimeout(leave, 2400);
+    const anim = play(.62, t => {
+      const p = eio(t / .62);
+      const x = lerp(r0.left, 0, p), y = lerp(r0.top, 0, p), w = lerp(r0.width, W, p), hh = lerp(r0.height, H, p);
+      Object.assign(ov.style, { left: x.toFixed(1) + 'px', top: y.toFixed(1) + 'px', width: w.toFixed(1) + 'px', height: hh.toFixed(1) + 'px', borderRadius: (rad * (1 - p)).toFixed(1) + 'px' });
+      ov.style.boxShadow = p >= 1 ? 'none' : '';
+      const s = Math.max(w / W, hh / H);
+      comp.style.transform = `translate(${((w - W * s) / 2).toFixed(1)}px, ${((hh - H * s) / 2).toFixed(1)}px) scale(${s.toFixed(4)})`;
+      if (ca) ca.style.opacity = (1 - clamp((p - .12) / .5)).toFixed(3);
+      const lx = lerp(lr0.left, g.lt.x, p), ly = lerp(lr0.top, g.lt.y, p), ls = lerp(lr0.width, g.lt.w, p) / g.lt.w;
+      fl.style.transform = `translate(${lx.toFixed(1)}px, ${ly.toFixed(1)}px) scale(${ls.toFixed(4)})`;
+    }, async () => {
+      await Promise.race([artP, new Promise(r => setTimeout(r, 900))]);   // 표지 그림이 다 그려진 뒤 넘어간다(동화 쪽은 캐시에서 같은 그림)
+      clearTimeout(fallback); requestAnimationFrame(() => requestAnimationFrame(leave));
+    });
+    // 누르면 바로(그림이 덜 왔어도) 넘어간다
+    const skip = e => { e.preventDefault(); e.stopPropagation(); if (anim.alive) anim.finish(); else leave(); };
+    ov.addEventListener('pointerdown', skip); fl.addEventListener('pointerdown', skip);
+  }
+  /* 책 열기 3판(시안 2026-11-22, startSeq=book3): 홈 화면이 크림 종이(동화 페이지 바탕과 같은 색)로 걷히고 카드는 살짝 커지며 함께 사라진다.
+     동화 쪽(engine/tale.js b3Make)은 같은 크림 종이에서 시작해 책 한 권이 내려앉아 열린다. 페이지가 바뀌는 순간엔 빈 종이뿐이라 이음새가 없다 */
+  function openBook3(card, h, go) {
+    const box = card.querySelector('.thumb') || card, cardLt = card.querySelector('.thumb .lt');
+    const same = cardLt && cardLt.complete && cardLt.naturalWidth && cardLt.currentSrc === h.lt;
+    const ltP = same ? Promise.resolve(cardLt) : b2Img(h.lt), artP = b2Img(h.art);   // 그림을 미리 풀어 두면 동화 쪽이 캐시에서 바로 꺼낸다
+    const ov = document.createElement('div'); ov.className = 'b2fly';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:300;background:#F5EFE9;opacity:0;touch-action:none';
+    document.body.appendChild(ov);
+    let gone = false;
+    const leave = async () => {
+      if (gone) return; gone = true;
+      const ltIm = await Promise.race([ltP, new Promise(r => setTimeout(() => r(null), 500))]);
+      await Promise.race([artP, new Promise(r => setTimeout(r, 700))]);
+      b2Give(h, ltIm && ltIm.naturalWidth ? ltIm.naturalWidth / ltIm.naturalHeight : 1.5); go();
+    };
+    const fallback = setTimeout(leave, 2000);
+    const anim = play(.4, t => {
+      const p = eio(t / .4);
+      ov.style.opacity = p.toFixed(3);
+      box.style.scale = (1 + .07 * eo(t / .4)).toFixed(4);
+    }, () => { clearTimeout(fallback); leave(); });
+    ov.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); if (anim.alive) anim.finish(); else leave(); });
+  }
+  /* 책 열기 4판(시안 2026-11-22, startSeq=book4): 누른 카드의 썸네일만 남고 나머지 홈은 크림 종이로 걷힌다. 남은 썸네일 둘레에 책등·책장 단면·그림자가
+     자라 책 한 권이 되면서 그 자리에서 눈앞으로 다가온다(7판: 카메라 목표는 '제목 쪽이 화면을 채운 자리' 하나, engine/book4.js PTBook.plan 시각표). 누른 순간(t0)과 카드 자리를 넘겨주고 NAV(.5초)에 동화로 —
+     동화 쪽은 <head> 에서 같은 책을 같은 시각표로 t0 부터 이어 그린다(페이지가 바뀌어도 책은 멈추지 않는다). 누르면 건너뛴다 */
+  function openBook4(card, h, go) {
+    const box = card.querySelector('.thumb') || card, r0 = box.getBoundingClientRect();
+    const cardArt = card.querySelector('.thumb .art'), cardLt = card.querySelector('.thumb .lt');
+    if (typeof PTBook === 'undefined' || !PTBook.plan || !cardArt || !cardArt.currentSrc) { openBook3(card, h, go); return; }
+    const art = cardArt.currentSrc, coverLt = cardLt && cardLt.currentSrc ? cardLt.currentSrc : '';
+    const t0 = Date.now();
+    const same = cardLt && cardLt.complete && cardLt.naturalWidth && cardLt.currentSrc === h.lt;   // 카드 레터링 = 제목 쪽 레터링(같은 파일)이면 기다리지 않는다
+    const ltP = same ? Promise.resolve(cardLt) : b2Img(h.lt); b2Img(h.art);   // 제목 쪽 키아트(h.art = _key_wide/_key_tall)를 미리 풀어 둔다
+    const ov = document.createElement('div'); ov.className = 'b2fly';
+    ov.style.cssText = 'position:fixed;inset:0;z-index:300;background:#F5EFE9;opacity:0;touch-action:none';
+    const radius = parseFloat(getComputedStyle(box).borderTopLeftRadius) || 0;
+    const bk = PTBook.make({ art, coverLt, lt: h.lt, board: h.board || undefined, z: 301, bg: false, id: 'b4Home', radius });
+    bk.root.classList.add('b2fly');
+    /* 시점 옮기기(2026-11-22 사용자 '끝에 잘리는 거 거슬림'): 화면 끝에 걸린 카드를 눌렀으면 홈이 걷히는 동안(FADE) 화면 전체(body)가 카드 쪽으로 살짝
+       미끄러져, 걷힘이 끝날 때 책(책등·두께 포함)이 여백 M 을 두고 온전히 들어와 있게 한다. 카드 줄 스크롤이 아니라 시점 이동이라 홈과 카드가 같이 움직이고,
+       이미 안에 있는 카드는 움직이지 않는다. 줌인 곡선은 옮겨진 자리(rect)에서 시작하므로 시선은 여전히 한 번. 덮개는 <html> 에 붙여 body 와 함께 밀리지 않게 한다 */
+    const W = innerWidth, H = innerHeight, M = Math.max(20, Math.min(W, H) * .04), u = Math.min(r0.height, r0.width * .9), bS = u * .075, bT = u * .107;
+    const fit = (lo, hi, len) => (hi - lo > len - 2 * M) ? (len - (lo + hi)) / 2 : lo < M ? M - lo : hi > len - M ? len - M - hi : 0;   // 안 들어가면 가운데로
+    const dx = fit(r0.left - bS, r0.right + bT, W), dy = fit(r0.top, r0.bottom + bT, H), shift = Math.hypot(dx, dy) >= 1;
+    const rect = { x: r0.left + dx, y: r0.top + dy, w: r0.width, h: r0.height };   // 걷힘이 끝난 뒤의 카드 자리 = 줌인의 시작 자리
+    const body = document.body; if (shift) body.style.willChange = 'transform';
+    document.documentElement.append(ov, bk.root); bk.layout({ x: r0.left, y: r0.top, w: r0.width, h: r0.height }, 0, 0);
+    box.style.visibility = 'hidden';
+    const TL = PTBook.TL, P = PTBook.plan(W, H, rect);
+    const sio = k => .5 - .5 * Math.cos(Math.PI * clamp(k));   // 부드러운 가감속
+    let gone = false, skip = false;
+    const leave = async () => {
+      if (gone) return; gone = true;
+      const ltIm = await Promise.race([ltP, new Promise(r => setTimeout(() => r(null), 400))]);
+      b2Give({ ...h, rect, t0, skip, art, coverLt, key: h.art, radius }, ltIm && ltIm.naturalWidth ? ltIm.naturalWidth / ltIm.naturalHeight : 1.5); go();
+    };
+    const fallback = setTimeout(leave, 2500);
+    // 페이지를 떠난 뒤에도 새 페이지가 그려질 때까지 이 페이지가 같은 시각표로 계속 그린다(KEEP 까지)
+    const anim = play(TL.KEEP, () => {
+      const t = (Date.now() - t0) / 1000, kf = sio(t / TL.FADE);
+      ov.style.opacity = kf.toFixed(3);
+      const s = P.at(t); let r = s.r;
+      if (shift) {   // 걷히는 동안 홈과 책이 함께 카드 쪽으로 미끄러진다(FADE 가 끝나면 책은 rect 에, 홈은 이미 다 걷혔다)
+        if (kf < 1) { body.style.transform = `translate(${(dx * kf).toFixed(2)}px, ${(dy * kf).toFixed(2)}px)`; r = { x: r.x - dx * (1 - kf), y: r.y - dy * (1 - kf), w: r.w, h: r.h }; }
+      }
+      bk.layout(r, s.g, s.ang);
+      if (t >= TL.NAV) { clearTimeout(fallback); leave(); }
+    }, () => { clearTimeout(fallback); leave(); });
+    window.__b4shift = { dx, dy, r0: { x: r0.left, y: r0.top, w: r0.width, h: r0.height } };   // 검수용
+    ov.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); skip = true; ov.style.opacity = '1'; if (anim.alive) anim.finish(); else leave(); });
+  }
   /* 누름이 보인 뒤(약 120ms) 커튼으로. 움직임 줄이기면 바로 */
   let soonCard = null;
   function openTaleSoon(card) {
@@ -490,6 +648,8 @@
     leavingPage = true;
     let gone = false;
     const go = () => { if (!gone) { gone = true; location.href = href; } };
+    const b2h = b2Plan(card);   // 책 열기 2판(시안): 커튼 대신 카드가 표지로 커진다. 움직임 줄이기면 바로 넘어가고 동화 쪽이 제목 쪽 → 짧은 페이드
+    if (b2h) { if (!motion()) { b2Give(b2h, 1.5); go(); } else ({ book3: openBook3, book4: openBook4 }[b2h.seq] || openBook2)(card, b2h, go); return; }
     if (!motion()) { go(); return; }
     const c = curtainEl(), L = c.querySelector('.l'), R = c.querySelector('.r'), V = c.querySelector('.val');
     const fallback = setTimeout(go, 1200);
@@ -509,7 +669,10 @@
   addEventListener('pageshow', e => {
     if (!e.persisted) return;
     leavingPage = false;
-    $('#stageOut').hidden = true; document.querySelectorAll('.curt').forEach(c => c.remove());
+    $('#stageOut').hidden = true; document.querySelectorAll('.curt, .b2fly').forEach(c => c.remove());
+    document.body.style.transform = ''; document.body.style.willChange = '';   // 4판 시점 옮기기(body 밀기)를 되돌린다
+    document.querySelectorAll('.thumb .lt').forEach(l => { l.style.visibility = ''; });
+    document.querySelectorAll('.thumb').forEach(t => { t.style.scale = ''; t.style.visibility = ''; });
     document.querySelectorAll('.card.anim').forEach(c => { untf(c); c.classList.remove('anim'); });
   });
 
