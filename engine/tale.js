@@ -2208,7 +2208,7 @@ const Tale = (() => {
     try {
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
       const q = new URLSearchParams(location.search).get('motion');
-      return q ? q === 'gsap' : localStorage.getItem('motionTrial') === 'gsap';
+      return q ? q !== 'off' : localStorage.getItem('motionTrial') !== 'off';   // 2026-11-24 기본으로 켬
     } catch (e) { return false; }
   };
   const MT_ON = motionTrial();

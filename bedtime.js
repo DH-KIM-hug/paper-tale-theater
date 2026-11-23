@@ -13,7 +13,7 @@
   const GAP_TALE = 3000, GAP_TITLE = 1000, GAP_LINE = 700, GAP_SCENE = 1500;
   const DIM_MS = (Number(P.get('dim')) > 0 ? Number(P.get('dim')) : 60) * 1000;
   /* GSAP 모션 시험(홈 home.js MotionTrial 과 같은 열쇠 motionTrial / ?motion=gsap). 화면 그림만 바꾼다 — 소리 사슬(<audio> ended)은 그대로라 화면이 꺼져도 끝까지 읽는다 */
-  const MT_ON = (() => { try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return false; const q = P.get('motion'); return q ? q === 'gsap' : localStorage.getItem('motionTrial') === 'gsap'; } catch (e) { return false; } })();
+  const MT_ON = (() => { try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return false; const q = P.get('motion'); return q ? q !== 'off' : localStorage.getItem('motionTrial') !== 'off'; } catch (e) { return false; } })();
   if (MT_ON && !window.gsap) { const sc = document.createElement('script'); sc.src = 'vendor/gsap/gsap.min.js?v=3.15.1'; document.head.appendChild(sc); }
   const gsx = () => (MT_ON && window.gsap) || null;
 

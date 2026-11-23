@@ -5,6 +5,7 @@ cd "$(dirname "$0")/../.."
 rm -rf www && mkdir -p www/assets
 cp index.html bedtime.html bedtime.js home_narration_el.js home.js home.css stage.js stage.css entitlements.js audio.js narration_tc.js story.js privacy.html www/   # privacy.html = 보호자 영역 '정보'의 앱 안 문서
 sed -i '' '/<script src="review.js/d' www/index.html   # 검수용 review.js(?review=1 전용)는 앱에 넣지 않는다 (2026-11-02 출시 점검)
+mkdir -p www/vendor/gsap && cp vendor/gsap/gsap.min.js vendor/gsap/LICENSE.txt www/vendor/gsap/   # GSAP 3.15.1(2026-11-24 첫 제출부터 모션 기본 켬). 이미 줄여진 파일이라 esbuild 목록에는 넣지 않는다
 # 개발용: 원고 초안·ASP 표(*.txt)·sed 백업(*-e)·맞춤 확인 페이지(_*.html)·꿀떡이 원고(source/)·녹음 생성 입력(voice_script*.json)·안 읽는 표(sfx_types.json, tiles.json, 백설공주 narration_tc.js, 옛 썸네일 patjuk.png)는 넣지 않는다 (2026-11-02 출시 점검)
 for d in engine tales sounds; do rsync -a --exclude='*.md' --exclude='*.py' --exclude='__pycache__' --exclude='.DS_Store' --exclude='*.txt' --exclude='*-e' --exclude='_*.html' --exclude='tales/kkultteok/source' --exclude='kkultteok/source' --exclude='voice_script*.json' --exclude='sfx_types.json' --exclude='snow_white/narration_tc.js' "$d" www/; done
 # v3w 그림은 코드가 한 번도 부르지 않는 것(옛 자세·옛 배경·시험 그림)을 뺀다 (2026-11-04 용량 줄이기). 목록 기준은 tools/app/unused_v3w.mjs (규칙 설명은 그 파일 머리). 원본 assets/v3w 는 그대로

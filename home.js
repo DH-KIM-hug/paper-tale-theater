@@ -15,8 +15,9 @@
     let flag = false;
     try {
       const q = new URLSearchParams(location.search).get('motion');
-      if (q === 'gsap') { flag = true; try { localStorage.setItem('motionTrial', 'gsap'); } catch (e) { /* 이번 화면만 */ } }
-      else { if (q) try { localStorage.removeItem('motionTrial'); } catch (e) { /* 무시 */ } flag = !q && localStorage.getItem('motionTrial') === 'gsap'; }
+      // 2026-11-24 사용자: 첫 제출부터 기본으로 켬. ?motion=off 면 끄고 기억, ?motion=gsap 이면 다시 켬
+      if (q === 'off') { flag = false; try { localStorage.setItem('motionTrial', 'off'); } catch (e) { /* 이번 화면만 */ } }
+      else { if (q) try { localStorage.removeItem('motionTrial'); } catch (e) { /* 무시 */ } flag = q ? q === 'gsap' : localStorage.getItem('motionTrial') !== 'off'; }
     } catch (e) { flag = false; }
     let p = null;
     const load = () => p || (p = new Promise(res => {
