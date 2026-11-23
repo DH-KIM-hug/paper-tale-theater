@@ -48,7 +48,7 @@
 - 바꾼 이름은 같은 목소리로 새로 녹음
 
 - 보호자 메뉴: 오른쪽 위 톱니 1초 길게 누르기
-- 처리방침 주소: https://paper-tale-sync.papertale.workers.dev/privacy
+- 처리방침 주소: https://ddoystory.com/tokitoki/privacy/
 - 문의: hello@ddoystory.com
 ```
 
@@ -67,9 +67,9 @@
 ## URL
 | 칸 | 값 | 판단 |
 |---|---|---|
-| 지원 URL (필수) | https://paper-tale-sync.papertale.workers.dev/privacy | 처리방침 페이지 하단에 hello@ddoystory.com 이 적혀 있어 임시로 쓸 수 있습니다. 가능하면 지원 안내만 있는 전용 페이지(또는 `mailto:` 가 아닌 웹 주소)를 나중에 만드세요. Apple은 지원 URL에 실제 연락 방법이 있는 페이지를 요구합니다 |
-| 마케팅 URL (선택) | **비워 두기 추천** | https://dh-kim-hug.github.io/paper-tale-theater/ 는 앱이 아니라 **웹 공개판**(잠금 없이 모든 동화가 열림, 아이 캐릭터 창작 동화 포함)입니다. 마케팅 링크로 걸면 4.99달러 상품 가치를 깎고, 아이 캐릭터 동화가 홍보 경로에 노출되며, Kids 앱의 외부 링크 규칙도 걸릴 수 있습니다. 소개 전용 한 장짜리 페이지가 생기면 그때 입력 |
-| 개인정보 처리방침 URL (필수) | https://paper-tale-sync.papertale.workers.dev/privacy | 2026-11-06 접속 200 확인. 시행일 2026년 11월 6일로 채워져 있고 이름 기능 절도 들어 있음(2026-11-07 확인). 단 영어 쪽에 `\u2192` 글자가 그대로 보이는 곳이 있어 고쳐야 함(README 체크리스트) |
+| 지원 URL (필수) | https://ddoystory.com/tokitoki/support/ | ddoystory.com(GitHub Pages, 저장소 DH-KIM-hug/ddoystory-site) 지원 전용 페이지. 문의 메일·자주 묻는 질문·처리방침 링크, 한/영(2026-11-23) |
+| 마케팅 URL (선택) | https://ddoystory.com/ (또는 비워 두기) | 회사 첫 화면(앱 소개·지원·처리방침 링크). 웹 공개판(dh-kim-hug.github.io/paper-tale-theater/)은 걸지 않는다 — 잠금 없는 판이라 유료 가치를 깎고 아이 캐릭터 동화가 노출됨 |
+| 개인정보 처리방침 URL (필수) | https://ddoystory.com/tokitoki/privacy/ | 2026-11-23 ddoystory.com 으로 옮김(내용은 privacy.html, 시행일 2026년 11월 13일). 옛 주소 https://paper-tale-sync.papertale.workers.dev/privacy 도 계속 열림 — 처리방침을 고치면 두 곳 다 갱신 |
 
 ## 저작권 표기 안
 - App Store Connect '저작권' 칸: `© 2026 DH-KIM-hug` (COPYRIGHT.md 와 같은 표기. 법적 이름·상호로 바꿀지는 사용자 결정)

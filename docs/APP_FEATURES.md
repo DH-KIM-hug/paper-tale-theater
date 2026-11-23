@@ -53,7 +53,8 @@
 - 서버가 하는 일: 기기 연결(연결 코드), 구매 영수증 확인, 이름 녹음 생성(ElevenLabs 호출)
 - 서버가 저장하지 않는 것: 아이 이름, 얼굴 모습, 식별 정보
 - 인터넷이 없어도 동화는 볼 수 있음. 인터넷은 기기 연결, 구매 확인, 이름 녹음, 공지 받기에만 씀
-- 개인정보 처리방침: https://paper-tale-sync.papertale.workers.dev/privacy
+- 개인정보 처리방침: https://ddoystory.com/tokitoki/privacy/ (옛 주소 https://paper-tale-sync.papertale.workers.dev/privacy 도 열림)
+- 지원 페이지: https://ddoystory.com/tokitoki/support/
 
 ## 공지와 의견
 - **공지사항**: 보호자 메뉴에서 서버 공지를 읽음. 아직 안 읽은 공지가 있으면 그 줄에만 점이 뜸. 인터넷이 없으면 마지막으로 받은 공지를 보여 줌

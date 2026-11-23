@@ -63,7 +63,7 @@ Toki Toki Tale — storybook app for ages 2 to 5
 ■ For parents
 - Purchases, device linking, outside documents and name settings are behind a grown-up check (hold the right answer to a multiplication question for 1.5 seconds)
 - Grown-up menu: hold the gear at the top right for 1 second
-- Privacy policy: https://paper-tale-sync.papertale.workers.dev/privacy
+- Privacy policy: https://ddoystory.com/tokitoki/privacy/
 - Contact: hello@ddoystory.com
 ```
 
@@ -79,9 +79,9 @@ Leave empty for 1.0 (Apple does not require it for a first release). If you want
 ## URLs
 | Field | Value | Note |
 |---|---|---|
-| Support URL (required) | https://paper-tale-sync.papertale.workers.dev/privacy | Temporary; the page ends with the contact email hello@ddoystory.com. A dedicated support page is better later |
-| Marketing URL (optional) | **Leave empty (recommended)** | The GitHub Pages root is the unlocked web version of the app, not a landing page; it also shows the original tales with the child character. See listing_ko.md for details |
-| Privacy Policy URL (required) | https://paper-tale-sync.papertale.workers.dev/privacy | Returned HTTP 200 on 2026-11-06. Effective date is filled in (November 6, 2026) and the name-feature section is present. Fix the literal `\u2192` shown in the English ‘Retention and deletion’ paragraph before submitting |
+| Support URL (required) | https://ddoystory.com/tokitoki/support/ | Dedicated support page on ddoystory.com (GitHub Pages): contact email, FAQ, privacy link, Korean/English (2026-11-23) |
+| Marketing URL (optional) | https://ddoystory.com/ (or leave empty) | Company home page (app intro, support and privacy links). Never the unlocked web version on dh-kim-hug.github.io/paper-tale-theater/ |
+| Privacy Policy URL (required) | https://ddoystory.com/tokitoki/privacy/ | Moved to ddoystory.com on 2026-11-23 (same text as privacy.html, effective November 13, 2026). The old URL https://paper-tale-sync.papertale.workers.dev/privacy still works; update both when the policy changes |
 
 ## Copyright
 `© 2026 DH-KIM-hug` (same as COPYRIGHT.md; change to a legal name if you prefer)
