@@ -950,7 +950,7 @@ body.app { --pz-c: 88px; --pz-arr: 80px; --pz-pw: 280px; --pz-ph: 104px; --pz-st
 }
 
 /* ═════════ 종이 풍경 스플래시 ═════════ */
-.splash { position: fixed; inset: 0; z-index: 60; overflow: hidden; background: #F5EFE9; touch-action: manipulation; }
+.splash { position: fixed; inset: 0; z-index: 60; overflow: hidden; background: #F5EFE9; touch-action: manipulation; -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }   /* 화면 어디를 눌러도 넘어감 — 누름 반짝임·선택 없음 */
 .splash-stage { position: absolute; inset: 0; }
 .splash-stage canvas { display: block; width: 100%; height: 100%; }
 .splash-fallback { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; color: #65513F; font-family: var(--font); }

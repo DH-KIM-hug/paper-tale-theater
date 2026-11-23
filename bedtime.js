@@ -12,6 +12,10 @@
   const MODE = P.get('mode') === 'list' ? 'list' : 'random';
   const GAP_TALE = 3000, GAP_TITLE = 1000, GAP_LINE = 700, GAP_SCENE = 1500;
   const DIM_MS = (Number(P.get('dim')) > 0 ? Number(P.get('dim')) : 60) * 1000;
+  /* GSAP 모션 시험(홈 home.js MotionTrial 과 같은 열쇠 motionTrial / ?motion=gsap). 화면 그림만 바꾼다 — 소리 사슬(<audio> ended)은 그대로라 화면이 꺼져도 끝까지 읽는다 */
+  const MT_ON = (() => { try { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return false; const q = P.get('motion'); return q ? q === 'gsap' : localStorage.getItem('motionTrial') === 'gsap'; } catch (e) { return false; } })();
+  if (MT_ON && !window.gsap) { const sc = document.createElement('script'); sc.src = 'vendor/gsap/gsap.min.js?v=3.15.1'; document.head.appendChild(sc); }
+  const gsx = () => (MT_ON && window.gsap) || null;
 
   /* 설정(로컬 저장): { count: 2, playlist: ['rabbit', …] } */
   const settings = () => { try { const o = JSON.parse(localStorage.getItem(KEY) || '{}'); return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; } };
@@ -52,7 +56,16 @@
     const a = $('#cvA'), b = $('#cvB'), on = a.classList.contains('on') ? a : b, off = on === a ? b : a;
     const src = coverSrc(t);
     if (on.getAttribute('src') === src) return;
-    off.onload = off.onerror = () => { off.onload = off.onerror = null; off.classList.add('on'); on.classList.remove('on'); };
+    off.onload = off.onerror = () => {
+      off.onload = off.onerror = null;
+      const g = gsx();
+      if (g && on.getAttribute('src')) {   // GSAP 시험 ⑤: 그림이 1.1초에 걸쳐 조용히 엇갈려 바뀐다(새 그림은 1.03배에서 제자리로)
+        [on, off].forEach(x => { x.style.transition = 'none'; });
+        g.fromTo(off, { opacity: 0, scale: 1.03 }, { opacity: 1, scale: 1, duration: 1.1, ease: 'sine.inOut', overwrite: true });
+        g.fromTo(on, { opacity: 1 }, { opacity: 0, duration: 1.1, ease: 'sine.inOut', overwrite: true });
+      }
+      off.classList.add('on'); on.classList.remove('on');
+    };
     off.src = src;
     if (off.complete && off.naturalWidth) off.onload();
   }
@@ -67,7 +80,9 @@
   const SVG_PLAY = '<img class="play" src="assets/ui/ic_play.webp" alt="" aria-hidden="true" draggable="false">';
   function paintPause() {
     const b = $('#pauseBtn');
+    const g = gsx(), was = b.firstElementChild;
     b.innerHTML = held ? SVG_PLAY : SVG_PAUSE;
+    if (g && was) g.fromTo(b.firstElementChild, { scale: .55, opacity: 0, rotation: held ? -30 : 30 }, { scale: 1, opacity: 1, rotation: 0, duration: .4, ease: 'back.out(2)', clearProps: 'transform,opacity' });   // GSAP 시험 ⑤: 아이콘이 부드럽게 돌며 바뀐다
     b.setAttribute('aria-label', held ? L('다시', 'Resume') : L('멈춤', 'Pause'));
   }
 

@@ -41,7 +41,9 @@ export const LANDS = [5, 5.15, 5.33];
 /** 홈이 쓰는 로고 너비(CSS px). home.css 의 .splash-wordmark 와 같은 식 */
 export function logoWidth(W, H) { return Math.min(LAUNCH_LOGO * Math.max(W, H), .84 * W, .7 * H); }
 
-export async function createSplashScene(host, { lang = 'ko', signal, onPreparing = () => {} } = {}) {
+/* GSAP 모션 시험(2026-11-24, ?motion=gsap 일 때만 — home.js MotionTrial): motion() 이 gsap 을 돌려주면 장면 시간축을 멈춰 둔 GSAP 타임라인 하나로 묶고
+   renderAt(t) 마다 그 시각으로 감아(seek) 값만 읽는다. 장면 순서·시각·효과음·길이는 그대로, 가감속·겹침·곡선만 다르다. 없으면 아래 원래 식 그대로 */
+export async function createSplashScene(host, { lang = 'ko', signal, onPreparing = () => {}, motion = null } = {}) {
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -50,7 +52,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
   const scene = new THREE.Scene();
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, -100, 100);
   const textures = new Set(), geometries = new Set(), materials = new Set();
-  let disposed = false, preparing = false, released = false, current = 0, observer, flyRect = null;
+  let disposed = false, preparing = false, released = false, current = 0, observer, flyRect = null, tl = null;
   const own = (set, x) => { set.add(x); return x; };
   const release = () => {
     if (released || preparing) return;
@@ -64,6 +66,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     disposed = true;
     signal?.removeEventListener('abort', destroy);
     observer?.disconnect();
+    tl?.kill();
     renderer.domElement.remove();
     release();
   };
@@ -227,6 +230,38 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     });
     const logoC = toMark(L.size[0] / 2, L.size[1] / 2);
 
+    /* GSAP 판: 상태 값 S 를 타임라인으로 움직인다(시각은 원래 식과 같은 자리, 효과음과 맞음) */
+    const gs = (() => { try { return typeof motion === 'function' ? motion() : motion; } catch (e) { return null; } })();
+    let S = null;
+    if (gs?.timeline) {
+      S = { zIn: 0, zOut: 0, push: 0, night: 0, sun: 1, fly: 0, flyM: 0, word: 1,
+        walk: actors.map(() => ({ v: 0 })), bow: actors.map(() => ({ v: 0 })), fold: actors.map(() => ({ v: 0 })) };
+      tl = gs.timeline({ paused: true, defaults: { ease: 'power2.inOut' } });
+      tl.set(S, {}, DURATION)
+        // 다가가기: 글자가 눕기 시작하면 곧 출발해 밤 하늘 막이 걷히기 직전까지 이어진다(멈칫 없이 겹침)
+        .to(S, { zIn: 1, duration: .78, ease: 'power3.inOut' }, .3)
+        // 무대를 보는 동안 아주 조금 더 다가갔다가(숨 쉬기) 빠질 때 돌아온다 — 정지 화면처럼 굳지 않게
+        .to(S, { push: 1, duration: 2.1, ease: 'sine.inOut' }, 1.1)
+        .to(S, { push: 0, duration: 1.4, ease: 'sine.inOut' }, 3.2)
+        // 밤 → 아침: 막은 부드럽게 걷히고, 해는 줄 끝에서 살짝 더 내려왔다 멈춘다
+        .to(S, { night: 1, duration: .5 }, .98)
+        .to(S, { sun: 0, duration: .62, ease: 'back.out(1.25)' }, 1.03)
+        // 아침 → 밤: 해가 먼저 끌려 올라가고 막이 따라 내려온다(원래는 막이 갑자기 빠르게 떨어짐)
+        .to(S, { sun: 1, duration: .46, ease: 'power2.in' }, 3.28)
+        .to(S, { night: 0, duration: .52, ease: 'power2.inOut' }, 3.36)
+        // 뒤로 빠지기: 로고 크기에 부드럽게 내려앉는다
+        .to(S, { zOut: 1, duration: .78, ease: 'power3.inOut' }, 4.4)
+        // 홈 로고 자리로: 크기는 천천히, 자리는 곡선으로 날아가 감속 착지
+        .to(S, { fly: 1, duration: DURATION - FLY_AT, ease: 'power3.inOut' }, FLY_AT)
+        .to(S, { flyM: 1, duration: DURATION - FLY_AT, ease: 'power2.inOut' }, FLY_AT)
+        .to(S, { word: 0, duration: .34, ease: 'power1.in' }, FLY_AT);
+      // 친구들: 효과음 시각(st)에 맞춰 차례로 걸어 들어와 감속하며 자리에 선다
+      actors.forEach((a, i) => tl.to(S.walk[i], { v: 1, duration: .62, ease: 'power2.out' }, a.st));
+      // 인사·접혀 눕기: stagger 로 물결처럼
+      tl.to(S.bow, { v: 1, duration: .27, ease: 'sine.inOut', yoyo: true, repeat: 1, stagger: .05 }, 2.95)
+        .to(S.fold, { v: 1, duration: .3, ease: 'power2.in', stagger: .045 }, 3.93);
+    }
+
     let W = 1, H = 1, m0 = 1, m1 = 1, c1 = [256, 251], squeeze = 1;
     function layout() {
       m0 = logoWidth(W, H) / L.size[0] / sxl;   // CSS px / 마크 픽셀(로고 크기)
@@ -237,38 +272,47 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
     }
     // 마크 점 p 가 화면 가운데 기준 (p - c)·m 에 오도록
     const place = (g, m, cx, cy) => { g.scale.setScalar(m); g.position.set(-cx * m, cy * m, 0); };
-    function zoomAt(t) { return t < 3 ? inout((t - .35) / .7) : 1 - inout((t - 4.45) / .7); }
+    function zoomAt(t) { if (S) return t < 3 ? S.zIn : 1 - S.zOut; return t < 3 ? inout((t - .35) / .7) : 1 - inout((t - 4.45) / .7); }
 
     function renderAt(time) {
       if (disposed) return;
       current = Math.max(0, Math.min(DURATION, time));
       const t = current;
+      if (tl) tl.seek(t, true);
       // 확대: 크기는 로그로, 중심은 화면에서 곧게 움직이도록
       const z = zoomAt(t);
-      let m = Math.exp(mix(Math.log(m0), Math.log(m1), z));
+      let m = Math.exp(mix(Math.log(m0), Math.log(m1 * (S ? 1 + .035 * S.push : 1)), z));
       const w = (1 / m0 - 1 / m) / (1 / m0 - 1 / m1 || 1);
       let cx = mix(logoC[0], c1[0], w), cy = mix(logoC[1], c1[1], w);
       // 끝: 홈 로고 마크 자리로 날아감
-      const fly = flyRect ? inout((t - FLY_AT) / (DURATION - FLY_AT)) : 0;
+      const fly = flyRect ? (S ? S.fly : inout((t - FLY_AT) / (DURATION - FLY_AT))) : 0;
       if (fly > 0) {
         const mf = flyRect.width / 512;
         const cxf = (W / 2 - flyRect.left) / mf, cyf = (H / 2 - flyRect.top) / mf;
-        const mm = Math.exp(mix(Math.log(m), Math.log(mf), fly));
+        const m00 = m, cx0 = cx, cy0 = cy;
+        const mm = Math.exp(mix(Math.log(m), Math.log(mf), S ? S.flyM : fly));
         const wf = (1 / m - 1 / mm) / (1 / m - 1 / mf || 1);
-        cx = mix(cx, cxf, wf); cy = mix(cy, cyf, wf); m = mm;
+        cx = mix(cx, cxf, S ? fly : wf); cy = mix(cy, cyf, S ? fly : wf); m = mm;
+        if (S) {   // 곧은 선 대신 위로 부푼 곡선: 출발점·도착점(로고 가운데, 화면 px) 사이 거리의 18% 만큼 옆으로 휜다
+          const sx = (256 - cx0) * m00, sy = -(256 - cy0) * m00, ex = (256 - cxf) * mf, ey = -(256 - cyf) * mf;
+          let nx = -(ey - sy), ny = ex - sx; if (ny < 0) { nx = -nx; ny = -ny; }   // 수직 방향 중 화면 위쪽으로 부푸는 쪽(길이 = 두 점 거리)
+          const bulge = .18 * Math.sin(Math.PI * fly);
+          cx -= nx * bulge / m; cy += ny * bulge / m;
+        }
       }
       place(root, m, cx, cy);
-      place(words, m0, logoC[0], logoC[1]);
+      if (S && fly > 0) place(words, m, cx, cy);   // GSAP 판: 글자도 아치와 함께 날아가며 작아진다(제자리에서 사라지지 않게)
+      else place(words, m0, logoC[0], logoC[1]);
 
       // 로고 마크 그림 ↔ 무대 층(같은 모습): 다가가는 중 .5~.75초, 뒤로 빠지는 중 4.5~4.75초에 넘긴다. 로고만 보일 땐 무대 층은 치운다
       const markIn = t < 3 ? 1 - smooth((t - .5) / .25) : smooth((t - 4.5) / .25), staged = markIn < 1;
       markPlane.visible = markIn > 0;
       day.m.visible = floor.m.visible = tied.visible = staged;
       // 밤 → 아침 → 밤: 달·별 그린 밤 하늘 막은 위로 걷혔다가(1~1.45초) 다시 내려온다(3.4~3.85초). 해는 그 사이 줄에 매달려 내려왔다 올라간다. 바닥은 그대로
-      const nightUp = t < 3 ? inout((t - 1) / .45) : 1 - out((t - 3.4) / .45);
+      const nightUp = S ? S.night : t < 3 ? inout((t - 1) / .45) : 1 - out((t - 3.4) / .45);
       night.m.visible = nightUp < 1 && staged;
       at(night.m, night.x, night.y - SH * nightUp);
-      const sunUp = t < 3 ? 1 - inout((t - 1.05) / .42) : inout((t - 3.3) / .42);
+      const sunUp = S ? S.sun : t < 3 ? 1 - inout((t - 1.05) / .42) : inout((t - 3.3) / .42);
       sun.visible = sunUp < 1 && staged;
       at(sun, 322, sunY - 330 * sunUp);
       rim.material.opacity = z;
@@ -287,13 +331,14 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
       {
         const BOW = 2.95;
         actors.forEach(a => {
-          const k = out((t - a.st) / .55), hop = Math.abs(Math.sin(Math.PI * k * 3)) * (1 - k);
+          let k = out((t - a.st) / .55), hop = Math.abs(Math.sin(Math.PI * k * 3)) * (1 - k);
+          if (S) { const p = clamp((t - a.st) / .62); k = S.walk[a.i].v; hop = Math.sin(Math.PI * p * 3) ** 2 * (1 - p) ** 1.5; }   // 같은 박자로 깡총, 땅에 부드럽게 닿고 점점 잦아듦
           a.p.visible = t >= a.st;
           const ax = 300 + (a.x - 300) * squeeze;
           at(a.p, mix(a.from, ax, k), a.y - 9 * hop);
-          const b = Math.sin(Math.PI * clamp((t - BOW - a.i * .05) / .55));   // 인사: 앞으로 숙였다(납작) 다시
+          const b = S ? S.bow[a.i].v : Math.sin(Math.PI * clamp((t - BOW - a.i * .05) / .55));   // 인사: 앞으로 숙였다(납작) 다시
           a.p.scale.set(1, 1 - .16 * b, 1);
-          fold(a.p, inout((t - 3.95 - a.i * .04) / .26));
+          fold(a.p, S ? S.fold[a.i].v : inout((t - 3.95 - a.i * .04) / .26));
           if (!a.p.visible || t < a.st) a.p.visible = false;
           if (a.n === 'pj3_tiger_stand') { const bowing = b > .2; actors.tigerBow.visible = a.p.visible && bowing; at(actors.tigerBow, a.p.position.x, -a.p.position.y); actors.tigerBow.rotation.x = a.p.rotation.x; if (bowing) a.p.visible = false; }
         });
@@ -310,7 +355,7 @@ export async function createSplashScene(host, { lang = 'ko', signal, onPreparing
         p.p.rotation.x = -Math.PI / 2 * (1 - Math.min(1, up));
         p.p.scale.y = Math.max(1, up);
         p.p.visible = up > .001;
-        setOpacity(p.p, 1 - smooth((t - FLY_AT) / .25));
+        setOpacity(p.p, S ? S.word : 1 - smooth((t - FLY_AT) / .25));
       }
       renderer.render(scene, camera);
     }

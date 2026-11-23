@@ -323,7 +323,15 @@
     heroDir = 0;
     slot.querySelectorAll('.hero-old').forEach(x => x.remove());
     const old = slot.firstElementChild;
-    if (dir && old && old.animate) {
+    if (dir && old && MT.g) {   // GSAP 시험 ⑥ 배너 넘김: 앞 그림은 35% 밀려나며 흐려지고(0.5초), 다음 그림은 반대쪽에서 미끄러져 들어온다(0.55초). 제목도 따라 들어온다
+      const g = MT.g;
+      old.classList.add('hero-old'); old.removeAttribute('href'); old.setAttribute('aria-hidden', 'true');
+      slot.insertAdjacentHTML('beforeend', cardHTML(t, { big: true }));
+      g.to(old, { xPercent: -dir * 35, opacity: 0, duration: .5, ease: 'power2.inOut', overwrite: 'auto', onComplete: () => old.remove() });
+      g.fromTo(slot.lastElementChild, { xPercent: dir * 35, opacity: 0 }, { xPercent: 0, opacity: 1, duration: .55, ease: 'power3.out', clearProps: 'transform,opacity' });
+      tt.innerHTML = heroTitleHTML(t);
+      g.fromTo(tt, { x: dir * 24, opacity: 0 }, { x: 0, opacity: 1, duration: .45, delay: .08, ease: 'power3.out', clearProps: 'transform,opacity' });
+    } else if (dir && old && old.animate) {
       const rm = RM.matches, mv = rm ? 0 : 40, E = 'cubic-bezier(.2,.8,.2,1)';
       old.classList.add('hero-old'); old.removeAttribute('href'); old.setAttribute('aria-hidden', 'true');
       slot.insertAdjacentHTML('beforeend', cardHTML(t, { big: true }));
@@ -341,9 +349,23 @@
     $('#heroPlay').setAttribute('aria-label', locked ? L(`${name} 열어 보기`, `Unlock ${name}`) : L(`${name} 시작하기`, `Start ${name}`));
     const dots = $('#heroDots');
     dots.hidden = heroList.length < 2;
+    const dotFrom = dir && MT.g ? dots.querySelector('.hd.on') : null, dotX0 = dotFrom ? dotFrom.offsetLeft + 12 : 0;
     dots.innerHTML = heroList.map(x => `<button type="button" class="hd${x.id === heroId ? ' on' : ''}" data-id="${x.id}" aria-label="${shown(x).title}"${x.id === heroId ? ' aria-current="true"' : ''}>${x.id === heroId && heroList.length > 1 && motion() ? '<i class="hd-fill"></i>' : ''}</button>`).join('');
+    if (dotFrom) gDot(dots, dotX0);
     const nf = fIn === 'dot' ? dots.querySelector('.hd.on') : fIn === 'card' ? slot.querySelector('.card:not(.hero-old)') : null;
     if (nf) nf.focus({ preventScroll: true });
+  }
+  /* GSAP 시험 ⑥ 점: 흰 막대가 앞 점에서 늘어나 다음 점까지 덮은 뒤(0.2초) 다음 점 크기로 줄어든다(0.22초). 그동안 새 점 자체는 숨겨 둔다(누름은 그대로) */
+  function gDot(dots, x0) {
+    const g = MT.g, on = dots.querySelector('.hd.on'); if (!g || !on) return;
+    const x1 = on.offsetLeft + 12, w = 32, bar = document.createElement('i');
+    bar.setAttribute('aria-hidden', 'true');
+    bar.style.cssText = `position:absolute;left:0;top:18px;height:8px;width:${w}px;border-radius:4px;background:#fff;pointer-events:none;z-index:1`;
+    dots.appendChild(bar); on.style.opacity = '0';
+    const lo = Math.min(x0, x1), span = Math.abs(x1 - x0) + w;
+    g.timeline({ onComplete: () => { bar.remove(); on.style.opacity = ''; } })
+      .fromTo(bar, { x: x0, width: w }, { x: lo, width: span, duration: .2, ease: 'power2.out' })
+      .to(bar, { x: x1, width: w, duration: .22, ease: 'power2.inOut' });
   }
   const HOVER = matchMedia('(hover: hover)');               // 마우스를 배너에 올려 두면 멈춤(터치 기기는 누른 뒤 남는 hover 무시)
   function heroStep(d, to, auto) {
@@ -780,10 +802,12 @@
     el.style.setProperty('--hold', ms + 'ms');
     /* 꾹 단추(어른이 열기·정답)는 둘레에 감빛 링이 찬다 (§5-8). 모양은 CSS .hold-ring */
     if (el.classList.contains('holdbtn') && !el.querySelector('.hold-ring')) el.insertAdjacentHTML('beforeend', '<i class="hold-ring" aria-hidden="true"></i>');
+    const gRing = () => el.classList.contains('gate-opt') && MT.g ? el.querySelector('.hold-ring') : null;   // GSAP 시험 ⑦: 보호자 확인 정답 게이지를 매끄럽게(시간·판정은 그대로)
     const start = e => {
       if (e.button) return;
       fired = false;
       el.classList.add('holding');
+      { const r = gRing(); if (r) { r.style.transition = 'none'; MT.g.fromTo(r, { '--hp': 0 }, { '--hp': 1, duration: ms / 1000, ease: 'power1.inOut', overwrite: true }); } }
       clearTimeout(timer);
       timer = setTimeout(() => {   // 링이 다 차면 60ms 크림으로 밝아졌다 사라지고 동작 (§5-8)
         fired = true; el.classList.remove('holding'); el.classList.add('held');
@@ -793,6 +817,7 @@
     const end = () => {
       if (!el.classList.contains('holding')) return;
       el.classList.remove('holding');
+      { const r = gRing(); if (r) MT.g.to(r, { '--hp': 0, duration: .22, ease: 'power2.out', overwrite: true }); }
       clearTimeout(timer);
       if (!fired && early) early();
     };
@@ -931,8 +956,9 @@
     }
     paper('down');
     gateLockUntil = Date.now() + GATE_LOCK;
-    gateSheet.classList.add('fail');                         // 틀림: 쪽지가 40ms 에 6px 눌렸다 올라오고 닫힌다(흔들기 없음)
-    setTimeout(() => { gateSheet.classList.remove('fail'); hideModal(gateEl, gateSheet, () => { gateOff(); sheetClosed(); toast(L('틀렸습니다. 30초 뒤에 다시 해 주세요.', 'Not quite. Please try again in 30 seconds.')); }); }, 100);
+    if (MT.g) MT.g.fromTo(gateSheet, { x: 0 }, { keyframes: [{ x: -8, duration: .07 }, { x: 8, duration: .09 }, { x: -6, duration: .08 }, { x: 4, duration: .07 }, { x: 0, duration: .07 }], ease: 'sine.inOut', clearProps: 'transform' });   // GSAP 시험 ⑦: 틀리면 좌우 ±8px 흔들린 뒤 닫힘
+    else gateSheet.classList.add('fail');                         // 틀림: 쪽지가 40ms 에 6px 눌렸다 올라오고 닫힌다(흔들기 없음)
+    setTimeout(() => { gateSheet.classList.remove('fail'); hideModal(gateEl, gateSheet, () => { gateOff(); sheetClosed(); toast(L('틀렸습니다. 30초 뒤에 다시 해 주세요.', 'Not quite. Please try again in 30 seconds.')); }); }, MT.g ? 420 : 100);
   }
   function closeGate() { gateCb = null; hideModal(gateEl, gateSheet, () => gateOff(sheetClosed)); }
   $('#gateClose').addEventListener('click', closeGate);
@@ -1495,7 +1521,7 @@
   function paintNoticeDot() {
     const b = guardList.querySelector('.g-item[data-k="notice"]'); if (!b) return;
     const d = b.querySelector('.g-dot'), want = noticeUnread();
-    if (want && !d) b.insertAdjacentHTML('beforeend', noticeDotHTML()); else if (!want && d) d.remove();
+    if (want && !d) { b.insertAdjacentHTML('beforeend', noticeDotHTML()); gBadgePop(b.querySelector('.g-dot')); } else if (!want && d) d.remove();
   }
   /* 휴대폰 세로(1열)는 목록이 먼저라 본문이 안 보인다. 본문이 보일 때만 '읽음'으로 친다 */
   const notePaneShown = () => !!guardBody.dataset.open || !matchMedia('(orientation: portrait) and (max-width: 699px)').matches;
@@ -1692,6 +1718,40 @@
         <div class="sheet-btns"><button type="button" class="ticket alt f-first" data-act="f-close">${L('닫기', 'Close')}</button>${list.length ? `<button type="button" class="ticket" data-act="f-open"${flowCtx.sel ? '' : ' disabled'}>${L('열기', 'Open')}</button>` : ''}</div>`;
     }
   }
+  /* GSAP 시험 ① 별로 열기(잠김 쪽지에서만): 별 다섯 개가 단추에서 차례로 자물쇠로 날아가 모이고(0.12초 간격, 각 0.5초), 자물쇠가 톡 튀었다 떨어지며 사라지고(0.45초),
+     그림 카드가 밝아지며 살짝 튄다(0.45초). 합쳐 약 1.8초 뒤 실제로 연다(unlockSel). 그동안 쪽지를 닫으면 열지 않는다(아무것도 쓰지 않음) */
+  let gUnlocking = false;
+  function gUnlock(btn) {
+    const g = MT.g, lock = flowSheet.querySelector('.note-lock'), pic = flowSheet.querySelector('.note-pic');
+    if (!g || !lock || !pic || !btn || gUnlocking) return false;
+    gUnlocking = true;
+    const br = btn.getBoundingClientRect(), lr = lock.getBoundingClientRect();
+    const sx = br.left + Math.min(br.width, br.height) / 2 + 6, sy = br.top + br.height / 2, ex = lr.left + lr.width / 2, ey = lr.top + lr.height / 2;
+    const stars = Array.from({ length: Entitlements.STAR_NEED }, () => {
+      const im = document.createElement('img'); im.src = 'assets/ui/star_one.webp?v=s4a'; im.alt = ''; im.setAttribute('aria-hidden', 'true');
+      im.style.cssText = 'position:fixed;left:-36px;top:-36px;width:72px;height:72px;z-index:2147483000;pointer-events:none';
+      document.body.appendChild(im); return im;
+    });
+    const glow = document.createElement('i'); glow.setAttribute('aria-hidden', 'true');
+    glow.style.cssText = 'position:absolute;inset:0;border-radius:inherit;background:#fff;opacity:0;pointer-events:none;z-index:3';
+    (pic.querySelector('.thumb') || pic).appendChild(glow);
+    const tl = g.timeline({ onComplete: () => { stars.forEach(x => x.remove()); glow.remove(); g.set([lock, pic], { clearProps: 'transform,opacity' }); gUnlocking = false; if (!flowEl.hidden) unlockSel(); } });
+    stars.forEach((im, i) => {
+      const cx = (sx + ex) / 2 + (i - 2) * 26, cy = Math.min(sy, ey) - 90 - i * 6, o = { t: 0 };
+      g.set(im, { x: sx, y: sy, scale: .4, opacity: 0 });
+      tl.to(im, { opacity: 1, scale: 1, duration: .14, ease: 'back.out(2)' }, i * .12)
+        .to(o, { t: 1, duration: .5, ease: 'power2.in', onUpdate: () => { const t = o.t, m = 1 - t; g.set(im, { x: m * m * sx + 2 * m * t * cx + t * t * ex, y: m * m * sy + 2 * m * t * cy + t * t * ey, scale: 1 - .45 * t }); } }, i * .12 + .1)
+        .to(im, { opacity: 0, scale: .3, duration: .12 }, i * .12 + .6)
+        .to(lock, { scale: 1 + .06 * (i + 1), duration: .08, ease: 'power2.out' }, i * .12 + .6);
+    });
+    const tLock = (stars.length - 1) * .12 + .74;
+    tl.to(lock, { y: -12, scale: 1.45, rotation: -12, duration: .16, ease: 'power2.out' }, tLock)
+      .to(lock, { y: 40, scale: .6, rotation: 18, opacity: 0, duration: .3, ease: 'power2.in' }, tLock + .16)
+      .to(glow, { keyframes: [{ opacity: .55, duration: .18 }, { opacity: 0, duration: .32 }] }, tLock + .3)
+      .to(pic, { keyframes: [{ scale: 1.06, y: -6, duration: .18, ease: 'power2.out' }, { scale: 1, y: 0, duration: .27, ease: 'back.out(2.5)' }] }, tLock + .3);
+    paper('tap');
+    return true;
+  }
   function unlockSel() {
     const id = flowCtx.sel; if (!id) return;
     const ok = pickKind === 'star' ? Entitlements.starUnlock(id) : Entitlements.waitUnlock(id);
@@ -1718,7 +1778,7 @@
     const act = b.dataset.act;
     if (act === 'f-close') closeFlow();
     else if (act === 'f-star') { pickKind = 'star'; paper('tap'); openFlow('pick', { sel: null }); }          // 종이별 고르기는 어른 확인 없이 (판단 #4 가)
-    else if (act === 'f-star1') { pickKind = 'star'; flowCtx.sel = flowCtx.id; unlockSel(); }                // 잠긴 동화에서 바로: 모아 둔 별 하나로 이 동화를 연다(2026-10-31 사용자: 별은 선택권, 바로 안 써도 됨)
+    else if (act === 'f-star1') { pickKind = 'star'; flowCtx.sel = flowCtx.id; if (!gUnlock(b)) unlockSel(); }                // 잠긴 동화에서 바로: 모아 둔 별 하나로 이 동화를 연다(2026-10-31 사용자: 별은 선택권, 바로 안 써도 됨)
     else if (act === 'f-wait') { pickKind = 'wait'; paper('tap'); openFlow('pick', { sel: null }); }
     else if (act === 'f-buy') doPurchase($('#flowMsg'));
     else if (act === 'f-restore') doRestore($('#flowMsg'));
@@ -2568,6 +2628,8 @@
     else if (app && sb > starPrev && motion() && !flyBusy.star && !flyBusy.stickers) { flyBusy.star = true; flyLater(() => flyTo('star', () => { flyBusy.star = false; })); }
     tabBtns.find(b => b.dataset.tab === 'puzzle').querySelector('.tab-badge').hidden = !(pzCur.length > 0) || flyBusy.puzzle;
     tabBtns.find(b => b.dataset.tab === 'stickers').querySelector('.tab-badge').hidden = !stCur || flyBusy.stickers;
+    if (MT.on() && !window.gsap) MT.load().then(g => { if (g) paintTabBadge(); });   // GSAP 가 오기 전에 그려졌으면 온 뒤에 한 번 더(점 톡을 놓치지 않게)
+    if (MT.g) tabBtns.forEach(b => { const d = b.querySelector('.tab-badge'); if (d && !d.hidden && d.dataset.gShown !== '1') { d.dataset.gShown = '1'; gBadgePop(d); } else if (d && d.hidden) delete d.dataset.gShown; });   // GSAP 시험 ⑧: 새 점은 처음 나타날 때 한 번만 톡
   }
   /* ── 보상 날아가기: 새 조각이 생긴 걸 홈에서 처음 볼 때, 작은 조각이 화면 가운데에서 탭 기호로 곡선을 그리며 들어가고 기호가 톡 튀며 점이 나타난다 ── */
   const FLY_PZ = 'paperTheater.pzFly', FLY_STAR = 'paperTheater.starFly';
@@ -2588,7 +2650,10 @@
     return raw === null || isNaN(Number(raw)) ? sb : Number(raw);
   }
   const bump = el => { if (el && el.animate) el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.15)' }, { transform: 'scale(1)' }], { duration: 260, easing: EASE }); };
+  /* GSAP 시험 ⑧ 새것 알림 점: 처음 나타날 때 한 번 톡(0 → 1, back.out 0.45초). 반복 없음 */
+  function gBadgePop(d) { if (d && MT.g) MT.g.fromTo(d, { scale: 0 }, { scale: 1, duration: .45, ease: 'back.out(3)', clearProps: 'transform' }); }
   function popBadge(k) {
+    if (MT.g) return;   // GSAP 시험이면 paintTabBadge 가 처음 나타날 때 한 번 톡(겹치지 않게)
     const b = tabBtns.find(x => x.dataset.tab === k).querySelector('.tab-badge');
     if (b && !b.hidden && b.animate) b.animate([{ transform: 'scale(0)' }, { transform: 'scale(1.4)' }, { transform: 'scale(1)' }], { duration: 300, easing: EASE });
   }
@@ -2652,15 +2717,30 @@
   paintTabBadge();
   Entitlements.onChange(() => { paintTabBadge(); requestRender(); });
 
-  /* 첫 화면엔 늘 스플래시(로고 안으로 들어갔다 나오기, engine/splash) — 앱을 켤 때·웹 접속·새로고침마다. 동화에서 홈으로 돌아올 때만 나오지 않는다. ?splash=1 강제 재생, ?splash=0 끔 */
-  function splash(done, after) {
+  /* 첫 화면 스플래시(로고 안으로 들어갔다 나오기, engine/splash). 2026-11-24 사용자 결정 A안: 하루(기기 현지 날짜) 첫 실행만 전체, 같은 날 다시 켜면
+     로고만 짧게(약 1초, 홈 로고 자리로 날아가 겹쳐짐). 전체를 재생한 날은 localStorage splashFullDay 에 기억(저장소가 막히면 늘 전체).
+     동화에서 홈으로 돌아올 때는 나오지 않는다. ?splash=0 끔, ?splash=full(또는 1) 늘 전체, ?splash=short 늘 짧게. 어느 판이든 화면을 누르면 바로 넘어간다 */
+  const SPLASH_DAY = 'splashFullDay';
+  const today = () => { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };
+  function splashMode(q) {
+    if (q === 'short') return 'short';
+    if (['full', '1', '2'].includes(q)) return 'full';
+    try { return localStorage.getItem(SPLASH_DAY) === today() ? 'short' : 'full'; } catch (e) { return 'full'; }
+  }
+  /* 스플래시를 누른 손가락이 떼어질 때 생기는 click 이 그 아래 홈 카드에 떨어지지 않게 한 번 삼킨다(iOS 웹뷰는 뗀 자리를 다시 찾아 click 을 보냄) */
+  const swallowClick = () => { const k = e => { e.stopPropagation(); e.preventDefault(); }; document.addEventListener('click', k, true); setTimeout(() => document.removeEventListener('click', k, true), 450); };
+  function splash(done, after, mode = 'full') {
     const sp = $('#splash');
-    let finished = false, shown = false, pending;
+    let finished = false, shown = false, pending, anims = [];
     const reveal = () => { if (!shown) { shown = true; done(); } };   // 로고가 날아가는 동안 홈을 먼저 드러낸다
-    const complete = () => {
+    const complete = e => {
       if (finished) return;
       finished = true;
       clearTimeout(pending);
+      if (e && e.type === 'pointerdown') swallowClick();
+      anims.forEach(a => a.cancel()); anims = [];
+      document.body.classList.remove('splash-flying');
+      sp.style.background = '';
       sp.removeEventListener('pointerdown', complete);
       sp.hidden = true;
       sp.setAttribute('aria-hidden', 'true');
@@ -2678,15 +2758,43 @@
     title.alt = lang === 'en' ? 'Toki Toki Tale' : '톡톡 동화극장';
     fallback.append(title); sp.append(fallback);
     sp.addEventListener('pointerdown', complete);
+    if (mode === 'short') {   // 짧은 판: Three.js 없이 정지 로고 0.45초 → 홈 로고 마크 자리로 곡선을 그리며 날아가 겹쳐진다(0.5초)
+      pending = setTimeout(() => {
+        reveal();
+        const mark = [...document.querySelectorAll('.logo-mark')].find(el => el.getBoundingClientRect().width > 0);
+        const fade = sp.animate([{ backgroundColor: '#F5EFE9' }, { backgroundColor: 'rgba(245,239,233,0)' }], { duration: 300, easing: 'ease-out', fill: 'forwards' });
+        anims.push(fade);
+        if (!mark || RM.matches) { const f = title.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, fill: 'forwards' }); anims.push(f); pending = setTimeout(complete, 320); return; }
+        // 로고 그림(lockup) 안의 마크 상자 → 홈 .logo-mark(512 정사각 그림, 마크 알파 상자 14~462) 로 크기·자리를 맞춘다(engine/splash/art2.js LOCKUP·MARK_BOX)
+        const LK = lang === 'en' ? { size: [1024, 805], mark: [289, 59, 735, 520] } : { size: [561, 464], mark: [138, 28, 401, 299] };
+        const a = title.getBoundingClientRect(), r = mark.getBoundingClientRect(), u = a.width / LK.size[0];
+        const s = (r.width * 448 / 512) / ((LK.mark[2] - LK.mark[0]) * u);
+        const fx = a.left + (LK.mark[0] + LK.mark[2]) / 2 * u, fy = a.top + (LK.mark[1] + LK.mark[3]) / 2 * u;   // 지금 마크 가운데
+        const tx = r.left + r.width * 238 / 512, ty = r.top + r.height * 237.5 / 512;   // 홈 마크 가운데
+        const ox = (LK.mark[0] + LK.mark[2]) / 2 * u, oy = (LK.mark[1] + LK.mark[3]) / 2 * u;   // 마크 가운데를 축으로
+        title.style.transformOrigin = `${ox}px ${oy}px`;
+        const dx = tx - fx, dy = ty - fy, mid = Math.sqrt(s);
+        let px = -dy, py = dx; if (py > 0) { px = -px; py = -py; }   // 진행 방향에 수직, 화면 위쪽으로
+        const fly = title.animate([
+          { transform: 'translate(0,0) scale(1)', opacity: 1 },
+          { transform: `translate(${dx * .45 + px * .16}px, ${dy * .45 + py * .16}px) scale(${mid})`, opacity: 1, offset: .45 },   // 곧은 선 대신 위로 부푼 곡선
+          { transform: `translate(${dx}px, ${dy}px) scale(${s})`, opacity: 0 }
+        ], { duration: 520, easing: 'cubic-bezier(.45,0,.2,1)', fill: 'forwards' });
+        anims.push(fly);
+        pending = setTimeout(complete, 540);
+      }, 450);
+      return;
+    }
+    try { localStorage.setItem(SPLASH_DAY, today()); } catch (e) { /* 저장소가 막히면 다음에도 전체 */ }
     const gl = (() => { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } })();
     if (!gl) { pending = setTimeout(complete, 1600); return; }   // WebGL 이 없으면 3D 장면을 받지 않고 정적 로고만 잠깐 보이다 넘어간다
     pending = setTimeout(complete, 5000);   // 3D 장면을 못 받으면 정적 첫 화면만 보이다 넘어간다
-    import('./engine/splash/start.js?v=20261108jg3')
+    import('./engine/splash/start.js?v=20261124gsap1')
       .then(({ startSplash }) => {
         if (finished) return;
         clearTimeout(pending);
         sp.removeEventListener('pointerdown', complete);
-        startSplash(sp, { lang, onDone: complete, onReveal: reveal });
+        startSplash(sp, { lang, onDone: complete, onReveal: reveal, motion: () => MT.g });   // GSAP 시험이면 이미 받아 둔 gsap 만(기다리지 않음)
       })
       .catch(complete);
   }
@@ -2704,9 +2812,9 @@
   function intro() {
     const q = new URLSearchParams(location.search).get('splash');
     let first = q === '0' ? false : !backFromApp();
-    if (['1', '2'].includes(q)) first = true;
+    if (['1', '2', 'full', 'short'].includes(q)) first = true;
     update({ anim: false });
-    if (first && location.hash !== '#parent') splash(() => { update({ intro: true, delay: .04, step: .035 }); homeReveal(); }, introAuto);   // 처음 안내는 스플래시가 끝난 뒤에만
+    if (first && location.hash !== '#parent') splash(() => { update({ intro: true, delay: .04, step: .035 }); homeReveal(); }, introAuto, splashMode(q));   // 처음 안내는 스플래시가 끝난 뒤에만
     else { update({ intro: true, delay: .02, step: .03 }); homeReveal(); }
   }
 

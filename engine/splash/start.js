@@ -3,7 +3,8 @@
 const SLOW = 1.3;
 // 징글·이름 부르기 파일(sounds/splash)은 다시 만들 때마다 아래 ?v= 를 올린다(같은 주소라 웹 캐시가 옛 녹음을 들려줌)
 // 스플래시(scene.js — 로고 안으로 들어갔다 나오기, 효과음, 홈 로고 자리로 날아가며 홈을 드러냄). onReveal = 홈이 드러나기 시작할 때 한 번
-export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = null } = {}) {
+// motion = GSAP 모션 시험(?motion=gsap)일 때 gsap 을 돌려주는 함수. 장면을 만들 때 아직 없으면 기다리지 않고 원래 움직임으로 재생한다
+export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = null, motion = null } = {}) {
   const en = lang === 'en';
   let keepVoice = null;   // 장면이 저절로 끝날 때 끝까지 들려줄 이름 부르기 목소리(차분한 읽기는 장면 끝을 조금 넘는다)
   let closed = false, raf = 0, timer = 0, loadTimer = 0, scene, revealed = false, sounds = [];
@@ -31,6 +32,10 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
   function finish(natural) {
     if (closed) return;
     closed = true;
+    if (natural?.type === 'pointerdown') {   // 누른 손가락을 뗄 때의 click 이 아래 홈 카드에 떨어지지 않게 한 번 삼킨다
+      const k = e => { e.stopPropagation(); e.preventDefault(); };
+      document.addEventListener('click', k, true); setTimeout(() => document.removeEventListener('click', k, true), 450);
+    }
     clearTimeout(timer); clearTimeout(loadTimer); cancelAnimationFrame(raf);
     abort.abort(); scene?.destroy();
     for (const a of sounds) { if (natural === true && a === keepVoice) continue; try { a.pause(); } catch (e) { /* 무시 */ } }   // 건너뛰면 모두 멈춤
@@ -68,10 +73,10 @@ export function startSplash(host, { lang = 'ko', onDone = () => {}, onReveal = n
     timer = setTimeout(finish, 500);
     return { finish };
   }
-  import('./scene.js?v=20261108jg1').then(async ({ createSplashScene }) => {
+  import('./scene.js?v=20261124gsap1').then(async ({ createSplashScene }) => {
     if (closed) return;
     const building = createSplashScene(host.querySelector('.splash-stage'), {
-      lang, signal: abort.signal,
+      lang, signal: abort.signal, motion,
       onPreparing: () => {
         // Downloads and GPU preparation are separate, bounded stages. The 12s outer
         // watchdog still covers the entire preparation, and taps remain enabled.

@@ -411,8 +411,24 @@ const Tale = (() => {
     handAt = at || target;
     const [x, y] = screenPoint(handAt);
     handEl.className = kind; handEl.style.left = x + 'px'; handEl.style.top = y + 'px'; handEl.hidden = false;
+    gHand(kind);
   }
-  function hideHand() { handEl.hidden = true; handAt = null; }
+  function hideHand() { handEl.hidden = true; handAt = null; if (handTl) { handTl.kill(); handTl = null; const sv = handEl.querySelector('svg'); if (sv) { sv.style.animation = ''; sv.style.transform = ''; sv.style.opacity = ''; } } }
+  /* GSAP 시험 ③ 손가락 힌트(톡만): 손가락이 비스듬히 아래에서 부드럽게 다가와(0.5초) 톡톡 두 번(0.6초) 두드리고 잠깐 쉬었다(0.5초) 물러나는(0.35초) 반복. sine 가감속 */
+  let handTl = null;
+  function gHand(kind) {
+    if (handTl) { handTl.kill(); handTl = null; }
+    const g = gsx(), sv = handEl.querySelector('svg');
+    if (!g || !sv || kind !== 'tap') { if (sv) { sv.style.animation = ''; sv.style.transform = ''; sv.style.opacity = ''; } return; }
+    sv.style.animation = 'none';
+    g.set(sv, { x: 34, y: 46, scale: 1, opacity: 0, transformOrigin: '50% 10%' });
+    handTl = g.timeline({ repeat: -1 })
+      .to(sv, { x: 0, y: 0, opacity: 1, duration: .5, ease: 'sine.inOut' })
+      .to(sv, { x: 4, y: 10, scale: .9, duration: .15, ease: 'sine.inOut', yoyo: true, repeat: 1 })
+      .to(sv, { x: 4, y: 10, scale: .9, duration: .15, ease: 'sine.inOut', yoyo: true, repeat: 1 })
+      .to(sv, { duration: .5 })
+      .to(sv, { x: 34, y: 46, opacity: 0, duration: .35, ease: 'sine.in' });
+  }
   /* 창 크기가 실행 중에 바뀌면(접는 아이폰 iPhone Duo 를 접고 펼 때, 아이패드 화면 나누기, 돌리기) 떠 있는 손가락을 대상 위로 다시 옮긴다(2026-11-18).
      손가락 자리는 띄울 때 한 번 px 로 재므로, 무대가 다시 맞춰져도 옛 자리에 남아 있었다 */
   function replaceHand() {
@@ -452,7 +468,7 @@ const Tale = (() => {
         e.stopPropagation();
         if (busy) return;
         target.removeEventListener('pointerdown', on);
-        arm(target, false); h.stop(); AudioFX.tap(); res();
+        arm(target, false); h.stop(); AudioFX.tap(); gPress(target, 'tap'); res();
       };
       target.addEventListener('pointerdown', on);
     });
@@ -465,7 +481,7 @@ const Tale = (() => {
       const t1 = setTimeout(() => showHand(target), 2000);
       const end = v => { clearTimeout(t1); clearTimeout(t2); target.removeEventListener('pointerdown', on); arm(target, false); hideHand(); res(v); };
       const t2 = setTimeout(() => end(false), ms);
-      const on = e => { e.stopPropagation(); if (busy) return; AudioFX.tap(); end(true); };
+      const on = e => { e.stopPropagation(); if (busy) return; AudioFX.tap(); gPress(target, 'tap'); end(true); };
       target.addEventListener('pointerdown', on);
     });
   }
@@ -521,6 +537,7 @@ const Tale = (() => {
             return;
           }
           st.order.push(it); st.kinds.add(it.key); st.count = st.order.length;
+          gPress(it.el, 'tap');
           if (onPut) { const r = onPut(it, st.count, st); if (r && r.catch) r.catch(er => console.warn('fill onPut', er)); }
           if (maxCount && st.count >= maxCount) finish(); else rearm();   // 넣은 뒤의 기다림(손가락·idleDone)을 새로 잰다
         };
@@ -577,13 +594,14 @@ const Tale = (() => {
           if (busy || locked) return;
           locked = true; clearTimeout(t2);
           if (o.ok) {
+            gPress(o.el, 'ok');
             options.forEach(x => { x.el.removeEventListener('pointerdown', x._on); arm(x.el, false); x.el.style.filter = ''; x.el.style.opacity = ''; });
             if (useTray) { tray.hidden = true; tray.innerHTML = ''; }
             AudioFX.ding(); res(o); return;
           }
           misses++;
           AudioFX.miss();
-          if (o.onWrong) await o.onWrong(); else await wiggleEl(o.el);
+          if (o.onWrong) { gPress(o.el, 'no'); await o.onWrong(); } else await wiggleEl(o.el);   // GSAP 시험: 동화가 따로 정한 오답 연출이 있어도 눌림·작은 흔들림은 같이(동화 연출이 scale·translate 를 쓰면 비켜 준다)
           if (misses === 1 && where) await say(where);
           if (misses >= 2) {
             good.el.style.filter = 'url(#hintGlow)';
@@ -599,10 +617,51 @@ const Tale = (() => {
     });
   }
   function wiggleEl(n) {
+    const gp = gPress(n, 'no'); if (gp) return gp;   // GSAP 시험: 눌림 뒤 부드러운 좌우 ±6px(회전 없음)
     return anim(n, [{ translate: '0 0' }, { translate: '-8px 0' }, { translate: '8px 0' }, { translate: '0 0' }], 360);
   }
   function pulse(n) {
     n.animate([{ translate: '0 0' }, { translate: '0 -12px' }, { translate: '0 0' }], { duration: 900, iterations: 4, easing: 'ease-in-out' });
+  }
+  /* GSAP 시험 ② 누르기 반응(?motion=gsap 일 때만): 누른 대상이 톡 눌렸다 튕김(.92 → 1.05 → 1, 0.35초). ok = 한 번 더 작게(1.03), no = 좌우 ±6px 부드럽게(회전 없음).
+     대상의 transform(속성·스타일)은 건드리지 않고 따로 도는 CSS scale·translate 만 쓴다. 대상의 가운데를 축으로 맞추려고 처음에 한 번 '커질 때 가운데가 어디로 밀리는지'를 재서 translate 로 되돌린다.
+     건너뜀: 이미 scale·translate 를 쓰는 대상, 화면의 40% 넘게 큰 대상. 다른 코드가 도중에 scale·translate 를 바꾸면 그 자리에서 멈추고 손대지 않는다.
+     반환: 연출 끝 Promise(no 는 흔들림까지), 건너뛰면 null */
+  function gPress(el, kind = 'tap') {
+    const g = gsx(); if (!g || !el || !el.isConnected || !el.getBoundingClientRect) return null;
+    try {
+      if (el._gpTl) { el._gpTl.progress(1).kill(); el._gpTl = null; }
+      const st = el.style, t0 = st.translate, s0 = st.scale;
+      if (s0 && s0 !== '1') return null;
+      let bx = 0, by = 0;
+      if (t0 && t0 !== 'none') { const m = /^(-?[\d.]+)px(?:\s+(-?[\d.]+)px)?$/.exec(t0.trim()); if (!m) return null; bx = +m[1]; by = +(m[2] || 0); }
+      const r0 = el.getBoundingClientRect(); if (!r0.width || !r0.height || r0.width * r0.height > innerWidth * innerHeight * .4) return null;
+      st.scale = '1.1'; const r1 = el.getBoundingClientRect(); st.scale = s0;
+      const dx = (r1.left + r1.width / 2 - r0.left - r0.width / 2) / .1, dy = (r1.top + r1.height / 2 - r0.top - r0.height / 2) / .1;
+      let inv;
+      if (typeof SVGElement !== 'undefined' && el instanceof SVGElement) {
+        const pm = el.parentNode && el.parentNode.getScreenCTM && el.parentNode.getScreenCTM(); if (!pm) return null;
+        const k = pm.inverse(); inv = (x, y) => [k.a * x + k.c * y, k.b * x + k.d * y];
+      } else { const f = el.offsetWidth ? r0.width / el.offsetWidth : 1; inv = (x, y) => [x / f, y / f]; }
+      const o = { s: 1, x: 0 }; let lastT = st.translate, lastS = st.scale, alive = true;
+      const put = () => {
+        if (!alive) return;
+        if (st.translate !== lastT || st.scale !== lastS || !el.isConnected) { alive = false; tl.kill(); return; }   // 다른 코드가 손댐 → 비켜 준다
+        const [lx, ly] = inv(-dx * (o.s - 1) + o.x, -dy * (o.s - 1));
+        st.scale = o.s.toFixed(4); st.translate = `${(bx + lx).toFixed(2)}px ${(by + ly).toFixed(2)}px`;
+        lastT = st.translate; lastS = st.scale;
+      };
+      let done;
+      const p = new Promise(r => { done = r; });
+      const tl = g.timeline({ onUpdate: put, onComplete: () => { if (alive && st.translate === lastT && st.scale === lastS) { st.translate = t0; st.scale = s0; } alive = false; el._gpTl = null; done(); }, onInterrupt: () => done() });
+      tl.to(o, { s: .92, duration: .08, ease: 'power2.out' })
+        .to(o, { s: 1.05, duration: .12, ease: 'power2.out' })
+        .to(o, { s: 1, duration: .15, ease: 'power2.inOut' });
+      if (kind === 'ok') tl.to(o, { s: 1.03, duration: .1, ease: 'sine.out' }).to(o, { s: 1, duration: .14, ease: 'sine.inOut' });
+      if (kind === 'no') tl.to(o, { keyframes: [{ x: -6, duration: .08 }, { x: 6, duration: .12 }, { x: -4, duration: .1 }, { x: 3, duration: .08 }, { x: 0, duration: .08 }], ease: 'sine.inOut' }, .12);
+      el._gpTl = tl;
+      return p;
+    } catch (e) { return null; }
   }
 
   /* ---------- 조작 4: 쓱 (화면 어디서든 그 방향으로 밀면 한 걸음, 길게 밀면 여러 걸음, 톡도 한 걸음으로 인정) ---------- */
@@ -2031,6 +2090,7 @@ const Tale = (() => {
       es.hidden = false;
       try { AudioFX.sfx('page_turn_big', .8); } catch (e) { /* 소리 없이 */ }
       if (!matchMedia('(prefers-reduced-motion: reduce)').matches) confetti($('#endConfetti'), 26);
+      gEnd(es);
       if (award) awardShow(es, award);
     };
     try {
@@ -2151,6 +2211,9 @@ const Tale = (() => {
       return q ? q === 'gsap' : localStorage.getItem('motionTrial') === 'gsap';
     } catch (e) { return false; }
   };
+  const MT_ON = motionTrial();
+  if (MT_ON) setTimeout(() => loadGsap(), 0);                       // 시험이 켜졌으면 미리 받아 둔다(누르기·손가락에 바로 쓰게)
+  function gsx() { return MT_ON && window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches ? window.gsap : null; }
   let gsapP = null;
   function loadGsap() {
     return gsapP || (gsapP = new Promise(res => {
@@ -2161,6 +2224,22 @@ const Tale = (() => {
       document.head.appendChild(sc);
       setTimeout(() => res(window.gsap || null), 2500);
     }));
+  }
+  /* GSAP 시험 ④ 끝 화면: '끝!' 글자가 톡 튀어나오고(0.5초 back.out), 0.3초 뒤 '홈으로'·'한 번 더'가 차례로 올라온다(각 0.4초, 0.12초 간격). 0.95초에 끝나
+     보상 연출(1초 뒤 시작)과 겹치지 않는다. 단추는 움직이는 동안에도 눌린다 */
+  function gEnd(es) {
+    const run = g => {
+      if (!g || es.hidden) return;
+      const t = es.querySelector('.ttl'), bs = [...es.querySelectorAll('.rbtn')];
+      if (t) g.fromTo(t, { scale: .3, opacity: 0, y: 10 }, { scale: 1, opacity: 1, y: 0, duration: .5, ease: 'back.out(2.2)', clearProps: 'transform,opacity' });
+      if (bs.length) g.fromTo(bs, { y: 28, opacity: 0 }, { y: 0, opacity: 1, duration: .4, ease: 'power3.out', stagger: .12, delay: .3, clearProps: 'transform,opacity' });
+    };
+    if (gsx()) run(gsx());
+    else if (MT_ON && !matchMedia('(prefers-reduced-motion: reduce)').matches) {   // 아직 GSAP 가 안 왔으면 잠깐 숨겼다가 오면 연출(못 오면 그대로 보인다)
+      const els = [es.querySelector('.ttl'), ...es.querySelectorAll('.rbtn')].filter(Boolean);
+      els.forEach(x => { x.style.opacity = '0'; });
+      loadGsap().then(g => { els.forEach(x => { x.style.opacity = ''; }); if (g) run(g); });
+    }
   }
   function loadReward3d() {
     if (typeof Reward3D !== 'undefined') return Promise.resolve();
