@@ -606,7 +606,19 @@
     boardR = board.getBoundingClientRect();
     placeEl(el, it);
     sfx('paper_down', .6);
-    if (motion()) el.animate([{ scale: '1.03' }, { scale: '.985', offset: .55 }, { scale: '1' }], { duration: 200, easing: EASE });
+    if (motion() && !gsapStick(el)) el.animate([{ scale: '1.03' }, { scale: '.985', offset: .55 }, { scale: '1' }], { duration: 200, easing: EASE });
+  }
+  /* GSAP 시험 ③(?motion=gsap, home.js MotionTrial): 붙일 때 종이가 눌렸다 튕김(.94 → 1.04 → 1), 0.44초. 회전 흔들림은 없음(2026-11-24 사용자).
+     자리(transform translate)는 그대로 두고 따로 도는 scale 속성만 바꾼다. 시험이 꺼져 있으면 false → 원래 연출 */
+  function gsapStick(el) {
+    const m = window.MotionTrial, g = m && m.g; if (!g) return false;
+    const o = { s: .94 }, put = () => { el.style.scale = o.s.toFixed(4); };
+    if (el._gsTl) el._gsTl.kill();
+    put();
+    el._gsTl = g.timeline({ onUpdate: put, onComplete: () => { el.style.scale = ''; } })
+      .to(o, { s: 1.04, duration: .14, ease: 'power2.out' }, 0)
+      .to(o, { s: 1, duration: .3, ease: 'back.out(2)' }, .14);   // 흔들림(±3도)은 뺌(2026-11-24 사용자: 별로)
+    return true;
   }
   /* 서랍으로 되돌리기: 제 칸으로 빨려 들어가며 작아짐 */
   function backToDrawer(el, key, it) {
@@ -645,7 +657,7 @@
       const cr = cell.getBoundingClientRect(), s = Math.min(cr.width / el._w, cr.height / el._h) * .86;
       const fx = cr.left + cr.width / 2 - boardR.left - el._w / 2, fy = cr.top + cr.height / 2 - boardR.top - el._h / 2;
       el.classList.add('up');
-      el.animate([{ transform: `translate(${fx}px, ${fy}px) scale(${s})` }, { transform: el.style.transform + ' scale(1.03)' }], { duration: 420, easing: MOVE }).onfinish = () => { el.classList.remove('up'); sfx('paper_down', .6); el.animate([{ scale: '1.03' }, { scale: '.985', offset: .55 }, { scale: '1' }], { duration: 200, easing: EASE }); };
+      el.animate([{ transform: `translate(${fx}px, ${fy}px) scale(${s})` }, { transform: el.style.transform + ' scale(1.03)' }], { duration: 420, easing: MOVE }).onfinish = () => { el.classList.remove('up'); sfx('paper_down', .6); if (!gsapStick(el)) el.animate([{ scale: '1.03' }, { scale: '.985', offset: .55 }, { scale: '1' }], { duration: 200, easing: EASE }); };
     } else sfx('paper_down', .6);
     dirty();
   }

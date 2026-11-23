@@ -9,6 +9,28 @@
   const RM = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
   const motion = () => !RM.matches;
   const REVIEW_ON = (() => { try { return new URLSearchParams(location.search).get('review') === '1'; } catch (e) { return false; } })();   // 검수용 '새 그림' 딱지는 ?review=1 일 때만
+  /* GSAP 모션 시험(2026-11-23, 사용자가 보고 고르기용): ?motion=gsap 이면 켜고 기억(localStorage motionTrial), ?motion=off 면 끈다.
+     켜졌을 때만 vendor/gsap/gsap.min.js 를 동적으로 불러온다. 꺼져 있거나 '동작 줄이기'면 지금 연출 그대로. engine/tale.js 도 같은 열쇠를 읽는다 */
+  const MT = window.MotionTrial = (() => {
+    let flag = false;
+    try {
+      const q = new URLSearchParams(location.search).get('motion');
+      if (q === 'gsap') { flag = true; try { localStorage.setItem('motionTrial', 'gsap'); } catch (e) { /* 이번 화면만 */ } }
+      else { if (q) try { localStorage.removeItem('motionTrial'); } catch (e) { /* 무시 */ } flag = !q && localStorage.getItem('motionTrial') === 'gsap'; }
+    } catch (e) { flag = false; }
+    let p = null;
+    const load = () => p || (p = new Promise(res => {
+      if (window.gsap) return res(window.gsap);
+      const sc = document.createElement('script');
+      sc.src = 'vendor/gsap/gsap.min.js?v=3.15.1';
+      sc.onload = () => res(window.gsap || null); sc.onerror = () => res(null);
+      document.head.appendChild(sc);
+      setTimeout(() => res(window.gsap || null), 3000);
+    }));
+    const on = () => flag && !RM.matches;
+    if (on()) load();
+    return { on, load, get g() { return on() ? window.gsap || null : null; } };
+  })();
 
   /* ── 움직임 도구 ── */
   const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
@@ -414,6 +436,7 @@
     renderNight(); drawStickers();
     if ((opts.intro || introPending) && motion() && opts.anim !== false && !rowsIntroDone()) {     // 앱을 처음 열었을 때(세션당 한 번): 배너 아래 줄이 위에서부터 50ms 간격으로 8px 떠오른다
       introPending = false;
+      if (MT.on()) { gsapIntro(rowsEl, opts.delay || 0); return; }   // GSAP 시험: 배너 → 줄 머리·카드 차례로 내려앉기
       let k = 0;
       rowsEl.querySelectorAll('.row').forEach(r => {
         if (!r.offsetParent) return;
@@ -425,6 +448,24 @@
     }
   }
   const rowsIntroDone = () => { try { return sessionStorage.getItem('ppRowsIntro') === '1'; } catch (e) { return false; } };
+  /* GSAP 시험 ① 홈 첫 화면(세션당 한 번): 배너가 먼저 자리 잡고(0.5초), 보이는 줄의 머리글과 카드가 위에서 한 장씩 살짝 내려앉는다. 합쳐 1초 안팎.
+     transform·opacity 만. 누름은 막지 않는다(움직이는 동안에도 카드가 눌린다). GSAP 를 못 불러오면 바로 원래 모습 */
+  function gsapIntro(rowsEl, delay) {
+    const inView = el => { if (!el || !el.offsetParent) return false; const b = el.getBoundingClientRect(); return b.top < innerHeight && b.bottom > 0 && b.left < innerWidth && b.right > 0; };
+    const hero = $('#hero'), heroOn = inView(hero);
+    const items = [...rowsEl.querySelectorAll('.row')].filter(inView).flatMap(r => [r.querySelector('.row-h'), ...[...r.querySelectorAll('.slot')].filter(inView)]).filter(Boolean);
+    if (!heroOn && !items.length) return;
+    try { sessionStorage.setItem('ppRowsIntro', '1'); } catch (e) { /* 다음에도 한 번 더 보일 뿐 */ }
+    const all = heroOn ? [hero, ...items] : items;
+    all.forEach(el => { el.style.opacity = '0'; });            // GSAP 가 오기 전 깜빡임 막기
+    const clear = () => all.forEach(el => { el.style.opacity = ''; el.style.transform = ''; });
+    MT.load().then(g => {
+      if (!g || !MT.on()) { clear(); return; }
+      const tl = g.timeline({ delay, onComplete: () => g.set(all, { clearProps: 'transform,opacity' }) });
+      if (heroOn) tl.fromTo(hero, { opacity: 0, y: 14, scale: .975 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: 'power3.out' }, 0);
+      if (items.length) tl.fromTo(items, { opacity: 0, y: -14, scale: .985 }, { opacity: 1, y: 0, scale: 1, duration: .42, ease: 'back.out(1.5)', stagger: Math.min(.045, .5 / items.length) }, heroOn ? .2 : 0);
+    });
+  }
   let emptySaid = false;
   const requestRender = () => render({ anim: false });
 
@@ -1754,19 +1795,40 @@
         <div class="ob-dots" role="group" aria-label="${L('안내 카드', 'Guide cards')}">${cards.map((c, i) => `<button type="button" class="ob-dot" data-ob="${i}" aria-label="${L(`${i + 1}번째 카드: ${c.t}`, `Card ${i + 1}: ${c.t}`)}"></button>`).join('')}</div>
         <button type="button" class="ticket pri ob-next" data-ob="next"></button>
       </div>`;
+    obStack = !!MT.g;   // GSAP 시험 ④: 카드를 한 자리에 겹쳐 두고 넘길 때 앞 카드는 옆으로 밀려나고 다음 카드가 뒤에서 올라온다
+    if (obStack) { const r = introSheet.querySelector('.ob-rail'); r.style.display = 'grid'; r.style.transition = 'none'; r.style.transform = 'none'; introSheet.querySelectorAll('.ob-slide').forEach(s => { s.style.gridArea = '1 / 1'; s.style.position = 'relative'; }); }
     introGo(0, true);
     showModal(introEl, introSheet, { focus: '#introTitle' });   // 화면 읽기는 제목부터, 다음 Tab 은 건너뛰기·점·다음
   }
   function introGo(i, quiet) {
     i = Math.max(0, Math.min(introN - 1, i));
-    const moved = i !== introAt; introAt = i;
+    const moved = i !== introAt, from = introAt; introAt = i;
     const rail = introSheet.querySelector('.ob-rail'); if (!rail) return;
-    rail.style.transform = `translateX(${-100 * i}%)`;
+    if (obStack) obStackGo(from, i, moved);
+    else rail.style.transform = `translateX(${-100 * i}%)`;
     introSheet.querySelectorAll('.ob-slide').forEach((s, k) => { s.inert = k !== i; s.setAttribute('aria-hidden', String(k !== i)); });
     introSheet.querySelectorAll('.ob-dot').forEach((d, k) => { d.classList.toggle('on', k === i); if (k === i) d.setAttribute('aria-current', 'step'); else d.removeAttribute('aria-current'); });
     const last = i === introN - 1, nx = introSheet.querySelector('.ob-next');
     nx.textContent = last ? L('시작하기', 'Get started') : L('다음', 'Next');
     if (moved && !quiet) try { AudioFX.sfx('page_turn', .35); } catch (e) { /* 소리 없이 */ }
+  }
+  /* GSAP 시험 ④ 처음 안내 넘기기(0.65초 안팎): 앞 카드 = 넘기는 쪽 옆으로 밀려나며 살짝 기울고(0.45초) 흐려짐(0.28초), 다음 카드 = 뒤에서 조금 작게 있다가 올라옴(0.5초, 0.14초 늦게).
+     원근·3D 없음. 손가락으로 끄는 동안에는 지금 카드가 손을 따라간다 */
+  let obStack = false;
+  function obStackGo(from, i, moved) {
+    const g = window.gsap, slides = [...introSheet.querySelectorAll('.ob-slide')]; if (!g) return;
+    const w = (introSheet.querySelector('.ob-view') || introSheet).clientWidth || 600;
+    if (!moved) {   // 처음 열 때 · 끌다가 제자리로
+      slides.forEach((s, k) => { if (k !== i) { g.killTweensOf(s); g.set(s, { autoAlpha: 0, x: 0, y: 0, scale: 1, rotation: 0, zIndex: 1 }); } });
+      g.to(slides[i], { autoAlpha: 1, x: 0, y: 0, scale: 1, rotation: 0, zIndex: 2, duration: .3, ease: 'power2.out', overwrite: true });
+      return;
+    }
+    const dir = i > from ? 1 : -1, old = slides[from], nw = slides[i];
+    slides.forEach((s, k) => { if (k !== i && k !== from) { g.killTweensOf(s); g.set(s, { autoAlpha: 0 }); } });
+    g.set(old, { zIndex: 2 }); g.set(nw, { zIndex: 1 });
+    g.to(old, { x: -dir * w * .8, rotation: -dir * 4, duration: .45, ease: 'power2.inOut', overwrite: true });
+    g.to(old, { autoAlpha: 0, duration: .28, ease: 'power1.in' });
+    g.fromTo(nw, { autoAlpha: 0, x: 0, y: 22, scale: .95, rotation: 0 }, { autoAlpha: 1, y: 0, scale: 1, duration: .5, delay: .14, ease: 'power3.out', overwrite: true });
   }
   function closeIntro() {
     if (introEl.hidden || introEl.dataset.state === 'closing') return;
@@ -1798,7 +1860,8 @@
         rail().classList.add('dragging');
       }
       const edge = (introAt === 0 && dx > 0) || (introAt === introN - 1 && dx < 0) ? .3 : 1;   // 끝에서는 덜 따라온다
-      rail().style.transform = `translateX(calc(${-100 * introAt}% + ${dx * edge}px))`;
+      if (obStack && window.gsap) { const cur = introSheet.querySelectorAll('.ob-slide')[introAt]; window.gsap.set(cur, { x: dx * edge, rotation: dx * edge / w * 4, overwrite: true }); }
+      else rail().style.transform = `translateX(calc(${-100 * introAt}% + ${dx * edge}px))`;
     });
     const end = e => {
       if (e.pointerId !== id) return;
@@ -2529,7 +2592,29 @@
     const b = tabBtns.find(x => x.dataset.tab === k).querySelector('.tab-badge');
     if (b && !b.hidden && b.animate) b.animate([{ transform: 'scale(0)' }, { transform: 'scale(1.4)' }, { transform: 'scale(1)' }], { duration: 300, easing: EASE });
   }
+  /* GSAP 시험: (sx,sy) 에서 톡 튀어 올랐다가 2차 곡선으로 (ex,ey) 까지. el 은 left/top 이 -크기/2 인 고정 요소(가운데 기준) */
+  function arcFly(g, el, sx, sy, ex, ey, s1 = .4) {   // 크기 1 = 200px 별(2026-11-24 사용자: 크게·불투명). 튀어 오름 0.4 → 반짝 펄스 0.3 → 머묾 → 곡선 0.75, 합쳐 약 1.8초
+    const hy = sy - 24, cx = (sx + ex) / 2 + (sx - ex) * .3, cy = Math.min(hy, ey) - Math.max(80, innerHeight * .12), o = { t: 0 };
+    g.set(el, { x: sx, y: sy + 24, scale: .3, rotation: -10, opacity: 0 });
+    return g.timeline()
+      .to(el, { y: hy, scale: 1.1, rotation: 0, opacity: 1, duration: .4, ease: 'back.out(2)' })
+      .to(el, { scale: 1, duration: .15, ease: 'power1.out' })
+      .to(el, { scale: 1.12, duration: .15, ease: 'power1.inOut', yoyo: true, repeat: 1 })
+      .to({}, { duration: .2 })
+      .to(o, { t: 1, duration: .75, ease: 'power2.inOut', onUpdate: () => {
+        const t = o.t, m = 1 - t;
+        g.set(el, { x: m * m * sx + 2 * m * t * cx + t * t * ex, y: m * m * hy + 2 * m * t * cy + t * t * ey, scale: 1 + (s1 - 1) * t });
+      } });
+  }
+  /* 받은 칸(과 그 안의 숫자)이 톡 커졌다 돌아온다 */
+  function gsapPop(g, box) {
+    if (!box) return;
+    g.fromTo(box, { scale: 1 }, { scale: 1.28, duration: .16, ease: 'power2.out', yoyo: true, repeat: 1, onComplete: () => g.set(box, { clearProps: 'transform' }) });
+    const n = box.querySelector && box.querySelector('.chip-n');
+    if (n) g.fromTo(n, { scale: 1 }, { scale: 1.5, duration: .18, delay: .08, ease: 'back.out(3)', yoyo: true, repeat: 1, onComplete: () => g.set(n, { clearProps: 'transform' }) });
+  }
   function flyTo(kind, done) {
+    if (kind !== 'puzzle' && MT.on() && !window.gsap) { MT.load().then(() => flyTo(kind, done)); return; }   // GSAP 시험: 아직 안 왔으면 기다렸다가(못 오면 원래 연출)
     const tb = kind === 'star' ? starChip : tabBtns.find(x => x.dataset.tab === kind).querySelector('.hole');
     if (!tb || (kind === 'star' && starChip.hidden)) { done(); return; }
     const r = tb.getBoundingClientRect(), ex = r.left + r.width / 2, ey = r.top + r.height / 2, sx = innerWidth / 2, sy = innerHeight / 2;
@@ -2538,6 +2623,14 @@
     el.className = 'fly-pc'; el.setAttribute('aria-hidden', 'true');
     el.innerHTML = kind === 'puzzle' ? mono('puzzle', 'fly-ic') : '<img src="assets/ui/star_one.webp" alt="" draggable="false">';
     document.body.appendChild(el);
+    const g = kind !== 'puzzle' && MT.g;
+    if (g) {   // GSAP 시험 ② 별 조각: 화면 가운데에서 200px 로 톡 튀어 올라 한 번 반짝이고 머문 뒤 곡선으로 별 칸까지 작아지며 날아가(합쳐 약 1.8초) 붙고, 칸과 숫자가 톡 커졌다 돌아온다
+      el.style.cssText = 'width:200px;height:200px;left:-100px;top:-100px;z-index:2147483000';
+      const im = el.querySelector('img'); if (im) im.style.cssText = 'width:100%;height:100%;display:block;object-fit:contain';
+      const tl = arcFly(g, el, sx, sy, ex, ey, Math.max(.2, Math.min(r.width, r.height) / 200));
+      tl.eventCallback('onComplete', () => { el.remove(); paper('up'); gsapPop(g, kind === 'star' ? starChip : tb.querySelector('.tab-ic')); done(); });
+      return;
+    }
     const kf = [{ transform: `translate(${sx}px, ${sy}px) scale(.3)`, opacity: 0, offset: 0 }, { transform: `translate(${sx}px, ${sy}px) scale(1.5)`, opacity: 1, offset: .18 }];
     for (let i = 1; i <= 14; i++) {
       const u = i / 14, t = u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2, m = 1 - t;

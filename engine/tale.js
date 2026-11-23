@@ -2142,6 +2142,26 @@ const Tale = (() => {
   }
 
   /* 3D 보상 연출 모듈(engine/reward3d.js)을 끝 화면에서 처음 필요할 때만 불러온다(동화 페이지마다 태그를 넣지 않는다). 실패해도 DOM 연출로 */
+  /* GSAP 모션 시험(2026-11-23, home.js MotionTrial 과 같은 열쇠): localStorage motionTrial = 'gsap' 이거나 ?motion=gsap 일 때만, '동작 줄이기'가 아닐 때만.
+     켜지면 끝 화면 보상은 3D 연출 대신 GSAP 2D 연출(아래 awardShow 의 gFly)로 바꾼다. 꺼져 있으면 지금 그대로 */
+  const motionTrial = () => {
+    try {
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+      const q = new URLSearchParams(location.search).get('motion');
+      return q ? q === 'gsap' : localStorage.getItem('motionTrial') === 'gsap';
+    } catch (e) { return false; }
+  };
+  let gsapP = null;
+  function loadGsap() {
+    return gsapP || (gsapP = new Promise(res => {
+      if (window.gsap) return res(window.gsap);
+      const sc = document.createElement('script');
+      sc.src = ROOT_URL + 'vendor/gsap/gsap.min.js?v=3.15.1';
+      sc.onload = () => res(window.gsap || null); sc.onerror = () => res(null);
+      document.head.appendChild(sc);
+      setTimeout(() => res(window.gsap || null), 2500);
+    }));
+  }
   function loadReward3d() {
     if (typeof Reward3D !== 'undefined') return Promise.resolve();
     return new Promise(res => {
@@ -2203,7 +2223,7 @@ const Tale = (() => {
     const pzSay = k => (k === 'piece2' || (k === 'sticker' && award.sticker2)) ? '그림이 완성됐어요!' : '퍼즐 조각을 받았어요!';
     const after = bal();
     paintPlate(award.star ? Math.max(0, after - 1) : after);
-    const fly = (html, cls, from, to, ms) => new Promise(res => {
+    let fly = (html, cls, from, to, ms) => new Promise(res => {
       if (calm) return res();
       const el = document.createElement('div'); el.className = 'flyer ' + cls; el.innerHTML = html; document.body.appendChild(el);
       const fx = from.left + from.width / 2, fy = from.top + from.height / 2, tx = to.left + to.width / 2, ty = to.top + to.height / 2;
@@ -2216,7 +2236,50 @@ const Tale = (() => {
       ], { duration: ms, easing: 'cubic-bezier(.3, .1, .2, 1)', fill: 'forwards' });
       a.onfinish = a.oncancel = () => { el.remove(); res(); };
     });
-    const pulse = el => { if (!calm) el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.18)' }, { transform: 'scale(.96)' }, { transform: 'scale(1)' }], { duration: 520, easing: 'ease-out' }); };
+    /* GSAP 시험 ② 보상 (0.4~1초 마디들): 스티커 = 그 자리에서 살짝 돌며 내려앉고(0.6초) 반짝 테두리가 한 바퀴(0.8초) → 스티커북 구멍으로 곡선(0.6초).
+       별 조각 = 받는 자리에서 튀어 오르고(0.36초) 곡선으로 별 접시까지(0.62초) → 접시가 톡 커졌다 돌아옴. transform·opacity 만 */
+    let G = null;
+    const gArc = (el, fx, fy, tx, ty, s0, s1, r0, dur) => {
+      const cx = (fx + tx) / 2 + (fx - tx) * .25, cy = Math.min(fy, ty) - Math.max(70, innerHeight * .12), o = { t: 0 };
+      return G.to(o, { t: 1, duration: dur, ease: 'power2.inOut', onUpdate: () => {
+        const t = o.t, m = 1 - t;
+        G.set(el, { x: m * m * fx + 2 * m * t * cx + t * t * tx, y: m * m * fy + 2 * m * t * cy + t * t * ty, scale: s0 + (s1 - s0) * t, rotation: r0 + (r0 === 0 && s1 < .5 ? 0 : 14) * t });
+      } });
+    };
+    const gFly = (html, cls, from, to) => new Promise(res => {   // from 은 별일 때 그림 가운데로 바꾼다
+      const el = document.createElement('div'); el.className = 'flyer ' + cls; el.style.transform = 'none'; el.style.zIndex = '2147483000';
+      if (cls === 'star') {   // 별은 조각 하나가 아니라 별 그림 전체를 크게(200px, 2026-11-24 사용자: 작고 옅어 안 보임). 그림 가운데에서 나타난다
+        el.innerHTML = `<img alt="" draggable="false" src="${ROOT_URL}assets/ui/star_one.webp?v=s4a">`;
+        el.style.width = el.style.height = '200px';
+        from = es.querySelector('.bwin').getBoundingClientRect();
+      } else el.innerHTML = html;
+      document.body.appendChild(el);
+      const sz = el.offsetWidth, fx = from.left + from.width / 2 - sz / 2, fy = from.top + from.height / 2 - sz / 2, tx = to.left + to.width / 2 - sz / 2, ty = to.top + to.height / 2 - sz / 2;
+      const end = () => { el.remove(); res(); };
+      if (cls === 'star') {
+        const s1 = Math.max(.2, Math.min(to.width, to.height) / sz * .9);   // 도착하면 접시 크기
+        G.set(el, { x: fx, y: fy + 24, scale: .3, rotation: -10, opacity: 0 });
+        G.timeline({ onComplete: end })
+          .to(el, { y: fy - 24, scale: 1.1, rotation: 0, opacity: 1, duration: .4, ease: 'back.out(2)' })   // 톡 튀어 오름
+          .to(el, { scale: 1, duration: .15, ease: 'power1.out' })
+          .to(el, { scale: 1.12, duration: .15, ease: 'power1.inOut', yoyo: true, repeat: 1 })              // 한 번 반짝(크기 펄스)
+          .to({}, { duration: .2 })                                                                          // 머묾(나타난 뒤 약 0.5초)
+          .add(gArc(el, fx, fy - 24, tx, ty, 1, s1, 0, .75));
+        return;
+      }
+      const ring = document.createElement('i');   // 반짝 테두리(스티커 예외 §7-1: 반짝 스티커 무지개 테두리와 같은 결)
+      ring.setAttribute('aria-hidden', 'true');
+      ring.style.cssText = 'position:absolute;inset:-12px;border-radius:50%;pointer-events:none;opacity:0;background:conic-gradient(from 0deg,rgba(255,255,255,0) 0 62%,#FFF6C8 74%,#fff 80%,#FFD66B 86%,rgba(255,255,255,0) 96%);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 9px),#000 calc(100% - 8px));mask:radial-gradient(farthest-side,transparent calc(100% - 9px),#000 calc(100% - 8px))';
+      el.appendChild(ring);
+      G.set(el, { x: fx, y: fy - 40, scale: 1.9, rotation: -14, opacity: 0 });
+      G.timeline({ onComplete: end })
+        .to(el, { y: fy, scale: 1.5, rotation: 0, opacity: 1, duration: .6, ease: 'back.out(1.6)' })
+        .fromTo(ring, { rotation: 0, opacity: 0 }, { rotation: 360, duration: .8, ease: 'power1.inOut' }, .35)
+        .to(ring, { keyframes: [{ opacity: 1, duration: .2 }, { opacity: 1, duration: .4 }, { opacity: 0, duration: .2 }] }, .35)
+        .add(gArc(el, fx, fy, tx, ty, 1.5, .5, 0, .6), 1.15);
+    });
+    const gPop = el => { G.fromTo(el, { scale: 1 }, { scale: 1.25, duration: .16, ease: 'power2.out', yoyo: true, repeat: 1, onComplete: () => G.set(el, { clearProps: 'transform' }) }); };
+    const pulse = el => { if (G) { gPop(el); return; } if (!calm) el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.18)' }, { transform: 'scale(.96)' }, { transform: 'scale(1)' }], { duration: 520, easing: 'ease-out' }); };
     /* 보상 말(퍼즐 조각·스티커·종이별)은 홈과 같은 Lily 녹음(home_narration_el.js)을 받아 합친다. 녹음이 없으면 브라우저 말하기(TTS)라 감정 없이 들렸다 (2026-10-29) */
     const rewardClips = (async () => {
       try {
@@ -2270,7 +2333,9 @@ const Tale = (() => {
     (async () => {
       await sleep(1000);                                          // '만세!' 1초 뒤
       if (es.hidden) return;
-      if (await play3d()) return;                                 // 3D 연출(engine/reward3d.js)로 끝냈으면 아래 DOM 연출은 건너뛴다. 못 하면(false) 그대로 아래로
+      if (!calm && motionTrial()) G = await loadGsap();           // GSAP 시험이 켜졌으면 3D 연출 대신 아래 DOM 순서에 GSAP 날기(gFly)
+      if (G) fly = (html, cls, from, to) => gFly(html, cls, from, to);
+      else if (await play3d()) return;                                 // 3D 연출(engine/reward3d.js)로 끝냈으면 아래 DOM 연출은 건너뛴다. 못 하면(false) 그대로 아래로
       await botP;
       if (award.sticker || award.sticker2) {
         await fly(stk(), 'stk', es.querySelector('.bwin').getBoundingClientRect(), hole.getBoundingClientRect(), 1300);
