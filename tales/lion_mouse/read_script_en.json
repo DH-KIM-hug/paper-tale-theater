@@ -8,7 +8,7 @@
  "notes": "영어 읽어 주기 대본. text 는 한국어 줄(키), en 이 읽는 문장. reuse 는 narration_el_en.js 의 영어 녹음 그대로, new 만 새로 녹음한다(trim 없음). 배역·연기 지시는 read_script_el.json 의 같은 줄을 따른다.",
  "acts": {
   "set:<savanna|morning|grass|board|night_forest|night_net>": "장면 배경(bgImage 키). scenes[].set 으로 자동 호출",
-  "lion:<sleep|wake|paw:down|paw:up|yawn|laugh|net|free|run|at:x,y>": "사자 자세·앞발·그물",
+  "lion:<sleep|wake|paw:down|paw:up|yawn|laugh|calm|net|free|run|at:x,y>": "사자 자세·앞발·그물",
   "mouse:<hop:<n>|slide|plead|out|run|gnaw|ride|at:x,y|hide>": "생쥐 폴짝·미끄럼·부탁·빠져나옴·갉기·타기",
   "bubble:pop | board:<paw|tooth|hole> | net:cut:<n> | scroll:run": "콧방울 퐁·비교 판·그물 줄 끊기·초원 달리기 배경 흐름",
   "cut:<paw|laugh|net|gnaw>": "그림 컷 4장 — 컷 속 외침(VOICE_LINES cut_paw·cut_laugh·cut_net)은 그대로 재사용",
@@ -387,17 +387,25 @@
      ]
     },
     {
-     "text": "사자가 웃다가 앞발이 스르르 열렸어요.",
-     "src": "reuse",
-     "en": "The lion laughed, and the big paw slowly opened.",
+     "text": "사자가 웃음을 멈추고 앞발을 번쩍 들어 주었어요. \"그래, 가 보렴.\"",
+     "src": "new",
+     "en": "The lion stopped laughing and lifted his big paw. \"All right, off you go.\"",
      "segs": [
       [
        "nar",
-       "The lion laughed, and the big paw slowly opened.",
-       "happy:1.1"
+       "The lion stopped laughing and lifted his big paw.",
+       null,
+       "[warm, gentle storytelling]"
+      ],
+      [
+       "lion",
+       "All right, off you go.",
+       null,
+       "[deep, warm, kind, amused, rumbling]"
       ]
      ],
      "before": [
+      "lion:calm",
       "lion:paw:up"
      ]
     },

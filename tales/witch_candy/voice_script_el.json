@@ -1461,11 +1461,11 @@
    ]
   },
   {
-   "text": "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야.",
+   "text": "마지막 주문은 빨강, 노랑, 파랑! 세 가지를 넣어 보자.",
    "segs": [
     [
      "witch",
-     "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야.",
+     "마지막 주문은 빨강, 노랑, 파랑! 세 가지를 넣어 보자.",
      "toneup",
      "[kind quirky witch, big announcement, excited, rallying]"
     ]

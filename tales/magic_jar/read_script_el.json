@@ -286,6 +286,27 @@
      ]
     },
     {
+     "text": "농부가 괭이 두 개를 옆에 내려놓았어요. \"이번엔 몇 개가 나오나 세어 볼까?\"",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "농부가 괭이 두 개를 옆에 내려놓았어요.",
+       null,
+       "[calm, warm]"
+      ],
+      [
+       "farmer",
+       "이번엔 몇 개가 나오나 세어 볼까?",
+       null,
+       "[curious, cheerful, inviting]"
+      ]
+     ],
+     "before": [
+      "hoes:aside"
+     ]
+    },
+    {
      "text": "항아리에서 괭이가 쑥, 쑥, 자꾸자꾸 나왔어요.",
      "src": "new",
      "segs": [

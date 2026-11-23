@@ -10,10 +10,10 @@
   "set:<queen_room|forest|house_front|house_table2|house_bed2|hill>": "장면 배경(scene(key)). scenes[].set 으로 자동 호출, 장면 안에서 배경을 바꿀 때는 before 에 둔다",
   "tint:<hex>,<op> | night:<on|off>": "색 겹(해 질 녘 #E8703A .16 등) / 밤 겹(#1F2A56 .45) 켜고 걷기",
   "mirror:room | mirror:face:<show|hide>": "거울 방 세트(거울+왕비 mirror 자세+거울 얼굴) / 거울 얼굴 보이기·숨기기",
-  "queen:look:<mirror|fist> | queen:hop": "왕비",
+  "queen:look:<mirror|fist> | queen:hop | queen:turn:<left|right>": "왕비",
   "snow:look:<stand|flee|eat|receive|awake|chair|bedknees|bedtoes|bedcurl|coffin>[:<dir>] | snow:at:<x,y>[:<look>[:<s>]] | snow:move:<x,y,ms> | snow:hop | snow:wiggle | snow:hide": "백설공주",
   "snow:enter_door | snow:eat3 | snow:sit7 | snow:onbed:<0-6>:<bedknees|bedtoes|bedcurl> | snow:window | snow:fall": "문 안으로 들어감(놀이판 3장) / 접시·컵 맛보기(냠! 꿀꺽! 냠냠!) / 일곱째 의자에 앉기(영차!) / i 번 침대에 눕기 / 창문 속 받기 자세 / 창틀 아래로 스르르",
-  "hunter:at:<x,y> | hunter:shake": "사냥꾼 놓기 / 고개 젓기",
+  "hunter:at:<x,y>[:<s>] | hunter:shake": "사냥꾼 놓기 / 고개 젓기 (s 를 주면 그 배율로 왕비 뒤 층에)",
   "door:reset | door:knock | door:open": "그림 속 문 조각(똑똑! / 삐걱 열림)",
   "table:set | beds:lay | beds:eight": "식탁+의자 일곱 / 작은 침대 일곱 두 줄 / 작은 침대 일곱+큰 침대(놀이판 8장 배치)",
   "crew:enter | crew:at:<x,y> | crew:hopOne:<0-6> | crew:hopAll | crew:hide": "일곱 난쟁이 줄(등불) 걸어 들어오기·자리·한 명 폴짝·모두 폴짝",
@@ -162,17 +162,24 @@
      ]
     },
     {
-     "text": "왕비는 사냥꾼에게 소리쳤어요. 백설공주를 깊은 숲에 데려가서 버리고 오너라!",
+     "text": "공주를 멀리 데려가거라. 다시는 성에 돌아오지 못하게 해.",
      "src": "new",
-     "needs_audio": true,
-     "en": "The queen shouted at the hunter. Take Snow White deep into the forest and leave her there!",
+     "en": "Take the princess far away. Make sure she never comes back to the castle.",
      "segs": [
       [
-       "nar",
-       "The queen shouted at the hunter. Take Snow White deep into the forest and leave her there!",
-       null,
-       "[calm, warm storytelling]"
+       "queen",
+       "Take the princess far away. Make sure she never comes back to the castle.",
+       "angry",
+       "[cold, commanding, low, sharp]"
       ]
+     ],
+     "before": [
+      "hunter:at:830,528:1.2",
+      "fx:pop",
+      "queen:turn:right"
+     ],
+     "after": [
+      "hunter:shake"
      ]
     },
     {

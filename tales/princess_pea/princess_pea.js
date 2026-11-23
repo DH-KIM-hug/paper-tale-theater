@@ -6,6 +6,7 @@
    시안(목업) 모드: 그림 파일이 아직 없으면 같은 크기·자리에 종이 자리표시(색 도형 + 한글 이름표)를 그린다(beauty_beast.js 와 같은 방식).
    그림: assets/v3w/pp_*.webp (목록 tools/app/gen/jobs_princess_pea.json) */
 (() => {
+  const QUILT = '그 위에 이불도 폭신폭신 덮었어요.';   // 2026-11-24 흐름 수정: 이불은 넉 장만 내려오는데 '이불도 스무 장'이라 하던 줄
   const AS = '../../assets/v3w/';
   /* 그림 폭/높이 — post_tale.py 출력(tales/princess_pea/ASP.txt)으로 바꾼다. 그림이 오기 전엔 SPEC §2-1 시작값. preload 가 실제 비율로 덮어쓴다 */
   const ASP = {
@@ -689,7 +690,7 @@
     }
     rig.appendChild(peaB.pos);
     T.pop(TX, 150, tr('푹신푹신')); duvs.forEach(d => d.hop(6, 400));
-    await say('이불도 스무 장, 푹신푹신!');
+    await say(QUILT);
     await sleep(SCENE_END);
 
     /* ===== 6. 위? 아래? (배움 놀이 3: 위·아래) ===== */

@@ -144,9 +144,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Rattle, rattle! The spinning wheels were loaded onto carts and taken far, far away.",
   "c": "audio/el/sleeping_beauty/en/nar_43c99792b9.mp3"
  },
- "물레는 모두 사라졌어요.": {
-  "t": "Every spindle was gone.",
-  "c": "audio/el/sleeping_beauty/en/nar_dcaaf42abd.mp3"
+ "사람들은 마을의 물레를 모두 거두었어요. 탑 꼭대기까지는 소식이 닿지 않았지요.": {
+  "t": "People gathered up every spindle in the villages. But the news never reached the top of the tower.",
+  "c": "audio/el/sleeping_beauty/en/nar_a823716577.mp3"
  },
  "공주님이 열여섯 살이 되던 날, 왕과 왕비는 멀리 나들이를 갔어요.": {
   "t": "On the day the princess turned sixteen, the king and queen went away on a journey.",

@@ -74,7 +74,7 @@ Object.assign(NARRATION_CLIPS, {
  "자동차 친구들도 빵빵! 부릉부릉! 신이 나서 소리쳤어요.": "audio/el/red_car/nar_ed8aa87c95.mp3",
  "이제 모두 함께 집으로 출발!": "audio/el/red_car/nar_3ff6830287.mp3",
  "서로 도우면 혼자서는 못 가는 길도 함께 갈 수 있답니다.": "audio/el/red_car/nar_5bc5e90721.mp3",
- "집에 온 자동차들은 침대 옆 차고에 나란히 들어갔어요.": "audio/el/red_car/nar_830fd7c6b7.mp3",
+ "친구 자동차 네 대는 침대 옆 차고에 쏙. 빨간 자동차는 오늘도 손에 꼭.": "audio/el/red_car/nar_04ed052138.mp3",
  "\"잘 자, 친구들.\"": "audio/el/red_car/tow_da44a8bd92.mp3",
  "\"오늘 정말 긴 하루였어.\"": "audio/el/red_car/red_370e3c714f.mp3",
  "자동차들의 불이 하나씩 꺼졌어요.": "audio/el/red_car/nar_5f30aca1f5.mp3",

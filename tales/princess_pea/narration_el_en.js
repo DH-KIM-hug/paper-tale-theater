@@ -96,9 +96,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Twenty! That makes twenty mattresses.",
   "c": "audio/el/princess_pea/en/queen_63a3fd6893.mp3"
  },
- "이불도 스무 장, 푹신푹신!": {
-  "t": "And twenty feather quilts on top, soft and fluffy!",
-  "c": "audio/el/princess_pea/en/nar_2ca1fb5a76.mp3"
+ "그 위에 이불도 폭신폭신 덮었어요.": {
+  "t": "Then soft, fluffy quilts went on top.",
+  "c": "audio/el/princess_pea/en/nar_f9c92bc134.mp3"
  },
  "완두콩은 어디 있을까요? 탑의 위? 아래?": {
   "t": "Where is the pea? At the top of the tower, or at the bottom?",

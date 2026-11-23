@@ -449,13 +449,13 @@
      ]
     },
     {
-     "text": "이불도 스무 장, 푹신푹신!",
-     "src": "reuse",
-     "en": "And twenty feather quilts on top, soft and fluffy!",
+     "text": "그 위에 이불도 폭신폭신 덮었어요.",
+     "src": "new",
+     "en": "Then soft, fluffy quilts went on top.",
      "segs": [
       [
        "nar",
-       "And twenty feather quilts on top, soft and fluffy!",
+       "Then soft, fluffy quilts went on top.",
        "happy"
       ]
      ],

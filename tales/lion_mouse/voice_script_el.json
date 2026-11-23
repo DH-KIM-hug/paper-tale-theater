@@ -747,13 +747,19 @@
    ]
   },
   {
-   "text": "사자가 웃다가 앞발이 스르르 열렸어요.",
+   "text": "사자가 웃음을 멈추고 앞발을 번쩍 들어 주었어요. \"그래, 가 보렴.\"",
    "segs": [
     [
      "nar",
-     "사자가 웃다가 앞발이 스르르 열렸어요.",
-     "happy:1.1",
-     "[warm, amused, storytelling]"
+     "사자가 웃음을 멈추고 앞발을 번쩍 들어 주었어요.",
+     null,
+     "[warm, gentle storytelling]"
+    ],
+    [
+     "lion",
+     "그래, 가 보렴.",
+     null,
+     "[deep, warm, kind, amused, rumbling]"
     ]
    ]
   },

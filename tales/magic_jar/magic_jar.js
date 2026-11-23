@@ -1,6 +1,7 @@
 /* 요술 항아리 — 목업. 착한 농부가 밭에서 요술 항아리를 얻어 이웃과 나누고, 욕심쟁이 부자는 항아리를 빌려 가 소동을 벌이지만 나눌 줄 알게 된다.
    조작은 모두 톡 · 톡톡톡(세기) · 골라요. 쓱·꾹·자유 놀이 없음. */
 (() => {
+  const TWO_ASIDE = '농부가 괭이 두 개를 옆에 내려놓았어요. "이번엔 몇 개가 나오나 세어 볼까?"';
   const AS = '../../assets/v3w/';
   const GROUND = 505;
   const ASP = { coin: 1.0064, farmer_amaze: 0.8628, farmer_count: 0.8194, farmer_feast: 0.9316, farmer_hoe: 0.9299, farmer_pull: 1.0085,
@@ -277,6 +278,13 @@
       cracked: op => { if (op === 'show') put(T, cracked, 700, 505); },
       hoes: async (op, n) => {
         if (op === 'hide') return hideAll(RD.hoes);
+        if (op === 'aside') {   /* 2026-11-24: 먼저 나온 두 개를 항아리 위에서 농부 뒤 땅으로 내려놓는다 */
+          const two = [-52, 52].map(dx => { const h = prop(T, 'hoe', 110); h.pos.style.pointerEvents = 'none'; put(T, h, fx(T, 520) + dx, 335, { raw: true }); return h; });
+          if (T.readInstant()) { two.forEach((h, i) => h.place(fx(T, 70 + i * 55), 500)); return; }
+          farmer.turn('left');
+          await Promise.all(two.map((h, i) => h.move(fx(T, 70 + i * 55), 500, 800, 'ease-in-out')));
+          farmer.turn('right'); return;
+        }
         n = +n; hideAll(RD.hoes);
         const spots = []; hoeRows(n).forEach((cnt, r) => { for (let c = 0; c < cnt; c++) spots.push([fx(T, 520) + (c - (cnt - 1) / 2) * 105, 335 - r * 115]); });
         for (let i = 0; i < n; i++) {
@@ -392,7 +400,13 @@
     const twoCut = T.cutImage([{ src: cutSrc('twohoes'), sfx: () => AudioFX.sfx('shimmer') || AudioFX.sfx('magic_wand') || AudioFX.sfx('pop'), hold: 2600 }], { hold: 2600 });
     await say('"어머나! 괭이가 두 개가 되었어요!" 아내가 깜짝 놀랐어요.');
     await twoCut;
-    two.forEach(h => hide(h));   // 세기는 하나부터 다시 솟아오른다
+    /* 2026-11-24 흐름 수정: 먼저 나온 괭이 두 개를 농부가 옆에 내려놓고("이번엔 몇 개가 나오나"), 새로 솟는 괭이를 하나부터 센다.
+       예전에는 두 개가 말없이 사라지고 같은 자리에서 하나부터 다시 셌다. 내려놓은 두 개는 이 장면 끝까지 농부 뒤에 둔다 */
+    farmer.turn('left');
+    await Promise.all([say(TWO_ASIDE), (async () => {
+      await Promise.all(two.map((h, i) => h.move(fx(T, 70 + i * 55), 500, 800, 'ease-in-out')));
+      farmer.turn('right'); farmer.hop(10, 260);
+    })()]);
     const hoes = [], nHoe = rnd(3, 6);
     let nCoin; do nCoin = rnd(4, 8); while (nCoin === nHoe);
     const hoeSpots = []; hoeRows(nHoe).forEach((cnt, r) => { for (let c = 0; c < cnt; c++) hoeSpots.push([fx(T, 520) + (c - (cnt - 1) / 2) * 105, 335 - r * 115]); });

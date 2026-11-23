@@ -764,6 +764,20 @@
    ]
   },
   {
+   "text": "\"너희가 먼저 집으로 간 줄 알았단다. 눈을 뜰 때까지 곁에 있을걸.\" 아빠가 미안해하며 말했어요.",
+   "en": "I thought you two had gone home ahead of me. I should have stayed beside you until you woke up. Papa said, feeling sorry.",
+   "segs": [
+    [
+     "father",
+     "I thought you two had gone home ahead of me. I should have stayed beside you until you woke up."
+    ],
+    [
+     "nar",
+     "Papa said, feeling sorry."
+    ]
+   ]
+  },
+  {
    "text": "\"아빠, 다시는 우리를 두고 가지 마세요.\" 헨젤이 말했어요.",
    "en": "\"Papa, please never leave us again,\" said Hansel.",
    "segs": [

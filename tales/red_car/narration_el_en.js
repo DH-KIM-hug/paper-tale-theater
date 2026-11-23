@@ -272,9 +272,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Now let's all go home together!",
   "c": "audio/el/red_car/en/nar_3aac6ef126.mp3"
  },
- "집에 온 자동차들은 침대 옆 차고에 나란히 들어갔어요.": {
-  "t": "Back home, the cars parked side by side in the garage next to the bed.",
-  "c": "audio/el/red_car/en/nar_f927a034f9.mp3"
+ "친구 자동차 네 대는 침대 옆 차고에 쏙. 빨간 자동차는 오늘도 손에 꼭.": {
+  "t": "Four friend cars, tucked into the garage by the bed. The red car, held tight in a hand, just like every night.",
+  "c": "audio/el/red_car/en/nar_affd154a81.mp3"
  },
  "\"잘 자, 친구들.\"": {
   "t": "Good night, friends.",

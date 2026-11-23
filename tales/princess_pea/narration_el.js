@@ -24,7 +24,7 @@ Object.assign(NARRATION_CLIPS, {
  "완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.": "audio/el/princess_pea/queen_2a2454651d.mp3",
  "열! 아직 더 있어요. 한 번 더 톡!": "audio/el/princess_pea/queen_280cafa1a3.mp3",
  "스물! 매트리스가 스무 장이에요.": "audio/el/princess_pea/queen_505c417c16.mp3",
- "이불도 스무 장, 푹신푹신!": "audio/el/princess_pea/nar_ea33f09bab.mp3",
+ "그 위에 이불도 폭신폭신 덮었어요.": "audio/el/princess_pea/nar_f5990ade67.mp3",
  "완두콩은 어디 있을까요? 탑의 위? 아래?": "audio/el/princess_pea/nar_4a4f804fc8.mp3",
  "거긴 탑의 위예요. 완두콩은 맨 아래에 있어요. 아래를 눌러 봐요.": "audio/el/princess_pea/nar_b82cff1b66.mp3",
  "맞아요! 완두콩은 맨 아래에 있어요.": "audio/el/princess_pea/nar_551f14f767.mp3",

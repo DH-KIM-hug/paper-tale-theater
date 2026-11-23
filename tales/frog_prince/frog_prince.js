@@ -283,8 +283,10 @@
     L28: "냠냠, 맛있다!",
     L29: "밤이 되자 개구리가 공주의 방까지 따라왔어요.",
     L30: "공주님, 같은 침대에서 자기로 했잖아요.",
-    L31: "으, 이제 그만!",
-    L32: "공주는 개구리를 침대 쪽으로 휙 던졌어요. 개구리는 푹신한 베개 위에 포옥!",
+    /* 2026-11-24 흐름 수정: 던지기 대신 공주가 망설이다 약속을 지켜 자리를 내주고, 개구리가 스스로 베개에 올라 마법이 풀린다 */
+    L31: "공주는 베개를 보고 잠깐 망설였어요.",
+    L31b: "그래, 약속했지. 여기서 자.",
+    L32: "개구리는 폴짝폴짝 베개 위로 뛰어올랐어요. 푹신한 베개 위에 포옥!",
     L33: "고마워요. 나는 마법에 걸린 왕자였어요. 약속을 지켜 줘서 마법이 풀렸어요.",
     L34: "어머, 개구리가… 왕자님이었구나!",
     L35: "다음 날, 공주와 왕자는 성 뜰에서 함께 놀았어요.",
@@ -355,6 +357,15 @@
     const king = mk(T, pz('king', ['stand']));
     const prince = mk(T, pz('prince', ['stand', 'hand']));
     const ball = prop(T, 'fp_prop_ball', HT.fp_prop_ball), table = prop(T, 'fp_prop_table', HT.fp_prop_table), plate = prop(T, 'fp_prop_plate', HT.fp_prop_plate), pillow = prop(T, 'fp_prop_pillow', HT.fp_prop_pillow);
+    /* 개구리가 스스로 베개 위로 폴짝(9장, 놀이와 읽어 주기가 같이 씀, 2026-11-24 흐름 수정: 공주가 던지던 것) */
+    const frogToPillow = async () => {
+      frog.look('hop', 'right');
+      await hops(T, frog, BED.x - 170, 2, 420);
+      hopSfx(T, .5); follow(BED.x - 80, 700);
+      await arc(frog, BED.x, BED.top - 62, 110, 700);
+      cue('cushion', .5) || sfx('paper_down', .4); frog.look('sit', 'left'); T.pop(BED.x, BED.top - 200, tr('포옥'), '#1F2A56');
+      pillow.body.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(.85)' }, { transform: 'scaleY(1)' }], { duration: 400 });
+    };
     const breads = [0, 1, 2].map(() => prop(T, 'fp_prop_bread', HT.fp_prop_bread));
     /* 레이어 소품(VISUAL_PLAN §4): 중간 층은 world 맨 뒤(배우보다 먼저), 앞 가림 층은 fx(배우 위). 모두 누름 없음 */
     const deco = k => { const a = prop(T, 'fp_layer_' + k, HT['fp_layer_' + k]); a.pos.style.pointerEvents = 'none'; return a; };
@@ -428,6 +439,7 @@
           if (op === 'dive') return (async () => { await frog.move(frog.x, POND.surf + 95, 500, 'ease-in'); await sleep(1400); frog.look('ball'); sfx('bubbles', .4); await frog.move(frog.x, POND.surf + 10, 900, 'ease-out'); })();
           if (op === 'hops') { const [x, n] = num(a[0]); return hops(T, frog, x, n, 420); }
           if (op === 'to_table') { hopSfx(T, .5); return arc(frog, 390, TABLE_TOP, 110, 600).then(() => frog.look('sit')); }
+          if (op === 'pillow') return frogToPillow(T);
           if (op === 'throw') return (async () => {
             frog.look('fly', 'right'); cue('boing', .6); follow(BED.x - 80, 1100);
             await arc(frog, BED.x, BED.top - 62, 170, 1100);
@@ -727,15 +739,9 @@
     })();
     await say(S.L29); await t9;
     frog.hop(6, 300); await say(S.L30);
-    prin.look('throw', 'right'); await say(S.L31);
-    const t9b = (async () => {
-      cue('boing', .6) || sfx('swish', .5); T.pop(prin.x + 30, FL - 310, tr('휙!'));
-      frog.look('fly', 'right');
-      follow(BED.x - 80, 1100);
-      await arc(frog, BED.x, BED.top - 62, 170, 1100);
-      cue('cushion', .5) || sfx('paper_down', .4); frog.look('surprise'); T.pop(BED.x, BED.top - 200, tr('포옥'), '#1F2A56');
-      pillow.body.animate([{ transform: 'scaleY(1)' }, { transform: 'scaleY(.85)' }, { transform: 'scaleY(1)' }], { duration: 400 });
-    })();
+    prin.look('sorry'); await say(S.L31);   // 베개(침대 쪽)를 보며 망설임: 반성 자세(정면)
+    prin.look('hand', 'right'); await say(S.L31b);   // 침대 쪽으로 손을 내밀어 자리를 내준다(자리 내주는 자세 그림이 없어 손 내밈으로)
+    const t9b = frogToPillow(T);
     await say(S.L32); await t9b;
     await sleep(500);
     sfx('shimmer', .7, () => sparkleSfx(T)); bgmDip(2.2, .3); elfx('el_jingle', .75); T.pop(BED.x, BED.top - 240, tr('팡!'), GOLD); // 변신 반짝(녹음)

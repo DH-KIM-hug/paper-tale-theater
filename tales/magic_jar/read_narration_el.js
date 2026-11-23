@@ -22,6 +22,10 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/magic_jar/wife_e5a1fcce23.mp3",
   "audio/el/magic_jar/nar_cc5b2b7d7b.mp3"
  ],
+ "농부가 괭이 두 개를 옆에 내려놓았어요. \"이번엔 몇 개가 나오나 세어 볼까?\"": [
+  "audio/el/magic_jar/nar_ec149cf48a.mp3",
+  "audio/el/magic_jar/farmer_092fbb8175.mp3"
+ ],
  "항아리에서 괭이가 쑥, 쑥, 자꾸자꾸 나왔어요.": "audio/el/magic_jar/nar_affd3d6db7.mp3",
  "괭이가 하나, 둘, 셋! 농부와 아내는 손뼉을 쳤어요.": "audio/el/magic_jar/nar_f8da210ec9.mp3",
  "농부와 아내는 마당의 항아리 곁에 그대로 있었어요.": "audio/el/magic_jar/nar_d0922551e3.mp3",

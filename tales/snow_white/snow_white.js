@@ -425,7 +425,7 @@
       const SETS = { queen_room: 'queen_room_v2', forest: 'forest_v2', house_front: 'house_front_v2', house_table2: 'house_table2', house_bed2: 'house_bed2', hill: 'hill_v2' };
       const CARD = { house_front: '사과 할머니', hill: '유리관' };
       /* 세로 화면에서 가로와 다르게 놓던 자리 (놀이판의 X(가로, 세로) 값) */
-      const PM = { forest: { 400: 440, 610: 575, '-120': 240 }, house_table2: { 230: 300 }, house_bed2: { 860: 640, 330: 460 }, hill: { 205: 360, 195: 330, 770: 650 } };
+      const PM = { queen_room: { 830: 700 }, forest: { 400: 440, 610: 575, '-120': 240 }, house_table2: { 230: 300 }, house_bed2: { 860: 640, 330: 460 }, hill: { 205: 360, 195: 330, 770: 650 } };
       const px = x => { x = +x; return P && PM[R.set] && PM[R.set][x] != null ? PM[R.set][x] : x; };
       const xy = s => String(s).split(',').map(Number);
       const fr = () => front(...R.fr);
@@ -553,6 +553,7 @@
         queen: (a, b) => {
           if (a === 'look') queen.look(b === 'fist' ? 'fist' : 'mirror');
           else if (a === 'hop') queen.hop(16, 320);
+          else if (a === 'turn') queen.turn(b === 'right' ? 'right' : 'left');   // 2026-11-24: 불려 온 사냥꾼 쪽으로
         },
         snow: (a, b, c, d) => {
           if (a === 'look') {
@@ -602,8 +603,9 @@
           }
           return null;
         },
-        hunter: (a, b) => {
-          if (a === 'at') { const [x, y] = xy(b); put(T, hunter, px(x), y); fr(); }
+        hunter: (a, b, c) => {
+          /* hunter:at:x,y[:배율] — 배율이 있으면(거울 방 1.2, 2026-11-24) 왕비 뒤 층에 둔다 */
+          if (a === 'at') { const [x, y] = xy(b); put(T, hunter, px(x), y, { s: c ? +c : 1 }); if (c && queen.pos.parentNode === T.world) T.world.insertBefore(hunter.pos, queen.pos); fr(); }
           else if (a === 'shake') (async () => { await sleep(200); for (let i = 0; i < 3; i++) await hunter.wiggle(5, 520); })();
         },
         door: a => {
@@ -764,6 +766,11 @@
     mf.hide();
     queen.hop(12, 300);
     await say('내가 제일이어야 해! 사냥꾼을 불러라!');
+    /* 2026-11-24 흐름 수정: 불려 온 사냥꾼에게 왕비가 명령을 말한다(숲에서 사냥꾼이 무엇을 못 하겠다는 건지 알 수 있게). 백설과 같은 방 배율 1.2, 왕비는 사냥꾼 쪽으로 돌아선다 */
+    put(T, hunter, X(830, 700), 528, { s: 1.2 }); T.world.insertBefore(hunter.pos, queen.pos); fadeIn(hunter, 500); sfx(T, 'pop');
+    await sleep(500); queen.turn('right');
+    await say('공주를 멀리 데려가거라. 다시는 성에 돌아오지 못하게 해.');
+    hunter.wiggle(3, 500);
     await sleep(300);
 
     /* ===== 2. 숲속의 사냥꾼 ===== */

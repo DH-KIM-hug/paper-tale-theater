@@ -159,6 +159,10 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Dear, the scholar is in danger! The snake's wife at the lonely house...",
   "c": "audio/el/magpie/en/mom_dc15daffbe.mp3"
  },
+ "들었어요! 새벽 전에 종이 세 번 울려야 한대요.": {
+  "t": "I heard it! The bell must ring three times before dawn.",
+  "c": "audio/el/magpie/en/mom_96ea7184cf.mp3"
+ },
  "종! 절의 종을 울리면 돼요. 우리가 날아가요!": {
   "t": "The bell! We just have to ring the temple bell. Let's fly!",
   "c": "audio/el/magpie/en/dad_6e02e52bbc.mp3"

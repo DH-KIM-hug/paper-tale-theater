@@ -54,6 +54,20 @@
    ]
   },
   {
+   "text": "농부가 괭이 두 개를 옆에 내려놓았어요. \"이번엔 몇 개가 나오나 세어 볼까?\"",
+   "en": "The farmer set the two hoes down beside him. \"How many will come out this time? Let's count!\"",
+   "segs": [
+    [
+     "nar",
+     "The farmer set the two hoes down beside him."
+    ],
+    [
+     "farmer",
+     "How many will come out this time? Let's count!"
+    ]
+   ]
+  },
+  {
    "text": "항아리를 세 번 톡톡 눌러서 괭이를 세 개 세어 봐요!",
    "en": "Tap the jar three times and count three hoes!"
   },

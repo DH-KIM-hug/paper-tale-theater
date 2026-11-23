@@ -346,6 +346,13 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/hansel/en/nar_57ce984d44.mp3"
   ]
  },
+ "\"너희가 먼저 집으로 간 줄 알았단다. 눈을 뜰 때까지 곁에 있을걸.\" 아빠가 미안해하며 말했어요.": {
+  "t": "I thought you two had gone home ahead of me. I should have stayed beside you until you woke up. Papa said, feeling sorry.",
+  "c": [
+   "audio/el/hansel/en/father_f0c6431556.mp3",
+   "audio/el/hansel/en/nar_88395cd1f7.mp3"
+  ]
+ },
  "헨젤과 그레텔은 마음이 따뜻하고 행복했어요.": {
   "t": "Hansel and Gretel felt warm and happy.",
   "c": "audio/el/hansel/en/nar_a994bdd6dc.mp3"

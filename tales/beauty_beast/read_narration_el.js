@@ -43,7 +43,10 @@ Object.assign(NARRATION_CLIPS, {
  "아버지는 덜덜 떨며 고개를 끄덕끄덕했어요.": "audio/el/beauty_beast/nar_078005ae88.mp3",
  "아버지는 장미를 들고 집으로 돌아왔어요.": "audio/el/beauty_beast/nar_50c3c670a4.mp3",
  "작은 집에서 세 딸이 아버지의 이야기를 들었어요.": "audio/el/beauty_beast/nar_f7b2693c6b.mp3",
- "야수가… 딸 하나를 보내라고 했단다.": "audio/el/beauty_beast/father_b4d93ea55f.mp3",
+ "아버지는 짐을 챙기며 말했어요. \"내가 궁전으로 돌아가야 한단다.\"": [
+  "audio/el/beauty_beast/nar_305691678e.mp3",
+  "audio/el/beauty_beast/father_dae6ad7560.mp3"
+ ],
  "언니들은 깜짝 놀라 입을 떡 벌렸어요.": "audio/el/beauty_beast/nar_8194a18f5b.mp3",
  "제 장미 때문이에요. 제가 갈게요.": "audio/el/beauty_beast/belle_0259b896dd.mp3",
  "안 된다, 벨.": "audio/el/beauty_beast/father_242aa1afbd.mp3",

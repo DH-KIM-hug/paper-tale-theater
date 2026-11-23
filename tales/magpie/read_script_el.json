@@ -752,6 +752,10 @@
        null,
        "[low, slow, deliberate, each word clear, mysterious]"
       ]
+     ],
+     "before": [
+      "mom:at:440,255:sit:right:.6",
+      "mom:fade:in"
      ]
     },
     {
@@ -766,7 +770,11 @@
       ]
      ],
      "after": [
-      "pop:640,175,후후…"
+      "pop:640,175,후후…",
+      "mom:look:fly:right",
+      "snd:wing_flap_1:.35",
+      "mom:walk:1080,0,1600",
+      "mom:hide"
      ]
     },
     {
@@ -801,7 +809,7 @@
    "set": "mg_bg_moonnest",
    "enter": [
     "dad:at:300,345:sit:right",
-    "mom:at:470,345:sit:left",
+    "mom:at:1150,175:fly:left",
     "cam:500,280,1"
    ],
    "lines": [
@@ -839,6 +847,24 @@
        "여보, 선비님이 큰일 났어요! 외딴집의 구렁이 아내가…",
        "sad",
        "[urgent, worried, breathless]"
+      ]
+     ],
+     "before": [
+      "snd:wing_flap_1:.35",
+      "mom:walk:470,345,1300",
+      "mom:at:470,345:sit:left",
+      "mom:hop"
+     ]
+    },
+    {
+     "text": "들었어요! 새벽 전에 종이 세 번 울려야 한대요.",
+     "src": "new",
+     "segs": [
+      [
+       "mom",
+       "들었어요! 새벽 전에 종이 세 번 울려야 한대요.",
+       null,
+       "[urgent, breathless, worried, clear]"
       ]
      ],
      "before": [

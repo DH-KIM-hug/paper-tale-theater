@@ -286,10 +286,6 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Up in the sky, the baby rain cloud bumps into a big rain cloud. Bump!",
   "c": "audio/el/kkultteok/en/nar_44b6387059.mp3"
  },
- "번개를 톡!": {
-  "t": "Tap the lightning!",
-  "c": "audio/el/kkultteok/en/nar_d01feda6d0.mp3"
- },
  "번쩍! 우르릉 쾅!": {
   "t": "Flash! Rumble, BOOM!",
   "c": "audio/el/kkultteok/en/nar_4a820ff223.mp3"

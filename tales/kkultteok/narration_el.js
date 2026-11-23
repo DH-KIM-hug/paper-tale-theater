@@ -76,7 +76,6 @@ Object.assign(NARRATION_CLIPS, {
  "아이들도 손을 흔들며 밖으로 달려 나가요.": "audio/el/kkultteok/nar_a9084e2b77.mp3",
  "꿀떡이는 하늘을 보고 멍! 멍!": "audio/el/kkultteok/name/4de47458c2.mp3",
  "하늘에서 아기 먹구름이 큰 먹구름과 쿵!": "audio/el/kkultteok/nar_e4460e4a1a.mp3",
- "번개를 톡!": "audio/el/kkultteok/nar_71e41588a7.mp3",
  "번쩍! 우르릉 쾅!": "audio/el/kkultteok/nar_e73bf45a5a.mp3",
  "\"으악!\" 아이들은 서로 꼭 껴안아요.": [
   "audio/el/kkultteok/oppa_1099b29c7c.mp3",

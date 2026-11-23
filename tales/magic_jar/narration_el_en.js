@@ -39,6 +39,13 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/magic_jar/en/nar_e2888814d5.mp3"
   ]
  },
+ "농부가 괭이 두 개를 옆에 내려놓았어요. \"이번엔 몇 개가 나오나 세어 볼까?\"": {
+  "t": "The farmer set the two hoes down beside him. \"How many will come out this time? Let's count!\"",
+  "c": [
+   "audio/el/magic_jar/en/nar_d937562806.mp3",
+   "audio/el/magic_jar/en/farmer_8a7bc63885.mp3"
+  ]
+ },
  "항아리를 세 번 톡톡 눌러서 괭이를 세 개 세어 봐요!": {
   "t": "Tap the jar three times and count three hoes!",
   "c": "audio/el/magic_jar/en/nar_4256f915ec.mp3"

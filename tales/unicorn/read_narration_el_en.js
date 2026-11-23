@@ -132,6 +132,10 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The deer nodded, nod, nod, to say goodbye, and stepped softly, step, step, back into the forest.",
   "c": "audio/el/unicorn/en/nar_71093a0335.mp3"
  },
+ "숲을 지나는 사이 어느새 아침이 밝았어요.": {
+  "t": "As she made her way through the forest, morning came.",
+  "c": "audio/el/unicorn/en/nar_04fbe2ae43.mp3"
+ },
  "쏴아아, 커다란 폭포 소리가 들려왔어요.": {
   "t": "Whoosh, splash! Dahyun heard the sound of a great big waterfall.",
   "c": "audio/el/unicorn/en/name/a1d9864fcd.mp3"

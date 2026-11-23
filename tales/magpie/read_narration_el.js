@@ -52,6 +52,7 @@ Object.assign(NARRATION_CLIPS, {
  "선비가 갇힌 그 밤, 소나무 둥지로 가 볼까요?": "audio/el/magpie/nar_e858114acb.mp3",
  "그때, 큰 소나무 둥지의 까치 가족은 잠들지 못하고 있었어요.": "audio/el/magpie/nar_298155ab1a.mp3",
  "여보, 선비님이 큰일 났어요! 외딴집의 구렁이 아내가…": "audio/el/magpie/mom_e93dbad02a.mp3",
+ "들었어요! 새벽 전에 종이 세 번 울려야 한대요.": "audio/el/magpie/mom_5d019e80eb.mp3",
  "종! 절의 종을 울리면 돼요. 우리가 날아가요!": "audio/el/magpie/dad_6278d22bae.mp3",
  "아기들아, 둥지에서 꼭 기다리렴.": "audio/el/magpie/mom_6a7a4b531f.mp3",
  "아기 까치들은 둥지 안에서 몸을 꼭 붙이고 고개를 끄덕끄덕했어요.": "audio/el/magpie/nar_a5f0ffdbb3.mp3",

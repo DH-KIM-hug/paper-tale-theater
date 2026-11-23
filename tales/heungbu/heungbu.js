@@ -489,7 +489,7 @@
     await say('흥부가 활짝 웃으며 말했어요. "형님, 괜찮아요. 우리 함께 살아요!"');
     const bags = [0, 1, 2].map(i => spr('rice', cl(460, i, 80), 100, 500));
     for (let i = 0; i < 3; i++) {
-      if (i === 0) await T.ask('쌀자루를 톡! 눌러서 형님네 집으로 보내 줘요.', () => T.tap(live(bags[i]), { prompt: '쌀자루를 톡! 형님께 보내요.' })); else await sleep(500); /* 한 번 누르면 나머지는 저절로 */
+      if (i === 0) await T.ask('쌀자루를 톡 눌러 형님께 건네줘요.', () => T.tap(live(bags[i]), { prompt: '쌀자루를 톡! 형님께 보내요.' })); else await sleep(500); /* 한 번 누르면 나머지는 저절로 */
       bags[i].pos.style.pointerEvents = 'none';
       sfx('marimba_' + (i + 1), .6); await bags[i].move(ns2.x, 470, 450, 'ease-in'); bags[i].hop(12, 240); T.pop(ns2.x, 120, NUM[i]);
     }

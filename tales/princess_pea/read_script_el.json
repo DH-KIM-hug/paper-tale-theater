@@ -446,14 +446,14 @@
      ]
     },
     {
-     "text": "이불도 스무 장, 푹신푹신!",
-     "src": "reuse",
+     "text": "그 위에 이불도 폭신폭신 덮었어요.",
+     "src": "new",
      "segs": [
       [
        "nar",
-       "이불도 스무 장, 푹신푹신!",
+       "그 위에 이불도 폭신폭신 덮었어요.",
        "happy",
-       "[warm, cozy, playful rhythm on 푹신푹신]"
+       "[warm, cozy, playful rhythm on 폭신폭신]"
       ]
      ],
      "before": [

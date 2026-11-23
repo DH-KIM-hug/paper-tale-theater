@@ -642,6 +642,18 @@
    ],
    "lines": [
     {
+     "text": "숲을 지나는 사이 어느새 아침이 밝았어요.",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "숲을 지나는 사이 어느새 아침이 밝았어요.",
+       null,
+       "[calm, gentle, soft morning]"
+      ]
+     ]
+    },
+    {
      "text": "쏴아아, 커다란 폭포 소리가 들려왔어요.",
      "src": "new",
      "segs": [

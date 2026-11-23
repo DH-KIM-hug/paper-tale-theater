@@ -107,9 +107,12 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Father came home holding the rose.",
   "c": "audio/el/beauty_beast/en/nar_e08c35f28a.mp3"
  },
- "야수가… 딸 하나를 보내라고 했단다.": {
-  "t": "The Beast... said one of my daughters must go to him.",
-  "c": "audio/el/beauty_beast/en/father_9f2955c9e1.mp3"
+ "아버지는 짐을 챙기며 말했어요. \"내가 궁전으로 돌아가야 한단다.\"": {
+  "t": "Father packed his bag and said. \"I must go back to the palace.\"",
+  "c": [
+   "audio/el/beauty_beast/en/nar_dd15825cb0.mp3",
+   "audio/el/beauty_beast/en/father_8b2ab52fb9.mp3"
+  ]
  },
  "제 장미 때문이에요. 제가 갈게요.": {
   "t": "It is because of my rose. I will go.",

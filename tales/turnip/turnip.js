@@ -1130,10 +1130,15 @@
     const q5 = '할머니가 누구를 부를까요?';
     await callChoice('girl', 'cow', { q: q5, okSound: () => T.tone([660, 880], .2, { type: 'triangle', vol: .14 }), noSound: () => moo(T),
       where: '음매~ 소는 풀을 먹고 있대요. 사람 친구를 먼저 불러요!', who: '손녀예요! 반짝이는 친구를 눌러 봐요!' });
+    /* 2026-11-24 흐름 수정: 고른 뒤 할머니가 먼저 "손녀야~!" 부르고(녹음 첫 조각 1.3초), 그 부름을 듣고 손녀가 달려와 허리를 잡는다.
+       예전에는 손녀가 먼저 와서 자리를 잡은 뒤에 부르는 소리가 나왔다. 같은 녹음 한 줄을 쓰고 움직임만 대사 안으로 옮겼다 */
     put(cast.girl, 1080);
-    await cast.girl.move(LINE_X[2], GROUND, 900);
-    cast.girl.look('pull'); cast.girl.pose(POSE.pull(4));
-    await say('"손녀야~!" 손녀가 할머니 허리를 잡았어요. 영차!');
+    T.pop(cast.grandma.x + 10, 200, '손녀야~!', C.bean);
+    await Promise.all([say('"손녀야~!" 손녀가 할머니 허리를 잡았어요. 영차!'), (async () => {
+      await sleep(1300);
+      await cast.girl.move(LINE_X[2], GROUND, 900);
+      cast.girl.look('pull'); cast.girl.pose(POSE.pull(4));
+    })()]);
     await pullRound(3, 12, '순무를 톡 눌러서 영차!');
     await say('조금 더 올라왔어요! 누가 더 도와줄까요?');
 

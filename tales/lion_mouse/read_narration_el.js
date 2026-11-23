@@ -34,7 +34,10 @@ Object.assign(NARRATION_CLIPS, {
  "생쥐를 내려다보던 사자가 물었어요.": "audio/el/lion_mouse/nar_7d3ef1e4dc.mp3",
  "\"네가? 나를 도와준다고?\"": "audio/el/lion_mouse/lion_4a091f3b11.mp3",
  "사자는 배를 잡고 껄껄, 땅이 쿵쿵 울리도록 웃었어요.": "audio/el/lion_mouse/nar_71ceff396f.mp3",
- "사자가 웃다가 앞발이 스르르 열렸어요.": "audio/el/lion_mouse/nar_59eea04c62.mp3",
+ "사자가 웃음을 멈추고 앞발을 번쩍 들어 주었어요. \"그래, 가 보렴.\"": [
+  "audio/el/lion_mouse/nar_d14467b91d.mp3",
+  "audio/el/lion_mouse/lion_d1fc7d1653.mp3"
+ ],
  "생쥐가 쏙 빠져나왔어요. \"고맙습니다, 사자님!\"": [
   "audio/el/lion_mouse/nar_1ad43fa2d3.mp3",
   "audio/el/lion_mouse/mouse_5e35f50010.mp3"

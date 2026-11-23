@@ -85,7 +85,10 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "사자랑 생쥐를 톡톡 눌러 봐요. 같이 웃어요!": "audio/el/lion_mouse/nar_519780a937.mp3",
  "그날부터 사자와 생쥐는 둘도 없는 친구가 되었답니다.": "audio/el/lion_mouse/nar_1a285ce481.mp3",
- "사자가 웃다가 앞발이 스르르 열렸어요.": "audio/el/lion_mouse/nar_59eea04c62.mp3",
+ "사자가 웃음을 멈추고 앞발을 번쩍 들어 주었어요. \"그래, 가 보렴.\"": [
+  "audio/el/lion_mouse/nar_d14467b91d.mp3",
+  "audio/el/lion_mouse/lion_d1fc7d1653.mp3"
+ ],
  "생쥐가 작은 이빨로 그물을 갉아요. 사각사각, 한 줄씩 끊어요!": "audio/el/lion_mouse/nar_428c90aef3.mp3"
 });
 Object.assign(VOICE_LINES, {

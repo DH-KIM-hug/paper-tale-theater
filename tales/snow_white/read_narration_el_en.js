@@ -36,9 +36,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "I must be the fairest! Call the hunter!",
   "c": "audio/el/snow_white/en/queen_3f0e4178fd.mp3"
  },
- "왕비는 사냥꾼에게 소리쳤어요. 백설공주를 깊은 숲에 데려가서 버리고 오너라!": {
-  "t": "The queen shouted at the hunter. Take Snow White deep into the forest and leave her there!",
-  "c": "audio/el/snow_white/en/nar_386f7fd7d6.mp3"
+ "공주를 멀리 데려가거라. 다시는 성에 돌아오지 못하게 해.": {
+  "t": "Take the princess far away. Make sure she never comes back to the castle.",
+  "c": "audio/el/snow_white/en/queen_e01d88db85.mp3"
  },
  "사냥꾼은 백설공주의 손을 잡고 숲으로 떠났어요.": {
   "t": "The hunter took Snow White by the hand, and off they went to the forest.",

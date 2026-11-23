@@ -80,7 +80,7 @@ Object.assign(NARRATION_CLIPS, {
  "이번엔 다른 색으로 해 볼까?": "audio/el/witch_candy/witch_11f6eb34d1.mp3",
  "솥 물이 쏴아, 다시 맑아졌어요.": "audio/el/witch_candy/nar_5850c26a2b.mp3",
  "자, 저어 보자. 뽀글뽀글…": "audio/el/witch_candy/witch_9de238b62a.mp3",
- "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야.": "audio/el/witch_candy/witch_3cba284ccb.mp3",
+ "마지막 주문은 빨강, 노랑, 파랑! 세 가지를 넣어 보자.": "audio/el/witch_candy/witch_a0bb35ed79.mp3",
  "전부 다요?": "audio/el/witch_candy/kid_97a0e705b5.mp3",
  "다현이가 하나씩, 하나씩, 퐁퐁퐁 넣었어요.": "audio/el/witch_candy/name/5b9fdec703.mp3",
  "하나, 둘, 셋! 색을 전부 섞으면…": "audio/el/witch_candy/nar_686695f38a.mp3",

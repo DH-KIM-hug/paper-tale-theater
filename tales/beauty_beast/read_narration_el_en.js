@@ -163,9 +163,12 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Back in the cottage, the three daughters listened to Father.",
   "c": "audio/el/beauty_beast/en/nar_a59d958b2a.mp3"
  },
- "야수가… 딸 하나를 보내라고 했단다.": {
-  "t": "The Beast... said one of my daughters must go to him.",
-  "c": "audio/el/beauty_beast/en/father_9f2955c9e1.mp3"
+ "아버지는 짐을 챙기며 말했어요. \"내가 궁전으로 돌아가야 한단다.\"": {
+  "t": "Father packed his bag and said. \"I must go back to the palace.\"",
+  "c": [
+   "audio/el/beauty_beast/en/nar_dd15825cb0.mp3",
+   "audio/el/beauty_beast/en/father_8b2ab52fb9.mp3"
+  ]
  },
  "언니들은 깜짝 놀라 입을 떡 벌렸어요.": {
   "t": "The sisters gasped, and their mouths fell wide open.",

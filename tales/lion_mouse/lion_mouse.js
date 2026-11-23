@@ -509,6 +509,11 @@
           if (rHead) rHead.set('yawn'); roar(T, .2);
           rHeadTimer = setTimeout(() => { if (rHead) rHead.set(null); }, 3200); return;
         }
+        if (verb === 'calm') {   // 2026-11-24: 웃음을 멈춘다(앞발을 들어 주기 전)
+          if (rLaugh) { rLaugh.cancel(); rLaugh = null; }
+          if (rHead) rHead.set(null);
+          return;
+        }
         if (verb === 'laugh') {
           if (rHeadTimer) { clearTimeout(rHeadTimer); rHeadTimer = null; }
           if (rHead) rHead.set('laugh');
@@ -882,18 +887,23 @@
     roar(T, .15);
     const laugh = lion.parts.hg.animate([{ translate: '0 0' }, { translate: '0 -4px' }, { translate: '0 0' }], { duration: 300, iterations: Infinity });
     await camTo(T.portrait() ? 800 : 610, T.portrait() ? 380 : 340, T.portrait() ? 1.4 : 1.3, 900);
-    AudioFX.sfx('creak', .5);
-    // 사자가 웃느라 몸이 뒤로 젖혀져 앞발이 들린다 (몸 전체를 뒷발 끝을 축으로 돌림)
-    await T.anim(lion.parts.hg, [{ rotate: '0deg' }, { rotate: '3deg' }], { duration: 1200, easing: 'ease-out' });
-    lion.parts.eyes('lion_pawup'); // 앞발이 들린다
-    await say('사자가 웃다가 앞발이 스르르 열렸어요.');
+    /* 2026-11-24 흐름 수정: 웃다가 우연히 앞발이 들리는 것이 아니라, 사자가 웃음을 멈추고 스스로 앞발을 들어 보내 준다(생쥐의 고맙다는 말이 그 행동에 대한 답) */
+    await sleep(600);
+    laugh.cancel(); head.set(null);
+    const lift = (async () => {
+      await sleep(1200);
+      AudioFX.sfx('creak', .5);
+      await T.anim(lion.parts.hg, [{ rotate: '0deg' }, { rotate: '3deg' }], { duration: 900, easing: 'ease-out' });
+      lion.parts.eyes('lion_pawup'); // 앞발을 들어 준다
+    })();
+    await say('사자가 웃음을 멈추고 앞발을 번쩍 들어 주었어요. "그래, 가 보렴."');
+    await lift;
     T.anim(lion.parts.hg, [{ rotate: '3deg' }, { rotate: '8deg' }], 500);
     mouse.parts.arms.setAttribute('opacity', 1); mouse.parts.pray.setAttribute('opacity', 0);
     T.tone([600, 1600], .25, { type: 'sine', vol: .14 });
     T.pop(860, 420, '쏙!', C.pine);
     mouse.face('right'); // 풀려나서 오른쪽으로 쏙
     await mouse.move(960, 498, 500, 'ease-in');
-    laugh.cancel();
     await say('생쥐가 쏙 빠져나왔어요. "고맙습니다, 사자님!"');
     squeak(T);
     if (mouse.parts.look) mouse.parts.look('run'); // 쪼르르 달려 나간다

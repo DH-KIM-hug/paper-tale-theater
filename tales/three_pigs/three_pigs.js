@@ -585,7 +585,7 @@
       line: '셋째는 벽돌로 집을 짓기로 했어요. 벽돌은 무거워서 열 장을 천천히 쌓아요.', done: '벽돌을 열 장 다 쌓았어요. 튼튼한 벽돌 집이 완성됐어요!' });
 
     /* 6~7. 늑대가 후~ */
-    async function blow({ label, bgKey, houseKey, ruinKey, cutKey, lines, pigKeys, arrive }) {
+    async function blow({ label, bgKey, houseKey, ruinKey, cutKey, lines, pigKeys, arrive, stopX }) {
       const P = portrait();
       const hx = P ? 640 : 700, hy = P ? 420 : GROUND, houseH = P ? 310 : 390, pigH = P ? 150 : 215;
       await T.sceneCard(label, () => { bg(bgKey); T.camSnap(P ? hx : 500, 280, 1); });
@@ -611,8 +611,10 @@
       pg.forEach(p => { p.show(true); p.hop(30, 350); });
       await say(lines[2]);
       await T.cutImage([{ src: U(cutKey), hold: 2600 }]);
-      pg.forEach((p, i) => { p.set(pigKeys[i].replace('base', 'flee')); p.move(1200, hy, 1100 + i * 150); });
+      /* stopX: 집에서 뛰어나와 그 자리에 멈춘다(어디로 갈지는 다음 장면에서 아이가 고른 뒤, 2026-11-24 흐름 수정) */
+      pg.forEach((p, i) => { p.set(pigKeys[i].replace('base', 'flee')); p.move(stopX ? stopX + i * (P ? 90 : 130) : 1200, hy, stopX ? 700 + i * 120 : 1100 + i * 150); });
       await sleep(900);
+      if (stopX) pg.forEach((p, i) => setTimeout(() => p.hop(16, 280), i * 120));
       await say(lines[3]);
     }
     await blow({ label: '후~ 짚 집', bgKey: 'strawlot', houseKey: 'house_straw', ruinKey: 'house_straw_ruin', cutKey: 'cut_strawhat', pigKeys: ['pig1_base'], arrive: '첫째는 짚 집에서 놀고 있었어요.',
@@ -620,7 +622,7 @@
         '짚 집이 훨훨 날아가 버렸어요!', '첫째는 둘째네 집으로 달려갔어요.'] });
     await blow({ label: '후~ 나무 집', bgKey: 'woodlot', houseKey: 'house_wood', ruinKey: 'house_wood_ruin', cutKey: 'cut_planks', pigKeys: ['pig1_base', 'pig2_base'], arrive: '첫째가 나무 집 안으로 후다닥 들어갔어요.',
       lines: ['늑대가 나무 집에도 왔어요. "아기 돼지야, 문 열어라!"', '첫째와 둘째가 말했어요. "싫어요, 싫어요!" 늑대가 말했어요. "그럼 후~ 후~ 불어 주지!"',
-        '나무 집이 와르르 무너졌어요!', '아기 돼지 둘은 막내네 집으로 달려갔어요.'] });
+        '나무 집이 와르르 무너졌어요!', '두 형이 무너지는 집에서 뛰어나왔어요!'], stopX: portrait() ? 600 : 760 });
 
     /* 8. 어느 집으로? */
     await T.sceneCard('어느 집으로?', () => { bg('field'); T.camSnap(500, 280, 1); });
@@ -632,9 +634,9 @@
     await look(500, 200);
     const pick = await T.ask('두 형은 숨이 차서 헉헉! 어느 집으로 가야 할까요?', () => T.choose([{ el: choiceA.pos }, { el: choiceB.pos }, { el: choiceC.pos, ok: true }],
       { prompt: '가장 튼튼한 집을 골라 봐요!', where: '짚은 너무 가벼워요. 다시 골라 봐요.', who: '벽돌 집이 가장 튼튼해요!' }));
-    runners.forEach((r, i) => r.move(choiceC.x - 30 + i * 40, 540, 1000 + i * 200));
+    /* 아이가 벽돌 집을 고른 뒤에야 두 형이 막내네로 달려간다(2026-11-24 흐름 수정: 고르기 전에 '막내네로 달려갔어요'가 먼저 나오던 것) */
     choiceC.hop(20, 400); sfx('ding');
-    await sleep(1300);
+    await Promise.all([say('아기 돼지 둘은 막내네 집으로 달려갔어요.'), ...runners.map((r, i) => r.move(choiceC.x - 30 + i * 40, 540, 1400 + i * 200))]);
     await say('맞아요! 가장 튼튼한 벽돌 집이에요. 삼 형제는 문을 꼭 닫았어요.');
 
     /* 9. 집 안, 그리고 늑대 */

@@ -29,7 +29,10 @@ Object.assign(NARRATION_CLIPS, {
  "죄송해요, 나리. 막내딸이 부탁한 거예요.": "audio/el/beauty_beast/father_6a6c4d9e38.mp3",
  "나리가 아니라 야수라고 불러라. 장미를 꺾었으니 벌을 받아야 해. 네가 돌아오든지, 딸 하나가 스스로 오든지.": "audio/el/beauty_beast/beast_d1f9b5bf71.mp3",
  "아버지는 장미를 들고 집으로 돌아왔어요.": "audio/el/beauty_beast/nar_50c3c670a4.mp3",
- "야수가… 딸 하나를 보내라고 했단다.": "audio/el/beauty_beast/father_b4d93ea55f.mp3",
+ "아버지는 짐을 챙기며 말했어요. \"내가 궁전으로 돌아가야 한단다.\"": [
+  "audio/el/beauty_beast/nar_305691678e.mp3",
+  "audio/el/beauty_beast/father_dae6ad7560.mp3"
+ ],
  "제 장미 때문이에요. 제가 갈게요.": "audio/el/beauty_beast/belle_0259b896dd.mp3",
  "안 된다, 벨.": "audio/el/beauty_beast/father_242aa1afbd.mp3",
  "괜찮아요. 제가 가고 싶어요.": "audio/el/beauty_beast/belle_36d2313a1b.mp3",

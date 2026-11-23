@@ -100,9 +100,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Twenty! That makes twenty mattresses.",
   "c": "audio/el/princess_pea/en/queen_63a3fd6893.mp3"
  },
- "이불도 스무 장, 푹신푹신!": {
-  "t": "And twenty feather quilts on top, soft and fluffy!",
-  "c": "audio/el/princess_pea/en/nar_2ca1fb5a76.mp3"
+ "그 위에 이불도 폭신폭신 덮었어요.": {
+  "t": "Then soft, fluffy quilts went on top.",
+  "c": "audio/el/princess_pea/en/nar_f9c92bc134.mp3"
  },
  "침대는 성의 지붕만큼 높아져서, 사다리가 필요했어요.": {
   "t": "The bed was now as tall as the castle roof, so they needed a ladder.",

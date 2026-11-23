@@ -382,23 +382,34 @@
    ]
   },
   {
-   "text": "으, 이제 그만!",
-   "en": "Ugh, that's enough!",
+   "text": "공주는 베개를 보고 잠깐 망설였어요.",
+   "en": "The princess looked at the pillow and paused for a moment.",
    "segs": [
     [
-     "prin",
-     "Ugh, that's enough!",
-     "toneup"
+     "nar",
+     "The princess looked at the pillow and paused for a moment.",
+     null
     ]
    ]
   },
   {
-   "text": "공주는 개구리를 침대 쪽으로 휙 던졌어요. 개구리는 푹신한 베개 위에 포옥!",
-   "en": "The princess tossed the frog toward the bed. Plop! He landed softly on the fluffy pillow!",
+   "text": "그래, 약속했지. 여기서 자.",
+   "en": "All right, I promised. You can sleep here.",
+   "segs": [
+    [
+     "prin",
+     "All right, I promised. You can sleep here.",
+     null
+    ]
+   ]
+  },
+  {
+   "text": "개구리는 폴짝폴짝 베개 위로 뛰어올랐어요. 푹신한 베개 위에 포옥!",
+   "en": "Hop, hop! The frog jumped up onto the pillow all by himself. Plop! He landed softly on the fluffy pillow!",
    "segs": [
     [
      "nar",
-     "The princess tossed the frog toward the bed. Plop! He landed softly on the fluffy pillow!",
+     "Hop, hop! The frog jumped up onto the pillow all by himself. Plop! He landed softly on the fluffy pillow!",
      null
     ]
    ]

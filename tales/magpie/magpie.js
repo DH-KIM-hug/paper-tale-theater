@@ -14,6 +14,7 @@
     mg_snake_flee: 'right', mg_mag_mom_sit: 'left', mg_mag_dad_sit: 'left', mg_mag_mom_fly: 'right', mg_mag_dad_fly: 'right',
     mg_mag_mom_tired: 'right', mg_mag_dad_tired: 'right', mg2_prop_arrow: 'right' };   // 그 밖의 그림은 앞모습('front')
   const FL = 505;
+  const WIN5 = { x: 440, px: 440, y: 255, s: .6 };   /* 2026-11-24: 외딴집(창호문) 장면 창가 엄마 까치 자리 */
   const BGS = ['mg_bg_path', 'mg_bg_bigtree', 'mg_bg_nest', 'mg_bg_night', 'mg_bg_porch', 'mg_bg_paperdoor', 'mg_bg_moonnest', 'mg2_bg_belltower_night', 'mg_bg_belltower', 'mg_bg_dawn'];
   const CUTS = ['mg_cut_arrow', 'mg_cut_flee', 'mg_cut_flock', 'mg_cut_ring', 'mg_cut_wake'];
   const src = k => AS + k + '.webp';
@@ -195,6 +196,7 @@
     L26: "종소리… 종이 울려야 해. 어떡하지…",
     L27: "그때, 큰 소나무 둥지의 까치 가족은 잠들지 못하고 있었어요.",
     L28: "여보, 선비님이 큰일 났어요! 외딴집의 구렁이 아내가…",
+    L28b: "들었어요! 새벽 전에 종이 세 번 울려야 한대요.",   /* 2026-11-24 흐름 수정: 창가에서 엿들은 엄마 까치가 조건을 전한다 */
     L29: "종! 절의 종을 울리면 돼요. 우리가 날아가요!",
     L30: "아기들아, 둥지에서 꼭 기다리렴.",
     L31: "까치 엄마 아빠와 숲속 까치 친구들이 밤하늘로 날아올랐어요.",
@@ -682,17 +684,21 @@
     const l22 = say(S.L22); await sleep(700); lady.hop(3, 800); await l22;
     sch.look('sit');
     const l23 = say(S.L23); sch.wiggle(3, 500); await l23;
-    await say(S.L24);
+    /* 2026-11-24 흐름 수정: 창호문 창가에 엄마 까치가 앉아 구렁이 아내의 조건을 엿듣고, 둥지로 날아간다(다음 장면에서 가족에게 전함). 창 너머라 작게(원근) */
+    put(T, mom, X(WIN5.x, WIN5.px), WIN5.y, { look: 'sit', to: 'right', s: WIN5.s }); fadeIn(mom, 700);
+    const l24 = say(S.L24); await sleep(1800); mom.hop(6, 300); await l24;
     const l25 = say(S.L25); await sleep(3000); T.pop(lady.x, FL - 330, tr('후후…'), '#1F2A56'); await l25;
+    mom.look('fly', 'right'); cue('wing_flap_1', .35) || sfx('whoosh', .3);
+    const momGone = mom.move(X(WIN5.x, WIN5.px) + 640, WIN5.y - 260, 1600, 'ease-in').then(() => hide(mom));
     await say(S.L26);
-    await sleep(SCENE_END);
+    await sleep(SCENE_END); await momGone;
 
     /* ===== 6. 달밤의 까치 (자동) ===== */
     const NX6 = 620, RIM6 = 372;   // 가로 화면: 배경 소나무 가지 끝(가지 윗면 y≈339)에 얹은 둥지
     await T.sceneCard(tr('달밤의 까치'), () => {
       scene('mg_bg_moonnest');
       put(T, dad, X(220, 400), FL - 160, { look: 'sit', to: 'right' });
-      put(T, mom, X(390, 540), FL - 160, { look: 'sit', to: 'left' });
+      put(T, mom, 1150, FL - 330, { look: 'fly', to: 'left' });   /* 2026-11-24: 외딴집 창가에서 돌아오는 길(L27 뒤에 둥지로 날아와 앉는다) */
       /* 달밤 장면: 가로 화면은 소나무 가지 끝에 둥지와 아기 까치를 둔다(대사가 둥지·아기를 말하는데 안 보이던 것, 2026-11-02 싱크 점검). 세로 화면은 폭이 좁아 엄마·아빠만 */
       if (!P) {
         const RW6 = 130 + 28 * N, RH6 = RW6 / ASP.mg2_prop_nest_rim;
@@ -702,7 +708,10 @@
       camSnap(P ? 420 : 500, 280, 1);
     }, dad.pos);
     await say(S.L27);
+    cue('wing_flap_1', .35) || sfx('whoosh', .3);
+    await mom.move(X(390, 540), FL - 160, 1300, 'ease-out'); mom.look('sit', 'left');
     const l28 = say(S.L28); mom.hop(10, 320); await l28;
+    const l28b = say(S.L28b); mom.hop(8, 300); await l28b;
     const l29 = say(S.L29); dad.hop(12, 320); await l29;
     mom.turn('right');
     const cx6 = X(NX6, 600 + (N - 1) * 22);

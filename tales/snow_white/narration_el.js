@@ -6,6 +6,7 @@ Object.assign(NARRATION_CLIPS, {
  "왕비님도 예쁘지만, 백설공주가 더 예뻐요.": "audio/el/snow_white/mirror_076de25900.mp3",
  "왕비는 샘이 나서 얼굴이 빨개졌어요.": "audio/el/snow_white/nar_eaa0e41a36.mp3",
  "내가 제일이어야 해! 사냥꾼을 불러라!": "audio/el/snow_white/queen_22e382d7a0.mp3",
+ "공주를 멀리 데려가거라. 다시는 성에 돌아오지 못하게 해.": "audio/el/snow_white/queen_04e059644d.mp3",
  "사냥꾼은 백설공주를 깊은 숲으로 데려갔어요.": "audio/el/snow_white/nar_9b530a6c68.mp3",
  "공주님, 저는 도저히 못 하겠어요. 멀리멀리 달아나세요.": "audio/el/snow_white/hunter_6b7251f68f.mp3",
  "고맙습니다, 아저씨.": "audio/el/snow_white/snow_d56e152fee.mp3",

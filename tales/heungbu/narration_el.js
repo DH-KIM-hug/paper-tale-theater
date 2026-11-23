@@ -65,7 +65,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/heungbu/nar_b609ee44c4.mp3",
   "audio/el/heungbu/heung_45261d2dfe.mp3"
  ],
- "쌀자루를 톡! 눌러서 형님네 집으로 보내 줘요.": "audio/el/heungbu/nar_c44167e2bd.mp3",
+ "쌀자루를 톡 눌러 형님께 건네줘요.": "audio/el/heungbu/nar_873b030140.mp3",
  "쌀자루를 톡! 형님께 보내요.": "audio/el/heungbu/nar_df590f1832.mp3",
  "쌀자루가 하나, 둘, 셋! 놀부는 눈물이 핑 돌았어요.": "audio/el/heungbu/nar_ad42681fbf.mp3",
  "흥부를 톡! 눌러서 모두 함께 만세!": "audio/el/heungbu/nar_3799714650.mp3",

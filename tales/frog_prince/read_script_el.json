@@ -866,38 +866,48 @@
      ]
     },
     {
-     "text": "으, 이제 그만!",
-     "src": "reuse",
-     "segs": [
-      [
-       "prin",
-       "으, 이제 그만!",
-       "toneup",
-       "[young girl, exasperated, a short huff, not a scream]"
-      ]
-     ],
-     "before": [
-      "prin:look:throw:right"
-     ]
-    },
-    {
-     "text": "공주는 개구리를 침대 쪽으로 휙 던졌어요. 개구리는 푹신한 베개 위에 포옥!",
-     "src": "reuse",
+     "text": "공주는 베개를 보고 잠깐 망설였어요.",
+     "src": "new",
      "segs": [
       [
        "nar",
-       "공주는 개구리를 침대 쪽으로 휙 던졌어요. 개구리는 푹신한 베개 위에 포옥!",
+       "공주는 베개를 보고 잠깐 망설였어요.",
        null,
-       "[quick at 휙, then soft and bouncy at 포옥, playful not alarming]"
+       "[quiet, gentle, a small hesitant pause]"
       ]
      ],
      "before": [
-      "fx:swish",
-      "pop:390,195,휙!"
+      "prin:look:sorry"
+     ]
+    },
+    {
+     "text": "그래, 약속했지. 여기서 자.",
+     "src": "new",
+     "segs": [
+      [
+       "prin",
+       "그래, 약속했지. 여기서 자.",
+       null,
+       "[young girl, a soft sigh then kind, keeping her promise]"
+      ]
      ],
-     "after": [
-      "frog:throw",
-      "pop:720,210,포옥"
+     "before": [
+      "prin:look:hand:right"
+     ]
+    },
+    {
+     "text": "개구리는 폴짝폴짝 베개 위로 뛰어올랐어요. 푹신한 베개 위에 포옥!",
+     "src": "new",
+     "segs": [
+      [
+       "nar",
+       "개구리는 폴짝폴짝 베개 위로 뛰어올랐어요. 푹신한 베개 위에 포옥!",
+       null,
+       "[bouncy at 폴짝폴짝, then soft and cozy at 포옥, playful]"
+      ]
+     ],
+     "before": [
+      "frog:pillow"
      ]
     },
     {

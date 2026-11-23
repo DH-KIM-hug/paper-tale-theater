@@ -132,6 +132,10 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "You're... not a unicorn.",
   "c": "audio/el/unicorn/en/kid_8b32b115e6.mp3"
  },
+ "숲을 지나는 사이 어느새 아침이 밝았어요.": {
+  "t": "As she made her way through the forest, morning came.",
+  "c": "audio/el/unicorn/en/nar_04fbe2ae43.mp3"
+ },
  "폭포 위에 무지개가 떠 있어요. 말 한 마리가 서 있어요.": {
   "t": "A rainbow hangs over the waterfall. A horse is standing there.",
   "c": "audio/el/unicorn/en/nar_f3a51b6eff.mp3"

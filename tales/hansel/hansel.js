@@ -882,6 +882,7 @@
     put(T, father, 500, GROUND, { look: 'hug', to: 'left' });
     put(T, hans, L(400, 440), GROUND, { look: 'joy', to: 'left' }); put(T, gret, L(600, 565), GROUND, { look: 'clever', to: 'left' });
     await say('"찾았다! 보고 싶었어!" 아빠가 말했어요.');
+    await say('"너희가 먼저 집으로 간 줄 알았단다. 눈을 뜰 때까지 곁에 있을걸." 아빠가 미안해하며 말했어요.'); /* 2026-11-24 흐름 수정: 숲에서 왜 헤어졌는지 아빠가 짚어 준다 */
     hans.hop(10, 300);
     await say('"아빠, 다시는 우리를 두고 가지 마세요." 헨젤이 말했어요.');
     father.hop(10, 300); hans.move(L(425, 455), GROUND, 500); gret.move(L(578, 550), GROUND, 500); /* 꼭 안기게 아빠 품으로 바짝 */

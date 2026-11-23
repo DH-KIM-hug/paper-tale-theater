@@ -648,6 +648,17 @@
    ],
    "lines": [
     {
+     "text": "숲을 지나는 사이 어느새 아침이 밝았어요.",
+     "src": "new",
+     "en": "As she made her way through the forest, morning came.",
+     "segs": [
+      [
+       "nar",
+       "As she made her way through the forest, morning came."
+      ]
+     ]
+    },
+    {
      "text": "쏴아아, 커다란 폭포 소리가 들려왔어요.",
      "src": "new",
      "en": "Whoosh, splash! Dahyun heard the sound of a great big waterfall.",

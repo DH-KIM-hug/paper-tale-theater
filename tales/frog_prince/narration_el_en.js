@@ -136,13 +136,17 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Princess, you said I could sleep in your bed.",
   "c": "audio/el/frog_prince/en/frog_f580d4e967.mp3"
  },
- "으, 이제 그만!": {
-  "t": "Ugh, that's enough!",
-  "c": "audio/el/frog_prince/en/prin_145e07f307.mp3"
+ "공주는 베개를 보고 잠깐 망설였어요.": {
+  "t": "The princess looked at the pillow and paused for a moment.",
+  "c": "audio/el/frog_prince/en/nar_db01c9bbe4.mp3"
  },
- "공주는 개구리를 침대 쪽으로 휙 던졌어요. 개구리는 푹신한 베개 위에 포옥!": {
-  "t": "The princess tossed the frog toward the bed. Plop! He landed softly on the fluffy pillow!",
-  "c": "audio/el/frog_prince/en/nar_a799e78170.mp3"
+ "그래, 약속했지. 여기서 자.": {
+  "t": "All right, I promised. You can sleep here.",
+  "c": "audio/el/frog_prince/en/prin_d7cb4998cb.mp3"
+ },
+ "개구리는 폴짝폴짝 베개 위로 뛰어올랐어요. 푹신한 베개 위에 포옥!": {
+  "t": "Hop, hop! The frog jumped up onto the pillow all by himself. Plop! He landed softly on the fluffy pillow!",
+  "c": "audio/el/frog_prince/en/nar_3d6b2762bd.mp3"
  },
  "고마워요. 나는 마법에 걸린 왕자였어요. 약속을 지켜 줘서 마법이 풀렸어요.": {
   "t": "Thank you. I was a prince under a spell. Because you kept your promise, the spell is broken.",

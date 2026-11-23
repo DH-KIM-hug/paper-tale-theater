@@ -57,6 +57,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/three_pigs/wolf_61e2f65ffa.mp3"
  ],
  "나무 집이 와르르 무너졌어요!": "audio/el/three_pigs/nar_b21c365f9a.mp3",
+ "두 형이 무너지는 집에서 뛰어나왔어요!": "audio/el/three_pigs/nar_0c771ca216.mp3",
  "아기 돼지 둘은 막내네 집으로 달려갔어요.": "audio/el/three_pigs/nar_bf1f7eae6d.mp3",
  "두 형은 숨이 차서 헉헉! 어느 집으로 가야 할까요?": "audio/el/three_pigs/nar_08f1520a05.mp3",
  "가장 튼튼한 집을 골라 봐요!": "audio/el/three_pigs/nar_a1f9ebe1c5.mp3",

@@ -159,6 +159,10 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The wood house tumbled down!",
   "c": "audio/el/three_pigs/en/nar_25c393d950.mp3"
  },
+ "두 형이 무너지는 집에서 뛰어나왔어요!": {
+  "t": "The two brothers ran out of the falling house!",
+  "c": "audio/el/three_pigs/en/nar_95d8b44ec1.mp3"
+ },
  "아기 돼지 둘은 막내네 집으로 달려갔어요.": {
   "t": "The two little pigs ran to their youngest brother's house.",
   "c": "audio/el/three_pigs/en/nar_35bc15a8ae.mp3"

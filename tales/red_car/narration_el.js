@@ -68,7 +68,7 @@ Object.assign(NARRATION_CLIPS, {
  "경찰차랑 소방차, 구급차랑 견인차도 다 여기 있네!": "audio/el/red_car/child_566d297a04.mp3",
  "이현이는 소중한 보물 자동차들을 모두 품에 안고 펄쩍펄쩍 기뻐했답니다.": "audio/el/red_car/name/4e615ccd09.mp3",
  "이제 모두 함께 집으로 출발!": "audio/el/red_car/nar_3ff6830287.mp3",
- "집에 온 자동차들은 침대 옆 차고에 나란히 들어갔어요.": "audio/el/red_car/nar_830fd7c6b7.mp3",
+ "친구 자동차 네 대는 침대 옆 차고에 쏙. 빨간 자동차는 오늘도 손에 꼭.": "audio/el/red_car/nar_04ed052138.mp3",
  "\"잘 자, 친구들.\"": "audio/el/red_car/tow_da44a8bd92.mp3",
  "\"오늘 정말 긴 하루였어.\"": "audio/el/red_car/red_370e3c714f.mp3",
  "자동차들의 불이 하나씩 꺼졌어요.": "audio/el/red_car/nar_5f30aca1f5.mp3",

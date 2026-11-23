@@ -1064,13 +1064,15 @@
         put(T, dog, X(680, 600), G, { look: 'wag', to: 'left' });
         startRain(0, 1000, -20, 14);
       });
-      baby.move(620, 190, 900, 'ease-in'); await sleep(900); T.shake(); AudioFX.sfx('bonk') || popSfx(T); morph(baby, 'sorry');
+      /* 2026-11-24 흐름 수정: 아기 먹구름이 큰 먹구름 곁으로 다가오면 아이가 아기 먹구름을 톡 → 쿵 → 번쩍 → 천둥 → 아이들이 껴안기까지 저절로.
+         예전에는 부딪힌 뒤 번개 그림이 나와서 번개를 누를 때까지 번쩍임과 천둥이 기다렸다 */
+      await baby.move(540, 185, 900, 'ease-out');
+      await T.ask('아기 먹구름을 톡!', () => T.tap(baby.pos, { prompt: '아기 먹구름을 톡!' }));
+      await baby.move(620, 190, 380, 'ease-in'); T.shake(); AudioFX.sfx('bonk') || popSfx(T); morph(baby, 'sorry'); T.pop(690, 120, tr('쿵!'));
       await say('하늘에서 아기 먹구름이 큰 먹구름과 쿵!');
-      const bg = el('g', { transform: 'translate(640,250) scale(.9)' }, T.world); el('image', { href: AS + 'pp_prop_lightning.webp', x: -9, y: -2, width: 33.6, height: 96, preserveAspectRatio: 'none', filter: 'url(#pp)' }, bg); el('circle', { cx: 8, cy: 46, r: 62, fill: 'transparent' }, bg);
-      await T.ask('번개를 톡!', () => T.tap(bg, { prompt: '번개를 톡!' }));
       const fl = el('rect', { x: -40, y: -24, width: 1080, height: 620, fill: '#fff', opacity: 0 }, T.fx);
       fl.animate([{ opacity: 0 }, { opacity: .85 }, { opacity: 0 }, { opacity: .5 }, { opacity: 0 }], { duration: 700 }).onfinish = () => fl.remove();
-      T.shake(); sfx('thunder', .4) || AudioFX.sfx('boom', .5) || T.tone([110, 55], .6, { type: 'sawtooth', vol: .08 }); T.pop(500, 150, tr('번쩍!'), '#E8A317'); bg.remove(); // 천둥은 부드럽게
+      T.shake(); sfx('thunder', .4) || AudioFX.sfx('boom', .5) || T.tone([110, 55], .6, { type: 'sawtooth', vol: .08 }); T.pop(500, 150, tr('번쩍!'), '#E8A317'); // 천둥은 부드럽게
       kids.forEach(k => k.look('eek'));
       await say('번쩍! 우르릉 쾅!');
       await T.cutImage([{ src: jsrc('cut_hug'), sfx: 'swish', hold: 3000 }], { hold: 3000 });

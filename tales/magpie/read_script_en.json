@@ -756,6 +756,10 @@
        "Very well. If the temple bell on the mountain rings three times before dawn, I will let you go.",
        null
       ]
+     ],
+     "before": [
+      "mom:at:440,255:sit:right:.6",
+      "mom:fade:in"
      ]
     },
     {
@@ -770,7 +774,11 @@
       ]
      ],
      "after": [
-      "pop:640,175,후후…"
+      "pop:640,175,후후…",
+      "mom:look:fly:right",
+      "snd:wing_flap_1:.35",
+      "mom:walk:1080,0,1600",
+      "mom:hide"
      ]
     },
     {
@@ -805,7 +813,7 @@
    "set": "mg_bg_moonnest",
    "enter": [
     "dad:at:300,345:sit:right",
-    "mom:at:470,345:sit:left",
+    "mom:at:1150,175:fly:left",
     "cam:500,280,1"
    ],
    "lines": [
@@ -844,6 +852,25 @@
        "mom",
        "Dear, the scholar is in danger! The snake's wife at the lonely house...",
        "sad"
+      ]
+     ],
+     "before": [
+      "snd:wing_flap_1:.35",
+      "mom:walk:470,345,1300",
+      "mom:at:470,345:sit:left",
+      "mom:hop"
+     ]
+    },
+    {
+     "text": "들었어요! 새벽 전에 종이 세 번 울려야 한대요.",
+     "src": "new",
+     "en": "I heard it! The bell must ring three times before dawn.",
+     "segs": [
+      [
+       "mom",
+       "I heard it! The bell must ring three times before dawn.",
+       null,
+       "[urgent, breathless, worried, clear]"
       ]
      ],
      "before": [

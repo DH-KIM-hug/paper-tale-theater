@@ -42,6 +42,7 @@ Object.assign(NARRATION_CLIPS, {
  "종소리… 종이 울려야 해. 어떡하지…": "audio/el/magpie/sch_9291b3eff4.mp3",
  "그때, 큰 소나무 둥지의 까치 가족은 잠들지 못하고 있었어요.": "audio/el/magpie/nar_298155ab1a.mp3",
  "여보, 선비님이 큰일 났어요! 외딴집의 구렁이 아내가…": "audio/el/magpie/mom_e93dbad02a.mp3",
+ "들었어요! 새벽 전에 종이 세 번 울려야 한대요.": "audio/el/magpie/mom_5d019e80eb.mp3",
  "종! 절의 종을 울리면 돼요. 우리가 날아가요!": "audio/el/magpie/dad_6278d22bae.mp3",
  "아기들아, 둥지에서 꼭 기다리렴.": "audio/el/magpie/mom_6a7a4b531f.mp3",
  "까치 엄마 아빠와 숲속 까치 친구들이 밤하늘로 날아올랐어요.": "audio/el/magpie/nar_1c2852d558.mp3",

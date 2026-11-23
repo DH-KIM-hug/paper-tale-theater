@@ -9,7 +9,7 @@ Object.assign(NARRATION_CLIPS, {
  "왕비는 샘이 나서 얼굴이 빨개졌어요.": "audio/el/snow_white/nar_eaa0e41a36.mp3",
  "왕비는 발을 쿵쿵 구르며 거울을 노려보았어요.": "audio/el/snow_white/nar_16253e871d.mp3",
  "내가 제일이어야 해! 사냥꾼을 불러라!": "audio/el/snow_white/queen_22e382d7a0.mp3",
- "왕비는 사냥꾼에게 소리쳤어요. 백설공주를 깊은 숲에 데려가서 버리고 오너라!": "audio/el/snow_white/nar_8d4a503b0b.mp3",
+ "공주를 멀리 데려가거라. 다시는 성에 돌아오지 못하게 해.": "audio/el/snow_white/queen_04e059644d.mp3",
  "사냥꾼은 백설공주의 손을 잡고 숲으로 떠났어요.": "audio/el/snow_white/nar_01b03809c1.mp3",
  "사냥꾼은 백설공주를 깊은 숲으로 데려갔어요.": "audio/el/snow_white/nar_9b530a6c68.mp3",
  "숲은 깜깜하고, 나뭇가지가 삐죽삐죽 뻗어 있었어요.": "audio/el/snow_white/nar_b730dfe586.mp3",

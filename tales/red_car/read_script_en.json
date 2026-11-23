@@ -1310,13 +1310,13 @@
    ],
    "lines": [
     {
-     "text": "집에 온 자동차들은 침대 옆 차고에 나란히 들어갔어요.",
+     "text": "친구 자동차 네 대는 침대 옆 차고에 쏙. 빨간 자동차는 오늘도 손에 꼭.",
      "src": "new",
-     "en": "Back home, the cars parked side by side in the garage next to the bed.",
+     "en": "Four friend cars, tucked into the garage by the bed. The red car, held tight in a hand, just like every night.",
      "segs": [
       [
        "nar",
-       "Back home, the cars parked side by side in the garage next to the bed.",
+       "Four friend cars, tucked into the garage by the bed. The red car, held tight in a hand, just like every night.",
        null
       ]
      ]

@@ -33,6 +33,7 @@ Object.assign(NARRATION_CLIPS, {
  "고마워! 이제 하나도 안 아파.": "audio/el/unicorn/deer_8076c51b68.mp3",
  "다현이는 사슴의 작은 뿔을 가만히 보았어요.": "audio/el/unicorn/name/597fa46a6e.mp3",
  "유니콘은… 아니구나.": "audio/el/unicorn/kid_2d9c9ccf21.mp3",
+ "숲을 지나는 사이 어느새 아침이 밝았어요.": "audio/el/unicorn/nar_8f0b40ac6c.mp3",
  "폭포 위에 무지개가 떠 있어요. 말 한 마리가 서 있어요.": "audio/el/unicorn/nar_dac91bcfd8.mp3",
  "꼬르륵…": "audio/el/unicorn/horse_bae05e7d7b.mp3",
  "말은 다현이의 간식 바구니를 보고 있어요.": "audio/el/unicorn/nar_6b047bb683.mp3",

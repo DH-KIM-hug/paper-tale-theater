@@ -25,7 +25,7 @@ Object.assign(NARRATION_CLIPS, {
  "왕비님은 매트리스를 한 장, 또 한 장, 차곡차곡 쌓았어요.": "audio/el/princess_pea/nar_64bc501b2a.mp3",
  "영차, 영차! 매트리스가 점점 높이높이 올라갔어요.": "audio/el/princess_pea/nar_9047f46f02.mp3",
  "스물! 매트리스가 스무 장이에요.": "audio/el/princess_pea/queen_505c417c16.mp3",
- "이불도 스무 장, 푹신푹신!": "audio/el/princess_pea/nar_ea33f09bab.mp3",
+ "그 위에 이불도 폭신폭신 덮었어요.": "audio/el/princess_pea/nar_f5990ade67.mp3",
  "침대는 성의 지붕만큼 높아져서, 사다리가 필요했어요.": "audio/el/princess_pea/nar_b243f16d80.mp3",
  "잠잘 시간이 되자 왕비가 공주를 손님방으로 데려왔어요.": "audio/el/princess_pea/nar_8b41664ab5.mp3",
  "완두콩은 맨 아래, 공주님은 맨 위에서 자요.": "audio/el/princess_pea/queen_5e70b2b7d9.mp3",

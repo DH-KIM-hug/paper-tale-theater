@@ -26,7 +26,7 @@ Object.assign(NARRATION_CLIPS, {
  "열여섯 살이 되면 물레 바늘에 찔려 영영 깨어나지 않는 깊은 잠에 빠질 거야.": "audio/el/sleeping_beauty/old_7237d36656.mp3",
  "영영이 아니에요. 백 년이 지나면 깨어날 거예요. 그리고 왕자님이 올 거예요.": "audio/el/sleeping_beauty/young_a97bce16de.mp3",
  "온 나라의 물레를 모두 치워라!": "audio/el/sleeping_beauty/king_0dce895685.mp3",
- "물레는 모두 사라졌어요.": "audio/el/sleeping_beauty/nar_81c9f8a61b.mp3",
+ "사람들은 마을의 물레를 모두 거두었어요. 탑 꼭대기까지는 소식이 닿지 않았지요.": "audio/el/sleeping_beauty/nar_5bc4509ac9.mp3",
  "공주님이 열여섯 살이 되던 날, 왕과 왕비는 멀리 나들이를 갔어요.": "audio/el/sleeping_beauty/nar_510e05f751.mp3",
  "공주님은 성 구석구석을 돌아다니다 탑 꼭대기까지 올라갔어요.": "audio/el/sleeping_beauty/nar_4ba685bd53.mp3",
  "할머니, 뭐 하세요?": "audio/el/sleeping_beauty/princess_8519bd970d.mp3",

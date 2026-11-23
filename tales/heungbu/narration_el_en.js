@@ -191,9 +191,9 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/heungbu/en/heung_37f4557d6f.mp3"
   ]
  },
- "쌀자루를 톡! 눌러서 형님네 집으로 보내 줘요.": {
-  "t": "Tap a rice sack to send it to your brother's house.",
-  "c": "audio/el/heungbu/en/nar_fd6e13156f.mp3"
+ "쌀자루를 톡 눌러 형님께 건네줘요.": {
+  "t": "Tap a rice sack to hand it to your brother.",
+  "c": "audio/el/heungbu/en/nar_ebd6daf92d.mp3"
  },
  "쌀자루를 톡! 형님께 보내요.": {
   "t": "Tap a rice sack! Send it to your brother.",

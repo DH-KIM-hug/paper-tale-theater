@@ -168,6 +168,10 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/hansel/father_ceab999c7b.mp3",
   "audio/el/hansel/nar_ae25a8def7.mp3"
  ],
+ "\"너희가 먼저 집으로 간 줄 알았단다. 눈을 뜰 때까지 곁에 있을걸.\" 아빠가 미안해하며 말했어요.": [
+  "audio/el/hansel/father_2e7c5d6169.mp3",
+  "audio/el/hansel/nar_1c2f7e4ab4.mp3"
+ ],
  "\"아빠, 다시는 우리를 두고 가지 마세요.\" 헨젤이 말했어요.": [
   "audio/el/hansel/hans_85195c6814.mp3",
   "audio/el/hansel/nar_61a9600b38.mp3"

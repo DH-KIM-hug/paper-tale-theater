@@ -697,14 +697,21 @@
      ]
     },
     {
-     "text": "야수가… 딸 하나를 보내라고 했단다.",
-     "src": "reuse",
-     "en": "The Beast... said one of my daughters must go to him.",
+     "text": "아버지는 짐을 챙기며 말했어요. \"내가 궁전으로 돌아가야 한단다.\"",
+     "src": "new",
+     "en": "Father packed his bag and said. \"I must go back to the palace.\"",
      "segs": [
       [
+       "nar",
+       "Father packed his bag and said.",
+       null,
+       "[quiet, heavy, slow]"
+      ],
+      [
        "father",
-       "The Beast... said one of my daughters must go to him.",
-       "sad"
+       "I must go back to the palace.",
+       "sad",
+       "[heavy, sad, brave, fatherly]"
       ]
      ],
      "before": [

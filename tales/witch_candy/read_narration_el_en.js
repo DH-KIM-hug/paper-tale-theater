@@ -320,9 +320,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Here we go, stir, stir. Bubble, bubble...",
   "c": "audio/el/witch_candy/en/witch_901633dc00.mp3"
  },
- "마지막은 핼러윈 특별 사탕! 색을 전부 다 넣는 거야.": {
-  "t": "Last of all, the special Halloween candy! We put in every single colour.",
-  "c": "audio/el/witch_candy/en/witch_bc0952509c.mp3"
+ "마지막 주문은 빨강, 노랑, 파랑! 세 가지를 넣어 보자.": {
+  "t": "The last spell is red, yellow and blue! Let's put in all three.",
+  "c": "audio/el/witch_candy/en/witch_0705fc18db.mp3"
  },
  "전부 다요?": {
   "t": "Every single one?",
