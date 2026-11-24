@@ -5,6 +5,7 @@ tales/<tale>/narration_el_look_<자리><모습>.js 를 쓴다. 기존 클립은 
 import json, os, re, sys, hashlib, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from polish import polish
+import asrcheck  # 저장 직후 받아쓰기 검사(--no-asr 로 끔)
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 KEY = open(os.path.expanduser('~/.config/elevenlabs/key')).read().strip()
 MODEL0 = 'eleven_v3'
@@ -29,13 +30,17 @@ def tts(path, voice, text, model, st):
     global made
     body = {'text': text, 'model_id': model, 'voice_settings': {**SETTINGS, **(st or {})}}
     import time, urllib.error
-    for a in range(6):
-        r = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128', json.dumps(body).encode(), {'xi-api-key': KEY, 'Content-Type': 'application/json'})
-        try:
-            data = urllib.request.urlopen(r, timeout=120).read(); open(path, 'wb').write(data); polish(path); made += 1; return
-        except urllib.error.HTTPError as e:
-            if e.code in (429, 500, 502, 503) and a < 5: time.sleep(3 * (a + 1)); continue
-            raise
+    def once():
+        for a in range(6):
+            r = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128', json.dumps(body).encode(), {'xi-api-key': KEY, 'Content-Type': 'application/json'})
+            try:
+                data = urllib.request.urlopen(r, timeout=120).read(); open(path, 'wb').write(data); polish(path); return
+            except urllib.error.HTTPError as e:
+                if e.code in (429, 500, 502, 503) and a < 5: time.sleep(3 * (a + 1)); continue
+                raise
+    ok = asrcheck.guarded(once, path, text, 'en' if '/en/' in path else None)
+    if ok: made += 1
+    return ok
 def jmap(f):  # narration js 의 Object.assign 맵들 읽기
     out = {}
     if not os.path.exists(f): return out
@@ -76,7 +81,9 @@ for tale, jobs in JOBS.items():
                     if not os.path.exists(p):
                         chars += len(sent)
                         if dry: print('NEED', rel, '|', sent)
-                        else: os.makedirs(os.path.dirname(p), exist_ok=True); tts(p, voice, sent, M, st); print('ok', rel, sent, flush=True)
+                        else: os.makedirs(os.path.dirname(p), exist_ok=True)
+                        if not tts(p, voice, sent, M, st): print('SUSPECT', rel, sent, flush=True); return None
+                        print('ok', rel, sent, flush=True)
                     return rel
                 seen = set()
                 for ln in lines_of(spec):
@@ -88,7 +95,7 @@ for tale, jobs in JOBS.items():
                     bv = bmap[text]; b = bv['c'] if isinstance(bv, dict) else bv
                     arr = [b] if isinstance(b, str) else list(b)
                     for si, (r, s, emo, dr) in enumerate(segs):
-                        if r == role: arr[si] = mk(r, s, emo, dr)
+                        if r == role: arr[si] = mk(r, s, emo, dr) or arr[si]  # 의심으로 못 만들면 기존 클립 그대로
                     val = arr[0] if isinstance(b, str) else arr
                     val = {'t': bv['t'], 'c': val} if isinstance(bv, dict) else val
                     if text in res[lang] and res[lang][text] != val: print('CONFLICT', tale, lang, text)
@@ -98,7 +105,7 @@ for tale, jobs in JOBS.items():
                     eld = (EL.get('extra') or {}).get(key)
                     b = bvl[key]; arr = [b] if isinstance(b, str) else list(b)
                     for si, s in enumerate(segs):
-                        if s[0] == role: arr[si] = mk(role, s[1], s[2] if len(s) > 2 else None, en_dir(eld, role, si) if en else (s[3] if len(s) > 3 else None))
+                        if s[0] == role: arr[si] = mk(role, s[1], s[2] if len(s) > 2 else None, en_dir(eld, role, si) if en else (s[3] if len(s) > 3 else None)) or arr[si]
                     res['vl'][lang][key] = arr[0] if isinstance(b, str) else arr
         n = len(res['ko']) + len(res['en'])
         print(f'== {tale} {code} {vname}: 줄 ko {len(res["ko"])} en {len(res["en"])} 소리대사 {len(res["vl"]["ko"])}/{len(res["vl"]["en"])}')
@@ -109,3 +116,5 @@ for tale, jobs in JOBS.items():
             f.write(f'/* {tale} — 자리 {slot} 아이 본인 대사의 반대 모습({look}) 녹음 맵 (tools/elevenlabs/gen_look.py 가 생성, 손으로 고치지 말 것). engine/names.js LOOK_CLIPS 가 읽는다 */\n')
             f.write(f"window.NARRATION_LOOK_CLIPS = Object.assign(window.NARRATION_LOOK_CLIPS || {{}}, {{ {code}: " + json.dumps(o, ensure_ascii=False, indent=1) + ' });\n')
 print('새로 만든 클립', made, '/ 보낼 글자(새로 필요)', chars)
+if dry: asrcheck.describe()
+asrcheck.report()

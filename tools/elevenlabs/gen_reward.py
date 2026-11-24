@@ -21,7 +21,9 @@ def clip(text, lang, tag):
 for ko, en, tag in jobs:
     for text, lang in ((ko, 'ko'), (en, 'en')):
         rel, sent = clip(text, lang, tag)
-        if not os.path.exists(f'{ROOT}/{rel}'): g['tts'](f'{ROOT}/{rel}', g['VOICE'], sent, g['MODEL'], g['SET']); print('녹음', text, rel, flush=True)
+        if not os.path.exists(f'{ROOT}/{rel}'): 
+            if not g['tts'](f'{ROOT}/{rel}', g['VOICE'], sent, g['MODEL'], g['SET']): print('의심, 건너뜀', text); continue   # 받아쓰기 검사(asrcheck) 에 걸림
+            print('녹음', text, rel, flush=True)
     K[ko] = clip(ko, 'ko', tag)[0]; E[en] = {'t': en, 'c': clip(en, 'en', tag)[0]}
 with open(f'{ROOT}/home_narration_el.js', 'w') as f:
     f.write('/* 홈 화면 문구 내레이션 — ElevenLabs (tools/elevenlabs/gen_home.py 가 생성, 손으로 고치지 말 것) */\n')

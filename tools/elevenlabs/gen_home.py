@@ -5,17 +5,20 @@
 영어 키도 한국어 문구(home.js 가 넘기는 글)다. 값은 {t: 영어 글, c: 클립}.
 모델 eleven_v4, 목소리 Lily. 있는 클립은 건너뛴다. API 키는 ~/.config/elevenlabs/key (출력하지 않음)."""
 from polish import polish  # 저장 직후 다듬기(polish.py)
+import asrcheck  # 저장 직후 받아쓰기 검사(--no-asr 로 끔)
 import json, os, re, sys, time, hashlib, subprocess, urllib.request, urllib.error
 KEY = open(os.path.expanduser('~/.config/elevenlabs/key')).read().strip()
 def tts(path, voice, text, model, settings):  # gen_tale.py 의 tts 와 같다 (gen_tale 은 import 하면 바로 실행돼서 복사)
     body = {'text': text, 'model_id': model, 'voice_settings': {'stability': 0.5, 'similarity_boost': 0.75, 'style': 0.3, **settings}}
-    for attempt in range(6):
-        r = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128', json.dumps(body).encode(), {'xi-api-key': KEY, 'Content-Type': 'application/json'})
-        try:
-            data = urllib.request.urlopen(r, timeout=120).read(); open(path, 'wb').write(data); polish(path); return
-        except urllib.error.HTTPError as e:
-            if e.code in (429, 500, 502, 503) and attempt < 5: time.sleep(3 * (attempt + 1)); continue
-            raise
+    def once():
+        for attempt in range(6):
+            r = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128', json.dumps(body).encode(), {'xi-api-key': KEY, 'Content-Type': 'application/json'})
+            try:
+                data = urllib.request.urlopen(r, timeout=120).read(); open(path, 'wb').write(data); polish(path); return
+            except urllib.error.HTTPError as e:
+                if e.code in (429, 500, 502, 503) and attempt < 5: time.sleep(3 * (attempt + 1)); continue
+                raise
+    return asrcheck.guarded(once, path, text, 'en' if '/en/' in path else None)  # False = 되풀이 의심, 파일 없음
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 MODEL = 'eleven_v4'
 VOICE = 'pFZP5JQG7iQjIQuC4Bku'  # Lily
@@ -64,12 +67,15 @@ def main():
                 chars += len(sent)
                 if dry: print('NEED', text); 
                 else:
-                    try: tts(path, VOICE, sent, MODEL, SET); print('ok', text, flush=True)
+                    try:
+                        if not tts(path, VOICE, sent, MODEL, SET): print('SUSPECT', text); continue
+                        print('ok', text, flush=True)
                     except urllib.error.HTTPError as e: print('ERR', e.code, text); continue
             if lang == 'ko': clips[ko] = rel
             else: clips_en[ko] = {'t': en, 'c': rel}
     print('새로 보낸 글자 수:', chars, '/ 클립', len(clips), len(clips_en))
-    if dry: return
+    if dry: asrcheck.describe(); return
+    asrcheck.report()
     with open(os.path.join(ROOT, 'home_narration_el.js'), 'w') as f:
         f.write('/* 홈 화면 문구 내레이션 — ElevenLabs (tools/elevenlabs/gen_home.py 가 생성, 손으로 고치지 말 것) */\n')
         f.write('const NARRATION_CLIPS = ' + json.dumps(clips, ensure_ascii=False, indent=1) + ';\n')
@@ -89,7 +95,9 @@ def stage(dry):
             if not os.path.exists(path):
                 chars += len(sent)
                 if dry: print('NEED', text); continue
-                try: tts(path, VOICE, sent, MODEL, SET); print('ok', text, flush=True)
+                try:
+                    if not tts(path, VOICE, sent, MODEL, SET): print('SUSPECT', text); continue
+                    print('ok', text, flush=True)
                 except urllib.error.HTTPError as e: print('ERR', e.code, text); continue
             if lang == 'ko': clips[ko] = rel
             else: clips_en[ko] = {'t': en, 'c': rel}

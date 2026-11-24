@@ -11,6 +11,7 @@ voice_script_el.json 은 voice_script.json 과 같은 모양이고 voices 의 �
 감정: eleven_v3 면 happy→[cheerful] sad→[sad] angry→[angry] whisper→[whispers] toneup→[excited] tonedown→[calm] 태그를 보낼 글 앞에 붙인다.
 API 키는 ~/.config/elevenlabs/key (저장소에 두지 않음)."""
 from polish import polish  # 저장 직후 다듬기(polish.py)
+import asrcheck  # 저장 직후 받아쓰기 검사(되풀이 녹음 걸러냄, --no-asr 로 끔)
 import json, os, re, sys, time, hashlib, urllib.request, urllib.error
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 KEY = open(os.path.expanduser('~/.config/elevenlabs/key')).read().strip()
@@ -25,14 +26,16 @@ def tagged(text, emo, model=None):
 
 def tts(path, voice, text, model=None, settings=None):
     body = {'text': text, 'model_id': model or MODEL, 'voice_settings': {**SETTINGS, **(settings or {})}}
-    for attempt in range(6):
-        r = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128', json.dumps(body).encode(),
-                                   {'xi-api-key': KEY, 'Content-Type': 'application/json'})
-        try:
-            data = urllib.request.urlopen(r, timeout=120).read(); open(path, 'wb').write(data); polish(path); return  # 실패하면 빈 파일을 남기지 않게 받은 뒤에 쓴다
-        except urllib.error.HTTPError as e:
-            if e.code in (429, 500, 502, 503) and attempt < 5: time.sleep(3 * (attempt + 1)); continue
-            raise
+    def once():
+        for attempt in range(6):
+            r = urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{voice}?output_format=mp3_44100_128', json.dumps(body).encode(),
+                                       {'xi-api-key': KEY, 'Content-Type': 'application/json'})
+            try:
+                data = urllib.request.urlopen(r, timeout=120).read(); open(path, 'wb').write(data); polish(path); return  # 실패하면 빈 파일을 남기지 않게 받은 뒤에 쓴다
+            except urllib.error.HTTPError as e:
+                if e.code in (429, 500, 502, 503) and attempt < 5: time.sleep(3 * (attempt + 1)); continue
+                raise
+    return asrcheck.guarded(once, path, text, 'en' if '/en/' in path else None)  # False = 되풀이 의심으로 끝까지 걸려 파일을 쓰지 않음
 
 def main():
     global MODEL
@@ -82,7 +85,9 @@ def main():
             if chars + len(sent) > cap: return None
             chars += len(sent)
             if not dry:
-                try: tts(path, V[role], sent, M, ST); made += 1; print('ok', role, sent, flush=True)
+                try:
+                    if not tts(path, V[role], sent, M, ST): errs += 1; chars -= len(sent); print('SUSPECT', role, text, flush=True); return None
+                    made += 1; print('ok', role, sent, flush=True)
                 except urllib.error.HTTPError as e:
                     errs += 1; chars -= len(sent); print('ERR', e.code, e.read()[:200], role, text, flush=True); return None
             else: print('NEED', rel, '|', text, flush=True)  # --dry: 새로 만들어야 할 클립 경로 (trim_line.py 가 이 경로에 잘라 낸 녹음을 둔다)
@@ -124,9 +129,9 @@ def main():
         urls = [clip(s[0], s[1], s[2] if len(s) > 2 else None, en_dir(eld, s[0], si) if en else (s[3] if len(s) > 3 else None), f'X{key}.{si}', tc_url('VOICE_LINES', key, si, s[0])) for si, s in enumerate(segs)]
         if not all(urls): skipped += 1; continue
         voice[key] = urls[0] if len(urls) == 1 else urls
-    if ONLY: print('시범', made, '개,', chars, '자'); return
+    if ONLY: print('시범', made, '개,', chars, '자'); asrcheck.report(); return
     if dry:
-        print('새로 만들 글자 수:', chars, '/ 건너뛸 줄:', skipped); return
+        print('새로 만들 글자 수:', chars, '/ 건너뛸 줄:', skipped); asrcheck.describe(); return
     sfx = '_EN' if en else ''
     with open(os.path.join(td, ('read_' if read else '') + ('narration_el_en.js' if en else 'narration_el.js')), 'w') as f:
         f.write(f'/* {tale} — ElevenLabs 배역 내레이션{" (영어)" if en else ""} (tools/elevenlabs/gen_tale.py 가 생성, 손으로 고치지 말 것). Typecast 쪽 상수에 덮어쓴다; 여기 없는 줄은 Typecast 클립 */\n')
@@ -141,5 +146,6 @@ def main():
         if fn.partition('_')[0] in MODELS: continue  # 모델을 따로 쓰는 배역은 비교용으로 옛 클립을 남긴다
         if os.path.isfile(fp) and f'audio/el/{tale}/{sub}{fn}' not in used: os.remove(fp)
     print(f'{tale}: 새로 {made}개, {chars}자, 오류 {errs}, 문장 {len(clips)}, 소리 대사 {len(voice)}, 건너뜀 {skipped}')
+    asrcheck.report()
 
 main()
