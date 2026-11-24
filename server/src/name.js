@@ -37,7 +37,11 @@ const INDEX = new Map(); // `${tale}|${id}` → line
 for (const [tale, lines] of Object.entries(NAME_LINES)) for (const l of lines) INDEX.set(tale + '|' + l.id, l);
 export const NAME_TALES = Object.keys(NAME_LINES);
 const TALE_IDS = NAME_TALES.filter((t) => t !== 'home');
-const HOME_TALE = 'witch_candy'; // 홈 스티커 이름 줄(home)은 이 동화의 아이 이름이다. 이 동화를 설정할 때 함께 만든다
+// 2026-11-24 사용자 결정(새 창작 동화 규칙): 출시 때의 네 편. 이 목록에 없는 창작 동화가 name_lines.js 에 들어오면 '새 동화'다.
+// 자격(eligible: '모든 동화 열기'를 샀거나 변경권을 사거나 받은 적 있음)이 있고 covered 에 그 동화가 없으면,
+// 그 새 동화만 대상으로 하는 실행(kind 'new')을 변경권 없이 한 번 만들 수 있다. 출시 네 편은 언제나 변경권이 필요하다.
+export const LAUNCH_TALES = ['kkultteok', 'red_car', 'unicorn', 'witch_candy'];
+const NEW_TALES = TALE_IDS.filter((t) => !LAUNCH_TALES.includes(t));
 const hasPiece = (p) => !!(p && p.n != null && p.pieces && p.pieces[p.n]);
 const piecesOf = (t) => NAME_LINES[t].reduce((m, l) => m + (hasPiece(l.ko) ? 1 : 0) + (hasPiece(l.enRec) ? 1 : 0), 0);
 const RECORDINGS = NAME_TALES.reduce((n, t) => n + piecesOf(t), 0);
@@ -65,21 +69,26 @@ export function catalog() {
 }
 
 // ---------- 계정 안의 이름 기능 상태 ----------
-// 2판(docs/NAME_SETUP_V2_PLAN.md §5): { first: [첫 설정을 쓴 동화], tickets: 남은 아이 이름 변경권(1.99) 장수, run, pv, tx }.
+// 2판(docs/NAME_SETUP_V2_PLAN.md §5): { first: [첫 설정을 쓴 동화], tickets: 남은 아이 이름 변경권(1.99) 장수, run, pv, tx, eligible, covered }.
+// 2026-11-24: 동화마다 무료 첫 설정을 없앴다. first 는 예전 기록을 깨지 않게 읽고 합치기만 하고 새로 늘리지 않는다.
+// 2026-11-24: eligible = 변경권을 사거나 받은 적 있음(구매 owned 도 자격으로 친다), covered = 실행을 만들 때 대상이던 동화(이름이 아니라 동화 id 만).
+// 옛 기록에 covered 가 없으면 first 를 covered 로 읽는다.
 // 옛 기록({ used, tickets(산 누계), covered })은 읽을 때 옮긴다: 생성을 한 번이라도 했으면 first = covered,
 // tickets = 산 누계 − (포함분 1회를 뺀 쓴 횟수)(남은 장수). 다음에 쓸 때 옛 필드는 사라진다.
 export function nameState(rec) {
   const n = rec.name || {};
-  let first, tickets;
+  let first, tickets, covered;
   if (Array.isArray(n.first)) {
     first = n.first;
     tickets = Number(n.tickets) || 0;
+    covered = Array.isArray(n.covered) ? n.covered : first;
   } else {
     const used = Number(n.used) || 0;
     first = used >= 1 && Array.isArray(n.covered) ? n.covered.filter((t) => TALE_IDS.includes(t)) : [];
     tickets = Math.max(0, (Number(n.tickets) || 0) - Math.max(0, used - 1));
+    covered = first;
   }
-  let run = n.run || null; // { id, tales, exp, kind: 'first'|'ticket' } — 진행 중인 실행 하나
+  let run = n.run || null; // { id, tales, exp, kind: 'ticket'|'new'|'first'(예전 서버) } 진행 중인 실행 하나
   if (run && !run.kind) run = { id: run.id, tales: run.tales, exp: run.exp, kind: run.backfill ? 'first' : 'ticket' };
   return {
     first,
@@ -87,7 +96,15 @@ export function nameState(rec) {
     run,
     pv: n.pv || null,                    // { d: 'YYYY-MM-DD', n } 미리 듣기
     tx: Array.isArray(n.tx) ? n.tx : [], // 이 계정이 쓴 이용권 거래의 해시(삭제·연결 때 정리용)
+    eligible: n.eligible === true || tickets > 0 || (Array.isArray(n.tx) && n.tx.length > 0),
+    covered,
   };
+}
+// 변경권 없이 이름을 넣을 수 있는 새 창작 동화(지금은 빈 목록)
+export function newFreeTales(rec, newTales = NEW_TALES) {
+  const n = nameState(rec);
+  if (!n.eligible && !(rec.state && rec.state.owned)) return [];
+  return newTales.filter((t) => !n.covered.includes(t));
 }
 
 const day = (now) => new Date(now).toISOString().slice(0, 10);
@@ -99,8 +116,9 @@ export function quota(rec, now) {
   return {
     owned,
     first: n.first,                                            // 첫 설정을 쓴 동화
-    firstLeft: owned ? TALE_IDS.filter((t) => !n.first.includes(t)) : [], // 아직 안 쓴 동화(무료 첫 설정 가능)
+    firstLeft: [],                                             // 2026-11-24 무료 첫 설정 없앰. 옛 앱 빌드가 읽어도 깨지지 않게 빈 목록으로 둔다
     tickets: n.tickets,                                        // 남은 아이 이름 변경권(1.99) 장수(한 장 = 네 편 한 번에)
+    newFree: newFreeTales(rec),                                // 2026-11-24 새 창작 동화 무료 설정 1번(지금은 빈 목록)
     activeRun: run,
     previewsLeftToday: Math.max(0, PREVIEWS_PER_DAY - (n.pv && n.pv.d === day(now) ? n.pv.n : 0)),
   };
@@ -115,6 +133,8 @@ export function mergeName(target, other) {
     run: a.run,
     pv: a.pv,
     tx: [...new Set([...a.tx, ...b.tx])],
+    eligible: a.eligible || b.eligible,
+    covered: [...new Set([...a.covered, ...b.covered])],
   };
 }
 
@@ -301,9 +321,10 @@ const activeRun = (n, now) => (n.run && n.run.exp > now ? n.run : null);
 const runOut = (run, extra) => ({ runId: run.id, tales: run.tales, kind: run.kind, expiresAt: new Date(run.exp).toISOString(), ...extra });
 
 // 실행 만들기(2판).
-//  { tale }          그 동화의 무료 첫 설정(동화마다 1번, first 에 넣는다). witch_candy 는 홈 스티커 줄(home)도 함께.
 //  { ticket: true }  아이 이름 변경권(1.99) 1장 = 네 편 + home 을 48시간 안에 한 번에. 이용권이 없으면 no_credit.
-// 2026-11-22 A안: 이용권은 '모든 동화 열기'를 사지 않은 계정도 사고 쓴다. 무료 첫 설정({ tale })만 구매(owned)가 필요하다.
+//  { tale }          도는 실행 이어 받기, 또는 새 창작 동화(출시 네 편 밖)의 무료 설정 1번(kind 'new', 아래).
+// 2026-11-22 A안: 이용권은 '모든 동화 열기'를 사지 않은 계정도 사고 쓴다.
+// 2026-11-24: 구매자와 아닌 사람의 흐름이 같다. '모든 동화 열기' 구매 = 변경권 1장(원 거래마다 한 번).
 export async function nameRun(env, me, body, now, putAccount) {
   const rec = me.rec;
   const hasTale = body.tale !== undefined, hasTicket = body.ticket !== undefined;
@@ -317,28 +338,30 @@ export async function nameRun(env, me, body, now, putAccount) {
     const tales = [...TALE_IDS, 'home'];
     await reserveGlobal(env, now, tales.reduce((s, t) => s + piecesOf(t), 0));
     const run = { id: randomToken().slice(0, 22), tales, exp: now + RUN_TTL_MS, kind: 'ticket' };
-    rec.name = { ...n, tickets: n.tickets - 1, run };
+    rec.name = { ...n, tickets: n.tickets - 1, run, eligible: true, covered: [...new Set([...n.covered, ...TALE_IDS])] };
     await putAccount(env, me.id, rec);
     return runOut(run);
   }
 
+  // 2026-11-24 사용자 결정: 동화마다 무료 첫 설정은 없앴다. '모든 동화 열기'에는 변경권 1장이 들어 있다(app.js applyReceipt).
+  // { tale } 은 도는 실행을 이어 받거나(이용권 실행, 새 동화 실행, 예전 서버가 만든 첫 설정 실행 kind 'first' 는 구매가 있을 때),
+  // 새 창작 동화의 무료 설정 1번에만 쓴다. 출시 네 편은 새 실행을 만들지 않고 변경권이 필요하다(402 no_credit).
   const tale = body.tale;
-  const tales = [tale, ...(tale === HOME_TALE ? ['home'] : [])];
   if (cur && cur.kind === 'ticket' && cur.tales.includes(tale)) return runOut(cur, { resumed: true });
-  if (!rec.state.owned) throw NE.notOwned(); // 무료 첫 설정은 '모든 동화 열기'에 들어 있다 // 이용권 실행 안에서 이미 받을 수 있다 → 무료 첫 설정을 아끼고 그 실행을 쓴다
-  if (n.first.includes(tale)) {
-    // 이미 첫 설정을 쓴 동화. 그 실행이 아직 살아 있으면 이어 쓰고, 아니면 이용권이 필요하다.
-    if (cur && cur.kind === 'first' && cur.tales.includes(tale)) return runOut(cur, { resumed: true });
-    throw NE.noCredit();
+  if (cur && cur.kind === 'first' && cur.tales.includes(tale) && rec.state.owned) return runOut(cur, { resumed: true });
+  if (cur && cur.kind === 'new' && cur.tales.includes(tale)) return runOut(cur, { resumed: true });
+  // 새 창작 동화(출시 네 편 밖) 무료 설정 1번. 그 동화 하나만 대상이다(출시 동화는 여기로 오지 못한다).
+  if (newFreeTales(rec).includes(tale)) {
+    await reserveGlobal(env, now, piecesOf(tale));
+    // 도는 'new' 실행이 있으면 같은 실행에 보태 앞 동화의 줄 받기가 끊기지 않게 한다. 이용권 실행 중이면 그 실행에 이미 들어 있다(위).
+    const run = cur && cur.kind === 'new'
+      ? { id: cur.id, tales: [...new Set([...cur.tales, tale])], exp: now + RUN_TTL_MS, kind: 'new' }
+      : { id: randomToken().slice(0, 22), tales: [tale], exp: now + RUN_TTL_MS, kind: 'new' };
+    rec.name = { ...n, run, covered: [...new Set([...n.covered, tale])] };
+    await putAccount(env, me.id, rec);
+    return runOut(run);
   }
-  await reserveGlobal(env, now, tales.reduce((s, t) => s + piecesOf(t), 0));
-  // 진행 중인 첫 설정 실행이 있으면 같은 실행에 동화를 보태 옛 동화의 줄 받기가 끊기지 않게 한다. 그 밖에는 새 실행이 옛 실행을 대신한다.
-  const run = cur && cur.kind === 'first'
-    ? { id: cur.id, tales: [...new Set([...cur.tales, ...tales])], exp: now + RUN_TTL_MS, kind: 'first' }
-    : { id: randomToken().slice(0, 22), tales, exp: now + RUN_TTL_MS, kind: 'first' };
-  rec.name = { ...n, first: [...n.first, tale], run };
-  await putAccount(env, me.id, rec);
-  return runOut(run);
+  throw NE.noCredit();
 }
 
 export async function nameLine(env, me, body, now, deps, cors, getAccount, putAccount) {
@@ -361,7 +384,7 @@ export async function nameLine(env, me, body, now, deps, cors, getAccount, putAc
   if (body.preview === true) {
     // 미리 듣기: 구매(owned)했거나, 이용권이 남았거나, 이용권 실행 중일 때만(아무것도 사지 않은 계정의 무료 생성을 막는다)
     const cur = activeRun(n, now);
-    if (!rec.state.owned && n.tickets < 1 && !(cur && cur.kind === 'ticket')) throw NE.notOwned();
+    if (!rec.state.owned && n.tickets < 1 && !(cur && (cur.kind === 'ticket' || cur.kind === 'new')) && !newFreeTales(rec).length) throw NE.notOwned();
     const today = day(now);
     const used = n.pv && n.pv.d === today ? n.pv.n : 0;
     if (used >= PREVIEWS_PER_DAY) throw NE.quota();
@@ -375,7 +398,7 @@ export async function nameLine(env, me, body, now, deps, cors, getAccount, putAc
   if (typeof body.runId !== 'string' || !n.run || body.runId !== n.run.id) throw NE.runMissing();
   if (n.run.exp <= now) throw NE.runExpired();
   if (!n.run.tales.includes(tale)) throw NE.runMissing();
-  if (n.run.kind !== 'ticket' && !rec.state.owned) throw NE.notOwned(); // 첫 설정 실행은 구매가 있어야 한다(환불 등)
+  if (n.run.kind === 'first' && !rec.state.owned) throw NE.notOwned(); // 예전 서버가 만든 첫 설정 실행은 구매가 있어야 한다(환불 등)
   // 이름 조각·언어마다 카운터 키를 따로 둔다(같은 키 초당 1회 쓰기 제한을 피하고, 계정 기록을 조각마다 쓰지 않게)
   const ck = `nl:${n.run.id}:${tale}:${id}:${lang}:${part.n}`;
   const count = Number(await env.ACCOUNTS.get(ck)) || 0;
@@ -403,7 +426,7 @@ export async function applyRenameReceipt(env, me, txKey, now, putAccount) {
     return { owned, state: me.rec.state, quota: quota(me.rec, now), duplicate: true };
   }
   await env.ACCOUNTS.put('rename:' + h, JSON.stringify({ acct: me.id }));
-  me.rec.name = { ...n, tickets: n.tickets + 1, tx: [...n.tx, h] };
+  me.rec.name = { ...n, tickets: n.tickets + 1, tx: [...n.tx, h], eligible: true };
   await putAccount(env, me.id, me.rec);
   return { owned, state: me.rec.state, quota: quota(me.rec, now) };
 }

@@ -277,11 +277,20 @@ async function own(env, a) {
 }
 
 const LINE = { tale: 'unicorn', id: NAME_LINES.unicorn[0].id };
-const firstRun = async (env, a, deps, tale = 'unicorn') => (await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale }, deps })).json;
 const setName = (env, a, f) => { // 시험용: 계정의 이름 기능 기록을 직접 바꾼다
   const k = 'acct:' + a.accountId, rec = JSON.parse(env.ACCOUNTS.map.get(k));
   rec.name = f(rec.name || {});
   env.ACCOUNTS.map.set(k, JSON.stringify(rec));
+};
+// 시험용: 변경권 1장을 넣고 그 장으로 실행(네 편 + home)을 만든다(2026-11-24: 이름 설정은 모두 변경권 실행)
+const ticketRun = async (env, a, deps) => {
+  setName(env, a, (n) => ({ ...n, tickets: (Number(n.tickets) || 0) + 1 }));
+  return (await raw(env, 'POST', '/v1/name/run', { auth: a, body: { ticket: true }, deps })).json;
+};
+// 시험용: 예전 서버가 만든 첫 설정 실행(kind 'first')이 남아 있는 계정
+const legacyFirstRun = (env, a, tales = ['unicorn']) => {
+  setName(env, a, (n) => ({ ...n, first: tales, tickets: Number(n.tickets) || 0, run: { id: 'f'.repeat(22), tales, exp: NOW + 3600 * 1000, kind: 'first' } }));
+  return { runId: 'f'.repeat(22), tales };
 };
 const ALL = ['kkultteok', 'red_car', 'unicorn', 'witch_candy'];
 const NAMES = { A: '서아', A_en: 'Seoa' };
@@ -310,27 +319,42 @@ describe('GET /v1/name/catalog·quota', () => {
     const home = r.json.tales.home.lines.find((x) => x.key === '딸기 다현이');
     expect(home.keyEn).toBe('Strawberry Dahyun');
   });
-  it('quota: 미구매 0, 구매 1', async () => {
+  it('quota: 미구매·구매 모두 firstLeft 는 빈 목록(2026-11-24 무료 첫 설정 없앰)', async () => {
     const { env, deps } = setup();
     const a = await newAccount(env, deps);
-    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json).toEqual({ owned: false, first: [], firstLeft: [], tickets: 0, activeRun: null, previewsLeftToday: 10 });
+    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json).toEqual({ owned: false, first: [], firstLeft: [], tickets: 0, newFree: [], activeRun: null, previewsLeftToday: 10 });
     await own(env, a);
-    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json).toMatchObject({ owned: true, first: [], firstLeft: ALL, tickets: 0 });
+    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json).toMatchObject({ owned: true, first: [], firstLeft: [], tickets: 0 });
   });
 });
 
-describe('POST /v1/name/run (동화별 첫 설정 · 이용권 실행)', () => {
-  it('미구매: 첫 설정은 403 not_owned, 이용권 실행은 이용권이 없으니 402 no_credit (2026-11-22 A안)', async () => {
+describe('POST /v1/name/run (이용권 실행, 2026-11-24 무료 첫 설정 없앰)', () => {
+  it('미구매: { tale } 도 { ticket } 도 변경권이 없으니 402 no_credit', async () => {
     const { env, deps } = setup();
     const a = await newAccount(env, deps);
     const r = await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps });
-    expect(r.status).toBe(403);
-    expect(r.json.error).toBe('not_owned');
+    expect(r.status).toBe(402);
+    expect(r.json.error).toBe('no_credit');
     const t = await raw(env, 'POST', '/v1/name/run', { auth: a, body: { ticket: true }, deps });
     expect(t.status).toBe(402);
     expect(t.json.error).toBe('no_credit');
   });
-  it('미구매 + 이용권: 네 편 실행·줄 받기·미리 듣기가 되고, 첫 설정은 여전히 403', async () => {
+  it('구매자도 { tale } 로 새 실행을 만들지 못한다(first 가 늘지 않음), 변경권 실행은 된다', async () => {
+    const { env, deps } = setup();
+    const a = await newAccount(env, deps);
+    await own(env, a);
+    for (const tale of ALL) {
+      const r = await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale }, deps });
+      expect(r.status, tale).toBe(402);
+      expect(r.json.error).toBe('no_credit');
+    }
+    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json).toMatchObject({ owned: true, first: [], firstLeft: [], tickets: 0, activeRun: null });
+    const run = await ticketRun(env, a, deps);
+    expect(run).toMatchObject({ kind: 'ticket', tales: [...ALL, 'home'] });
+    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'witch_candy' }, deps })).json).toMatchObject({ runId: run.runId, resumed: true });
+    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json).toMatchObject({ first: [], firstLeft: [], tickets: 0 });
+  });
+  it('미구매 + 이용권: 네 편 실행·줄 받기·미리 듣기가 되고, 실행이 끝나면 { tale } 은 402', async () => {
     const { env, deps } = setup();
     const a = await newAccount(env, deps);
     setName(env, a, (n) => ({ ...n, tickets: 1 }));
@@ -342,24 +366,42 @@ describe('POST /v1/name/run (동화별 첫 설정 · 이용권 실행)', () => {
     expect(q).toMatchObject({ owned: false, firstLeft: [], tickets: 0, activeRun: { runId: run.json.runId, kind: 'ticket' } });
     for (const lang of ['ko', 'en']) expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.json.runId, ...LINE, lang, names: NAMES }, deps })).status).toBe(200);
     expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body: { preview: true, ...LINE, lang: 'ko', names: NAMES }, deps })).status).toBe(200); // 실행 중 미리 듣기
-    // 실행 안의 동화로 { tale } 을 부르면 그 이용권 실행을 돌려받는다(첫 설정을 쓰지 않음)
+    // 실행 안의 동화로 { tale } 을 부르면 그 이용권 실행을 돌려받는다
     expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps })).json).toMatchObject({ runId: run.json.runId, resumed: true });
-    // 실행이 끝나고 이용권도 없으면: 첫 설정 403, 미리 듣기 403
+    // 실행이 끝나고 이용권도 없으면: { tale } 402, 미리 듣기 403
     setName(env, a, (n) => ({ ...n, run: { ...n.run, exp: NOW - 1 } }));
-    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps })).status).toBe(403);
+    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps })).status).toBe(402);
     expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body: { preview: true, ...LINE, lang: 'ko', names: NAMES }, deps })).status).toBe(403);
   });
-  it('구매를 잃은(환불) 계정의 첫 설정 실행은 줄을 더 받지 못한다', async () => {
+  it('예전 서버의 첫 설정 실행(kind first)이 남은 계정: 이어 받기·줄 받기는 되고, 만료 뒤에는 402, first 는 그대로 읽힌다', async () => {
+    const { env, deps, clock } = setup();
+    const a = await newAccount(env, deps);
+    await own(env, a);
+    const run = legacyFirstRun(env, a, ['unicorn', 'red_car']);
+    let q = (await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json;
+    expect(q).toMatchObject({ first: ['unicorn', 'red_car'], firstLeft: [], tickets: 0, activeRun: { runId: run.runId, kind: 'first' } });
+    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'red_car' }, deps })).json).toMatchObject({ runId: run.runId, resumed: true });
+    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'kkultteok' }, deps })).status).toBe(402); // 실행 밖 동화는 새로 열지 않는다
+    expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, ...LINE, lang: 'ko', names: NAMES }, deps })).status).toBe(200);
+    clock.t += 2 * 3600 * 1000;
+    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps })).status).toBe(402);
+    // 변경권 실행은 first 와 상관없이 네 편 모두
+    expect((await ticketRun(env, a, deps)).tales).toEqual([...ALL, 'home']);
+    q = (await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json;
+    expect(q).toMatchObject({ first: ['unicorn', 'red_car'], firstLeft: [], tickets: 0 });
+  });
+  it('구매를 잃은(환불) 계정의 예전 첫 설정 실행은 줄을 더 받지 못하고 이어 받기도 안 된다', async () => {
     const { env, deps } = setup();
     const a = await newAccount(env, deps);
     await own(env, a);
-    const run = await firstRun(env, a, deps);
+    const run = legacyFirstRun(env, a);
     const k = 'acct:' + a.accountId, rec = JSON.parse(env.ACCOUNTS.map.get(k));
     rec.state.owned = false;
     env.ACCOUNTS.map.set(k, JSON.stringify(rec));
     const r = await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, ...LINE, lang: 'ko', names: NAMES }, deps });
     expect(r.status).toBe(403);
     expect(r.json.error).toBe('not_owned');
+    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps })).status).toBe(402);
   });
   it('요청 모양: tale 또는 ticket:true 하나만, 옛 {} 와 {backfill} 은 400', async () => {
     const { env, deps } = setup();
@@ -370,53 +412,6 @@ describe('POST /v1/name/run (동화별 첫 설정 · 이용권 실행)', () => {
       expect(r.status, JSON.stringify(body)).toBe(400);
     }
     expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json.first).toEqual([]);
-  });
-  it('첫 설정: 동화마다 1번 무료, 두 번째는 402, 다른 동화는 그대로 남는다', async () => {
-    const { env, deps, clock } = setup();
-    const a = await newAccount(env, deps);
-    await own(env, a);
-    const r = await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps });
-    expect(r.status).toBe(200);
-    expect(r.json).toMatchObject({ tales: ['unicorn'], kind: 'first' });
-    expect(Date.parse(r.json.expiresAt) - NOW).toBe(48 * 3600 * 1000);
-    const q = (await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json;
-    expect(q).toMatchObject({ first: ['unicorn'], firstLeft: ['kkultteok', 'red_car', 'witch_candy'], tickets: 0 });
-    expect(q.activeRun).toMatchObject({ runId: r.json.runId, tales: ['unicorn'], kind: 'first' });
-    // 같은 동화를 다시 설정하려면(이용권 0장) 402. 실행이 살아 있는 동안은 같은 실행을 이어 준다(first 를 또 쓰지 않음)
-    const again = await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps });
-    expect(again.status).toBe(200);
-    expect(again.json).toMatchObject({ runId: r.json.runId, resumed: true });
-    clock.t += 49 * 3600 * 1000;
-    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json.activeRun).toBeNull();
-    const dead = await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps });
-    expect(dead.status).toBe(402);
-    expect(dead.json.error).toBe('no_credit');
-    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { ticket: true }, deps })).status).toBe(402); // 이용권도 0장
-    // 다른 동화는 아직 무료
-    const red = await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'red_car' }, deps });
-    expect(red.status).toBe(200);
-    expect(red.json.tales).toEqual(['red_car']);
-  });
-  it('witch_candy 첫 설정은 홈 스티커 줄(home)도 함께, 다른 동화는 home 없음', async () => {
-    const { env, deps } = setup();
-    const a = await newAccount(env, deps);
-    await own(env, a);
-    expect((await firstRun(env, a, deps, 'witch_candy')).tales).toEqual(['witch_candy', 'home']);
-    const b = await newAccount(env, deps);
-    await own(env, b);
-    expect((await firstRun(env, b, deps, 'kkultteok')).tales).toEqual(['kkultteok']);
-  });
-  it('첫 설정을 연달아 하면 같은 실행에 동화를 보탠다(앞 동화의 줄 받기가 끊기지 않음)', async () => {
-    const { env, deps } = setup();
-    const a = await newAccount(env, deps);
-    await own(env, a);
-    const r1 = await firstRun(env, a, deps, 'unicorn');
-    const r2 = await firstRun(env, a, deps, 'red_car');
-    expect(r2.runId).toBe(r1.runId);
-    expect(r2.tales).toEqual(['unicorn', 'red_car']);
-    const ok = await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: r1.runId, ...LINE, lang: 'ko', names: NAMES }, deps });
-    expect(ok.status).toBe(200);
-    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json.first).toEqual(['unicorn', 'red_car']);
   });
   it('이용권 실행: 1장으로 네 편 + home, 이용권 0장이면 402, 도는 중에는 이어 쓴다', async () => {
     const { env, deps, clock } = setup();
@@ -449,7 +444,7 @@ describe('POST /v1/name/run (동화별 첫 설정 · 이용권 실행)', () => {
     expect(none.status).toBe(402);
     expect(none.json.error).toBe('no_credit');
   });
-  it('이용권 실행이 새 첫 설정으로 대체되지 않는다', async () => {
+  it('이용권 실행 중 { tale } 은 그 실행을 돌려받는다(first 를 쓰지 않음)', async () => {
     const { env, deps } = setup();
     const a = await newAccount(env, deps);
     await own(env, a);
@@ -464,19 +459,18 @@ describe('POST /v1/name/run (동화별 첫 설정 · 이용권 실행)', () => {
     const a = await newAccount(env, deps);
     await own(env, a);
     setName(env, a, () => ({ first: [], tickets: 1 }));
-    const r = await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps });
+    const r = await raw(env, 'POST', '/v1/name/run', { auth: a, body: { ticket: true }, deps });
     expect(r.status).toBe(503);
     expect(r.json.error).toBe('busy');
-    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { ticket: true }, deps })).status).toBe(503);
     expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json).toMatchObject({ first: [], tickets: 1 });
   });
-  it('옛 기록 이전: 생성한 적 있으면 first = covered, 이용권은 남은 장수로, 안 했으면 모두 무료', async () => {
+  it('옛 기록 이전: 생성한 적 있으면 first = covered(읽기만), 이용권은 남은 장수로, firstLeft 는 언제나 빈 목록', async () => {
     const { env, deps } = setup();
     const a = await newAccount(env, deps);
     await own(env, a);
     setName(env, a, () => ({ used: 1, tickets: 0, covered: ['unicorn', 'red_car'], run: { id: 'r'.repeat(22), tales: [...ALL, 'home'], exp: NOW + 3600 * 1000 } }));
     let q = (await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json;
-    expect(q).toMatchObject({ first: ['unicorn', 'red_car'], firstLeft: ['kkultteok', 'witch_candy'], tickets: 0 });
+    expect(q).toMatchObject({ first: ['unicorn', 'red_car'], firstLeft: [], tickets: 0 });
     expect(q.activeRun).toMatchObject({ runId: 'r'.repeat(22), kind: 'ticket' });
     // 이전 뒤 줄 받기·쓰기가 새 형식으로 저장된다
     expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: 'r'.repeat(22), ...LINE, lang: 'ko', names: NAMES }, deps })).status).toBe(200);
@@ -485,16 +479,16 @@ describe('POST /v1/name/run (동화별 첫 설정 · 이용권 실행)', () => {
     const saved = JSON.parse(env.ACCOUNTS.map.get('acct:' + a.accountId)).name;
     expect(saved).toMatchObject({ first: ['unicorn', 'red_car'], tickets: 0 });
     expect(saved).not.toHaveProperty('used');
-    expect(saved).not.toHaveProperty('covered');
+    expect(saved.covered).toEqual(['unicorn', 'red_car']); // 2026-11-24 covered 는 새 형식에서 '실행 대상이던 동화' 뜻으로 남는다
     // 이용권 산 누계 3장·실행 2번(포함 1회 + 이용권 1장) → 남은 2장
     const b = await newAccount(env, deps);
     await own(env, b);
     setName(env, b, () => ({ used: 2, tickets: 3, covered: ALL }));
     expect((await raw(env, 'GET', '/v1/name/quota', { auth: b, deps })).json).toMatchObject({ tickets: 2, firstLeft: [] });
-    // 한 번도 안 한 계정은 모두 무료
+    // 한 번도 안 한 계정도 무료 첫 설정은 없다
     const c = await newAccount(env, deps);
     await own(env, c);
-    expect((await raw(env, 'GET', '/v1/name/quota', { auth: c, deps })).json).toMatchObject({ first: [], firstLeft: ALL, tickets: 0 });
+    expect((await raw(env, 'GET', '/v1/name/quota', { auth: c, deps })).json).toMatchObject({ first: [], firstLeft: [], tickets: 0 });
   });
 });
 
@@ -503,7 +497,7 @@ describe('POST /v1/name/line', () => {
     const { env, deps, fetch } = setup();
     const a = await newAccount(env, deps);
     await own(env, a);
-    const run = await firstRun(env, a, deps);
+    const run = await ticketRun(env, a, deps);
     const r = await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, ...LINE, lang: 'ko', piece: 0, names: NAMES }, deps, origin: 'capacitor://localhost' });
     expect(r.status).toBe(200);
     expect(r.headers.get('content-type')).toBe('audio/mpeg');
@@ -523,7 +517,7 @@ describe('POST /v1/name/line', () => {
     const { env, deps, fetch } = setup();
     const a = await newAccount(env, deps);
     await own(env, a);
-    const run = await firstRun(env, a, deps, 'witch_candy');
+    const run = await ticketRun(env, a, deps);
     const pron = NAME_LINES.witch_candy.find((x) => x.tplEn.startsWith('{A_g:He/She} melted'));
     expect(pron.ko).toBeNull();
     for (const body of [{ runId: run.runId, tale: 'witch_candy', id: pron.id, lang: 'en', names: { A_en: 'Seoa' }, look: { A: 'b' } }, { preview: true, tale: 'witch_candy', id: pron.id, lang: 'en', names: {} }]) {
@@ -551,7 +545,7 @@ describe('POST /v1/name/line', () => {
     const { env, deps, fetch } = setup();
     const a = await newAccount(env, deps);
     await own(env, a);
-    const run = await firstRun(env, a, deps, 'kkultteok');
+    const run = await ticketRun(env, a, deps);
     const l = NAME_LINES.kkultteok.find((x) => x.key.startsWith('다현이는 성큼성큼'));
     expect(l.ko.whole).toBe(true);
     const r = await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, tale: 'kkultteok', id: l.id, lang: 'ko', piece: l.ko.n, names: { A: '서아', B: '지민', C: '하늘' } }, deps });
@@ -568,7 +562,7 @@ describe('POST /v1/name/line', () => {
     const { env, deps, fetch } = setup();
     const a = await newAccount(env, deps);
     await own(env, a);
-    const run = await firstRun(env, a, deps, 'red_car');
+    const run = await ticketRun(env, a, deps);
     const l = NAME_LINES.red_car[0];
     expect(l.ko.whole).toBe(false);
     const r = await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, tale: 'red_car', id: l.id, lang: 'ko', names: { B: '서아' } }, deps });
@@ -585,7 +579,7 @@ describe('POST /v1/name/line', () => {
     const { env, deps, fetch } = setup();
     const a = await newAccount(env, deps);
     await own(env, a);
-    const run = await firstRun(env, a, deps, 'kkultteok');
+    const run = await ticketRun(env, a, deps);
     const l = NAME_LINES.kkultteok.find((x) => x.ko && x.ko.look) || NAME_LINES.kkultteok.find((x) => x.ko); // 아이 목소리 줄이 없으면(2026-11-07) 아무 한국어 줄로 같은 규칙을 본다
     const send = (look) => raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, tale: 'kkultteok', id: l.id, lang: 'ko', names: NAMES, look }, deps });
     await send({ A: 'b', B: 'g', C: 'b' });
@@ -598,7 +592,7 @@ describe('POST /v1/name/line', () => {
     const { env, deps, fetch } = setup();
     const a = await newAccount(env, deps);
     await own(env, a);
-    const run = await firstRun(env, a, deps, 'red_car');
+    const run = await ticketRun(env, a, deps);
     const l = NAME_LINES.red_car.find((x) => x.enRec && x.enRec.orig.B_en);
     await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, tale: 'red_car', id: l.id, lang: 'en', names: { B: '지민' } }, deps });
     expect(fetch.calls[0].body.text).toContain('Ee-hyun');
@@ -610,7 +604,7 @@ describe('POST /v1/name/line', () => {
     const { env, deps, clock } = setup();
     const a = await newAccount(env, deps);
     await own(env, a);
-    const run = await firstRun(env, a, deps);
+    const run = await ticketRun(env, a, deps);
     const body = { runId: run.runId, ...LINE, lang: 'ko', names: NAMES };
     expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body: { ...body, runId: 'x'.repeat(22) }, deps })).status).toBe(404);
     expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body: { ...body, id: 'nope' }, deps })).status).toBe(400);
@@ -636,13 +630,13 @@ describe('POST /v1/name/line', () => {
     deps.fetch = fakeEleven(() => new Response('{"detail":"boom"}', { status: 500 }));
     const a = await newAccount(env, deps);
     await own(env, a);
-    const run = await firstRun(env, a, deps);
+    const run = await ticketRun(env, a, deps);
     const body = { runId: run.runId, ...LINE, lang: 'ko', names: NAMES };
     const r = await raw(env, 'POST', '/v1/name/line', { auth: a, body, deps });
     expect(r.status).toBe(502);
     expect(r.json.error).toBe('tts_failed');
     expect(env.ACCOUNTS.keys().filter((k) => k.startsWith('nl:'))).toHaveLength(0);
-    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json.first).toEqual(['unicorn']); // 첫 설정은 실행을 만들 때 쓴다(줄 실패와 무관)
+    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json).toMatchObject({ first: [], tickets: 0 }); // 변경권은 실행을 만들 때 쓴다(줄 실패와 무관)
   });
   it('키가 없으면 502', async () => {
     const { env, deps } = setup({ ELEVENLABS_API_KEY: '' });
@@ -744,7 +738,7 @@ describe('POST /v1/name/line', () => {
     const over = await raw(env, 'POST', '/v1/name/line', { auth: a, body, deps });
     expect(over.status).toBe(429);
     expect(over.json.error).toBe('quota_exceeded');
-    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json).toMatchObject({ previewsLeftToday: 0, first: [], firstLeft: ALL, tickets: 0 }); // 첫 설정·이용권과 별개
+    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps })).json).toMatchObject({ previewsLeftToday: 0, first: [], firstLeft: [], tickets: 0 }); // 이용권과 별개
     clock.t += 24 * 3600 * 1000;
     expect((await raw(env, 'POST', '/v1/name/line', { auth: a, body, deps })).status).toBe(200);
   });
@@ -796,34 +790,90 @@ describe('아이 이름 변경권(1.99) 영수증', () => {
     expect(ok.json.owned).toBe(false); // 이용권은 전체 구매를 열지 않는다(앱이 owned 로 잠금을 풀지 않게)
     expect(ok.json.state.owned).toBe(false);
     expect(ok.json.quota).toMatchObject({ owned: false, tickets: 1, firstLeft: [] });
-    // 전체 구매(unlockall) 뒤에도 이용권은 그대로, 첫 설정이 생긴다
+    // 전체 구매(unlockall) 뒤에는 이용권 +1(2026-11-24 포함분). 동화마다 첫 설정은 없다
     expect((await call(env, 'POST', '/v1/receipt/apple', { auth: a, body: { signedTransaction: await signTransaction(chain, goodPayload()) }, deps: d })).json.owned).toBe(true);
-    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps: d })).json).toMatchObject({ owned: true, tickets: 1, firstLeft: ALL });
+    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps: d })).json).toMatchObject({ owned: true, tickets: 2, firstLeft: [] });
     const dup = await call(env, 'POST', '/v1/receipt/apple', { auth: a, body: { signedTransaction: jws1 }, deps: d });
     expect(dup.status).toBe(200);
     expect(dup.json.duplicate).toBe(true);
     expect(dup.json.owned).toBe(true);
-    expect(dup.json.quota.tickets).toBe(1);
+    expect(dup.json.quota.tickets).toBe(2);
     // 다른 계정(구매자)이 같은 거래를 쓰면 거절
     const b = await newAccount(env, d);
     await call(env, 'POST', '/v1/receipt/apple', { auth: b, body: { signedTransaction: await signTransaction(chain, goodPayload()) }, deps: d });
     expect((await call(env, 'POST', '/v1/receipt/apple', { auth: b, body: { signedTransaction: jws1 }, deps: d })).status).toBe(422);
     // 새 거래는 또 +1
     const two = await call(env, 'POST', '/v1/receipt/apple', { auth: a, body: { signedTransaction: await signTransaction(chain, rename('2000000000000002')) }, deps: d });
-    expect(two.json.quota.tickets).toBe(2);
-    // 이용권 2장 = 이용권 실행 2번(한 번에 네 편), 그다음은 402. 첫 설정(동화마다)은 이용권과 별개로 그대로 남는다
+    expect(two.json.quota.tickets).toBe(3);
+    // 이용권 3장 = 이용권 실행 3번(한 번에 네 편), 그다음은 402. 구매자도 { tale } 로 따로 열 수 없다
     const t1 = await raw(env, 'POST', '/v1/name/run', { auth: a, body: { ticket: true }, deps: d });
     expect(t1.json.tales).toEqual([...ALL, 'home']);
-    clock2.t += 49 * 3600 * 1000;
-    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { ticket: true }, deps: d })).status).toBe(200);
+    for (let k = 0; k < 2; k++) {
+      clock2.t += 49 * 3600 * 1000;
+      expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { ticket: true }, deps: d })).status).toBe(200);
+    }
     clock2.t += 49 * 3600 * 1000;
     expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { ticket: true }, deps: d })).status).toBe(402);
-    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps: d })).status).toBe(200);
+    expect((await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps: d })).status).toBe(402);
     // 거래 번호 원문은 KV 에 없다
     expect([...env.ACCOUNTS.map.keys(), ...env.ACCOUNTS.map.values()].join('')).not.toContain('2000000000000001');
     // 계정을 지워도 '쓴 거래' 표시는 남아 다른 계정에서 다시 못 쓴다
     expect((await call(env, 'DELETE', '/v1/account', { auth: a, deps: d })).status).toBe(204);
     expect((await call(env, 'POST', '/v1/receipt/apple', { auth: b, body: { signedTransaction: jws1 }, deps: d })).status).toBe(422);
+  });
+  it('모든 동화 열기에 변경권 1장(2026-11-24): 원 거래마다 한 번, 복원·다른 계정·연결·삭제 뒤에도 다시 안 줌', async () => {
+    const env = makeEnv({ APPLE_ROOT_CA_G3_PEM: chain.rootPem });
+    const d = { now: () => Date.UTC(2026, 9, 27, 12) };
+    const tickets = async (acc) => (await raw(env, 'GET', '/v1/name/quota', { auth: acc, deps: d })).json.tickets;
+    const buy = (acc, over = {}) => signTransaction(chain, goodPayload(over)).then((jws) => call(env, 'POST', '/v1/receipt/apple', { auth: acc, body: { signedTransaction: jws }, deps: d }));
+    const a = await newAccount(env, d);
+    const r1 = await buy(a);
+    expect(r1.status).toBe(200);
+    expect(r1.json.bonusTicket).toBe(true);
+    expect(await tickets(a)).toBe(1);
+    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps: d })).json).toMatchObject({ owned: true, firstLeft: [], tickets: 1 });
+    // 같은 영수증을 다시 보내도(앱을 켤 때마다 isOwned, 구매 복원) 그대로
+    const r2 = await buy(a);
+    expect(r2.json.bonusTicket).toBeUndefined();
+    expect(await tickets(a)).toBe(1);
+    // 같은 원 거래의 다른 거래 번호(복원으로 새로 받은 거래)도 한 번으로 친다
+    await buy(a, { transactionId: '1000000999999999' });
+    expect(await tickets(a)).toBe(1);
+    // 같은 애플 계정의 다른 기기(다른 계정): 열리기는 하지만 변경권은 없다
+    const b = await newAccount(env, d);
+    expect((await buy(b)).json.owned).toBe(true);
+    expect(await tickets(b)).toBe(0);
+    // 연결 코드로 b 를 a 에 합쳐도 늘지 않는다
+    const code = (await call(env, 'POST', '/v1/link/create', { auth: a, body: {}, deps: d })).json.code;
+    const m = await call(env, 'POST', '/v1/link/redeem', { auth: b, body: { code }, deps: d });
+    const merged = { accountId: m.json.accountId, token: m.json.token };
+    expect(await tickets(merged)).toBe(1);
+    await buy(merged);
+    expect(await tickets(merged)).toBe(1);
+    // 계정을 지우고 새 계정에서 복원해도 다시 주지 않는다
+    expect((await call(env, 'DELETE', '/v1/account', { auth: merged, deps: d })).status).toBe(204);
+    const c = await newAccount(env, d);
+    expect((await buy(c)).json.owned).toBe(true);
+    expect(await tickets(c)).toBe(0);
+    // 다른 원 거래(다른 애플 계정의 구매)는 또 1장
+    const e = await newAccount(env, d);
+    expect((await buy(e, { originalTransactionId: '1000000555555555', transactionId: '1000000555555555' })).json.bonusTicket).toBe(true);
+    expect(await tickets(e)).toBe(1);
+    // 원 거래 번호는 KV 에 없다
+    expect([...env.ACCOUNTS.map.keys(), ...env.ACCOUNTS.map.values()].join('')).not.toContain('1000000123456789');
+  });
+  it('이전에 산 계정(변경권 표시 없음)도 다음 확인 때 한 번 받는다', async () => {
+    const env = makeEnv({ APPLE_ROOT_CA_G3_PEM: chain.rootPem });
+    const d = { now: () => Date.UTC(2026, 9, 27, 12) };
+    const a = await newAccount(env, d);
+    const jws = await signTransaction(chain, goodPayload());
+    await call(env, 'POST', '/v1/receipt/apple', { auth: a, body: { signedTransaction: jws }, deps: d });
+    for (const k of [...env.ACCOUNTS.map.keys()]) if (k.startsWith('bonus:')) env.ACCOUNTS.map.delete(k); // 예전 서버로 산 상태
+    const k = 'acct:' + a.accountId, rec = JSON.parse(env.ACCOUNTS.map.get(k));
+    rec.name = { first: ['unicorn'], tickets: 0 }; env.ACCOUNTS.map.set(k, JSON.stringify(rec));
+    await call(env, 'POST', '/v1/receipt/apple', { auth: a, body: { signedTransaction: jws }, deps: d });
+    await call(env, 'POST', '/v1/receipt/apple', { auth: a, body: { signedTransaction: jws }, deps: d });
+    expect((await raw(env, 'GET', '/v1/name/quota', { auth: a, deps: d })).json).toMatchObject({ tickets: 1, first: ['unicorn'] });
   });
   it('알 수 없는 상품은 여전히 422', async () => {
     const env = makeEnv({ APPLE_ROOT_CA_G3_PEM: chain.rootPem });
@@ -845,8 +895,8 @@ describe('개인정보: 이름은 KV·로그에 남지 않는다', () => {
       await own(env, a);
       await raw(env, 'POST', '/v1/name/check', { auth: a, body: { names: secret }, deps });
       await raw(env, 'POST', '/v1/name/line', { auth: a, body: { preview: true, ...LINE, lang: 'ko', names: secret }, deps });
-      const run = await firstRun(env, a, deps, 'kkultteok');
-      await firstRun(env, a, deps, 'unicorn'); // 같은 실행에 보탠다
+      const run = await ticketRun(env, a, deps);
+      await raw(env, 'POST', '/v1/name/run', { auth: a, body: { tale: 'unicorn' }, deps }); // 같은 실행을 이어 받는다
       const dog = NAME_LINES.kkultteok.find((l) => l.ko && l.ko.send.includes('{D'));
       for (const lang of ['ko', 'en']) await raw(env, 'POST', '/v1/name/line', { auth: a, body: { runId: run.runId, tale: 'kkultteok', id: dog.id, lang, names: secret }, deps });
       // 실패 경로도(로그가 남는 곳)
@@ -857,7 +907,7 @@ describe('개인정보: 이름은 KV·로그에 남지 않는다', () => {
       const b = await newAccount(env, deps);
       const merged = await call(env, 'POST', '/v1/link/redeem', { auth: b, body: { code }, deps });
       const q = (await raw(env, 'GET', '/v1/name/quota', { auth: { accountId: merged.json.accountId, token: merged.json.token }, deps })).json;
-      expect(q.first).toEqual(['kkultteok', 'unicorn']);
+      expect(q.first).toEqual([]);
       expect(q.activeRun.runId).toBe(run.runId);
       const dump = [...env.ACCOUNTS.map.keys(), ...env.ACCOUNTS.map.values()].join('\n');
       for (const v of Object.values(secret)) {

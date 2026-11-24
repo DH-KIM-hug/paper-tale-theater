@@ -19,7 +19,8 @@
      apply() 가 모습이 원래와 다른 자리의 맵을 읽어 이름 덮어쓰기보다 먼저 덮는다. 맵의 vl 은 VOICE_LINES(말풍선 없는 소리 대사)를 덮는다
    · 화면 글자: Names.view(글, 동화id) — 원래 이름을 받침 규칙으로 바꾸고, 영어 대명사 줄은 서버 템플릿(tplEn)을 모습으로 채운다
    · 서버 호출은 Entitlements.nameCall(인증 Bearer) 로만. 이름·모습은 요청 본문에만 실리고 서버에 남지 않는다
-   · 이용권(2판): 4.99 구매에 동화마다 첫 설정 1번(run { tale }) · 그 뒤 아이 이름 변경권(1.99) 1장 = 네 편 한 번에(run { ticket: true }, 48시간)
+   · 이용권(2026-11-24 하나의 흐름): 아이 이름 변경권(1.99) 1장 = 네 편 한 번에(run { ticket: true }, 48시간). '모든 동화 열기' 구매에 1장이 들어 있다(서버가 넣음).
+     run { tale } 은 도는 실행 이어 받기와 새 창작 동화 무료 설정 1번(서버 kind 'new')에만 쓴다. 동화마다 무료 첫 설정은 없앴다
    · TTS 없음: 녹음이 다 받아지지 않은 동화는 원래 녹음을 그대로 쓴다
    · 이름 조각 + 고정 조각(2026-11-22 사용자 확정): 서버는 이름 조각(catalog pieces[n])만 녹음해 돌려준다. 고정 조각은 앱 묶음
      (audio/el/<동화>/parts/, 다듬기 전)에 있고, 기기가 assemble() 로 한 파일로 합쳐(앞뒤 무음 자르기 → 이름 조각 음량을 고정 조각에 맞춤 →
@@ -559,11 +560,102 @@ const Names = (() => {
   const settings = () => JSON.parse(JSON.stringify(S));
   const tale = t => JSON.parse(JSON.stringify(cfgOf(t)));
 
+  /* ───────── 표지 그림(2026-11-24 사용자 결정) ─────────
+     홈 카드·타일·배너·책 표지(_key_*)·끝 화면(_back_*)을 주인공 모습에 맞춘다. 퍼즐 조각은 원래 그림 그대로(부르는 쪽이 cover 를 거치지 않는다).
+     · 유니콘·사탕 마녀·빨간 자동차: 같은 구도로 아이만 바꾼 그림 <원래이름>_<자리><모습>.webp (tools/app/gen/mk_jobs_look_cover.py)
+     · 구름 공장: 아이 셋을 지운 배경판 <원래이름>_base.webp 에 고른 모습의 자세 그림을 얹어 합성한다. 기본 모습 조합이면 원래 그림 그대로.
+       합성은 비동기라 끝나기 전에는 배경판을 돌려주고, 끝나면 그 배경판을 쓰는 <img> 를 합성본으로 바꾼다.
+       합성본은 data URL 로 sessionStorage 에 둔다(동화 페이지·책 넘김 handoff 가 바로 쓴다) */
+  const COVER_SPOTS = ['card', 'tile', 'banner', 'key_wide', 'key_tall', 'back_wide', 'back_tall'];
+  const COVER_LOOK = {
+    unicorn: { A: { b: COVER_SPOTS } }, witch_candy: { A: { b: COVER_SPOTS } },
+    red_car: { B: { g: ['banner', 'back_wide', 'back_tall'] } },   // 카드·타일·표지는 자동차만 있어 그대로
+  };
+  /* 구름 공장 합성: 자리 → [자세(원래 모습 id, cf4_ 뺌), 가운데 x, 발끝 y, 높이(그림 높이 비율), 좌우 뒤집기] — 그리는 순서(뒤 → 앞) */
+  const COVER_KIDS = {
+    card: [['nuna_lookup', .10, .93, .57], ['oppa_lookup', .26, .93, .57], ['agi_wave', .43, .92, .42]],
+    tile: [['nuna_lookup', .21, .91, .80], ['oppa_lookup', .43, .91, .78], ['agi_wave', .63, .91, .56]],
+    banner: [['nuna_lookup', .15, .93, .66], ['oppa_point', .32, .93, .64], ['agi_wave', .48, .94, .47]],
+    key_wide: [['nuna_lookup', .32, .85, .58], ['oppa_lookup', .52, .84, .57], ['agi_wave', .42, .90, .42]],
+    key_tall: [['nuna_lookup', .24, .66, .40], ['oppa_lookup', .41, .66, .39], ['agi_wave', .57, .67, .29]],
+    back_wide: [['nuna_hug', .63, .97, .84], ['oppa_hug', .26, .97, .86], ['agi_hug', .45, 1, .62]],
+    back_tall: [['nuna_hug', .24, .90, .64], ['oppa_hug', .52, .88, .64], ['agi_hug', .38, .99, .48]],
+  };
+  const COVER_V = 'c1';   // 합성 자리·배경판을 바꾸면 올린다(sessionStorage 열쇠)
+  const coverSpot = (tale, path) => {
+    const m = String(path || '').match(/^(.*?)(thumbs|banner)\/([^/?#]+)\.webp(\?[^#]*)?$/); if (!m) return null;
+    const [, pre, dir, name, q = ''] = m;
+    const spot = dir === 'banner' ? (name === tale ? 'banner' : '') : (name.startsWith(tale + '_') ? name.slice(tale.length + 1) : '');
+    return COVER_SPOTS.includes(spot) ? { spot, root: pre, dir: pre + dir + '/', name, q } : null;
+  };
+  const coverMem = {}, coverJobs = {}, coverWait = {};
+  const ssGet = k => { try { return sessionStorage.getItem(k); } catch (e) { return null; } };
+  const ssSet = (k, v) => { try { sessionStorage.setItem(k, v); } catch (e) { /* 꽉 차면 이번 페이지 메모리만 */ } };
+  const loadImg = u => new Promise((res, rej) => { const i = new Image(); i.decoding = 'async'; i.onload = () => res(i); i.onerror = rej; i.src = u; });
+  function coverSwap(k, url) {
+    const from = coverWait[k]; if (!from || typeof document === 'undefined') return;
+    document.querySelectorAll('img').forEach(im => { if (from.has(im.getAttribute('src'))) im.src = url; });
+    document.querySelectorAll('[style*="_base.webp"]').forEach(el => {
+      from.forEach(b => { if (el.style.backgroundImage && el.style.backgroundImage.includes(b)) el.style.backgroundImage = el.style.backgroundImage.split(b).join(url); });
+    });
+  }
+  function composeCover(c, base, lk, k) {
+    if (coverJobs[k]) return coverJobs[k];
+    return (coverJobs[k] = (async () => {
+      const kids = COVER_KIDS[c.spot] || [];
+      const [bg, ...ims] = await Promise.all([loadImg(base), ...kids.map(([p]) => loadImg(c.root + 'v3w/' + art('kkultteok', 'cf4_' + p, lk) + '.webp'))]);
+      const cv = document.createElement('canvas'); cv.width = bg.naturalWidth; cv.height = bg.naturalHeight;
+      const x = cv.getContext('2d'), W = cv.width, H = cv.height;
+      x.drawImage(bg, 0, 0);
+      kids.forEach(([, cx, by, hh, flip], i) => {
+        const im = ims[i], h = hh * H, w = h * im.naturalWidth / im.naturalHeight, X = cx * W - w / 2, Y = by * H - h;
+        x.save();
+        /* 엔진이 붙이는 것과 같은 어두운 웜 그림자(종이 인형이 배경판 위에 떠 있는 두께) */
+        x.shadowColor = 'rgba(46,36,28,.30)'; x.shadowBlur = H * .012; x.shadowOffsetX = H * .004; x.shadowOffsetY = H * .006;
+        if (flip) { x.translate(X + w, Y); x.scale(-1, 1); x.drawImage(im, 0, 0, w, h); } else x.drawImage(im, X, Y, w, h);
+        x.restore();
+      });
+      const url = c.spot === 'tile' ? cv.toDataURL('image/png') : cv.toDataURL('image/jpeg', .9);   // 타일은 모서리 투명(원래 타일과 같게)
+      coverMem[k] = url; ssSet(k, url); coverSwap(k, url);
+      return url;
+    })().catch(() => null));
+  }
+  function cover(tale, path) {
+    try {
+      const c = coverSpot(tale, path); if (!c) return path;
+      if (tale === 'kkultteok') {
+        if (!KIDS.some(s => lookTag(tale, s))) return path;
+        const lk = looks(tale), k = `paperTheater.cover.${COVER_V}.${c.spot}.${KIDS.map(s => lk[s]).join('')}`;
+        const hit = coverMem[k] || ssGet(k); if (hit) return (coverMem[k] = hit);
+        if (typeof document === 'undefined') return path;
+        const base = c.dir + c.name + '_base.webp' + c.q;
+        (coverWait[k] = coverWait[k] || new Set()).add(base);
+        composeCover(c, base, lk, k);
+        return base;
+      }
+      const R = COVER_LOOK[tale]; if (!R) return path;
+      for (const s of Object.keys(R)) {
+        const tag = lookTag(tale, s);
+        if (tag && R[s][tag] && R[s][tag].includes(c.spot)) return c.dir + c.name + '_' + s + tag + '.webp' + c.q;
+      }
+      return path;
+    } catch (e) { return path; }
+  }
+  /* 그림 경로 하나(assets/v3w/<id>.webp)를 지금 모습으로 — 홈 스티커처럼 경로를 들고 있는 곳용 */
+  const artSrc = (tale, path) => { try { return String(path).replace(/([^/]+)\.webp/, (m, id) => art(tale, id) + '.webp'); } catch (e) { return path; } };
+  /* 구름 공장을 바꾼 모습이면 홈·동화 페이지에서 미리 합성해 둔다(카드 → 배너 → 표지 → 끝 화면 순) */
+  try {
+    if ((here === 'home' || here === 'kkultteok') && typeof document !== 'undefined' && KIDS.some(s => lookTag('kkultteok', s))) {
+      const root = here === 'home' ? 'assets/' : '../../assets/';
+      COVER_SPOTS.forEach(sp => cover('kkultteok', root + (sp === 'banner' ? 'banner/kkultteok' : 'thumbs/kkultteok_' + sp) + '.webp'));
+    }
+  } catch (e) { /* 미리 못 해도 부를 때 한다 */ }
+
   const ready = (async () => { try { return await apply(); } catch (e) { return 0; } })();
   return {
     SLOTS, KIDS, TALES, TALE_SLOTS, LOOK_ART, LOOK_CLIPS, supported, settings, tale, catalog: cat, fetchCatalog, quota, lastQuota: () => lastQ, check,
     preview, previewText, previewLine, previewArt, start, resume, useTicket, progress, needed, setOriginal, setAgree, agree: () => !!S.agree,
-    look, looks, lookTag, sprite, art, apply, view, templatize, active, ready, busy: () => busy, stop: () => { stopReq = true; },
+    look, looks, lookTag, sprite, art, artSrc, cover, apply, view, templatize, active, ready, busy: () => busy, stop: () => { stopReq = true; },
     onChange: f => { listeners.add(f); return () => listeners.delete(f); }, _polish: polish, _assemble: assemble, _native: !!FS, PRON_CLIPS
   };
 })();

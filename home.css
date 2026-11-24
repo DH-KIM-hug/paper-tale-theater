@@ -1412,6 +1412,12 @@ pre.g-doc { overflow: auto; padding: 12px; font: var(--fs-caption)/1.6 var(--fon
 .col .ticket { min-height: var(--hit-adult); }
 .flow-buy .sheet-btns { justify-content: center; align-items: center; gap: var(--s-4); }
 @media (max-width: 700px) { .buy-cols { grid-template-columns: minmax(0, 1fr); } .col { min-height: 140px; } }
+/* 아이 이름 변경권은 모든 동화 열기와 다른 상품이라 세 칸 아래 따로 한 줄(2026-11-24 사용자) */
+.col.rename-col { min-height: 0; margin-bottom: var(--s-4); display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: var(--s-4); row-gap: 6px; align-items: center; }
+.col.rename-col h3 { grid-column: 1; }
+.col.rename-col .how { grid-column: 1; }
+.col.rename-col .ticket { grid-column: 2; grid-row: 1 / span 2; min-width: 240px; }
+@media (max-width: 700px) { .col.rename-col { grid-template-columns: minmax(0, 1fr); } .col.rename-col .ticket { grid-column: 1; grid-row: auto; min-width: 0; } }
 /* 아이폰 세로: 쪽지 폭 100% − 32, 패딩 24, 어른 단추 폭 100% */
 @media (orientation: portrait) and (max-width: 699px) {
   .sheet { padding: var(--s-5); }

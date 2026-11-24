@@ -5,11 +5,12 @@
    · 스티커: 놀이로 처음 끝까지 한 동화마다 1장(웹 공개판에서도 기기 안에 모은다). 읽어 주기·자동 재생 완주는 둘 다 주지 않는다(엔진이 finishPlay 를 부르지 않는다)
    · 위 조각(stickers2): 같은 동화를 두 번째로 끝까지 놀았을 때 1장(아래 조각 stickers 가 이미 있으면 위 조각). 완주 횟수를 따로 세지 않는다
    · 캐릭터 스티커: 동화마다 세트(tales/stickers.js 의 STICKERS). 놀이로 끝까지 할 때마다 다음 그림 1장(첫 완주 포함, 하루 제한 없음). 세트를 다 모으면 더 주지 않는다
-   · 전체 구매 4.99달러(한 번). 웹(공개 판)은 canPlay 가 언제나 true — 잠그지 않는다
+   · 전체 구매(한 번, 아이 이름 변경권 1장 포함: 서버가 원 거래마다 한 번 넣어 준다, 2026-11-24). 가격은 StoreKit displayPrice 그대로(2026-11-24, 달러 기본값 없음). 웹(공개 판)은 canPlay 가 언제나 true, 잠그지 않는다
    · 앱 모드 = window.Capacitor 가 있거나, 주소에 ?store=1 이 있거나, localStorage store_mode === '1'
    · 기록(state)은 기기 안에 두고, 서버가 있으면 무작위 계정으로 조용히 동기화한다. 서버가 없어도 모든 기능이 동작한다
    · 동화 페이지에 이 파일을 넣어 두면 잠긴 동화의 주소로 바로 들어와도 홈으로 돌려보낸다
-   · 실제 결제: Entitlements.setBridge({ purchase(), restore() }) 가 Promise<boolean> 을 돌려주게 연결 */
+   · 실제 결제: Entitlements.setBridge({ purchase(), restore() }). purchase() 는 { ok, reason } 을 돌려준다
+     (reason: StorePlugin.swift 의 no-product, cancelled, pending, unverified, error. 2026-11-24) */
 const Entitlements = (() => {
   /* 서버 주소는 여기 한 곳. 빌드/시험에서 window.PAPERTALE_API_BASE 로 바꿀 수 있고, 비어 있으면 동기화를 끈다 */
   const API_BASE = (typeof window !== 'undefined' && window.PAPERTALE_API_BASE) || '';
@@ -26,7 +27,7 @@ const Entitlements = (() => {
   const ID_RE = /^[a-z0-9_]{1,40}$/;
   const CAST_RE = /^[a-z0-9_]{1,40}\.[a-z0-9_]{1,40}$/;
   const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
-  let price = '$4.99', renamePrice = '$1.99';
+  let price = '', renamePrice = '', pricing = null;   // StoreKit displayPrice. 못 받았으면 빈 글(화면은 '가격 불러오는 중', 2026-11-24 달러 기본값 없앰). pricing = 다시 받는 중인 약속
   const OWNED_KEY = 'owned_all';        // 옛 구매 기록(호환): state.owned 와 함께 읽는다
   const K_ACCOUNT = 'sync_account', K_STATE = 'sync_state', K_DIRTY = 'sync_dirty', K_RECEIPT = 'sync_receipt';
   const store = {
@@ -286,13 +287,22 @@ const Entitlements = (() => {
   let bridge = null;
   function setBridge(b) { bridge = b; }
   function markOwned() { load().owned = true; store.set(OWNED_KEY, '1'); save(true); notify(); }
+  /* 결제 결과를 { ok, reason } 으로 맞춘다(옛 시험 다리의 true/false 도 받는다). 이유가 없으면 'error' */
+  const asResult = (r, key = 'owned') => (r === true || (r && (r.ok || r[key]))) ? { ok: true } : { ok: false, reason: (r && (r.reason || r.error)) || 'error' };
+  /* 모든 동화 열기 사기 → { ok, reason }. 가격(상품)을 못 받았으면 한 번 다시 불러 보고, 그래도 없으면 no-product */
   async function purchase() {
-    if (bridge && bridge.purchase) { if (await bridge.purchase()) { markOwned(); return true; } return false; }
-    if (window.Capacitor) return false;           // 앱인데 결제 연결이 없으면 열어 주지 않는다
-    markOwned(); return true;                     // 웹 미리보기(?store=1) 모의 결제
+    if (bridge && bridge.purchase) {
+      if (nativeStore && !price && !(await refreshPrices()).price) return { ok: false, reason: 'no-product' };
+      let r;
+      try { r = asResult(await bridge.purchase()); } catch (e) { return { ok: false, reason: 'error' }; }
+      if (r.ok) markOwned();
+      return r;
+    }
+    if (window.Capacitor) return { ok: false, reason: 'no-product' };   // 앱인데 결제 연결이 없으면 열어 주지 않는다
+    markOwned(); return { ok: true };             // 웹 미리보기(?store=1) 모의 결제
   }
   async function restore() {
-    if (bridge && bridge.restore) { if (await bridge.restore()) { markOwned(); return true; } return false; }
+    if (bridge && bridge.restore) { if (asResult(await bridge.restore()).ok) { markOwned(); return true; } return false; }
     if (window.Capacitor) return false;
     return owned();
   }
@@ -441,10 +451,11 @@ const Entitlements = (() => {
   async function purchaseRename() {
     let r = null;
     try {
-      if (bridge && bridge.purchaseRename) r = await bridge.purchaseRename();
-      else return { ok: false, error: 'no_store' };
-    } catch (e) { return { ok: false, error: 'store_error' }; }
-    if (!r || !r.purchased || !r.signedTransaction) return { ok: false, error: (r && r.reason) || 'cancelled' };
+      if (!bridge || !bridge.purchaseRename) return { ok: false, error: 'no_store' };
+      if (nativeStore && !renamePrice && !(await refreshPrices()).renamePrice) return { ok: false, error: 'no-product', reason: 'no-product' };
+      r = await bridge.purchaseRename();
+    } catch (e) { return { ok: false, error: 'error', reason: 'error' }; }
+    if (!r || !r.purchased || !r.signedTransaction) { const why = (r && r.reason) || 'error'; return { ok: false, error: why, reason: why }; }
     const sent = await sendReceipt({ signedTransaction: r.signedTransaction, productId: RENAME_ID });
     return sent ? { ok: true } : { ok: false, error: 'receipt_pending' };   // 못 보낸 영수증은 보관했다가 다음 동기화 때 다시 보낸다
   }
@@ -452,7 +463,7 @@ const Entitlements = (() => {
   /* 실제 앱(Capacitor)이면 네이티브 StoreKit 플러그인(Store)에 연결: 스토어 거래 기록이 구매 여부의 기준 */
   const nativeStore = typeof window !== 'undefined' && window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Store;
   if (nativeStore) {
-    const viaStore = async r => { if (r && r.owned) { sendReceipt(r); return true; } return false; };
+    const viaStore = async r => { if (r && r.owned) { sendReceipt(r); return { ok: true }; } return { ok: false, reason: (r && r.reason) || 'error' }; };
     bridge = {
       purchase: async () => viaStore(await nativeStore.purchase()),
       restore: async () => viaStore(await nativeStore.restore()),
@@ -460,10 +471,24 @@ const Entitlements = (() => {
     };
     /* 이름 바꾸기 이용권이 결제 화면 밖에서 끝난 경우(승인 대기 뒤 등): 영수증을 서버로 */
     nativeStore.addListener('renamePurchased', r => { if (r && r.signedTransaction) sendReceipt({ signedTransaction: r.signedTransaction, productId: RENAME_ID }); });
-    nativeStore.getPrice().then(r => { if (r && r.price) price = r.price; }).catch(() => {});
-    if (nativeStore.getRenamePrice) nativeStore.getRenamePrice().then(r => { if (r && r.price) renamePrice = r.price; }).catch(() => {});
+    refreshPrices();
     nativeStore.isOwned().then(r => { if (r && r.owned) { markOwnedQuiet(); sendReceipt(r); } }).catch(() => {});
     nativeStore.addListener('ownedChanged', r => { if (r && r.owned) { markOwnedQuiet(); sendReceipt(r); } });
+  }
+  /* 두 상품 가격(StoreKit displayPrice)을 다시 받는다. 바뀌면 화면에 알린다 → { price, renamePrice } */
+  function refreshPrices() {
+    if (!nativeStore) return Promise.resolve({ price, renamePrice });
+    if (!pricing) pricing = Promise.all([
+      nativeStore.getPrice ? nativeStore.getPrice().catch(() => null) : null,
+      nativeStore.getRenamePrice ? nativeStore.getRenamePrice().catch(() => null) : null
+    ]).then(([a, b]) => {
+      const before = price + '|' + renamePrice;
+      if (a && a.price) price = a.price;
+      if (b && b.price) renamePrice = b.price;
+      if (price + '|' + renamePrice !== before) notify();
+      return { price, renamePrice };
+    }).finally(() => { pricing = null; });
+    return pricing;
   }
   function grantAll() { markOwned(); }
   function revokeAll() { store.del(OWNED_KEY); load().owned = false; save(false); }
@@ -480,7 +505,7 @@ const Entitlements = (() => {
   function _reset(s) { st = s === undefined ? null : normalize(s); }
 
   const api = {
-    FREE_ALWAYS, PER_WEEK, STAR_NEED, STICKER_MAX, get PRICE() { return price; }, get RENAME_PRICE() { return renamePrice; }, API_BASE, PRODUCT_ID, RENAME_ID, nameCall, purchaseRename, owned,
+    FREE_ALWAYS, PER_WEEK, STAR_NEED, STICKER_MAX, get PRICE() { return price; }, get RENAME_PRICE() { return renamePrice; }, refreshPrices, API_BASE, PRODUCT_ID, RENAME_ID, nameCall, purchaseRename, owned,
     appMode, weekNumber, dateStr, freeThisWeek, status, canPlay, isFree, lockedChoices,
     purchase, restore, grantAll, revokeAll, setBridge, guard,
     state: () => load(), merge, normalize, balanceOf,

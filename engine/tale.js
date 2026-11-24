@@ -985,7 +985,7 @@ const Tale = (() => {
       const onStage = new Set([...root.querySelectorAll('img,image')].map(e => nameOf(e.getAttribute('src') || e.getAttribute('href') || '')));
       const bgs = Object.keys(imgCache).filter(src => /_(bg|lb)[0-9]*_/.test(src) && !/board|frame|card|table/.test(src) && !onStage.has(nameOf(src))
         && imgCache[src].img && imgCache[src].img.naturalWidth);
-      const pool = bgs.length ? bgs : [`${ROOT_URL}assets/thumbs/${id}_key_${portrait ? 'tall' : 'wide'}.webp`];
+      const pool = bgs.length ? bgs : [coverOf(id, `${ROOT_URL}assets/thumbs/${id}_key_${portrait ? 'tall' : 'wide'}.webp`)];
       flips.slice(1).forEach((p, i) => setArt(p, pool[i % pool.length]));
       pool.slice(0, NP).forEach(src => { const im = imgCache[src] && imgCache[src].img; if (im && im.decode) im.decode().catch(() => {}); });
       // 넘김 시각: 4장을 그림이 보일 만큼 천천히, 뒤로 갈수록 조금씩 빨라진다(10-30 사용자: 너무 빠름)
@@ -1790,6 +1790,9 @@ const Tale = (() => {
   function clear() { bgL.innerHTML = ''; world.innerHTML = ''; fxL.innerHTML = ''; }
 
   /* ---------- 틀 만들기 ---------- */
+  /* 표지 그림(책 표지·책장·끝 화면)과 캐릭터 스티커를 주인공 모습에 맞춘다(engine/names.js, 2026-11-24). names.js 가 없는 동화는 그대로 */
+  const coverOf = (id, p) => { try { return typeof Names !== 'undefined' && Names.cover ? Names.cover(id, p) : p; } catch (e) { return p; } };
+  const castImg = (id, p) => { try { return typeof Names !== 'undefined' && Names.artSrc ? Names.artSrc(id, p) : p; } catch (e) { return p; } };
   /* 저장소 뿌리(홈·썸네일 경로): 이 엔진 파일(engine/tale.js)의 한 단계 위 */
   const ROOT_URL = (() => { try { return new URL('../', document.currentScript.src).href; } catch (e) { return '../../'; } })();
   preload(ROOT_URL + 'assets/v3w/cm_cut_bg.webp');   // 만화 컷 바탕은 첫 컷에 바로 보이게 미리
@@ -1832,7 +1835,7 @@ const Tale = (() => {
     const portraitMQ = window.matchMedia('(orientation: portrait)');
     /* 시작 화면 키아트: <id>_key_wide.webp(가로) / <id>_key_tall.webp(세로), 둘 다 있을 때만 (THUMBSKEY). 없으면 예전 구멍 배치 */
     const keySrc = () => (window.THUMBSKEY || []).includes(id)
-      ? `${ROOT_URL}assets/thumbs/${id}_key_${portraitMQ.matches ? 'tall' : 'wide'}.webp` : '';
+      ? coverOf(id, `${ROOT_URL}assets/thumbs/${id}_key_${portraitMQ.matches ? 'tall' : 'wide'}.webp`) : '';
     const set = () => {
       const has = window.THUMBS2L || [];
       const src = has.includes(id) ? `${ROOT_URL}assets/thumbs/${id}_light.webp` : '';
@@ -2172,7 +2175,7 @@ const Tale = (() => {
       paint(); if (!window.BACKACCENT) heroesP.then(paint);
       const kind = () => (portraitMQ.matches ? 'tall' : 'wide');
       const bi = es.querySelector('.bimg'); let step = 0;
-      const chain = () => [base + '_back_' + kind() + '.webp', base + '_key_' + kind() + '.webp', base + '_tile.webp'];
+      const chain = () => [coverOf(id, base + '_back_' + kind() + '.webp'), coverOf(id, base + '_key_' + kind() + '.webp'), base + '_tile.webp'];
       bi.onerror = () => { step++; const c = chain(); if (step < c.length) { es.classList.add('fallback'); bi.src = c[step]; } else bi.removeAttribute('src'); };
       es.classList.toggle('fallback', false); bi.src = chain()[0];
       es.hidden = false;
@@ -2475,7 +2478,7 @@ const Tale = (() => {
         if (award.sticker2) { const top = await pieceSrc('top'); items.push({ kind: top ? 'piece2' : 'sticker', img: top || tile, target: () => hole.getBoundingClientRect() }); }
         if (award.cast) {
           const c = (Entitlements.castOf(id).find(x => x.k === award.cast)) || null;
-          if (c) items.push({ kind: 'cast', img: /^(https?:|\/)/.test(c.img) ? c.img : ROOT_URL + c.img, target: () => hole.getBoundingClientRect() });
+          if (c) items.push({ kind: 'cast', img: castImg(id, /^(https?:|\/)/.test(c.img) ? c.img : ROOT_URL + c.img), target: () => hole.getBoundingClientRect() });
         }
         if (wantStar) items.push({ kind: 'star', target: () => plate.getBoundingClientRect() });
         if (!items.length) return true;
@@ -2515,7 +2518,7 @@ const Tale = (() => {
         if (award.sticker || award.sticker2) await sleep(800);
         const c = (Entitlements.castOf(id).find(x => x.k === award.cast)) || null;
         if (c) {
-          const src = /^(https?:|\/)/.test(c.img) ? c.img : ROOT_URL + c.img;
+          const src = castImg(id, /^(https?:|\/)/.test(c.img) ? c.img : ROOT_URL + c.img);
           await fly(`<img alt="" draggable="false" src="${src}">`, 'cast', es.querySelector('.bwin').getBoundingClientRect(), hole.getBoundingClientRect(), 1300);
           pulse(book);
           sfx('pop', .8);

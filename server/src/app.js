@@ -137,6 +137,8 @@ async function linkRedeem(env, me, body, now) {
     if (!r) continue;
     r.accounts = [...new Set(r.accounts.map((a) => (a === me.id ? rec.accountId : a)))];
     await env.ACCOUNTS.put('receipt:' + h, JSON.stringify(r));
+    const b = await env.ACCOUNTS.get('bonus:' + h, 'json'); // 변경권 1장 준 표시도 남는 계정으로
+    if (b && b.acct === me.id) await env.ACCOUNTS.put('bonus:' + h, JSON.stringify({ acct: rec.accountId }));
   }
   const ownedVia = target.ownedVia || me.rec.ownedVia; // 옛 쿠폰(2026-11-13 제거)으로 연 계정 표시도 옮긴다
   await putAccount(env, rec.accountId, { tokenHashes, state: merged, receipts, name, ...(ownedVia ? { ownedVia } : {}) });
@@ -151,6 +153,11 @@ async function deleteAccount(env, me) {
     r.accounts = r.accounts.filter((a) => a !== me.id);
     if (r.accounts.length) await env.ACCOUNTS.put('receipt:' + h, JSON.stringify(r));
     else await env.ACCOUNTS.delete('receipt:' + h);
+  }
+  // '모든 동화 열기'에 든 변경권 1장 표시(bonus:)는 계정만 지우고 남긴다(같은 구매로 다시 받지 못하게).
+  for (const h of me.rec.receipts || []) {
+    const b = await env.ACCOUNTS.get('bonus:' + h, 'json');
+    if (b && b.acct === me.id) await env.ACCOUNTS.put('bonus:' + h, JSON.stringify({ acct: null }));
   }
   // 이름 바꾸기권 거래는 계정만 지우고 '이미 쓴 거래' 표시는 남긴다(다른 계정에서 다시 쓰지 못하게).
   for (const h of nameState(me.rec).tx) await env.ACCOUNTS.put('rename:' + h, JSON.stringify({ acct: null }));
@@ -170,8 +177,18 @@ async function applyReceipt(env, me, receiptKey) {
   const rec = me.rec;
   rec.receipts = [...new Set([...(rec.receipts || []), h])];
   rec.state = { ...rec.state, owned: true };
+  // 2026-11-24: '모든 동화 열기' 한 번에 아이 이름 변경권 1장. 원 거래(receiptKey)마다 한 번만 준다.
+  // 표시는 'bonus:<해시>' 에 따로 두어 복원·재확인·다른 기기 연결·계정 삭제 뒤에도 다시 주지 않는다(이전 구매도 다음 확인 때 한 번).
+  const bk = 'bonus:' + h;
+  let bonusTicket = false;
+  if (!(await env.ACCOUNTS.get(bk))) {
+    await env.ACCOUNTS.put(bk, JSON.stringify({ acct: me.id }));
+    const n = nameState(rec);
+    rec.name = { ...n, tickets: n.tickets + 1, eligible: true };
+    bonusTicket = true;
+  }
   await putAccount(env, me.id, rec);
-  return { owned: true, state: rec.state };
+  return { owned: true, state: rec.state, ...(bonusTicket ? { bonusTicket } : {}) };
 }
 
 async function receiptApple(env, me, body, now) {

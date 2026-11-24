@@ -80,7 +80,9 @@
     const i = key.indexOf('.'), tale = key.slice(0, i), k = key.slice(i + 1);
     const set = (typeof STICKERS !== 'undefined' && STICKERS[tale]) || [];
     const c = set.find(x => x.k === k);
-    return c && c.img ? { key, tale, k, img: c.img, ko: c.ko, en: c.en, sh: c.sh || SCALE[key] || 1, kid: !!c.kid } : null;
+    /* 사탕 마녀 아이 스티커는 주인공 모습에 맞춘 그림(Names.artSrc, 2026-11-24) */
+    const img = c && c.img && typeof Names !== 'undefined' && Names.artSrc ? Names.artSrc(tale, c.img) : c && c.img;
+    return c && c.img ? { key, tale, k, img, ko: c.ko, en: c.en, sh: c.sh || SCALE[key] || 1, kid: !!c.kid } : null;
   }
   const shiny = key => { try { return Entitlements.isShiny(key); } catch (e) { return false; } };
   const bgOpen = b => castN() >= b.need;

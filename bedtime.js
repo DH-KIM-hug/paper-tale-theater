@@ -49,7 +49,8 @@
   /* ── 화면 ── */
   const state = s => { document.body.dataset.state = s; B.phase = s; };
   const tall = () => innerHeight > innerWidth;
-  const coverSrc = t => `assets/thumbs/${t.id}_key_${tall() ? 'tall' : 'wide'}.webp`;
+  /* 표지는 주인공 모습에 맞춘 그림(engine/names.js Names.cover, 2026-11-24) */
+  const coverSrc = t => { const p = `assets/thumbs/${t.id}_key_${tall() ? 'tall' : 'wide'}.webp`; try { return typeof Names !== 'undefined' && Names.cover ? Names.cover(t.id, p) : p; } catch (e) { return p; } };
   let curCover = null;
   function setCover(t) {
     curCover = t;
