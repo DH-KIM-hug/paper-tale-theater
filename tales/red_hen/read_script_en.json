@@ -1514,17 +1514,16 @@
      ]
     },
     {
-     "text": "딸기는 피자에 안 넣어!",
-     "en": "Strawberries don't go on pizza!",
+     "text": "딸기는 다음 요리에 쓰자!",
+     "en": "Let's save the strawberries for the next dish!",
      "segs": [
       [
        "cat",
-       "Strawberries don't go on pizza!",
+       "Let's save the strawberries for the next dish!",
        "happy"
       ]
      ],
-     "src": "reuse",
-     "from": "I_nostraw",
+     "src": "new",
      "before": [
       "k9:rest"
      ]
@@ -1679,17 +1678,16 @@
      ]
     },
     {
-     "text": "토마토는 팬케이크에 안 넣어!",
-     "en": "Tomatoes don't go on pancakes!",
+     "text": "토마토는 다음 요리에 쓰자!",
+     "en": "Let's save the tomatoes for the next dish!",
      "segs": [
       [
        "dog",
-       "Tomatoes don't go on pancakes!",
+       "Let's save the tomatoes for the next dish!",
        "happy"
       ]
      ],
-     "src": "reuse",
-     "from": "I_notomato",
+     "src": "new",
      "before": [
       "k9:rest"
      ]

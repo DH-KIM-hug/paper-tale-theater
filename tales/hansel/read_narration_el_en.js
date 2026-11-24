@@ -346,8 +346,8 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/hansel/en/nar_57ce984d44.mp3"
   ]
  },
- "\"너희가 먼저 집으로 간 줄 알았단다. 눈을 뜰 때까지 곁에 있을걸.\" 아빠가 미안해하며 말했어요.": {
-  "t": "I thought you two had gone home ahead of me. I should have stayed beside you until you woke up. Papa said, feeling sorry.",
+ "\"얘들아, 너희를 숲에 두고 와서 미안하다. 얼마나 무서웠니?\" 아빠가 미안해하며 말했어요.": {
+  "t": "Children, I am sorry I left you in the forest. How scared you must have been! Papa said, feeling sorry.",
   "c": [
    "audio/el/hansel/en/father_f0c6431556.mp3",
    "audio/el/hansel/en/nar_88395cd1f7.mp3"

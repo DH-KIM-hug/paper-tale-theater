@@ -10,6 +10,7 @@ Object.assign(NARRATION_CLIPS, {
  ],
  "개미 눈으로 보면 풀잎이 나무처럼 커다래요!": "audio/el/ant_grasshopper/nar_694a3e3ed0.mp3",
  "곡식을 톡톡 눌러서 창고로 날라 줘요!": "audio/el/ant_grasshopper/nar_7a90bda140.mp3",
+ "곡식을 톡 눌러 봐요. 개미들이 한 알씩 창고로 날라요!": "audio/el/ant_grasshopper/nar_ba7c54daa1.mp3",
  "노란 곡식을 톡톡 눌러 봐요!": "audio/el/ant_grasshopper/nar_b6d1150fe1.mp3",
  "창고 칸이 가득 찼어요! 하나부터 열까지, 열 칸!": "audio/el/ant_grasshopper/nar_e2370d7219.mp3",
  "\"같이 놀자~ 띠리링!\" 베짱이가 노래해요.": [

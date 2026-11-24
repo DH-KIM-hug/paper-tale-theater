@@ -55,9 +55,9 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/kongjwi/en/nar_8e73cd0ced.mp3"
   ]
  },
- "물동이를 톡톡톡 눌러서 물을 세 번 부어 봐요!": {
-  "t": "Tap the bucket, tap tap tap, to pour water three times!",
-  "c": "audio/el/kongjwi/en/nar_269dd8d558.mp3"
+ "물동이를 톡 눌러 봐요. 콩쥐가 물을 세 번 부어요!": {
+  "t": "Tap the water jar. Kongjwi pours the water three times!",
+  "c": "audio/el/kongjwi/en/nar_5e44451725.mp3"
  },
  "물동이를 톡톡톡! 물을 부어요.": {
   "t": "Tap the bucket, tap tap tap! Pour the water.",
@@ -107,9 +107,13 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/kongjwi/en/sparrow_a58793bb49.mp3"
   ]
  },
- "참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요. 참새를 하나씩 세어 봐요!": {
-  "t": "The sparrows pecked and peeled the husks. Let's count the sparrows one by one!",
-  "c": "audio/el/kongjwi/en/nar_7218fd015c.mp3"
+ "참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요.": {
+  "t": "The sparrows pecked and peeled the husks.",
+  "c": "audio/el/kongjwi/en/nar_eb5767248f.mp3"
+ },
+ "참새를 톡 눌러 봐요. 한 마리씩 세어요!": {
+  "t": "Tap the sparrows. Let's count them one by one!",
+  "c": "audio/el/kongjwi/en/nar_54f2c482ea.mp3"
  },
  "참새를 톡톡톡톡톡! 하나씩 세어요.": {
   "t": "Tap the sparrows, tap tap tap tap tap! Count them one by one.",
@@ -137,9 +141,13 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/kongjwi/en/kong_6770fa3459.mp3"
   ]
  },
- "콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡! 건너 봐요!": {
-  "t": "Kongjwi crossed the stream to go to the feast. Tap to cross the stepping stones!",
-  "c": "audio/el/kongjwi/en/nar_7425076013.mp3"
+ "콩쥐는 잔치에 가려고 개울을 건너기로 했어요.": {
+  "t": "Kongjwi crossed the stream to go to the feast.",
+  "c": "audio/el/kongjwi/en/nar_417b0e7ea0.mp3"
+ },
+ "콩쥐를 톡 눌러 봐요. 징검다리를 폴짝폴짝 건너요!": {
+  "t": "Tap Kongjwi. She hops across the stepping stones!",
+  "c": "audio/el/kongjwi/en/nar_b7968d3fc4.mp3"
  },
  "풍덩! 꽃신 한 짝이 개울에 빠졌어요. 꽃신은 둥둥 떠내려갔어요.": {
   "t": "Splash! One shoe fell into the stream and floated away.",
@@ -172,9 +180,9 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/kongjwi/en/won_7997f018b0.mp3"
   ]
  },
- "꽃신 세 켤레 중에서 나비 꽃신이 콩쥐의 꽃신이에요. 나비 꽃신을 톡!": {
-  "t": "Of the three pairs of shoes, the butterfly shoe is Kongjwi's. Tap the butterfly shoe!",
-  "c": "audio/el/kongjwi/en/nar_450b95df73.mp3"
+ "꽃신 세 짝 중에서 나비가 그려진 꽃신을 찾아봐요.": {
+  "t": "Find the shoe with the butterfly among the three shoes.",
+  "c": "audio/el/kongjwi/en/nar_7ca4c54f2b.mp3"
  },
  "나비 꽃신을 톡!": {
   "t": "Tap the butterfly shoe!",

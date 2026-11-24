@@ -210,9 +210,6 @@ const NARRATION_CLIPS_EN = {
  "하늘에서 아기 먹구름이 큰 먹구름과 쿵!": {
   "t": "Up in the sky, the baby rain cloud bumps into a big rain cloud. Bump!"
  },
- "번개를 톡!": {
-  "t": "Tap the lightning!"
- },
  "번쩍! 우르릉 쾅!": {
   "t": "Flash! Rumble, BOOM!"
  },

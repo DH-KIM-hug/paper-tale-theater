@@ -8296,10 +8296,10 @@
     "id": "kf6cda826",
     "mode": "both",
     "keyOld": "다현이가 넣어 줘. 하나든 여러 개든 좋아.",
-    "key": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
-    "keyEn": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
+    "key": "다현아, 마음에 드는 재료를 하나나 두 개 골라 넣어 줘.",
+    "keyEn": "다현아, 마음에 드는 재료를 하나나 두 개 골라 넣어 줘.",
     "enOld": "Dahyun, you put them in. One or lots, it's all good.",
-    "en": "Dahyun, you put them in. One or lots, it's all good.",
+    "en": "Dahyun, pick one or two ingredients you like and put them in.",
     "g": [],
     "parts": {
      "ko": {
@@ -8315,7 +8315,7 @@
       },
       "tag": "[kind quirky witch, warm, giggly, a little silly, never scary]",
       "urlOld": "audio/el/witch_candy/witch_67ea3cbc9b.mp3",
-      "url": "audio/el/witch_candy/name/7ca67ace62.mp3",
+      "url": "audio/el/witch_candy/name/f29cbfd9eb.mp3",
       "urlLook": {},
       "orig": {},
       "look": null,
@@ -8327,9 +8327,9 @@
        },
        {
         "k": "S",
-        "tpl": "네가 넣어 줘. 하나든 여러 개든 좋아.",
+        "tpl": "마음에 드는 재료를 하나나 두 개 골라 넣어 줘.",
         "gap": 0,
-        "url": "audio/el/witch_candy/parts/ko_e730a9298a1f.mp3"
+        "url": "audio/el/witch_candy/parts/ko_3ae219827f03.mp3"
        }
       ]
      },
@@ -8346,7 +8346,7 @@
       },
       "tag": "[kind quirky witch, warm, giggly, a little silly, never scary]",
       "urlOld": "audio/el/witch_candy/en/witch_0c45cd1a0c.mp3",
-      "url": "audio/el/witch_candy/en/name/c510326cde.mp3",
+      "url": "audio/el/witch_candy/en/name/c8b147c540.mp3",
       "urlLook": {},
       "orig": {},
       "look": null,
@@ -8358,9 +8358,9 @@
        },
        {
         "k": "S",
-        "tpl": "you put them in. One or lots, it's all good.",
+        "tpl": "pick one or two ingredients you like and put them in.",
         "gap": 0,
-        "url": "audio/el/witch_candy/parts/en_3c2132bcadae.mp3"
+        "url": "audio/el/witch_candy/parts/en_800328693eda.mp3"
        }
       ]
      }

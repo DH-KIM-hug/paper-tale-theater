@@ -201,12 +201,12 @@
    ]
   },
   {
-   "text": "할머니가 누구를 부를까요?",
-   "en": "Who will Grandma call?",
+   "text": "할머니가 가족을 한 명 더 부르려고 해요. 손녀는 어디 있을까요?",
+   "en": "Grandma wants to call one more family member. Where is the granddaughter?",
    "segs": [
     [
      "nar",
-     "Who will Grandma call?",
+     "Grandma wants to call one more family member. Where is the granddaughter?",
      "happy:1.1"
     ]
    ]
@@ -463,12 +463,12 @@
    ]
   },
   {
-   "text": "이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!",
-   "en": "This time, all six together! Tap the turnip. Heave-ho!",
+   "text": "순무를 톡 눌러 봐요. 다 함께 영차!",
+   "en": "Tap the turnip. All together, heave-ho!",
    "segs": [
     [
      "nar",
-     "This time, all six together! Tap the turnip. Heave-ho!",
+     "Tap the turnip. All together, heave-ho!",
      "toneup:1.3"
     ]
    ]
@@ -705,12 +705,12 @@
    ]
   },
   {
-   "text": "순무국을 한 그릇씩 나눠 줘요. 냄비를 톡 눌러요!",
-   "en": "Let's share the soup, one bowl each. Tap the pot!",
+   "text": "냄비를 톡 눌러 봐요. 여섯 친구의 그릇에 순무국을 담아요!",
+   "en": "Tap the pot. Let's fill six bowls with turnip soup!",
    "segs": [
     [
      "nar",
-     "Let's share the soup, one bowl each. Tap the pot!",
+     "Tap the pot. Let's fill six bowls with turnip soup!",
      "happy:1.1"
     ]
    ]

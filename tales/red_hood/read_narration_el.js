@@ -52,9 +52,9 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/red_hood/nar_2e15813edb.mp3"
  ],
  "빨간 모자는 문을 열고 침대 곁으로 다가갔어요.": "audio/el/red_hood/nar_7de1707e60.mp3",
- "\"할머니, 오셨어요?\" 그런데 침대 속 할머니가 어딘가 이상해요.": [
-  "audio/el/red_hood/hood_bb9747f68e.mp3",
-  "audio/el/red_hood/nar_03bbde0b16.mp3"
+ "\"할머니, 저 왔어요!\" 그런데 침대에 누운 할머니가 어딘가 이상해요.": [
+  "audio/el/red_hood/hood_f0240cf27c.mp3",
+  "audio/el/red_hood/nar_086083861b.mp3"
  ],
  "\"할머니, 귀가 왜 이렇게 커요?\"": "audio/el/red_hood/hood_3b4e5a5554.mp3",
  "\"네 말을 잘 들으려고 그렇지~\"": "audio/el/red_hood/wolf_ebcd8e8cf9.mp3",

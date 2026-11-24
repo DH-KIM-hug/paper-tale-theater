@@ -2,7 +2,7 @@
 // 줄: id, key(녹음 맵 열쇠 = 한국어 글), keyEn(영어 맵 열쇠, 홈만 영어 글), mode(play|read|both|home), tpl/tplEn(화면 글 템플릿), en(영어 글), g(영어 대명사 자리)
 //     ko/enRec: 그 언어 녹음 {seg, segs, voice, model, settings, tag, whole, n(이름 조각 번호|null), send(이름 조각 보낼 글), pieces[{k:S|N|K, tpl, gap, url|urls, slots, g}], orig, url, urlLook, chars, look?}
 //     서버는 이름 조각(pieces[n])만 녹음한다(앞뒤 조각 글은 previous_text/next_text 문맥). 고정 조각은 앱 묶음에 있고 기기에서 합친다(engine/names.js)
-export const NAME_LINES_VERSION = "nl3-0dfd72af4f";
+export const NAME_LINES_VERSION = "nl3-d243c5b4d6";
 export const NAME_LINES = {
  "kkultteok": [
   {
@@ -9005,12 +9005,12 @@ export const NAME_LINES = {
   },
   {
    "id": "kf6cda826",
-   "key": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
-   "keyEn": "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.",
+   "key": "다현아, 마음에 드는 재료를 하나나 두 개 골라 넣어 줘.",
+   "keyEn": "다현아, 마음에 드는 재료를 하나나 두 개 골라 넣어 줘.",
    "mode": "both",
-   "tpl": "{A:아/야}, 네가 넣어 줘. 하나든 여러 개든 좋아.",
-   "en": "Dahyun, you put them in. One or lots, it's all good.",
-   "tplEn": "{A_en}, you put them in. One or lots, it's all good.",
+   "tpl": "{A:아/야}, 마음에 드는 재료를 하나나 두 개 골라 넣어 줘.",
+   "en": "Dahyun, pick one or two ingredients you like and put them in.",
+   "tplEn": "{A_en}, pick one or two ingredients you like and put them in.",
    "ko": {
     "seg": null,
     "segs": 1,
@@ -9037,13 +9037,13 @@ export const NAME_LINES = {
      },
      {
       "k": "S",
-      "tpl": "네가 넣어 줘. 하나든 여러 개든 좋아.",
+      "tpl": "마음에 드는 재료를 하나나 두 개 골라 넣어 줘.",
       "gap": 0,
-      "url": "audio/el/witch_candy/parts/ko_e730a9298a1f.mp3"
+      "url": "audio/el/witch_candy/parts/ko_3ae219827f03.mp3"
      }
     ],
     "orig": {},
-    "url": "audio/el/witch_candy/name/7ca67ace62.mp3",
+    "url": "audio/el/witch_candy/name/f29cbfd9eb.mp3",
     "urlLook": {},
     "chars": 4
    },
@@ -9073,13 +9073,13 @@ export const NAME_LINES = {
      },
      {
       "k": "S",
-      "tpl": "you put them in. One or lots, it's all good.",
+      "tpl": "pick one or two ingredients you like and put them in.",
       "gap": 0,
-      "url": "audio/el/witch_candy/parts/en_3c2132bcadae.mp3"
+      "url": "audio/el/witch_candy/parts/en_800328693eda.mp3"
      }
     ],
     "orig": {},
-    "url": "audio/el/witch_candy/en/name/c510326cde.mp3",
+    "url": "audio/el/witch_candy/en/name/c8b147c540.mp3",
     "urlLook": {},
     "chars": 7
    },

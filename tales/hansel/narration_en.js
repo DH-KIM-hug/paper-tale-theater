@@ -23,10 +23,6 @@ const NARRATION_CLIPS_EN = {
   "t": "Tap Hansel! Let's go!",
   "c": "audio/tc/hansel/en/nar_c4ab9e016e.mp3"
  },
- "헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!": {
-  "t": "Hansel drops the crumbs one by one. Let's count them together!",
-  "c": "audio/tc/hansel/en/nar_0183b67856.mp3"
- },
  "헨젤을 톡톡톡톡톡! 부스러기를 세어요.": {
   "t": "Tap Hansel, tap tap tap tap tap! Count the crumbs.",
   "c": "audio/tc/hansel/en/nar_61bad6deb0.mp3"
@@ -100,10 +96,6 @@ const NARRATION_CLIPS_EN = {
  "너무 맛있어서 둘은 배가 빵빵해졌어요.": {
   "t": "It was so yummy that their tummies got round and full.",
   "c": "audio/tc/hansel/en/nar_3ec6450d8d.mp3"
- },
- "지붕에 사탕이 빠진 곳이 있어요. 헨젤이 하나씩 붙여 줘요. 같이 세어 봐요!": {
-  "t": "Some candies are missing from the roof. Hansel sticks them on one by one. Let's count!",
-  "c": "audio/tc/hansel/en/nar_e9199107a5.mp3"
  },
  "헨젤을 톡톡톡톡톡! 사탕을 세어요.": {
   "t": "Tap Hansel, tap tap tap tap tap! Count the candies.",

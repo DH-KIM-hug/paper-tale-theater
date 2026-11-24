@@ -604,18 +604,18 @@
      ]
     },
     {
-     "text": "\"할머니, 오셨어요?\" 그런데 침대 속 할머니가 어딘가 이상해요.",
+     "text": "\"할머니, 저 왔어요!\" 그런데 침대에 누운 할머니가 어딘가 이상해요.",
      "src": "reuse",
-     "en": "Grandmother, are you here? But Grandmother in the bed looked a little odd.",
+     "en": "Grandma, I am here! But the grandma lying in bed looked a little odd.",
      "segs": [
       [
        "hood",
-       "Grandmother, are you here?",
+       "Grandma, I am here!",
        "happy"
       ],
       [
        "nar",
-       "But Grandmother in the bed looked a little odd."
+       "But the grandma lying in bed looked a little odd."
       ]
      ],
      "before": [

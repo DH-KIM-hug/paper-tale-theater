@@ -1089,6 +1089,7 @@
         anim(sp, [{ opacity: 0 }, { opacity: 1 }, { opacity: 1 }, { opacity: 0 }], 900).then(() => sp.remove());
         await anim(act('jige'), [{ transform: 'translate(215px,0px)' }, { transform: 'translate(0px,0px)' }], { duration: 900, easing: 'ease-in-out' });
         act('jige').style.transform = '';
+        await lastCut; // 호랑이 비명이 끝까지 들린 뒤 다음 목소리가 시작한다
       },
     };
 
@@ -1203,12 +1204,12 @@
       const hello = k => { const u = Narrator.voiceLine(k); return u && AudioFX.voice(u); };
       // 한 명씩 차례로 톡 (자유 놀이 없이): 친구들 → 할멈 순서
       const greet = [
-        ...FRIENDS.map(f => ({ el: partyEl(f), go: () => { const s = FINALE_SFX[f.id]; s && AudioFX[s] && AudioFX[s](); friends[f.id].hop(26, 500); hello('hi_' + f.id); } })),
-        { el: granny.pos, go: () => { sfx('chime_up', .5); granny.hop(22, 420); hello('hi_halmi'); } },
+        ...FRIENDS.map(f => ({ el: partyEl(f), go: () => { const s = FINALE_SFX[f.id]; s && AudioFX[s] && AudioFX[s](); friends[f.id].hop(26, 500); return hello('hi_' + f.id); } })),
+        { el: granny.pos, go: () => { sfx('chime_up', .5); granny.hop(22, 420); return hello('hi_halmi'); } },
       ];
       // 잔치 친구들은 서로 겹쳐 서 있어 첫 친구(알밤) 그림이 이웃에 덮인다 → 누구를 눌러도 시작한다(choose, 모두 정답)
       await T.ask(LINES.finaleTap, () => T.choose(greet.map(g => ({ el: g.el, ok: true }))));
-      for (let i = 0; i < greet.length; i++) { greet[i].go(); await sleep(700); } /* 한 번 누르면 나머지는 저절로 (2026-10-20 톡 조작 정리) */
+      for (let i = 0; i < greet.length; i++) { const done = Promise.resolve(greet[i].go()).catch(() => {}); await Promise.race([done, sleep(4000)]); await sleep(250); } /* 인사 하나가 끝나야 다음 친구가 말한다 */  /* 한 번 누르면 나머지는 저절로 (2026-10-20 톡 조작 정리) */
       await bowTogether();
     }
 

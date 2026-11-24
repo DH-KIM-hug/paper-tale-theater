@@ -154,11 +154,11 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Little Red Riding Hood opened the door and went over to the bed.",
   "c": "audio/el/red_hood/en/nar_2ea0b2f8b5.mp3"
  },
- "\"할머니, 오셨어요?\" 그런데 침대 속 할머니가 어딘가 이상해요.": {
-  "t": "Grandmother, are you here? But Grandmother in the bed looked a little odd.",
+ "\"할머니, 저 왔어요!\" 그런데 침대에 누운 할머니가 어딘가 이상해요.": {
+  "t": "Grandma, I am here! But the grandma lying in bed looked a little odd.",
   "c": [
-   "audio/el/red_hood/en/hood_884198af42.mp3",
-   "audio/el/red_hood/en/nar_f940374407.mp3"
+   "audio/el/red_hood/en/hood_321ae00af7.mp3",
+   "audio/el/red_hood/en/nar_75fcff3bbc.mp3"
   ]
  },
  "\"할머니, 귀가 왜 이렇게 커요?\"": {

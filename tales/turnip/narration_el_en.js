@@ -73,9 +73,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The turnip came up a little! But it still won't come out.",
   "c": "audio/el/turnip/en/nar_5e24dae3bf.mp3"
  },
- "할머니가 누구를 부를까요?": {
-  "t": "Who will Grandma call?",
-  "c": "audio/el/turnip/en/nar_912759c51b.mp3"
+ "할머니가 가족을 한 명 더 부르려고 해요. 손녀는 어디 있을까요?": {
+  "t": "Grandma wants to call one more family member. Where is the granddaughter?",
+  "c": "audio/el/turnip/en/nar_ac2d00b769.mp3"
  },
  "음매~ 소는 풀을 먹고 있대요. 사람 친구를 먼저 불러요!": {
   "t": "Moo~ The cow is busy eating grass. Let's call a people friend first!",
@@ -173,9 +173,9 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/turnip/en/nar_d7017f99f6.mp3"
   ]
  },
- "이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!": {
-  "t": "This time, all six together! Tap the turnip. Heave-ho!",
-  "c": "audio/el/turnip/en/nar_ee08cbd45d.mp3"
+ "순무를 톡 눌러 봐요. 다 함께 영차!": {
+  "t": "Tap the turnip. All together, heave-ho!",
+  "c": "audio/el/turnip/en/nar_8d7f92e06f.mp3"
  },
  "순무를 톡톡 눌러요. 영~차!": {
   "t": "Tap the turnip. Heave-ho!",
@@ -261,9 +261,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Wow! Grandpa, Grandma, the granddaughter, the puppy, the cat, the mouse! You remembered the whole order.",
   "c": "audio/el/turnip/en/nar_ec8d98c1e9.mp3"
  },
- "순무국을 한 그릇씩 나눠 줘요. 냄비를 톡 눌러요!": {
-  "t": "Let's share the soup, one bowl each. Tap the pot!",
-  "c": "audio/el/turnip/en/nar_96a44d84e2.mp3"
+ "냄비를 톡 눌러 봐요. 여섯 친구의 그릇에 순무국을 담아요!": {
+  "t": "Tap the pot. Let's fill six bowls with turnip soup!",
+  "c": "audio/el/turnip/en/nar_a65a5fda38.mp3"
  },
  "냄비를 톡 눌러서 한 그릇씩!": {
   "t": "Tap the pot for one bowl each!",

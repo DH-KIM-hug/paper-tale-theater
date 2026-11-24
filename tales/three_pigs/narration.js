@@ -68,12 +68,10 @@ const NARRATION_CLIPS = {
   "audio/tc/three_pigs/pigc_dd300607fe.mp3",
   "audio/tc/three_pigs/wolf_c763a4e287.mp3"
  ],
- "집을 톡톡 눌러서 몇 번 부는지 세어 봐요.": "audio/tc/three_pigs/nar_3ed0774761.mp3",
  "후~ 후~ 여덟 번이나 불었지만 벽돌 집은 끄떡없어요!": "audio/tc/three_pigs/nar_db609aaedf.mp3",
  "늑대는 숨이 차서 털썩 주저앉았어요.": "audio/tc/three_pigs/nar_beb8bbeded.mp3",
  "늑대는 지붕으로 살금살금 올라갔어요. 굴뚝으로 몰래 들어가려고요.": "audio/tc/three_pigs/nar_d1fdb40a58.mp3",
  "아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.": "audio/tc/three_pigs/nar_579203fe82.mp3",
- "불을 톡톡 눌러서 크게 해 줘요.": "audio/tc/three_pigs/nar_1cc8d75667.mp3",
  "보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.": "audio/tc/three_pigs/nar_3563075954.mp3",
  "\"앗, 뜨거워!\"": "audio/tc/three_pigs/wolf_f87faa686a.mp3",
  "늑대는 굴뚝으로 휙! 날아가서 멀리멀리 도망쳤어요. 다시는 오지 않았어요.": "audio/tc/three_pigs/nar_c3525a6c8e.mp3",

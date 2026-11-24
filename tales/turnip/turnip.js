@@ -44,7 +44,7 @@
     grandma_stand: 'v3w/tn2_grandma_stand.webp', grandma_pull: 'v3w/tn2_grandma_pull.webp', grandma_fall: 'v3w/tn2_grandma_fall.webp', grandma_cheer: 'v3w/tn2_grandma_cheer.webp',
     girl_stand: 'v3w/tn2_girl_stand.webp', girl_pull: 'v3w/tn2_girl_pull.webp', girl_fall: 'v3w/tn2_girl_fall.webp', girl_cheer: 'v3w/tn2_girl_cheer.webp',
     dog_stand: 'v3w/tn2_dog_stand.webp', dog_pull: 'v3w/tn2_dog_pull.webp', dog_fall: 'v3w/tn2_dog_fall.webp', dog_cheer: 'v3w/tn2_dog_cheer.webp',
-    cat_stand: 'v3w/tn2_cat_stand.webp', cat_pull: 'v3w/tn2_cat_pull.webp', cat_fall: 'v3w/tn2_cat_fall.webp', cat_cheer: 'v3w/tn2_cat_cheer.webp',
+    cat_stand: 'v3w/tn2_cat_stand.webp', cat_pull: 'v3w/tn2_cat_pull.webp', cat_fall: 'v3w/tn2_cat_fall.webp', cat_cheer: 'v3w/tn2_cat_cheer.webp', cat_jump: 'v3w/tn2_cat_jump.webp',
     mouse_stand: 'v3w/tn2_mouse_stand.webp', mouse_pull: 'v3w/tn2_mouse_pull.webp', mouse_fall: 'v3w/tn2_mouse_fall.webp', mouse_cheer: 'v3w/tn2_mouse_cheer.webp',
     dog_jump: 'v3w/tn_dog_jump5.webp', cat_sit: 'v3w/tn_cat_sit.webp', girl_badge: 'v3w/tn2_girl_stand.webp', dog_badge: 'v3w/tn2_dog_stand.webp', cow: 'v3w/rab_aud_cow.webp', pig: 'v3w/rab_aud_pig.webp',
     cut_glare: 'v3w/tn_cut_glare5.webp', cut_pop: 'v3w/tn_cut_pop2nf.webp',
@@ -86,6 +86,7 @@
     cat_pull: [78.1, 0.554, 1.0862],
     cat_fall: [82.3, 0.536, 1.0391],
     cat_cheer: [83.0, 0.614, 0.9885],
+    cat_jump: [80.1, 0.62, 1.0239], // 2026-11-24 지붕에서 뛰어내리기: 높이 = 서기 82.0 × 0.977(같은 부위로 잰 값), 기준 x = 몸통 가운데, 그림 아래끝 = 앞발(내려앉을 때 앞발이 풀밭에 닿는다). 서기와 같이 왼쪽을 봐서 뒤집지 않는다
     mouse_stand: [44.0, 0.334, 0.8159],
     mouse_pull: [42.4, 0.368, 0.9440],
     mouse_fall: [40.1, 0.532, 1.0553],
@@ -93,7 +94,7 @@
     dog_jump: [96, .5, 1.2046], cat_sit: [78, .5, .9567],
   };
   const FLIP = {};
-  const LOOKS = { grandpa: ['stand', 'pull', 'fall', 'cheer'], grandma: ['stand', 'pull', 'fall', 'cheer'], girl: ['stand', 'pull', 'fall', 'cheer'], dog: ['stand', 'pull', 'fall', 'cheer', 'jump'], cat: ['stand', 'pull', 'fall', 'cheer', 'sit'], mouse: ['stand', 'pull', 'fall', 'cheer'] };
+  const LOOKS = { grandpa: ['stand', 'pull', 'fall', 'cheer'], grandma: ['stand', 'pull', 'fall', 'cheer'], girl: ['stand', 'pull', 'fall', 'cheer'], dog: ['stand', 'pull', 'fall', 'cheer', 'jump'], cat: ['stand', 'pull', 'fall', 'cheer', 'sit', 'jump'], mouse: ['stand', 'pull', 'fall', 'cheer'] };
   /* 배경 그림: 무대 1000×560을 덮고 가장자리를 조금 더 덮는다 (그림 비율 1760:992) */
   const BG_EDGE = { garden: ['#93c4e1', '#754937'], lowangle: ['#76be5a', '#5d3e2d'], door: ['#6cb0e4', '#7d8a42'], fence: ['#7ebce3', '#90a444'],
     barn: ['#69b5e0', '#53793c'], mouse: ['#fad070', '#d19462'], feast: ['#fb8450', '#d1832c'] };
@@ -1127,7 +1128,7 @@
 
     /* --- 5. 손녀 (텃밭 옆 모습, 줄이 길어짐) --- */
     await T.sceneCard('손녀', () => sideView(2), cast.grandma.pos);
-    const q5 = '할머니가 누구를 부를까요?';
+    const q5 = '할머니가 가족을 한 명 더 부르려고 해요. 손녀는 어디 있을까요?';
     await callChoice('girl', 'cow', { q: q5, okSound: () => T.tone([660, 880], .2, { type: 'triangle', vol: .14 }), noSound: () => moo(T),
       where: '음매~ 소는 풀을 먹고 있대요. 사람 친구를 먼저 불러요!', who: '손녀예요! 반짝이는 친구를 눌러 봐요!' });
     /* 2026-11-24 흐름 수정: 고른 뒤 할머니가 먼저 "손녀야~!" 부르고(녹음 첫 조각 1.3초), 그 부름을 듣고 손녀가 달려와 허리를 잡는다.
@@ -1188,9 +1189,10 @@
     cast.cat.lean.style.filter = '';
     await cast.cat.hop(40);
     const catDown = (async () => { // 지붕 끝에서 풀밭으로 폴짝 뛰어내린다
-      cast.cat.pose(POSE.stand());
+      cast.cat.look('jump'); cast.cat.pose(POSE.stand()); // 뛰는 동안만 뛰기 그림
       await cast.cat.move(700, 300, 320, 'ease-out');
       await cast.cat.move(640, T.portrait() ? 470 : 480, 380, 'ease-in');
+      cast.cat.look('stand'); // 내려앉으면 서기 그림
       await cast.cat.hop(16, 260);
     })();
     await say('고양이가 지붕에서 폴짝 내려왔어요.');
@@ -1252,12 +1254,15 @@
 
     /* --- 9. 쑥! (다 함께 톡톡) --- */
     lbFade(T, 'garden'); // 해 질 녘 라이트박스: 마지막 당기기
-    await ask('이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!', () => T.mash(turnip.pos, { count: 4, prompt: '순무를 톡톡 눌러요. 영~차!', onStep: i => {
+    const heaveStep = i => {
       const p = i / 4;
       line.forEach(a => a.pose(POSE.pull(6 + p * 20)));
       turnip.place(TX, GROUND - rise - p * 22);
       chorus(T, 6); wobble(); T.pop(460, 170, i % 2 ? '영~' : '차!', C.bean);
-    } }));
+    };
+    // 한 번 톡 하면 네 번의 영차가 저절로 (2026-11-24 아스트라)
+    await ask('순무를 톡 눌러 봐요. 다 함께 영차!', () => T.tap(turnip.pos, { prompt: '순무를 톡 눌러 봐요. 다 함께 영차!' }));
+    for (let i = 1; i <= 4; i++) { heaveStep(i); await sleep(500); }
     const cutTurnip = (svg, y, s, word) => {
       T.el('rect', { x: 0, y: 220, width: 400, height: 80, fill: C.soil }, svg);
       const tg = T.el('g', { transform: `translate(200,${y}) scale(${s})` }, svg); drawTurnip(T, tg);
@@ -1364,7 +1369,7 @@
     const dots = [0, 1, 2, 3, 4, 5].map(i => el('circle', { cx: 380 + i * 48, cy: 118, r: 17, fill: C.cream, stroke: C.gold, 'stroke-width': 5 }, ui));
     const NUM = ['하나', '둘', '셋', '넷', '다섯', '여섯'];
     padHit(T, pot);
-    await ask('순무국을 한 그릇씩 나눠 줘요. 냄비를 톡 눌러요!', () => T.mash(pot, { count: 6, prompt: '냄비를 톡 눌러서 한 그릇씩!', onStep: i => {
+    const soupStep = i => {
       const a = line[i - 1];
       const bowl = T.el('g', {}, T.world);
       if (!pic(T, bowl, 'soup_bowl', -25, -17, 50, 50 * 119 / 153)) T.paper(bowl, [['path', { d: 'M-22 -8 H22 Q20 14 0 15 Q-20 14 -22 -8 Z', fill: C.snow }], ['ellipse', { cx: 0, cy: -8, rx: 22, ry: 5, fill: C.amber }]]);
@@ -1373,7 +1378,10 @@
       dots[i - 1].setAttribute('fill', C.persimmon);
       T.tone(523 + i * 40, .2, { type: 'triangle', vol: .16 });
       setTimeout(() => { a.hop(20, 300); T.pop(a.x, !T.portrait() ? a.y - a.h * a.scale - 90 : a.y > 450 ? a.y - 20 : a.y - a.h * a.scale - 50, NUM[i - 1], C.pine); }, 600); // 머리 위 (얼굴을 가리지 않게). 세로 앞줄은 발치
-    } }));
+    };
+    // 한 번 톡 하면 여섯 그릇이 차례로 저절로 (2026-11-24 아스트라)
+    await ask('냄비를 톡 눌러 봐요. 여섯 친구의 그릇에 순무국을 담아요!', () => T.tap(pot, { prompt: '냄비를 톡 눌러 봐요!' }));
+    for (let i = 1; i <= 6; i++) { soupStep(i); await sleep(750); }
     T.finale();
     await sleep(1200);
     await say('여섯 그릇, 여섯 명! 딱 맞아요.');

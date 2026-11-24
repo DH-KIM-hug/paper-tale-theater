@@ -25,7 +25,6 @@ const NARRATION_CLIPS = {
   "audio/tc/kongjwi/step_4b669be22d.mp3",
   "audio/tc/kongjwi/nar_a119f0e00e.mp3"
  ],
- "물동이를 톡톡톡 눌러서 물을 세 번 부어 봐요!": "audio/tc/kongjwi/nar_7e533bade9.mp3",
  "물동이를 톡톡톡! 물을 부어요.": "audio/tc/kongjwi/nar_c043c995e8.mp3",
  "앗! 독 밑에 구멍이 나서 물이 줄줄 새어 나왔어요.": "audio/tc/kongjwi/nar_8a05591f40.mp3",
  "그때 두꺼비가 폴짝 나타났어요. \"내가 구멍을 막아 줄게!\"": [
@@ -47,7 +46,6 @@ const NARRATION_CLIPS = {
   "audio/tc/kongjwi/nar_7fbbccfd56.mp3",
   "audio/tc/kongjwi/sparrow_e98833ac93.mp3"
  ],
- "참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요. 참새를 하나씩 세어 봐요!": "audio/tc/kongjwi/nar_54e02ea6e6.mp3",
  "참새를 톡톡톡톡톡! 하나씩 세어요.": "audio/tc/kongjwi/nar_24c8096b9d.mp3",
  "참새가 하나, 둘, 셋, 넷, 다섯! 쌀이 금방 하얗게 되었어요.": "audio/tc/kongjwi/nar_6dff9ca4fb.mp3",
  "이제 콩쥐는 베를 짜야 했어요. 콩쥐는 열심히 베를 짰어요.": "audio/tc/kongjwi/nar_42eb00e1f8.mp3",
@@ -59,7 +57,6 @@ const NARRATION_CLIPS = {
   "audio/tc/kongjwi/nar_229f877907.mp3",
   "audio/tc/kongjwi/kong_e131472d9f.mp3"
  ],
- "콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡! 건너 봐요!": "audio/tc/kongjwi/nar_19aae5dc7d.mp3",
  "풍덩! 꽃신 한 짝이 개울에 빠졌어요. 꽃신은 둥둥 떠내려갔어요.": "audio/tc/kongjwi/nar_e49adfe7ce.mp3",
  "콩쥐는 아쉬웠지만 한 짝만 신고 잔치로 갔어요.": "audio/tc/kongjwi/nar_3a6f5918c4.mp3",
  "잔치에서는 북과 장구와 꽹과리 소리가 울렸어요. 북을 톡 눌러 봐요!": "audio/tc/kongjwi/nar_d49053abe2.mp3",
@@ -70,7 +67,6 @@ const NARRATION_CLIPS = {
   "audio/tc/kongjwi/nar_f3fbfbc1cd.mp3",
   "audio/tc/kongjwi/won_9bfc50197b.mp3"
  ],
- "꽃신 세 켤레 중에서 나비 꽃신이 콩쥐의 꽃신이에요. 나비 꽃신을 톡!": "audio/tc/kongjwi/nar_1f1cdb2f39.mp3",
  "나비 꽃신을 톡!": "audio/tc/kongjwi/nar_518188e1d9.mp3",
  "나비가 그려진 꽃신을 찾아봐요.": "audio/tc/kongjwi/nar_972aed48b0.mp3",
  "반짝이는 꽃신을 톡!": "audio/tc/kongjwi/nar_eb5684573a.mp3",

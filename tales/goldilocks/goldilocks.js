@@ -1062,9 +1062,9 @@
     intro.go(); // 시작 음악 (놀이)
     await say('숲속 통나무집에 곰 세 식구가 살았어요.');
     const hiBear = async b => {
-      vo('hi_' + b.key); b.setFace('happy'); b.hop(24, 420);
+      const vp = vo('hi_' + b.key); b.setFace('happy'); b.hop(24, 420);
       pop(b.x, headY(b) - 40, '안녕!', b.key === 'dad' ? C.bark : b.key === 'mom' ? C.persimmon : C.pine);
-      await sleep(700);
+      await Promise.all([vp, sleep(700)]); // 한 곰의 인사를 끝까지 듣고 다음 곰으로(2026-11-24 아스트라)
     };
     const first = (await T.ask('곰 가족을 톡 눌러서 인사해요!', () => T.choose(B.map(a => ({ el: a.pos, ok: true, a })), { prompt: '곰을 톡 눌러서 안녕!' }))).a; // 한 마리만 누르면 나머지는 저절로 (2026-10-19)
     for (const b of [first, ...B.filter(b => b !== first)]) await hiBear(b);
@@ -1479,13 +1479,16 @@
     await say('골디락스: "아기 곰 의자, 같이 고칠래?"');
     bears.baby.setFace('smile'); bears.baby.hop(20);
     hammer.style.opacity = '1';
-    await T.ask('톡톡 눌러서 뚝딱뚝딱 고쳐요!', () => T.mash(fix.g, { count: 5, prompt: '의자를 톡톡! 뚝딱뚝딱.', onStep: i => {
+    await T.ask('의자를 톡 눌러 봐요. 뚝딱뚝딱 고쳐요!', () => T.tap(fix.g, { prompt: '의자를 톡! 뚝딱뚝딱.' })); // 한 번 누르면 나머지 네 번은 저절로 (2026-11-24 아스트라)
+    for (let i = 1; i <= 5; i++) {
+      AudioFX.countBeat && AudioFX.countBeat(i);
       knock(T);
       hammer.animate([{ transform: `translate(${fix.x - 70}px,380px) rotate(-30deg)` }, { transform: `translate(${fix.x - 50}px,400px) rotate(20deg)` }, { transform: `translate(${fix.x - 70}px,380px) rotate(-30deg)` }], { duration: 300 });
       fix.setBroken(1 - i / 5);
       pop(fix.x, 250, '뚝딱!', C.bark);
       (i % 2 ? goldi : bears.baby).hop(16, 300);
-    } }));
+      await sleep(i < 5 ? 450 : 200);
+    }
     hammer.remove();
     await sleep(400);
     if (cue('ding_glock', .8) === false) AudioFX.sfx('ding') || AudioFX.ding();

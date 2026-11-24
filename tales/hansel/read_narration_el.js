@@ -127,8 +127,8 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/hansel/father_ceab999c7b.mp3",
   "audio/el/hansel/nar_ae25a8def7.mp3"
  ],
- "\"너희가 먼저 집으로 간 줄 알았단다. 눈을 뜰 때까지 곁에 있을걸.\" 아빠가 미안해하며 말했어요.": [
-  "audio/el/hansel/father_2e7c5d6169.mp3",
+ "\"얘들아, 너희를 숲에 두고 와서 미안하다. 얼마나 무서웠니?\" 아빠가 미안해하며 말했어요.": [
+  "audio/el/hansel/father_044025acb8.mp3",
   "audio/el/hansel/nar_1c2f7e4ab4.mp3"
  ],
  "헨젤과 그레텔은 마음이 따뜻하고 행복했어요.": "audio/el/hansel/nar_f8c11a65fc.mp3",

@@ -116,10 +116,6 @@ const NARRATION_CLIPS_EN = {
   "t": "Now it's the Sun's turn.",
   "c": "audio/tc/sun_wind/en/nar_b32b73854f.mp3"
  },
- "해님을 톡톡 눌러서 따뜻하게 비춰 줘요!": {
-  "t": "Tap the Sun to shine nice and warm!",
-  "c": "audio/tc/sun_wind/en/nar_03ac0a70a4.mp3"
- },
  "해님을 톡톡 눌러 봐요!": {
   "t": "Tap the Sun!",
   "c": "audio/tc/sun_wind/en/nar_3608052f98.mp3"
@@ -232,10 +228,6 @@ const NARRATION_CLIPS_EN = {
  "시원한 물에 발을 퐁당 담갔어요.": {
   "t": "The traveler dipped both feet into the cool water, splash!",
   "c": "audio/tc/sun_wind/en/nar_0390190dfa.mp3"
- },
- "바람아, 이번엔 살살 불어 줄래? 톡, 살살~": {
-  "t": "Wind, could you blow gently this time? Tap, gently~",
-  "c": "audio/tc/sun_wind/en/nar_a1e1c4ec45.mp3"
  },
  "바람을 살살 톡톡 눌러 봐요!": {
   "t": "Tap the Wind gently!",

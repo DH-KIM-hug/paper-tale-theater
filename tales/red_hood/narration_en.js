@@ -95,13 +95,6 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/red_hood/en/nar_759d914660.mp3"
   ]
  },
- "\"할머니, 오셨어요?\" 그런데 침대 속 할머니가 어딘가 이상해요.": {
-  "t": "Grandmother, are you here? But Grandmother in the bed looked a little odd.",
-  "c": [
-   "audio/tc/red_hood/en/hood_bfae50ee4a.mp3",
-   "audio/tc/red_hood/en/nar_7290aa97e8.mp3"
-  ]
- },
  "벽에 걸린 진짜 할머니 사진과 비교해서 다른 곳을 찾아봐요!": {
   "t": "Compare with the real Grandmother's picture on the wall and find what is different!",
   "c": "audio/tc/red_hood/en/nar_4ab4d65c49.mp3"
@@ -195,10 +188,6 @@ const NARRATION_CLIPS_EN = {
   "t": "Where is the vase with the same color as the flower?",
   "c": "audio/tc/red_hood/en/nar_844cf50b80.mp3"
  },
- "빨간 모자를 톡! 똑똑똑 노크해요.": {
-  "t": "Tap Red Hood! Knock, knock, knock.",
-  "c": "audio/tc/red_hood/en/nar_5cf7d843d7.mp3"
- },
  "\"할머니, 귀가 왜 이렇게 커요?\"": {
   "t": "Grandmother, why are your ears so big?",
   "c": "audio/tc/red_hood/en/hood_83f638a0c8.mp3"
@@ -219,10 +208,6 @@ const NARRATION_CLIPS_EN = {
   "t": "Grandmother, why is your mouth so long?",
   "c": "audio/tc/red_hood/en/hood_52517b0252.mp3"
  },
- "\"그건 말이지… 어흥! 놀랐지?\"": {
-  "t": "Well, you see... Roar! Did I scare you?",
-  "c": "audio/tc/red_hood/en/wolf_c9c434a207.mp3"
- },
  "사진 속 할머니와 달라 보이는 곳을 톡!": {
   "t": "Tap what looks different from Grandmother in the picture!",
   "c": "audio/tc/red_hood/en/nar_c7b98c9a78.mp3"
@@ -242,10 +227,6 @@ const NARRATION_CLIPS_EN = {
  "창문을 톡!": {
   "t": "Tap the window!",
   "c": "audio/tc/red_hood/en/nar_5a421491ed.mp3"
- },
- "늑대를 톡톡톡! 간지럼을 태워요.": {
-  "t": "Tap, tap, tap the wolf! Tickle him.",
-  "c": "audio/tc/red_hood/en/nar_d52a4cb30b.mp3"
  },
  "간식을 톡! 한 사람씩 나눠 줘요.": {
   "t": "Tap the snack! Share with each one.",

@@ -95,12 +95,12 @@
   },
   {
    "key": "A7w",
-   "text": "지금은 웃을 때가 아니에요.",
-   "en": "This is not a smiling time.",
+   "text": "친구들이 모두 싫다고 했지요. 암탉은 어떤 기분일까요?",
+   "en": "The friends all said no. How does the hen feel?",
    "segs": [
     [
      "nar",
-     "This is not a smiling time.",
+     "The friends all said no. How does the hen feel?",
      null
     ]
    ]
@@ -922,6 +922,18 @@
    ]
   },
   {
+   "key": "I_nextstraw",
+   "text": "딸기는 다음 요리에 쓰자!",
+   "en": "Let's save the strawberries for the next dish!",
+   "segs": [
+    [
+     "cat",
+     "Let's save the strawberries for the next dish!",
+     "happy"
+    ]
+   ]
+  },
+  {
    "key": "I_notomato",
    "text": "토마토는 팬케이크에 안 넣어!",
    "en": "Tomatoes don't go on pancakes!",
@@ -929,6 +941,18 @@
     [
      "dog",
      "Tomatoes don't go on pancakes!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "I_nexttomato",
+   "text": "토마토는 다음 요리에 쓰자!",
+   "en": "Let's save the tomatoes for the next dish!",
+   "segs": [
+    [
+     "dog",
+     "Let's save the tomatoes for the next dish!",
      "happy"
     ]
    ]

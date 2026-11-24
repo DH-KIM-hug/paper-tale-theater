@@ -116,9 +116,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Now it's the Sun's turn.",
   "c": "audio/el/sun_wind/en/nar_8d4a15fd1e.mp3"
  },
- "해님을 톡톡 눌러서 따뜻하게 비춰 줘요!": {
-  "t": "Tap the Sun to shine nice and warm!",
-  "c": "audio/el/sun_wind/en/nar_aa30d2ad1e.mp3"
+ "해님을 톡 눌러 봐요. 햇볕이 점점 따뜻해져요!": {
+  "t": "Tap the Sun. The sunshine gets warmer and warmer!",
+  "c": "audio/el/sun_wind/en/nar_b04700f3e1.mp3"
  },
  "해님을 톡톡 눌러 봐요!": {
   "t": "Tap the Sun!",
@@ -233,9 +233,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The traveler dipped both feet into the cool water, splash!",
   "c": "audio/el/sun_wind/en/nar_8da4bf0759.mp3"
  },
- "바람아, 이번엔 살살 불어 줄래? 톡, 살살~": {
-  "t": "Wind, could you blow gently this time? Tap, gently~",
-  "c": "audio/el/sun_wind/en/nar_ec72affa60.mp3"
+ "바람을 톡 눌러 봐요. 이번엔 살살 불어요.": {
+  "t": "Tap the Wind. This time, blow gently.",
+  "c": "audio/el/sun_wind/en/nar_251ca6adba.mp3"
  },
  "바람을 살살 톡톡 눌러 봐요!": {
   "t": "Tap the Wind gently!",

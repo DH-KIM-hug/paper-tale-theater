@@ -170,9 +170,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Look at the bar below to see who is ahead.",
   "c": "audio/el/rabbit/en/nar_f800db1ca4.mp3"
  },
- "토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!": {
-  "t": "The rabbit zooms along! Tap the screen again and again!",
-  "c": "audio/el/rabbit/en/nar_9a9d8bd49f.mp3"
+ "화면을 톡 눌러요. 토끼가 쌩쌩 달려가요!": {
+  "t": "Tap the screen. The rabbit zooms off!",
+  "c": "audio/el/rabbit/en/nar_432ac533a4.mp3"
  },
  "화면을 톡톡 눌러 봐요!": {
   "t": "Tap the screen again and again!",

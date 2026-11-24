@@ -266,8 +266,8 @@
    "en": "Hansel decided to mark the way with bread crumbs."
   },
   {
-   "text": "헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!",
-   "en": "Hansel drops the crumbs one by one. Let's count them together!"
+   "text": "헨젤을 톡 눌러 봐요. 빵 부스러기를 하나씩 떨어뜨려요!",
+   "en": "Tap Hansel. He drops the bread crumbs one by one!"
   },
   {
    "text": "헨젤을 톡톡톡톡톡! 부스러기를 세어요.",
@@ -438,8 +438,8 @@
    "en": "It was so yummy that their tummies got round and full."
   },
   {
-   "text": "지붕에 사탕이 빠진 곳이 있어요. 헨젤이 하나씩 붙여 줘요. 같이 세어 봐요!",
-   "en": "Some candies are missing from the roof. Hansel sticks them on one by one. Let's count!"
+   "text": "헨젤을 톡 눌러 봐요. 지붕에 사탕을 하나씩 붙여요!",
+   "en": "Tap Hansel. He sticks the candies onto the roof one by one!"
   },
   {
    "text": "헨젤을 톡톡톡톡톡! 사탕을 세어요.",
@@ -764,8 +764,8 @@
    ]
   },
   {
-   "text": "\"너희가 먼저 집으로 간 줄 알았단다. 눈을 뜰 때까지 곁에 있을걸.\" 아빠가 미안해하며 말했어요.",
-   "en": "I thought you two had gone home ahead of me. I should have stayed beside you until you woke up. Papa said, feeling sorry.",
+   "text": "\"얘들아, 너희를 숲에 두고 와서 미안하다. 얼마나 무서웠니?\" 아빠가 미안해하며 말했어요.",
+   "en": "Children, I am sorry I left you in the forest. How scared you must have been! Papa said, feeling sorry.",
    "segs": [
     [
      "father",

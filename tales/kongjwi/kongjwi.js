@@ -117,6 +117,11 @@
       return { go, stop };
     })();
     const { sleep, say, camSnap, camTo } = T;
+    /* 한 번 누르면 나머지 단계는 저절로 이어 간다(2026-11-24 아스트라 검수): 안내와 누르기 동시 */
+    const askSteps = async (text, target, count, prompt, onStep, gap = 450) => {
+      await T.ask(text, () => T.tap(target, { prompt }));
+      for (let i = 1; i <= count; i++) { try { AudioFX.countBeat && count >= 3 && AudioFX.countBeat(i); } catch (e) { /* 무시 */ } onStep(i); if (i < count) await sleep(gap); }
+    };
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
@@ -405,9 +410,9 @@
       put(T, jar, 560, 505); put(T, pail, 480, 520);
     }, jar.pos);
     await say('"이 독에 물을 가득 채워라!" 새엄마가 말했어요.');
-    await T.ask('물동이를 톡톡톡 눌러서 물을 세 번 부어 봐요!', () => T.mash(pail.pos, { count: 3, prompt: '물동이를 톡톡톡! 물을 부어요.', onStep: i => {
+    await askSteps('물동이를 톡 눌러 봐요. 콩쥐가 물을 세 번 부어요!', pail.pos, 3, '물동이를 톡! 물을 부어요.', i => {
       pail.hop(14, 260); sfx('marimba_' + i, .6) || popSfx(T); pourDrops(pail, jar); leakDrops(jar); T.pop(pail.x, pail.y - 290, tr(NUM[i - 1])); // 붓는 만큼 한 음씩
-    } }));
+    });
     daeg(); // 물이 새어 울상이 된 콩쥐 — 대금
     await T.cutImage([{ src: cutSrc('wet'), sfx: 'pop', hold: 2600 }], { hold: 2600 });
     scene('jar');
@@ -452,11 +457,12 @@
     scene('mat');
     put(T, kong, 390, 505, { look: 'sweep', to: 'right' }); put(T, basketY, 500, 535); put(T, basketR, 590, 535);
     put(T, flock, 500, 310); flock.pos.animate([{ opacity: 0 }, { opacity: 1 }], 300);
-    await T.ask('참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요. 참새를 하나씩 세어 봐요!', () => T.mash(flock.pos, { count: 5, prompt: '참새를 톡톡톡톡톡! 하나씩 세어요.', onStep: i => {
+    await say('참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요.');
+    await askSteps('참새를 톡 눌러 봐요. 한 마리씩 세어요!', flock.pos, 5, '참새를 톡! 하나씩 세어요.', i => {
       const s = sparrows[i - 1]; put(T, s, 410 + i * 52, 440 - (i % 2) * 26, { to: 'left' });
       s.pos.animate([{ opacity: 0, translate: '0 -30px' }, { opacity: 1, translate: '0 0' }], 260); s.hop(10, 240);
       sfx('marimba_' + i, .6) || popSfx(T); sayNum(T, i); T.pop(s.x, s.y - 190, tr(NUM[i - 1])); // 한 마리에 한 음
-    } }));
+    });
     hide(flock);
     await say('참새가 하나, 둘, 셋, 넷, 다섯! 쌀이 금방 하얗게 되었어요.');
 
@@ -492,7 +498,8 @@
       kong.look(i % 2 ? 'stepL' : 'stepR', 'right'); kong.move(x, STONE_Y, 380); kong.hop(26, 380); followCam(x); sfx('marimba_' + i, .6) || popSfx(T); wig('willowL', 2, 400); wig('willowR', 2, 400); T.pop(x + 40, STONE_Y - 295, tr(NUM[i - 1]));
       return sleep(380);
     };
-    await T.ask('콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡! 건너 봐요!', () => T.tap(kong.pos, { prompt: '콩쥐를 톡! 징검다리를 건너요.' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    await say('콩쥐는 잔치에 가려고 개울을 건너기로 했어요.');
+    await T.ask('콩쥐를 톡 눌러 봐요. 징검다리를 폴짝폴짝 건너요!', () => T.tap(kong.pos, { prompt: '콩쥐를 톡! 징검다리를 건너요.' })); // 한 번 누르면 나머지는 저절로 (2026-10-19)
     { const next = STONES.filter(x => x > kong.x + 10); for (let i = 1; i <= next.length; i++) { await cross(i, next[i - 1]); await sleep(400); } }
     await T.cutImage([{ src: cutSrc('splash'), sfx: 'pop', hold: 2600 }], { hold: 2600 });
     scene('stream');
@@ -530,7 +537,7 @@
     }, won.pos);
     await say('개울에 빠진 꽃신은 원님에게 닿았어요. "이 꽃신의 주인을 찾아요!"');
     sfx('question', .6);
-    const got = await T.ask('꽃신 세 켤레 중에서 나비 꽃신이 콩쥐의 꽃신이에요. 나비 꽃신을 톡!', () => T.choose([
+    const got = await T.ask('꽃신 세 짝 중에서 나비가 그려진 꽃신을 찾아봐요.', () => T.choose([
       { key: 'p', el: shoeP.pos, ok: false }, { key: 'b', el: shoeB.pos, ok: true }, { key: 'm', el: shoeM.pos, ok: false }],
       { prompt: '나비 꽃신을 톡!', where: '나비가 그려진 꽃신을 찾아봐요.', who: '반짝이는 꽃신을 톡!' }));
     clinkSfx(T); shoeB.hop(24, 320);
@@ -570,6 +577,7 @@
     await Promise.all([kong.hop(40, 500), won.hop(30, 500), step.hop(24, 500), pat.hop(24, 500)]);
     await say('착한 마음은 도움을 불러와요.');
     await finaleWait();
+
     T.finale(); stopAmb(.8);
     return '착한 마음은 도움을 불러와요!';
   }

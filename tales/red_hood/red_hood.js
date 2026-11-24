@@ -6,13 +6,13 @@
   const GROUND = 505;
   const ASP = { apple: 0.9286, basket: 1.0222, bread: 1.2479, flower_blue: 0.7891, flower_red: 0.7875, flower_yellow: 0.7629, frame: 0.8729,
     granny_home: 0.8575, granny_pop: 0.8640, granny_tea: 0.6613, hood_hide: 0.7705, hood_joy: 0.7599, hood_knock: 0.7253,
-    hood_pick: 0.9378, hood_surprise: 0.6674, hood_walk: 0.6526, hood_walk2: 0.6693, hood_wonder: 0.6272, hunter_laugh: 0.6687,
+    hood_pick: 0.9378, hood_surprise: 0.6674, hood_walk: 0.6526, hood_walk2: 0.6693, hood_wonder: 0.6272, hood_wonder_l: 0.6272, hunter_laugh: 0.6687,
     hunter_tickle: 0.7593, hunter_walk: 0.5861, mama: 0.4933, milk: 0.4470, vase_blue: 0.9068, vase_red: 0.9094, vase_yellow: 0.9067,
     wardrobe: 0.7023, wolf_flee: 1.4077, wolf_granny: 1.0447, wolf_hiccup: 0.8826, wolf_jump: 1.1224, wolf_peek: 0.8881,
     wolf_run: 1.5403, wolf_sleep: 1.0934, wolf_whisper: 1.2990, };
   /* 2026-10-20 새 그림은 그림 크기(세로 픽셀)가 옛 그림과 달라서, 옛 그림과 같은 픽셀 축척이 되도록 높이에 곱하는 비율 */
   const RS = { basket: 0.901, flower_blue: 0.941, flower_red: 0.820, granny_home: 0.804, granny_pop: 0.910, /* 2026-10-20 크기 일관성: 할머니 튀어나옴(pop)이 차 마실 때(tea)보다 15% 작아서 tea 와 같은 0.910 으로 */ granny_tea: 0.910, hood_hide: 0.735,
-    hood_joy: 0.946, hood_knock: 0.781, hood_pick: 0.771, hood_surprise: 0.890, hood_walk: 0.887, hood_walk2: 0.887, /* 2026-10-20 크기 일관성: walk2 는 walk 와 같은 몸 높이로 (0.800 → 0.887, 옛 0.800 은 화면에서 10% 작았다) */ hood_wonder: 0.950,
+    hood_joy: 0.946, hood_knock: 0.781, hood_pick: 0.771, hood_surprise: 0.890, hood_walk: 0.887, hood_walk2: 0.887, /* 2026-10-20 크기 일관성: walk2 는 walk 와 같은 몸 높이로 (0.800 → 0.887, 옛 0.800 은 화면에서 10% 작았다) */ hood_wonder: 0.950, hood_wonder_l: 0.950,
     hunter_tickle: 0.892, hunter_walk: 0.931, mama: 0.933, milk: 0.863, vase_blue: 0.904, vase_red: 0.944, vase_yellow: 0.964,
     wardrobe: 0.734, wolf_granny: 0.652, wolf_hiccup: 0.550, wolf_jump: 0.494, wolf_peek: 0.596, };
   const BGS = ['bed', 'cottage', 'door', 'flowers', 'kitchen', 'room', 'shortcut', 'table', 'trail', 'tree'];
@@ -266,7 +266,7 @@
     await Promise.race([Promise.all(loads), new Promise(r => setTimeout(r, 4000))]);
 
     const hood = mk(T, { joy: ['hood_joy', 230, 'left'], walk: ['hood_walk', 230, 'right'], walk2: ['hood_walk2', 230, 'right'],
-      pick: ['hood_pick', 230, 'left'], knock: ['hood_knock', 230, 'left'], wonder: ['hood_wonder', 230, 'left'],
+      pick: ['hood_pick', 230, 'left'], knock: ['hood_knock', 230, 'left'], wonder: ['hood_wonder', 230, 'left'], wonderL: ['hood_wonder_l', 230, 'left'], /* 2026-11-24 왼쪽을 보는 갸웃 그림(같은 비율 1.00, 같은 크기): 침대 속 늑대에게 인사 */
       surprise: ['hood_surprise', 230, 'left'], hide: ['hood_hide', 230, 'left'] });
     const mama = mk(T, { a: ['mama', 270, 'left'] });
     const granny = mk(T, { home: ['granny_home', 230, 'left'], pop: ['granny_pop', 230, 'left'], tea: ['granny_tea', 230, 'left'] });
@@ -637,11 +637,10 @@
       T.clear(); bgImage(T, 'cottage'); dress(T, 'cottage', P, { bird: true }); camSnap(480, (T.viewWidth() < 990) ? 310 : 320, (T.viewWidth() < 990) ? 2.2 : 1.5);
       put(T, hood, 470, 366, { look: 'knock', to: 'left', s: .34 });
     }, wolf.pos);
-    /* 누르는 영역: 작은 빨간 모자(.34배) 둘레에 투명 받침 — 화면에서 짧은 변 80px 이상 */
-    const hb = hood.body.getBBox(), hoodPad = T.el('rect', { x: Math.min(hb.x, -90), y: hb.y - 20, width: Math.max(hb.width, 180), height: hb.height + 40, fill: '#fff', opacity: 0 });
-    hood.pos.insertBefore(hoodPad, hood.pos.firstChild);
-    await T.ask('빨간 모자는 숲속 할머니 집에 도착했어요. 문을 톡 두드려요!', () => T.tap(live(hood), { prompt: '빨간 모자를 톡! 똑똑똑 노크해요.' }));
-    hoodPad.remove();
+    /* 누르는 영역(2026-11-24 아스트라 A): 눈에 보이는 문짝 전체와 빨간 모자를 함께 덮는 투명 영역 하나. 문을 눌러도, 빨간 모자를 눌러도 노크가 난다 (세로 휴대폰에서도 짧은 변 80px 이상) */
+    const doorHot = hotRect(T, 438, 262, 112, 108);
+    await T.ask('빨간 모자는 숲속 할머니 집에 도착했어요. 문을 톡 두드려요!', () => T.tap(doorHot, { prompt: '문을 톡! 똑똑똑 두드려요.' }));
+    doorHot.remove();
     for (let k = 0; k < 3; k++) { knock(T); T.pop(560, 250, '똑!'); lyHop('bird', 6, 250); await hood.hop(8, 200); }
     await say('"들어오렴~" 안에서 쉰 목소리가 들렸어요.');
 
@@ -649,18 +648,18 @@
     await T.cutImage([{ src: cutSrc('granwolf'), hold: 2600 }], { hold: 2600 });
     await T.sceneCard('이상해요', () => {
       scene('bed', P ? 470 : 590);
-      put(T, wolf, 335, 472, { look: 'granny', to: 'left' });
+      put(T, wolf, 335, 400, { look: 'granny', to: 'left' }); /* 침대 매트리스 위로(2026-11-24 아스트라 C: 양탄자 앞이 아니라 침대 속 할머니로 읽히게) */
       put(T, frame, FRAME[0], FRAME[1], { s: FRAME[2] }); // 그림 속 빈 액자 안에 진짜 할머니 사진
-      put(T, hood, 640, 510, { look: 'wonder', to: 'left' });
+      put(T, hood, 640, 510, { look: 'wonderL', to: 'left' }); // 왼쪽 침대 속 늑대를 본다
     }, wolf.pos);
-    await say('"할머니, 오셨어요?" 그런데 침대 속 할머니가 어딘가 이상해요.');
-    const WX = 335, WHt = 405 * RS.wolf_granny, WW = WHt * ASP.wolf_granny, WG = 472; // 2026-10-20 새 늑대 그림(오른쪽을 봄)에 맞춰 귀·눈·입 자리를 다시 잡음
+    await say('"할머니, 저 왔어요!" 그런데 침대에 누운 할머니가 어딘가 이상해요.');
+    const WX = 335, WHt = 405 * RS.wolf_granny, WW = WHt * ASP.wolf_granny, WG = 400; // 2026-10-20 새 늑대 그림(오른쪽을 봄)에 맞춰 귀·눈·입 자리를 다시 잡음
     const px = f => WX - WW / 2 + f * WW, py = f => WG - WHt + f * WHt;
     const parts = {
       ear: { at: [px(.35), py(.14)], r: 32, q: '"할머니, 귀가 왜 이렇게 커요?"', a: '"네 말을 잘 들으려고 그렇지~"', w: '뾰족 귀!' },
       eye: { at: [px(.61), py(.26)], r: 28, q: '"할머니, 눈이 왜 이렇게 노랗고 커요?"', a: '"너를 잘 보려고 그렇지~"', w: '노란 눈!' },
       /* 입: 그림에서 잰 주둥이(크림) x .60~.84·y .34~.44, 안경 아래끝 y .35 — 원이 안경을 덮지 않게 주둥이 가운데로 내리고 작게 (2026-10-27) */
-      mouth: { at: [px(.75), py(.40)], r: 24, q: '"할머니, 입이 왜 이렇게 길어요?"', a: '"그건 말이지… 어흥! 놀랐지?"', w: '긴 입!' },
+      mouth: { at: [px(.75), py(.40)], r: 24, q: '"할머니, 입이 왜 이렇게 길어요?"', a: '"너와 이야기를 나누려고 그렇지~"', w: '긴 입!' },
     };
     const left = Object.keys(parts);
     const PROMPT = '사진 속 할머니와 달라 보이는 곳을 톡!';
@@ -679,6 +678,8 @@
       if (!left.length) break;
       await say('빨간 모자는 고개를 갸웃했어요. 또 이상한 곳이 있나 봐요.');
     }
+    wolf.wiggle(8, 500); T.pop(WX, WG - WHt - 20, '어흥!');
+    await say('"어흥! 내가 누군지 알겠니?"'); /* 세 곳을 모두 찾은 뒤에 정체를 드러낸다(2026-11-24 아스트라) */
     hood.look('surprise'); hood.hop(30, 350);
     await say('빨간 모자는 깜짝 놀랐어요. 이 사람은 할머니가 아니에요!');
 
@@ -715,10 +716,14 @@
     await hunter.move(600, 510, 1200);
     hunter.look('tickle');
     await say('"늑대잖아! 이럴 땐 간질간질 간지럼이 최고지!"');
-    await T.mash(live(wolf), { count: 5, prompt: '늑대를 톡톡톡! 간지럼을 태워요.', onStep: i => {
+    /* 한 번 누르면 간지럼은 저절로 이어진다(2026-11-24 아스트라 B) */
+    await T.ask('늑대를 톡 눌러 봐요. 사냥꾼이 간질간질 간지럼을 태워요!', () => T.tap(live(wolf), { prompt: '늑대를 톡 눌러 봐요. 사냥꾼이 간질간질 간지럼을 태워요!' }));
+    for (let i = 1; i <= 5; i++) {
+      try { AudioFX.countBeat && AudioFX.countBeat(i); } catch (e) { /* 무시 */ }
       wolf.wiggle(6 + i * 2, 260); hunter.hop(12, 260); sfx('marimba_' + i, .6) || popSfx(T); // 간지럼 한 번에 한 음
       T.pop(780, 300 - i * 6, ['킥', '킥킥', '키득', '하하', '꺄르르!'][i - 1] || '킥');
-    } });
+      if (i < 5) await sleep(450);
+    }
     await T.cutImage([{ src: cutSrc('hiccup'), sfx: 'pop', hold: 2600 }], { hold: 2600 });
     hunter.look('laugh');
     wolf.look('hiccup'); wolf.place(760, 510);

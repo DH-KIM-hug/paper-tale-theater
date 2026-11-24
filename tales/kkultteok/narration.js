@@ -73,7 +73,6 @@ const NARRATION_CLIPS = {
   "audio/tc/kkultteok/nar_4ecb0b156f.mp3"
  ],
  "\"먹구름아, 우리랑 놀래?\"": "audio/tc/kkultteok/nuna_64e169498d.mp3",
- "번개를 톡!": "audio/tc/kkultteok/nar_366feacf79.mp3",
  "번쩍! 우르르 쾅!": "audio/tc/kkultteok/nar_ed043daf8f.mp3",
  "먹구름이 깜짝 놀라 번개를 냈어요.": "audio/tc/kkultteok/nar_ce44f89e68.mp3",
  "꿀떡이를 톡! 꼭 안아 줘요.": "audio/tc/kkultteok/nar_3579d395ee.mp3",

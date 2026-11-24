@@ -977,6 +977,17 @@
    ]
   },
   {
+   "text": "의자를 톡 눌러 봐요. 뚝딱뚝딱 고쳐요!",
+   "en": "Tap the chair. Bang, bang, let's fix it!",
+   "segs": [
+    [
+     "nar",
+     "Tap the chair. Bang, bang, let's fix it!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
    "text": "짠! 의자가 다 고쳐졌어요.",
    "en": "Ta-da! The chair is all fixed.",
    "segs": [

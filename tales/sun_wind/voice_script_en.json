@@ -225,8 +225,8 @@
    ]
   },
   {
-   "text": "해님을 톡톡 눌러서 따뜻하게 비춰 줘요!",
-   "en": "Tap the Sun to shine nice and warm!"
+   "text": "해님을 톡 눌러 봐요. 햇볕이 점점 따뜻해져요!",
+   "en": "Tap the Sun. The sunshine gets warmer and warmer!"
   },
   {
    "text": "해님을 톡톡 눌러 봐요!",
@@ -401,12 +401,12 @@
    "en": "The traveler dipped both feet into the cool water, splash!"
   },
   {
-   "text": "바람아, 이번엔 살살 불어 줄래? 톡, 살살~",
-   "en": "Wind, could you blow gently this time? Tap, gently~",
+   "text": "바람을 톡 눌러 봐요. 이번엔 살살 불어요.",
+   "en": "Tap the Wind. This time, blow gently.",
    "segs": [
     [
      "nar",
-     "Wind, could you blow gently this time? Tap, gently~",
+     "Tap the Wind. This time, blow gently.",
      "whisper"
     ]
    ]

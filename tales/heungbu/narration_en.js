@@ -50,14 +50,6 @@ const NARRATION_CLIPS_EN = {
   "t": "A swallow family lived under the eaves of Heungbu's little house.",
   "c": "audio/tc/heungbu/en/nar_beec7d0884.mp3"
  },
- "아기 제비는 몇 마리일까요? 둥지를 톡톡톡 눌러서 세어 봐요!": {
-  "t": "How many baby swallows are there? Tap the nest, tap tap tap, to count!",
-  "c": "audio/tc/heungbu/en/nar_70d03d3c21.mp3"
- },
- "둥지를 톡톡톡! 아기 제비를 세어 봐요.": {
-  "t": "Tap the nest, tap tap tap! Count the baby swallows.",
-  "c": "audio/tc/heungbu/en/nar_c6e5f0e31e.mp3"
- },
  "아기 제비가 하나, 둘, 셋! 세 마리예요.": {
   "t": "One, two, three! There are three baby swallows.",
   "c": "audio/tc/heungbu/en/nar_0da5798dc1.mp3"
@@ -110,14 +102,6 @@ const NARRATION_CLIPS_EN = {
   "t": "Tap Heungbu, tap tap tap! Water the seed.",
   "c": "audio/tc/heungbu/en/nar_cef16b4ec8.mp3"
  },
- "쑥쑥 자란 줄기에 박이 열렸어요. 줄기를 톡톡톡 눌러서 박을 세어 봐요!": {
-  "t": "The vine grew and grew, and gourds appeared. Tap the vine, tap tap tap, to count the gourds!",
-  "c": "audio/tc/heungbu/en/nar_678a15ae5c.mp3"
- },
- "줄기를 톡톡톡! 박을 세어 봐요.": {
-  "t": "Tap the vine, tap tap tap! Count the gourds.",
-  "c": "audio/tc/heungbu/en/nar_88d2866e5c.mp3"
- },
  "박이 하나, 둘, 셋! 세 통이에요.": {
   "t": "One, two, three! There are three gourds.",
   "c": "audio/tc/heungbu/en/nar_24f7d0905d.mp3"
@@ -133,14 +117,6 @@ const NARRATION_CLIPS_EN = {
  "첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.": {
   "t": "White rice poured out of the first gourd! The children shouted with joy.",
   "c": "audio/tc/heungbu/en/nar_4d5272bae5.mp3"
- },
- "쌀자루를 톡톡톡 눌러서 세어 봐요!": {
-  "t": "Tap the rice sacks, tap tap tap, to count them!",
-  "c": "audio/tc/heungbu/en/nar_fd9f230793.mp3"
- },
- "쌀자루를 톡톡톡! 세어 봐요.": {
-  "t": "Tap the rice sacks, tap tap tap! Count them.",
-  "c": "audio/tc/heungbu/en/nar_aaf8c945ed.mp3"
  },
  "쌀자루가 하나, 둘, 셋! 이제 배불리 먹을 수 있어요.": {
   "t": "One, two, three rice sacks! Now they can eat until they are full.",
@@ -238,10 +214,6 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/heungbu/en/nar_760ac8d711.mp3",
    "audio/tc/heungbu/en/heung_a67cfa9f17.mp3"
   ]
- },
- "쌀자루를 톡! 눌러서 형님네 집으로 보내 줘요.": {
-  "t": "Tap a rice sack to send it to your brother's house.",
-  "c": "audio/tc/heungbu/en/nar_486041de85.mp3"
  },
  "쌀자루를 톡! 형님께 보내요.": {
   "t": "Tap a rice sack! Send it to your brother.",

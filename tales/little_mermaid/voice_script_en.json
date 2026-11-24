@@ -36,34 +36,34 @@
    ]
   },
   {
-   "text": "무거운 것은 가라앉고, 가벼운 것은 떠요. 어느 것이 바다 밑까지 내려올까요?",
-   "en": "Heavy things sink, and light things float. Which one will come all the way down to the sea floor?",
+   "text": "나무토막과 돌을 물에 넣으면 어떻게 될까요? 바닥에 닿을 것을 골라 봐요.",
+   "en": "If we put the wood and the stone in the water, what will happen? Pick the one that reaches the bottom.",
    "segs": [
     [
      "nar",
-     "Heavy things sink, and light things float. Which one will come all the way down to the sea floor?",
+     "If we put the wood and the stone in the water, what will happen? Pick the one that reaches the bottom.",
      "happy"
     ]
    ]
   },
   {
-   "text": "나무토막은 가벼워서 둥둥 떠요.",
-   "en": "The piece of wood is light, so it floats.",
+   "text": "나무토막은 물 위에 둥둥 떠요.",
+   "en": "The piece of wood floats on the water.",
    "segs": [
     [
      "nar",
-     "The piece of wood is light, so it floats.",
+     "The piece of wood floats on the water.",
      null
     ]
    ]
   },
   {
-   "text": "무거운 돌이 가라앉았어요!",
-   "en": "The heavy stone sank!",
+   "text": "돌은 바닥으로 가라앉았어요!",
+   "en": "The stone sank to the bottom!",
    "segs": [
     [
      "nar",
-     "The heavy stone sank!",
+     "The stone sank to the bottom!",
      "happy"
     ]
    ]
@@ -80,23 +80,23 @@
    ]
   },
   {
-   "text": "코르크 병은 가벼워서 둥둥 떠요.",
-   "en": "The cork bottle is light, so it floats.",
+   "text": "병은 물 위에 떠요.",
+   "en": "The bottle floats on the water.",
    "segs": [
     [
      "nar",
-     "The cork bottle is light, so it floats.",
+     "The bottle floats on the water.",
      null
     ]
    ]
   },
   {
-   "text": "무거운 닻도 가라앉았어요!",
-   "en": "The heavy anchor sank too!",
+   "text": "닻은 바닥으로 가라앉았어요!",
+   "en": "The anchor sank to the bottom!",
    "segs": [
     [
      "nar",
-     "The heavy anchor sank too!",
+     "The anchor sank to the bottom!",
      "happy"
     ]
    ]

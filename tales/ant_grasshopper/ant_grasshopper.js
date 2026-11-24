@@ -1058,7 +1058,7 @@
     let stored = 0;
     let numQ = Promise.resolve(); // 곡식 한 알마다 숫자를 소리로 센다 (2026-10-20): 겹치지 않게 한 개씩 차례로 끝까지 듣고 다음
     const sayNum = k => { numQ = numQ.then(async () => { try { await Narrator.speak(NUM[k]); } catch (e) { /* 소리 없이도 진행 */ } await sleep(250); }); };
-    await T.ask('곡식을 톡톡 눌러서 창고로 날라 줘요!', () => T.mash(pile, { count: 10, prompt: '노란 곡식을 톡톡 눌러 봐요!', onStep: i => {
+    const grainStep = i => {
       sayNum(i - 1);
       sfx(i <= 8 ? 'marimba_' + i : 'marimba_note', .6); // 한 알에 한 음, 올라가는 마림바
       const a = ant(T, T.world, PX + 140, 496, .9); a.face('right'); carry(a.p, true);
@@ -1072,7 +1072,9 @@
         T.tone(520 + stored * 40, .15, { type: 'triangle', vol: .12 });
         T.pop(E.pop[0], E.pop[1], NUM[stored - 1] + '!', C.pine);
       }, 1250);
-    } }));
+    };
+    await T.ask('곡식을 톡 눌러 봐요. 개미들이 한 알씩 창고로 날라요!', () => T.tap(pile, { prompt: '노란 곡식을 톡 눌러 봐요!' })); // 한 번 누르면 나머지 아홉 알은 저절로 (2026-11-24 아스트라)
+    for (let i = 1; i <= 10; i++) { AudioFX.countBeat && AudioFX.countBeat(i); grainStep(i); await sleep(450); }
     await sleep(1600);
     await numQ;
     sfx('party_horn', .6);

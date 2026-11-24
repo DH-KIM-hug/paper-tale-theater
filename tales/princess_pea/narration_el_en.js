@@ -100,13 +100,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Then soft, fluffy quilts went on top.",
   "c": "audio/el/princess_pea/en/nar_f9c92bc134.mp3"
  },
- "완두콩은 어디 있을까요? 탑의 위? 아래?": {
-  "t": "Where is the pea? At the top of the tower, or at the bottom?",
-  "c": "audio/el/princess_pea/en/nar_119722eb28.mp3"
+ "침대에 숨긴 완두콩은 매트리스 위에 있을까요, 아래에 있을까요?": {
+  "t": "Is the pea hidden on top of the mattresses, or underneath them?",
+  "c": "audio/el/princess_pea/en/nar_039aee0d06.mp3"
  },
- "거긴 탑의 위예요. 완두콩은 맨 아래에 있어요. 아래를 눌러 봐요.": {
-  "t": "That's the top of the tower. The pea is at the very bottom. Tap the bottom.",
-  "c": "audio/el/princess_pea/en/nar_b136e6999d.mp3"
+ "거긴 매트리스 위예요. 완두콩은 맨 아래에 있어요. 아래를 눌러 봐요.": {
+  "t": "That's on top of the mattresses. The pea is at the very bottom. Tap the bottom.",
+  "c": "audio/el/princess_pea/en/nar_afb7adbd1e.mp3"
  },
  "맞아요! 완두콩은 맨 아래에 있어요.": {
   "t": "That's right! The pea is at the very bottom.",

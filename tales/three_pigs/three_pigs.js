@@ -46,6 +46,11 @@
     const say = T.say, sleep = T.sleep, tr = T.tr;
     if (T.fx) T.fx.style.pointerEvents = 'none'; // 효과 글자(pop)가 누르는 대상을 덮어 누름을 가로채지 않게 (2026-10-22)
     const portrait = () => T.viewWidth() < 990;
+    /* 한 번 누르면 나머지 단계는 저절로 이어 간다(2026-11-24 아스트라 검수): 안내와 누르기 동시 */
+    const askSteps = async (text, target, count, prompt, onStep, gap = 450) => {
+      await T.ask(text, () => T.tap(target, { prompt }));
+      for (let i = 1; i <= count; i++) { try { AudioFX.countBeat && count >= 3 && AudioFX.countBeat(i); } catch (e) { /* 무시 */ } onStep(i); if (i < count) await sleep(gap); }
+    };
     const look = (x, dur = 700) => T.camTo(x, 280, 1, dur);
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } }; // 소리 없이도 진행
     const raf = () => new Promise(r => requestAnimationFrame(r));
@@ -656,9 +661,9 @@
     sfx('knock', .7);
     await say('늑대가 벽돌 집에 왔어요. "아기 돼지야, 문 열어라!"');
     await say('"싫어요, 싫어요!" "그럼 후~ 후~ 불어 주지!"');
-    await T.mash(wall, { count: 8, prompt: '집을 톡톡 눌러서 몇 번 부는지 세어 봐요.', onStep: i => {
+    await askSteps('벽돌 집을 톡 눌러 봐요. 늑대가 몇 번 부는지 함께 세어요!', wall, 8, '벽돌 집을 톡 눌러 봐요.', i => {
       sfx(i <= 8 ? 'marimba_' + i : 'marimba_note', .6); T.pop(400, 300, NUM[i - 1]); wolf2.hop(12, 300); // 센 만큼 한 음씩
-    } });
+    });
     await say('후~ 후~ 여덟 번이나 불었지만 벽돌 집은 끄떡없어요!');
     wolf2.set('wolf_tired', 230); sfx('sad_trombone', .6); // 늑대가 지쳐서 풀썩
     await T.cutImage([{ src: U('cut_tired'), hold: 2600 }]);
@@ -682,11 +687,11 @@
     await more('집 안의 삼 형제는 굴뚝 아래에 솥을 놓았어요.');
     amb('pot_boil', { vol: .25, dur: 4 }); // 솥 보글보글
     await say('아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.');
-    await T.mash(fire, { count: 5, prompt: '불을 톡톡 눌러서 크게 해 줘요.', onStep: i => {
+    await askSteps('불을 톡 눌러 봐요. 물이 보글보글 끓어요.', fire, 5, '불을 톡 눌러 봐요.', i => {
       const p = i / 5;
       glow.setAttribute('rx', 18 + 62 * p); glow.setAttribute('ry', 14 + 40 * p); glow.setAttribute('opacity', .15 + .5 * p);
       T.pop(500 + (Math.random() - .5) * 100, 250, '보글');
-    } });
+    });
     sfx('drumroll_crash', .6); // 늑대가 내려오기 전
     const stopShiver = shiver();
     /* 2026-11-02 싱크: 컷이 대사 앞뒤에 따로 떠서 "쑥 내려왔어요"·"앗, 뜨거워!"·"굴뚝으로 휙!" 동안 늑대가 없었다 → 컷마다 그 대사와 함께 */

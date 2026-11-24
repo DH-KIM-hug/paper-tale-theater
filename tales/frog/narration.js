@@ -49,7 +49,6 @@ const NARRATION_CLIPS = {
   "audio/tc/frog/mom_a5c1acc4ee.mp3",
   "audio/tc/frog/nar_05f8113964.mp3"
  ],
- "엄마개구리를 톡톡 눌러서 부풀려 볼까요?": "audio/tc/frog/nar_4daab3e3db.mp3",
  "엄마개구리를 톡톡 눌러 봐요!": "audio/tc/frog/nar_85e40c241f.mp3",
  "\"아직 황소가 더 커요!\"": "audio/tc/frog/babyb_1ba19e140a.mp3",
  "\"와, 양만큼 커졌다! 그래도 황소가 더 커요!\"": "audio/tc/frog/babyc_ad62bf8244.mp3",

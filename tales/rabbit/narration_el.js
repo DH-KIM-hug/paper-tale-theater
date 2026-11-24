@@ -47,7 +47,7 @@ Object.assign(NARRATION_CLIPS, {
  "토끼는 쌩~ 거북이는 엉금 한 발!": "audio/el/rabbit/nar_369d528b9c.mp3",
  "여기는 경주 지도예요. 돌멩이, 개울, 언덕을 지나 깃발까지!": "audio/el/rabbit/nar_79f0aa45c5.mp3",
  "아래 막대를 보면 누가 앞서는지 알 수 있어요.": "audio/el/rabbit/nar_432344b137.mp3",
- "토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!": "audio/el/rabbit/nar_73a49429aa.mp3",
+ "화면을 톡 눌러요. 토끼가 쌩쌩 달려가요!": "audio/el/rabbit/nar_65ed007151.mp3",
  "화면을 톡톡 눌러 봐요!": "audio/el/rabbit/nar_44dea921e9.mp3",
  "금세 언덕 위 나무 그늘까지 왔어요.": "audio/el/rabbit/nar_43cb9ddb94.mp3",
  "뒤를 돌아보니… 거북이는 안 보여요!": "audio/el/rabbit/nar_be0769fee0.mp3",

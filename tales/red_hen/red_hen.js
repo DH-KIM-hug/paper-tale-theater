@@ -891,7 +891,7 @@
         if (!P) { who.hop(12, 300); }
         rest.el.animate([{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(30px)' }], { duration: 500, fill: 'forwards' });
         cue('giggle_xylo', .4) || cue('pop', .4);
-        await say(DISH === 'pizza' ? 'I_nostraw' : 'I_notomato');
+        await say(DISH === 'pizza' ? 'I_nextstraw' : 'I_nexttomato');
       }
       if (DISH === 'pizza') {   // 오븐에 넣고 띵
         hen.look('stand', 'right');

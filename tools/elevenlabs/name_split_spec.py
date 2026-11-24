@@ -122,7 +122,7 @@ D['kkultteok'] = [
 ]
 D['witch_candy'] = [
  (1, '앞', G, 'N:다현이랑‖친구들은 사탕 가게로 쪼르르 들어갔어요.', '앞', G, 'N:Dahyun‖and her friends scurried right into the candy shop.', '시험 L1 통과', ''),
- (2, '앞', G, 'N:다현아,‖네가 넣어 줘. 하나든 여러 개든 좋아.', '부름', G, 'N:Dahyun,‖you put them in. One or lots, it\'s all good.', '선택안(시험 L2 통과): "다현아, 네가 넣어 줘." — 영어와 같은 부름 꼴. 원문 꼴(앞+조사)도 통과 유형이라 둘 다 가능', ''),
+ (2, '앞', G, 'N:다현아,‖마음에 드는 재료를 하나나 두 개 골라 넣어 줘.', '부름', G, 'N:Dahyun,‖pick one or two ingredients you like and put them in.', '2026-11-24 아스트라 검수로 문안 바꿈(이름 조각은 그대로, 고정 조각만 새로). 옛 선택안(시험 L2 통과): "다현아, 네가 넣어 줘." — 영어와 같은 부름 꼴. 원문 꼴(앞+조사)도 통과 유형이라 둘 다 가능', ''),
  (3, '감탄 뒤', G, '뿅!‖N:다현이가‖빨간 딸기가 됐어요!', '감탄 뒤', G, 'Poof!‖N:Dahyun‖turned into a red strawberry!', '', ''),
  (4, '가운데(조사 없음)', AB, '뿅!‖N:다현이 발이‖오리발이 됐어요!', '감탄 뒤(소유)', AB, 'Poof!‖N:Dahyun\'s feet‖turned into duck feet!', '글 그대로. table.md 의 "다현이는 발이" 로 고치는 안도 가능', ''),
  (5, '감탄 뒤', G, '뿅!‖N:다현이한테‖물고기 꼬리가 생겼어요!', '감탄 뒤', G, 'Poof!‖N:Dahyun‖grew a fish tail!', '', ''),

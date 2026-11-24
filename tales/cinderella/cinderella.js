@@ -1043,12 +1043,11 @@
     slipper.pos.animate([{ translate: '0 -40px', rotate: '-20deg' }, { translate: '0 0', rotate: '0deg' }], 400);
     sparkleRing(T, slipper.x, slipper.y - 10, 50, 8, ['#BFD9EA', '#F4F6FA']);
     T.pop(ST[1][0], ST[1][1] - cind.h * SS - 20, tr('앗!'));
-    for (const [x, y] of ST.slice(2)) await cind.move(x, y, 750, 'linear');
-    hide(cind);
+    await sleep(250); /* 구두를 떨어뜨린 그 계단에서 잠시 멈춘다(큰 구두 컷 뒤 같은 자리에서 이어 달린다, 2026-11-24 아스트라) */
     await cutArt(T, 'stairs_slipper', () => { sparkleSfx(T); setTimeout(() => AudioFX.sfx('ding') || popSfx(T), 400); });
     /* 2026-11-02 그림-대사 맞춤: 달려 내려가는 대사 동안 신데렐라가 계단 아래쪽을 달려 나간다 */
-    put(T, cind, ST[2][0], ST[2][1], { look: 'run', to: 'left', s: SS });
-    const runOff = (async () => { await cind.move(ST[3][0], ST[3][1], 1300, 'linear'); await cind.move(ST[4][0], ST[4][1], 1300, 'linear'); hide(cind); })();
+    put(T, cind, ST[1][0], ST[1][1], { look: 'run', to: 'left', s: SS });
+    const runOff = (async () => { await cind.move(ST[2][0], ST[2][1], 700, 'linear'); await cind.move(ST[3][0], ST[3][1], 1300, 'linear'); await cind.move(ST[4][0], ST[4][1], 1300, 'linear'); hide(cind); })();
     await say('신데렐라는 계단을 달려 내려가다 유리 구두 한 짝을 떨어뜨렸어요.');
     await runOff;
     put(T, prince, 980, ST[0][1] - 10, { look: 'stand', to: 'left', s: SS });

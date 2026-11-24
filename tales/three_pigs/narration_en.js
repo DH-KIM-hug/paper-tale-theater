@@ -185,10 +185,6 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/three_pigs/en/wolf_c3eb2cb1e0.mp3"
   ]
  },
- "집을 톡톡 눌러서 몇 번 부는지 세어 봐요.": {
-  "t": "Tap the house to count how many times he blows.",
-  "c": "audio/tc/three_pigs/en/nar_f8a9bad33b.mp3"
- },
  "후~ 후~ 여덟 번이나 불었지만 벽돌 집은 끄떡없어요!": {
   "t": "Huff, puff! He blew eight times, but the brick house did not budge!",
   "c": "audio/tc/three_pigs/en/nar_9040d0e76c.mp3"
@@ -204,10 +200,6 @@ const NARRATION_CLIPS_EN = {
  "아기 돼지들은 큰 솥에 물을 팔팔 끓였어요.": {
   "t": "The little pigs boiled water in a big pot.",
   "c": "audio/tc/three_pigs/en/nar_fdcb45c71e.mp3"
- },
- "불을 톡톡 눌러서 크게 해 줘요.": {
-  "t": "Tap, tap the fire to make it bigger.",
-  "c": "audio/tc/three_pigs/en/nar_4f8b3cd530.mp3"
  },
  "보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.": {
   "t": "Bubble, bubble, the water is boiling! Then the wolf slid down the chimney.",

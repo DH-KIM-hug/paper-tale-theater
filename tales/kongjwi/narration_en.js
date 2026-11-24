@@ -63,10 +63,6 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/kongjwi/en/nar_f0bff8f3d4.mp3"
   ]
  },
- "물동이를 톡톡톡 눌러서 물을 세 번 부어 봐요!": {
-  "t": "Tap the bucket, tap tap tap, to pour water three times!",
-  "c": "audio/tc/kongjwi/en/nar_5c5a10c40a.mp3"
- },
  "물동이를 톡톡톡! 물을 부어요.": {
   "t": "Tap the bucket, tap tap tap! Pour the water.",
   "c": "audio/tc/kongjwi/en/nar_5fe2e0afe5.mp3"
@@ -127,10 +123,6 @@ const NARRATION_CLIPS_EN = {
  "참새를 톡! 곡식을 도와줘요.": {
   "t": "Tap the sparrows! Help with the grain.",
   "c": "audio/tc/kongjwi/en/nar_316c820d93.mp3"
- },
- "참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요. 참새를 하나씩 세어 봐요!": {
-  "t": "The sparrows pecked and peeled the husks. Let's count the sparrows one by one!",
-  "c": "audio/tc/kongjwi/en/nar_a4d1e4a29b.mp3"
  },
  "참새를 톡톡톡톡톡! 하나씩 세어요.": {
   "t": "Tap the sparrows, tap tap tap tap tap! Count them one by one.",
@@ -209,10 +201,6 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/kongjwi/en/nar_972f69e2f0.mp3",
    "audio/tc/kongjwi/en/won_9be4b6b0e6.mp3"
   ]
- },
- "꽃신 세 켤레 중에서 나비 꽃신이 콩쥐의 꽃신이에요. 나비 꽃신을 톡!": {
-  "t": "Of the three pairs of shoes, the butterfly shoe is Kongjwi's. Tap the butterfly shoe!",
-  "c": "audio/tc/kongjwi/en/nar_25914f60ff.mp3"
  },
  "나비 꽃신을 톡!": {
   "t": "Tap the butterfly shoe!",

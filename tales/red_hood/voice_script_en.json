@@ -163,19 +163,8 @@
    ]
   },
   {
-   "text": "\"할머니, 오셨어요?\" 그런데 침대 속 할머니가 어딘가 이상해요.",
-   "en": "Grandmother, are you here? But Grandmother in the bed looked a little odd.",
-   "segs": [
-    [
-     "hood",
-     "Grandmother, are you here?",
-     "happy"
-    ],
-    [
-     "nar",
-     "But Grandmother in the bed looked a little odd."
-    ]
-   ]
+   "text": "\"할머니, 저 왔어요!\" 그런데 침대에 누운 할머니가 어딘가 이상해요.",
+   "en": "\"Grandma, I'm here!\" But the grandma lying in bed looks a little strange."
   },
   {
    "text": "벽에 걸린 진짜 할머니 사진과 비교해서 다른 곳을 찾아봐요!",
@@ -317,8 +306,8 @@
    "en": "Where is the vase with the same color as the flower?"
   },
   {
-   "text": "빨간 모자를 톡! 똑똑똑 노크해요.",
-   "en": "Tap Red Hood! Knock, knock, knock."
+   "text": "문을 톡! 똑똑똑 두드려요.",
+   "en": "Tap the door! Knock, knock, knock!"
   },
   {
    "text": "\"할머니, 귀가 왜 이렇게 커요?\"",
@@ -376,15 +365,12 @@
    ]
   },
   {
-   "text": "\"그건 말이지… 어흥! 놀랐지?\"",
-   "en": "Well, you see... Roar! Did I scare you?",
-   "segs": [
-    [
-     "wolf",
-     "Well, you see... Roar! Did I scare you?",
-     "normal"
-    ]
-   ]
+   "text": "\"너와 이야기를 나누려고 그렇지~\"",
+   "en": "\"So that I can talk with you, my dear.\""
+  },
+  {
+   "text": "\"어흥! 내가 누군지 알겠니?\"",
+   "en": "\"Roar! Do you know who I am?\""
   },
   {
    "text": "사진 속 할머니와 달라 보이는 곳을 톡!",
@@ -407,8 +393,8 @@
    "en": "Tap the window!"
   },
   {
-   "text": "늑대를 톡톡톡! 간지럼을 태워요.",
-   "en": "Tap, tap, tap the wolf! Tickle him."
+   "text": "늑대를 톡 눌러 봐요. 사냥꾼이 간질간질 간지럼을 태워요!",
+   "en": "Tap the wolf. The hunter tickles him, tickle tickle!"
   },
   {
    "text": "간식을 톡! 한 사람씩 나눠 줘요.",

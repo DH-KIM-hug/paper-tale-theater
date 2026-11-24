@@ -42,13 +42,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "A swallow family lived under the eaves of Heungbu's little house.",
   "c": "audio/el/heungbu/en/nar_8ab8a7ee79.mp3"
  },
- "아기 제비는 몇 마리일까요? 둥지를 톡톡톡 눌러서 세어 봐요!": {
-  "t": "How many baby swallows are there? Tap the nest, tap tap tap, to count!",
-  "c": "audio/el/heungbu/en/nar_026631bb34.mp3"
- },
- "둥지를 톡톡톡! 아기 제비를 세어 봐요.": {
-  "t": "Tap the nest, tap tap tap! Count the baby swallows.",
-  "c": "audio/el/heungbu/en/nar_5c75e24149.mp3"
+ "둥지를 톡 눌러 봐요. 아기 제비를 함께 세어요!": {
+  "t": "Tap the nest. Let's count the baby swallows together!",
+  "c": "audio/el/heungbu/en/nar_39922bb661.mp3"
  },
  "아기 제비가 하나, 둘, 셋! 세 마리예요.": {
   "t": "One, two, three! There are three baby swallows.",
@@ -82,13 +78,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Heungbu planted the seed in his yard.",
   "c": "audio/el/heungbu/en/nar_9623bb5f6d.mp3"
  },
- "쑥쑥 자란 줄기에 박이 열렸어요. 줄기를 톡톡톡 눌러서 박을 세어 봐요!": {
-  "t": "The vine grew and grew, and gourds appeared. Tap the vine, tap tap tap, to count the gourds!",
-  "c": "audio/el/heungbu/en/nar_b6bf6aadb6.mp3"
- },
- "줄기를 톡톡톡! 박을 세어 봐요.": {
-  "t": "Tap the vine, tap tap tap! Count the gourds.",
-  "c": "audio/el/heungbu/en/nar_dd74d1a4c8.mp3"
+ "줄기를 톡 눌러 봐요. 박을 함께 세어요!": {
+  "t": "Tap the vine. Let's count the gourds together!",
+  "c": "audio/el/heungbu/en/nar_c585f1fdad.mp3"
  },
  "박이 하나, 둘, 셋! 세 통이에요.": {
   "t": "One, two, three! There are three gourds.",
@@ -106,13 +98,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "White rice poured out of the first gourd! The children shouted with joy.",
   "c": "audio/el/heungbu/en/nar_f3bc9c3a15.mp3"
  },
- "쌀자루를 톡톡톡 눌러서 세어 봐요!": {
-  "t": "Tap the rice sacks, tap tap tap, to count them!",
-  "c": "audio/el/heungbu/en/nar_a3ee37ad74.mp3"
- },
- "쌀자루를 톡톡톡! 세어 봐요.": {
-  "t": "Tap the rice sacks, tap tap tap! Count them.",
-  "c": "audio/el/heungbu/en/nar_1b90b005ab.mp3"
+ "첫 번째 박을 톡 눌러 봐요. 쌀자루가 몇 개 나올까요?": {
+  "t": "Tap the first gourd. How many sacks of rice will come out?",
+  "c": "audio/el/heungbu/en/nar_ceb5537dfd.mp3"
  },
  "쌀자루가 하나, 둘, 셋! 이제 배불리 먹을 수 있어요.": {
   "t": "One, two, three rice sacks! Now they can eat until they are full.",

@@ -29,8 +29,8 @@ const NARRATION_CLIPS_EN = {
   "t": "How does the hen feel? Tap the sad face.",
   "c": null
  },
- "지금은 웃을 때가 아니에요.": {
-  "t": "This is not a smiling time.",
+ "친구들이 모두 싫다고 했지요. 암탉은 어떤 기분일까요?": {
+  "t": "The friends all said no. How does the hen feel?",
   "c": null
  },
  "암탉은 조금 시무룩했어요. 하지만 금방 기운을 냈지요.": {
@@ -311,6 +311,14 @@ const NARRATION_CLIPS_EN = {
  },
  "토마토는 팬케이크에 안 넣어!": {
   "t": "Tomatoes don't go on pancakes!",
+  "c": null
+ },
+ "딸기는 다음 요리에 쓰자!": {
+  "t": "Let's save the strawberries for the next dish!",
+  "c": null
+ },
+ "토마토는 다음 요리에 쓰자!": {
+  "t": "Let's save the tomatoes for the next dish!",
   "c": null
  },
  "꿀이 주르르.": {

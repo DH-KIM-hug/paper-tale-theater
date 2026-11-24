@@ -6,7 +6,6 @@ const NARRATION_CLIPS = {
   "audio/tc/hansel/nar_3d5d795f3d.mp3"
  ],
  "헨젤은 빵 부스러기로 길을 표시하기로 했어요.": "audio/tc/hansel/nar_fcc1fa67fb.mp3",
- "헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!": "audio/tc/hansel/nar_d496da0216.mp3",
  "헨젤을 톡톡톡톡톡! 부스러기를 세어요.": "audio/tc/hansel/nar_b51e759865.mp3",
  "빵 부스러기가 하나, 둘, 셋, 넷, 다섯! 길이 생겼어요.": "audio/tc/hansel/nar_4379aea0f2.mp3",
  "빈터에는 빨간 산딸기가 가득했어요. 둘은 냠냠 따 먹었어요.": "audio/tc/hansel/nar_a1d0c23f93.mp3",
@@ -28,7 +27,6 @@ const NARRATION_CLIPS = {
  "그때 달콤한 냄새가 솔솔 났어요. 앗, 과자 집이에요!": "audio/tc/hansel/nar_f49b1de121.mp3",
  "벽은 쿠키, 지붕은 사탕이에요.": "audio/tc/hansel/nar_75697fdafc.mp3",
  "너무 맛있어서 둘은 배가 빵빵해졌어요.": "audio/tc/hansel/nar_216001b2f9.mp3",
- "지붕에 사탕이 빠진 곳이 있어요. 헨젤이 하나씩 붙여 줘요. 같이 세어 봐요!": "audio/tc/hansel/nar_f63b72933e.mp3",
  "헨젤을 톡톡톡톡톡! 사탕을 세어요.": "audio/tc/hansel/nar_c563f8512d.mp3",
  "사탕이 하나, 둘, 셋, 넷, 다섯! 지붕이 예뻐졌어요.": "audio/tc/hansel/nar_9fd3393683.mp3",
  "그때 문이 열리고 마녀 할머니가 나왔어요.": "audio/tc/hansel/nar_c9aabf7999.mp3",

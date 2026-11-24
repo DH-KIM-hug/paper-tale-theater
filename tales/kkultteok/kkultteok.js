@@ -152,6 +152,11 @@
       return { go, stop };
     })();
     const { sleep, say, camSnap } = T;
+    /* 한 번 누르면 나머지 단계는 저절로 이어 간다(2026-11-24 아스트라 검수). onStep 이 약속을 돌려주면 끝날 때까지 기다린다 */
+    const askSteps = async (text, target, count, prompt, onStep) => {
+      await T.ask(text, () => T.tap(target, { prompt }));
+      for (let i = 1; i <= count; i++) { try { AudioFX.countBeat && AudioFX.countBeat(i); } catch (e) { /* 무시 */ } await onStep(i); await sleep(150); }
+    };
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
@@ -1184,10 +1189,11 @@
       await say('하늘에 커다란 무지개! "우와!"');
       // 그림 속 무지개 띠를 따라 누를 자리 (타원 호)
       const arc = el('path', { d: 'M75 400 A465 330 0 0 1 1005 400', fill: 'none', stroke: 'transparent', 'stroke-width': 250 }, T.world); // 일곱 띠 전체를 덮는다
-      await T.ask('무지개를 톡톡톡… 일곱 색을 세어 봐요!', () => T.mash(arc, { count: 7, prompt: '무지개를 톡톡톡… 일곱 색을 세어 봐요!', onStep: i => {
+      await askSteps('무지개를 톡 눌러 봐요. 일곱 색이 차례로 빛나요.', arc, 7, '무지개를 톡! 일곱 색이 빛나요.', async i => {
         const t = Math.PI * (1 - (i - .5) / 7), x = 540 + 470 * Math.cos(t), y = 380 - 320 * Math.sin(t);
-        sfx('marimba_' + i, .6) || popSfx(T); Narrator.speak(NAME[i - 1]); T.pop(X(x, Math.max(320, Math.min(680, x))), Math.max(70, y), tr(NAME[i - 1]), COL[i - 1]); // 한 색에 한 음
-      } }));
+        sfx('marimba_' + i, .6) || popSfx(T); T.pop(X(x, Math.max(320, Math.min(680, x))), Math.max(70, y), tr(NAME[i - 1]), COL[i - 1]); // 한 색에 한 음
+      try { await Narrator.speak(NAME[i - 1]); } catch (e) { /* 소리 없이도 진행 */ } // 색 이름을 끝까지 듣고 다음 띠 (2026-11-24 아스트라 B)
+    });
       arc.remove();
       await sleep(500); // 저절로 (2026-10-20 톡 조작 정리)
       // 남은 비를 톡톡 다 내리면서 조금씩 작아지고 옅어져, 작은 하얀 구름만 남는다 (갑자기 하얘지지 않게)

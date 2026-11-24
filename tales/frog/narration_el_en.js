@@ -169,9 +169,9 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/frog/en/nar_4f1f95473c.mp3"
   ]
  },
- "엄마개구리를 톡톡 눌러서 부풀려 볼까요?": {
-  "t": "Shall we tap, tap, and puff up Mama Frog?",
-  "c": "audio/el/frog/en/nar_8f7562764f.mp3"
+ "엄마개구리를 톡 눌러 봐요. 얼마나 커질까요?": {
+  "t": "Tap Mama Frog. How big will she get?",
+  "c": "audio/el/frog/en/nar_2f8f2176c4.mp3"
  },
  "엄마개구리를 톡톡 눌러 봐요!": {
   "t": "Tap, tap, tap Mama Frog!",

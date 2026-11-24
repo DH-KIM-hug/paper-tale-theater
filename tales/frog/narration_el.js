@@ -49,7 +49,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/frog/mom_ef0de5c49e.mp3",
   "audio/el/frog/nar_55da34644b.mp3"
  ],
- "엄마개구리를 톡톡 눌러서 부풀려 볼까요?": "audio/el/frog/nar_0b05dc69d6.mp3",
+ "엄마개구리를 톡 눌러 봐요. 얼마나 커질까요?": "audio/el/frog/nar_09c6410aae.mp3",
  "엄마개구리를 톡톡 눌러 봐요!": "audio/el/frog/nar_0aac9300ac.mp3",
  "\"아직 황소가 더 커요!\"": "audio/el/frog/babyb_7eb1be4af8.mp3",
  "\"와, 양만큼 커졌다! 그래도 황소가 더 커요!\"": "audio/el/frog/babyc_49b7734676.mp3",

@@ -213,9 +213,9 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/three_pigs/en/wolf_8368d6d6ee.mp3"
   ]
  },
- "집을 톡톡 눌러서 몇 번 부는지 세어 봐요.": {
-  "t": "Tap the house to count how many times he blows.",
-  "c": "audio/el/three_pigs/en/nar_b4f415518b.mp3"
+ "벽돌 집을 톡 눌러 봐요. 늑대가 몇 번 부는지 함께 세어요!": {
+  "t": "Tap the brick house. Let's count together how many times the wolf blows!",
+  "c": "audio/el/three_pigs/en/nar_099f100cec.mp3"
  },
  "후~ 후~ 여덟 번이나 불었지만 벽돌 집은 끄떡없어요!": {
   "t": "Huff, puff! He blew eight times, but the brick house did not budge!",
@@ -233,9 +233,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The little pigs boiled water in a big pot.",
   "c": "audio/el/three_pigs/en/nar_fc7559b06c.mp3"
  },
- "불을 톡톡 눌러서 크게 해 줘요.": {
-  "t": "Tap, tap the fire to make it bigger.",
-  "c": "audio/el/three_pigs/en/nar_a45b1b4b3a.mp3"
+ "불을 톡 눌러 봐요. 물이 보글보글 끓어요.": {
+  "t": "Tap the fire. The water bubbles and boils.",
+  "c": "audio/el/three_pigs/en/nar_9f379a123b.mp3"
  },
  "보글보글 물이 끓어요! 그때 굴뚝에서 늑대가 쑥 내려왔어요.": {
   "t": "Bubble, bubble, the water is boiling! Then the wolf slid down the chimney.",

@@ -84,7 +84,7 @@ Object.assign(NARRATION_CLIPS, {
  "엄마 목소리를 잘 아는 아기 염소들은 오래오래 행복하게 살았답니다.": "audio/el/wolf_goats/nar_f257c8ab1e.mp3",
  "엄마 염소를 톡 눌러 봐요!": "audio/el/wolf_goats/nar_d611133639.mp3",
  "막내 염소를 톡 눌러서 시계 속에 숨겨 줘요!": "audio/el/wolf_goats/nar_409557608c.mp3",
- "늑대 배를 톡톡 눌러 봐요!": "audio/el/wolf_goats/nar_ec27b4fbee.mp3",
+ "늑대 배를 톡 눌러 봐요. 아기들이 한 마리씩 나와요!": "audio/el/wolf_goats/nar_4cca2d6c95.mp3",
  "늑대를 톡! 눌러 봐요!": "audio/el/wolf_goats/nar_9bcb4e99c4.mp3",
  "돌멩이를 톡! 눌러 봐요!": "audio/el/wolf_goats/nar_4f8d247b2e.mp3"
 });

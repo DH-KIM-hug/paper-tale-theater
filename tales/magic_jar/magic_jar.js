@@ -410,11 +410,15 @@
     const hoes = [], nHoe = rnd(3, 6);
     let nCoin; do nCoin = rnd(4, 8); while (nCoin === nHoe);
     const hoeSpots = []; hoeRows(nHoe).forEach((cnt, r) => { for (let c = 0; c < cnt; c++) hoeSpots.push([fx(T, 520) + (c - (cnt - 1) / 2) * 105, 335 - r * 115]); });
-    await T.ask(`항아리를 ${KN[nHoe]} 번 톡톡 눌러서 괭이를 ${KN[nHoe]} 개 세어 봐요!`, () => T.mash(jar.pos, { count: nHoe, prompt: `항아리를 ${KN[nHoe]} 번 톡톡! 괭이를 세어 봐요.`, onStep: i => {
+    /* 한 번 톡 누르면 나머지는 저절로 하나씩 센다(2026-11-24 아스트라 B). 수 이름이 겹쳐 첫 낱말이 잘리지 않게 간격을 넉넉히 */
+    const autoCount = async (n, step) => { for (let i = 1; i <= n; i++) { try { AudioFX.countBeat && AudioFX.countBeat(i); } catch (e) { /* 무시 */ } step(i); if (i < n) await sleep(950); } };
+    const GUIDE = '항아리를 톡 눌러 봐요. 무엇이 몇 개 나오는지 함께 세어요!';
+    await T.ask(GUIDE, () => T.tap(jar.pos, { prompt: GUIDE }));
+    await autoCount(nHoe, i => {
       const h2 = prop(T, 'hoe', 110); h2.pos.style.pointerEvents = 'none'; put(T, h2, hoeSpots[i - 1][0], hoeSpots[i - 1][1], { raw: true });
       h2.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); hoes.push(h2);
       jar.hop(12, 240); note(i) || popSfx(T); vo('n' + i); jarGlint(); if (i === nHoe) later(500, 'tada', .7);
-    } }));
+    });
     await say(`괭이가 ${words(nHoe)}! 농부와 아내는 손뼉을 쳤어요.`);
     await wife.hop(30, 400);
 
@@ -439,11 +443,12 @@
     await sleep(400);
     burst.forEach(c => hide(c));   // 세기는 하나씩 다시 놓인다
     const csp = tight(T) ? (nCoin <= 5 ? 60 : 50) : (nCoin <= 5 ? 90 : 72);   // 엽전 사이 간격: 8개까지 가로·세로 화면 안에 들어오게
-    await T.ask(`항아리를 ${KN[nCoin]} 번 톡톡 눌러서 엽전을 ${KN[nCoin]} 개 세어 봐요!`, () => T.mash(jar.pos, { count: nCoin, prompt: `항아리를 ${KN[nCoin]} 번 톡톡! 엽전을 세어 봐요.`, onStep: i => {
+    await T.ask(GUIDE, () => T.tap(jar.pos, { prompt: GUIDE }));
+    await autoCount(nCoin, i => {
       const c = prop(T, 'coin', 52); c.pos.style.pointerEvents = 'none'; put(T, c, fx(T, 520) + (i - (nCoin + 1) / 2) * csp, 548, { raw: true });
       c.pos.animate([{ opacity: 0, translate: '0 -40px' }, { opacity: 1, translate: '0 0' }], 280);
       jar.hop(10, 220); note(i) || clinkSfx(T); vo('n' + i); jarGlint(); if (i === nCoin) later(500, 'tada', .7);
-    } }));
+    });
     await say(`엽전이 ${words(nCoin)}! 이제 쌀도 사고 옷도 살 수 있어요.`);
 
     /* --- 5. 이웃에게 나눠 주기 --- */
@@ -539,11 +544,12 @@
     scene('hallwide');
     put(T, jar, 700, 505); put(T, rich, 240, 505, { look: 'shout', to: 'right' });
     await say('풍덩! 아버지가 항아리에 거꾸로 쏙 빠졌어요. 다치지는 않았어요.');
-    await T.ask('"아버지가 어디 계시지?" 항아리를 여덟 번 톡톡 눌러서 아버지를 세어 봐요!', () => T.mash(jar.pos, { count: 8, prompt: '항아리를 여덟 번 톡톡! 아버지를 세어 봐요.', onStep: i => {
+    await T.ask('"아버지가 어디 계시지?" ' + GUIDE, () => T.tap(jar.pos, { prompt: GUIDE }));
+    await autoCount(8, i => {
       const o = olds[i - 1]; o.pos.style.pointerEvents = 'none';   // 항아리 위·옆에 쌓이는 아버지 그림이 눌림을 가로채지 않게
       put(T, o, tight(T) ? 500 + (4.5 - i) * 48 : 880 - (i - 1) * 80 + 10, 520 - (i % 2) * 6, { look: i % 2 ? 'a' : 'b', to: 'left', s: tight(T) ? .72 : 1, raw: tight(T) });
       o.pos.animate([{ opacity: 0 }, { opacity: 1 }], 250); jar.hop(10, 200); note(i) || popSfx(T); vo('n' + i);
-    } }));
+    });
     await T.cutImage([{ src: cutSrc('eight'), sfx: () => cue('tada', .7) || AudioFX.sfx('pop'), hold: 2600 }], { hold: 2600 });
     await say('아버지가 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱, 여덟! 여덟 명이나 되었어요.');
     await say('"내가 진짜 아버지다!" "아니야, 내가 진짜야!" 모두 서로 자기가 진짜라고 우겼어요.');

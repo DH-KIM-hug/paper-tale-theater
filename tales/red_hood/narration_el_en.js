@@ -95,12 +95,9 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/red_hood/en/nar_b9ab8710cd.mp3"
   ]
  },
- "\"할머니, 오셨어요?\" 그런데 침대 속 할머니가 어딘가 이상해요.": {
-  "t": "Grandmother, are you here? But Grandmother in the bed looked a little odd.",
-  "c": [
-   "audio/el/red_hood/en/hood_884198af42.mp3",
-   "audio/el/red_hood/en/nar_f940374407.mp3"
-  ]
+ "\"할머니, 저 왔어요!\" 그런데 침대에 누운 할머니가 어딘가 이상해요.": {
+  "t": "\"Grandma, I'm here!\" But the grandma lying in bed looks a little strange.",
+  "c": "audio/el/red_hood/en/nar_0b5487a537.mp3"
  },
  "벽에 걸린 진짜 할머니 사진과 비교해서 다른 곳을 찾아봐요!": {
   "t": "Compare with the real Grandmother's picture on the wall and find what is different!",
@@ -195,9 +192,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Where is the vase with the same color as the flower?",
   "c": "audio/el/red_hood/en/nar_2fcd2a30d5.mp3"
  },
- "빨간 모자를 톡! 똑똑똑 노크해요.": {
-  "t": "Tap Red Hood! Knock, knock, knock.",
-  "c": "audio/el/red_hood/en/nar_79a3959a03.mp3"
+ "문을 톡! 똑똑똑 두드려요.": {
+  "t": "Tap the door! Knock, knock, knock!",
+  "c": "audio/el/red_hood/en/nar_a88f1fb3a0.mp3"
  },
  "\"할머니, 귀가 왜 이렇게 커요?\"": {
   "t": "Grandmother, why are your ears so big?",
@@ -219,9 +216,13 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Grandmother, why is your mouth so long?",
   "c": "audio/el/red_hood/en/hood_91265b9f26.mp3"
  },
- "\"그건 말이지… 어흥! 놀랐지?\"": {
-  "t": "Well, you see... Roar! Did I scare you?",
-  "c": "audio/el/red_hood/en/wolf_22408870d7.mp3"
+ "\"너와 이야기를 나누려고 그렇지~\"": {
+  "t": "\"So that I can talk with you, my dear.\"",
+  "c": "audio/el/red_hood/en/nar_c426c0e8a0.mp3"
+ },
+ "\"어흥! 내가 누군지 알겠니?\"": {
+  "t": "\"Roar! Do you know who I am?\"",
+  "c": "audio/el/red_hood/en/nar_0d0606c292.mp3"
  },
  "사진 속 할머니와 달라 보이는 곳을 톡!": {
   "t": "Tap what looks different from Grandmother in the picture!",
@@ -243,9 +244,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap the window!",
   "c": "audio/el/red_hood/en/nar_484f15527f.mp3"
  },
- "늑대를 톡톡톡! 간지럼을 태워요.": {
-  "t": "Tap, tap, tap the wolf! Tickle him.",
-  "c": "audio/el/red_hood/en/nar_bbd8d05b74.mp3"
+ "늑대를 톡 눌러 봐요. 사냥꾼이 간질간질 간지럼을 태워요!": {
+  "t": "Tap the wolf. The hunter tickles him, tickle tickle!",
+  "c": "audio/el/red_hood/en/nar_c2f2013e71.mp3"
  },
  "간식을 톡! 한 사람씩 나눠 줘요.": {
   "t": "Tap the snack! Share with each one.",

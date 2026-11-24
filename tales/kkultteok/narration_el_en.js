@@ -350,9 +350,9 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/kkultteok/en/nuna_8a407b2a1b.mp3"
   ]
  },
- "무지개를 톡톡톡… 일곱 색을 세어 봐요!": {
-  "t": "Tap the rainbow... let's count all seven colors!",
-  "c": "audio/el/kkultteok/en/nar_2457016456.mp3"
+ "무지개를 톡 눌러 봐요. 일곱 색이 차례로 빛나요.": {
+  "t": "Tap the rainbow. All seven colors light up, one by one.",
+  "c": "audio/el/kkultteok/en/nar_6730922f3a.mp3"
  },
  "아기 먹구름을 톡!": {
   "t": "Tap the baby rain cloud!",

@@ -1045,14 +1045,16 @@
     const holdOnce = async (lv, guide) => {
       let lastTone = 0;
       ring.setAttribute('opacity', 1); ring.setAttribute('stroke-dashoffset', 654);
-      const warm = () => T.mash(SN.pos, { count: 3, prompt: '해님을 톡톡 눌러 봐요!', onStep: i => {
+      // 첫 단계만 한 번 톡, 이어서 세 번의 따뜻해짐은 저절로 (2026-11-24 아스트라). 다음 단계는 누르지 않고 이어 간다
+      const step = i => {
         const p = i / 3;
         ring.setAttribute('stroke-dashoffset', 654 * (1 - p));
         SN.p.glow.setAttribute('opacity', (.2 + p * .5).toFixed(2));
         SN.body.style.transform = `scale(${1 + p * .12})`;
         T.tone(330 + p * 200, .4, { type: 'sine', vol: .06 });
-      } });
-      await T.ask(guide, warm);
+      };
+      if (guide) await T.ask(guide, () => T.tap(SN.pos, { prompt: '해님을 톡 눌러 봐요!' }));
+      for (let i = 1; i <= 3; i++) { step(i); AudioFX.countBeat && AudioFX.countBeat(i); await sleep(450); }
       ring.setAttribute('opacity', 0);
       SN.body.style.transform = ''; spinRays(SN); SND.warm(T, lv + 1); sparkles(T, SN.x, SN.y, 120, 8);
       F.sky.setAttribute('fill', warmLv[lv][0]); F.warm.setAttribute('opacity', warmLv[lv][1]);
@@ -1063,17 +1065,17 @@
         b.animate([{ opacity: 0 }, { opacity: .45 }, { opacity: 0 }], { duration: 1400, delay: i * 80 }).finished.then(() => b.remove());
       }
     };
-    await holdOnce(0, '해님을 톡톡 눌러서 따뜻하게 비춰 줘요!');
+    await holdOnce(0, '해님을 톡 눌러 봐요. 햇볕이 점점 따뜻해져요!');
     N.__shiver.cancel(); N.P.face('smile');
     setOutfit(N.P, 'coatShut', 'down', { buttons: 4 });
     for (let i = 3; i >= 0; i--) { N.P.buttons[i].setAttribute('opacity', 0); T.tone(700 + i * 90, .1, { type: 'triangle', vol: .12 }); await sleep(220); }
     setOutfit(N.P, 'coat', 'down');
     await say('"아, 따뜻하다~" 나그네가 단추를 풀었어요.');
-    await holdOnce(1, '조금 더 톡톡!');
+    await holdOnce(1, null);
     setOutfit(N.P, 'coat', 'fan'); N.P.sweat.setAttribute('opacity', 1); N.P.face('o');
     T.pop(N.x + 20, N.y - 350, '팔랑팔랑', C.bark); // 부채질하는 모자 위 (세로 화면은 카메라가 오른쪽에 있어 왼쪽은 잘린다)
     await say('"아이, 더워!" 모자로 부채질을 해요.');
-    await holdOnce(2, '한 번 더 톡톡!');
+    await holdOnce(2, null);
     vo('cut_off'); // 컷 속 나그네 한숨 (말풍선 없음)
     await (cutArt(T, 'cut_off', 'swish', 2400) || T.cut(svg => {
       const coat = T.el('g', { transform: 'translate(250,110) rotate(-28)' }, svg);
@@ -1176,7 +1178,7 @@
     await say('나그네는 개울가에서 쉬어요.');
     AudioFX.splash(); T.pop(N.x + 150, N.y + 30, '퐁당!', C.indigo); // 발 옆 물 위 (다리를 가리지 않게)
     await say('시원한 물에 발을 퐁당 담갔어요.');
-    await T.ask('바람아, 이번엔 살살 불어 줄래? 톡, 살살~', () => T.mash(WW.pos, { count: 3, prompt: '바람을 살살 톡톡 눌러 봐요!', onStep: i => {
+    const blowStep = i => {
       WW.p.setMouth('blow'); WW.p.puffCheeks(1.1); SND.breeze(T);
       // 그림: 바람(가운데 위)이 왼쪽 나그네 쪽으로 분다 → 바람 줄기도 왼쪽으로. 도형: 바람이 왼쪽에 있어 오른쪽으로
       windGust(T, WW, 2, { y0: 220, y1: 400, w: 4, alpha: .55, dur: 1800, dist: ST.art ? 520 : 600 });
@@ -1186,7 +1188,10 @@
       else T.pop(N.x + 30 + i * 130, N.y - 360 + (i % 2) * 40, '살랑~', C.pine);
       N.P.face('big');
       setTimeout(() => WW.p.setMouth('smile'), 600);
-    } }));
+    };
+    // 한 번 톡 하면 세 번의 산들바람이 저절로 이어진다 (2026-11-24 아스트라)
+    await T.ask('바람을 톡 눌러 봐요. 이번엔 살살 불어요.', () => T.tap(WW.pos, { prompt: '바람을 살살 톡 눌러 봐요!' }));
+    for (let i = 1; i <= 3; i++) { blowStep(i); AudioFX.countBeat && AudioFX.countBeat(i); await sleep(700); }
     await say('"아, 시원해. 고마워, 바람아!"');
     WW.hop(20);
     aimWind(WW, ST.art ? 771 : 600); // 이제 오른쪽 해님을 마주 본다 (악수 컷과 같은 자리: 바람 왼쪽, 해 오른쪽)

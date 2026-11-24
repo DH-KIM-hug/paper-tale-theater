@@ -35,7 +35,7 @@ const TEXT_EN = {
  "그럼 제일 큰 것은 뭘까요? 눌러 봐요.": "Then which one is the biggest? Tap it.",
  "완두콩 위에 매트리스를 쌓아 볼까? 몇 장일까요? 톡 눌러 봐요.": "Shall we pile mattresses on top of the pea? How many will there be? Tap!",
  "열! 아직 더 있어요. 한 번 더 톡!": "Ten! And there are still more. Tap once more!",
- "완두콩은 어디 있을까요? 탑의 위? 아래?": "Where is the pea? At the top of the tower, or at the bottom?",
+ "침대에 숨긴 완두콩은 매트리스 위에 있을까요, 아래에 있을까요?": "Is the pea hidden on top of the mattresses, or underneath them?",
  "공주님은 어디서 잘까요? 위? 아래?": "Where will the princess sleep? At the top, or at the bottom?",
  "유리 상자를 톡 눌러 봐요.": "Tap the glass case."
 };

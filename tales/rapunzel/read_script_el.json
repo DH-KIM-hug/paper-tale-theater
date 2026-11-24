@@ -634,7 +634,7 @@
       "classical:songs_without_words"
      ],
      "after": [
-      "prince:walk:260,3500",
+      "prince:walk:320,3500",
       "hum:480,140"
      ]
     },
@@ -690,8 +690,8 @@
       ]
      ],
      "before": [
-      "horse:at:260,505",
-      "prince:at:330,505:stand"
+      "horse:at:320,505",
+      "prince:at:440,505:stand"
      ],
      "after": [
       "prince:loop"

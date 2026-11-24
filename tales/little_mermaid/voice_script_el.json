@@ -112,11 +112,11 @@
    "scene": 1
   },
   {
-   "text": "무거운 것은 가라앉고, 가벼운 것은 떠요. 어느 것이 바다 밑까지 내려올까요?",
+   "text": "나무토막과 돌을 물에 넣으면 어떻게 될까요? 바닥에 닿을 것을 골라 봐요.",
    "segs": [
     [
      "nar",
-     "무거운 것은 가라앉고, 가벼운 것은 떠요. 어느 것이 바다 밑까지 내려올까요?",
+     "나무토막과 돌을 물에 넣으면 어떻게 될까요? 바닥에 닿을 것을 골라 봐요.",
      "happy",
      "[bright, inviting, playful question for a small child]"
     ]
@@ -124,11 +124,11 @@
    "scene": 1
   },
   {
-   "text": "나무토막은 가벼워서 둥둥 떠요.",
+   "text": "나무토막은 물 위에 둥둥 떠요.",
    "segs": [
     [
      "nar",
-     "나무토막은 가벼워서 둥둥 떠요.",
+     "나무토막은 물 위에 둥둥 떠요.",
      null,
      "[kind, encouraging, gently explaining, not disappointed]"
     ]
@@ -136,11 +136,11 @@
    "scene": 1
   },
   {
-   "text": "무거운 돌이 가라앉았어요!",
+   "text": "돌은 바닥으로 가라앉았어요!",
    "segs": [
     [
      "nar",
-     "무거운 돌이 가라앉았어요!",
+     "돌은 바닥으로 가라앉았어요!",
      "happy",
      "[cheerful, praising, bright]"
     ]
@@ -160,11 +160,11 @@
    "scene": 1
   },
   {
-   "text": "코르크 병은 가벼워서 둥둥 떠요.",
+   "text": "병은 물 위에 떠요.",
    "segs": [
     [
      "nar",
-     "코르크 병은 가벼워서 둥둥 떠요.",
+     "병은 물 위에 떠요.",
      null,
      "[kind, encouraging, gently explaining, not disappointed]"
     ]
@@ -172,11 +172,11 @@
    "scene": 1
   },
   {
-   "text": "무거운 닻도 가라앉았어요!",
+   "text": "닻은 바닥으로 가라앉았어요!",
    "segs": [
     [
      "nar",
-     "무거운 닻도 가라앉았어요!",
+     "닻은 바닥으로 가라앉았어요!",
      "happy",
      "[cheerful, praising, bright]"
     ]

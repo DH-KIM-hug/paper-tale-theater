@@ -68,48 +68,20 @@
    ]
   },
   {
-   "text": "항아리를 세 번 톡톡 눌러서 괭이를 세 개 세어 봐요!",
-   "en": "Tap the jar three times and count three hoes!"
-  },
-  {
-   "text": "항아리를 세 번 톡톡! 괭이를 세어 봐요.",
-   "en": "Tap the jar three times! Count the hoes."
+   "text": "항아리를 톡 눌러 봐요. 무엇이 몇 개 나오는지 함께 세어요!",
+   "en": "Tap the jar. Let's count together what comes out and how many!"
   },
   {
    "text": "괭이가 하나, 둘, 셋! 농부와 아내는 손뼉을 쳤어요.",
    "en": "One, two, three hoes! The farmer and his wife clapped their hands."
   },
   {
-   "text": "항아리를 네 번 톡톡 눌러서 괭이를 네 개 세어 봐요!",
-   "en": "Tap the jar four times and count four hoes!"
-  },
-  {
-   "text": "항아리를 네 번 톡톡! 괭이를 세어 봐요.",
-   "en": "Tap the jar four times! Count the hoes."
-  },
-  {
    "text": "괭이가 하나, 둘, 셋, 넷! 농부와 아내는 손뼉을 쳤어요.",
    "en": "One, two, three, four hoes! The farmer and his wife clapped their hands."
   },
   {
-   "text": "항아리를 다섯 번 톡톡 눌러서 괭이를 다섯 개 세어 봐요!",
-   "en": "Tap the jar five times and count five hoes!"
-  },
-  {
-   "text": "항아리를 다섯 번 톡톡! 괭이를 세어 봐요.",
-   "en": "Tap the jar five times! Count the hoes."
-  },
-  {
    "text": "괭이가 하나, 둘, 셋, 넷, 다섯! 농부와 아내는 손뼉을 쳤어요.",
    "en": "One, two, three, four, five hoes! The farmer and his wife clapped their hands."
-  },
-  {
-   "text": "항아리를 여섯 번 톡톡 눌러서 괭이를 여섯 개 세어 봐요!",
-   "en": "Tap the jar six times and count six hoes!"
-  },
-  {
-   "text": "항아리를 여섯 번 톡톡! 괭이를 세어 봐요.",
-   "en": "Tap the jar six times! Count the hoes."
   },
   {
    "text": "괭이가 하나, 둘, 셋, 넷, 다섯, 여섯! 농부와 아내는 손뼉을 쳤어요.",
@@ -120,60 +92,20 @@
    "en": "This time they dropped in one coin. Whoosh! Coins poured out."
   },
   {
-   "text": "항아리를 네 번 톡톡 눌러서 엽전을 네 개 세어 봐요!",
-   "en": "Tap the jar four times and count four coins!"
-  },
-  {
-   "text": "항아리를 네 번 톡톡! 엽전을 세어 봐요.",
-   "en": "Tap the jar four times! Count the coins."
-  },
-  {
    "text": "엽전이 하나, 둘, 셋, 넷! 이제 쌀도 사고 옷도 살 수 있어요.",
    "en": "One, two, three, four coins! Now they could buy rice and clothes."
-  },
-  {
-   "text": "항아리를 다섯 번 톡톡 눌러서 엽전을 다섯 개 세어 봐요!",
-   "en": "Tap the jar five times and count five coins!"
-  },
-  {
-   "text": "항아리를 다섯 번 톡톡! 엽전을 세어 봐요.",
-   "en": "Tap the jar five times! Count the coins."
   },
   {
    "text": "엽전이 하나, 둘, 셋, 넷, 다섯! 이제 쌀도 사고 옷도 살 수 있어요.",
    "en": "One, two, three, four, five coins! Now they could buy rice and clothes."
   },
   {
-   "text": "항아리를 여섯 번 톡톡 눌러서 엽전을 여섯 개 세어 봐요!",
-   "en": "Tap the jar six times and count six coins!"
-  },
-  {
-   "text": "항아리를 여섯 번 톡톡! 엽전을 세어 봐요.",
-   "en": "Tap the jar six times! Count the coins."
-  },
-  {
    "text": "엽전이 하나, 둘, 셋, 넷, 다섯, 여섯! 이제 쌀도 사고 옷도 살 수 있어요.",
    "en": "One, two, three, four, five, six coins! Now they could buy rice and clothes."
   },
   {
-   "text": "항아리를 일곱 번 톡톡 눌러서 엽전을 일곱 개 세어 봐요!",
-   "en": "Tap the jar seven times and count seven coins!"
-  },
-  {
-   "text": "항아리를 일곱 번 톡톡! 엽전을 세어 봐요.",
-   "en": "Tap the jar seven times! Count the coins."
-  },
-  {
    "text": "엽전이 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱! 이제 쌀도 사고 옷도 살 수 있어요.",
    "en": "One, two, three, four, five, six, seven coins! Now they could buy rice and clothes."
-  },
-  {
-   "text": "항아리를 여덟 번 톡톡 눌러서 엽전을 여덟 개 세어 봐요!",
-   "en": "Tap the jar eight times and count eight coins!"
-  },
-  {
-   "text": "항아리를 여덟 번 톡톡! 엽전을 세어 봐요.",
-   "en": "Tap the jar eight times! Count the coins."
   },
   {
    "text": "엽전이 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱, 여덟! 이제 쌀도 사고 옷도 살 수 있어요.",
@@ -310,8 +242,8 @@
    ]
   },
   {
-   "text": "항아리를 여덟 번 톡톡! 아버지를 세어 봐요.",
-   "en": "Tap the jar eight times! Count the fathers."
+   "text": "\"아버지가 어디 계시지?\" 항아리를 톡 눌러 봐요. 무엇이 몇 개 나오는지 함께 세어요!",
+   "en": "\"Where is my father?\" Tap the jar. Let's count together what comes out and how many!"
   },
   {
    "text": "아버지가 하나, 둘, 셋, 넷, 다섯, 여섯, 일곱, 여덟! 여덟 명이나 되었어요.",

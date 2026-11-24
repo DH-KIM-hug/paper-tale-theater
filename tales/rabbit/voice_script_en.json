@@ -267,12 +267,12 @@
    "en": "Look at the bar below to see who is ahead."
   },
   {
-   "text": "토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!",
-   "en": "The rabbit zooms along! Tap the screen again and again!",
+   "text": "화면을 톡 눌러요. 토끼가 쌩쌩 달려가요!",
+   "en": "Tap the screen. The rabbit zooms off!",
    "segs": [
     [
      "nar",
-     "The rabbit zooms along! Tap the screen again and again!",
+     "Tap the screen. The rabbit zooms off!",
      "happy:1.2"
     ]
    ]

@@ -101,7 +101,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/kkultteok/nar_89a3e28d1d.mp3",
   "audio/el/kkultteok/nuna_7c7e27ea0d.mp3"
  ],
- "무지개를 톡톡톡… 일곱 색을 세어 봐요!": "audio/el/kkultteok/nar_a9c98d4310.mp3",
+ "무지개를 톡 눌러 봐요. 일곱 색이 차례로 빛나요.": "audio/el/kkultteok/nar_701b886704.mp3",
  "아기 먹구름을 톡!": "audio/el/kkultteok/nar_b4a6386c88.mp3",
  "비를 다 내린 아기 먹구름은 하얗게 변했어요.": "audio/el/kkultteok/nar_392a054eb3.mp3",
  "하얀 아기 구름이 방긋 웃어요. 퐁!": "audio/el/kkultteok/nar_4a98cdc4b8.mp3",

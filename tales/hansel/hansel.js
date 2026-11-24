@@ -108,6 +108,11 @@
       return { go, stop };
     })();
     const { sleep, say, camSnap } = T;
+    /* 한 번 누르면 나머지 단계는 저절로 이어 간다(2026-11-24 아스트라 검수): 안내와 누르기 동시 */
+    const askSteps = async (text, target, count, prompt, onStep, gap = 450) => {
+      await T.ask(text, () => T.tap(target, { prompt }));
+      for (let i = 1; i <= count; i++) { try { AudioFX.countBeat && count >= 3 && AudioFX.countBeat(i); } catch (e) { /* 무시 */ } onStep(i); if (i < count) await sleep(gap); }
+    };
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
@@ -626,12 +631,12 @@
     }, hans.pos);
     const stepX = L(110, 36);
     let hx = hans.x, gx = gret.x;
-    await T.ask('헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!', () => T.mash(hans.pos, { count: 5, prompt: '헨젤을 톡톡톡톡톡! 부스러기를 세어요.', onStep: i => {
+    await askSteps('헨젤을 톡 눌러 봐요. 빵 부스러기를 하나씩 떨어뜨려요!', hans.pos, 5, '헨젤을 톡! 부스러기를 떨어뜨려요.', i => {
       const cx = hx - 14;
       crumbAt(cx, 520); sfx('marimba_' + i, .6) || popSfx(T); T.pop(cx, i % 2 ? 260 : 200, tr(NUM[i - 1])); // 한 개에 한 음
       hx += stepX; gx += stepX;
       hans.hop(10, 220); hans.move(hx, GROUND, 360); gret.move(gx, GROUND, 360);
-    } }));
+    });
     await say('빵 부스러기가 하나, 둘, 셋, 넷, 다섯! 길이 생겼어요.');
     await say('부스러기가 콩콩, 길게 줄을 이었지요.');
 
@@ -731,13 +736,13 @@
     const HOLES = [[446, 108], [502, 108], [557, 108], [623, 108], [535, 150]];
     const holeRing = HOLES.map(([x, y]) => T.el('circle', { cx: x, cy: y, r: 18, fill: 'none', stroke: '#FFD54F', 'stroke-width': 3, 'stroke-dasharray': '5 4', opacity: .0 }, T.world));
     holeRing.forEach(c => c.animate([{ opacity: .35 }, { opacity: .95 }, { opacity: .35 }], { duration: 1200, iterations: Infinity }));
-    await T.ask('지붕에 사탕이 빠진 곳이 있어요. 헨젤이 하나씩 붙여 줘요. 같이 세어 봐요!', () => T.mash(hans.pos, { count: 5, prompt: '헨젤을 톡톡톡톡톡! 사탕을 세어요.', onStep: i => {
+    await askSteps('헨젤을 톡 눌러 봐요. 지붕에 사탕을 하나씩 붙여요!', hans.pos, 5, '헨젤을 톡! 사탕을 붙여요.', i => {
       try { Narrator.hideBubble(); } catch (e) { /* 자막이 지붕 사탕 자리를 가리지 않게 누르는 동안은 숨긴다 */ }
       const [x, y] = HOLES[i - 1], sx = hans.x, sy = hans.y - 150, c = candyAt(0, 0, i - 1);
       holeRing[i - 1].remove();
       c.animate([{ transform: `translate(${sx}px,${sy}px) scale(.4)` }, { transform: `translate(${x}px,${y}px) scale(1)` }], { duration: 480, easing: 'ease-out', fill: 'forwards' });
       hans.hop(12, 240); sfx('marimba_' + i, .6) || popSfx(T); setTimeout(() => T.pop(x + 34, y + 44, tr(NUM[i - 1])), 400);   /* 숫자는 사탕 오른쪽 아래(사탕을 가리지 않게) */
-    } }));
+    });
     await say('사탕이 하나, 둘, 셋, 넷, 다섯! 지붕이 예뻐졌어요.');
 
     /* --- 7. 마녀 할머니 --- */
@@ -882,7 +887,7 @@
     put(T, father, 500, GROUND, { look: 'hug', to: 'left' });
     put(T, hans, L(400, 440), GROUND, { look: 'joy', to: 'left' }); put(T, gret, L(600, 565), GROUND, { look: 'clever', to: 'left' });
     await say('"찾았다! 보고 싶었어!" 아빠가 말했어요.');
-    await say('"너희가 먼저 집으로 간 줄 알았단다. 눈을 뜰 때까지 곁에 있을걸." 아빠가 미안해하며 말했어요.'); /* 2026-11-24 흐름 수정: 숲에서 왜 헤어졌는지 아빠가 짚어 준다 */
+    await say('"얘들아, 너희를 숲에 두고 와서 미안하다. 얼마나 무서웠니?" 아빠가 미안해하며 말했어요.'); /* 2026-11-24 아스트라: 아빠가 아이들을 숲에 두고 온 일을 인정하고 사과한다 */
     hans.hop(10, 300);
     await say('"아빠, 다시는 우리를 두고 가지 마세요." 헨젤이 말했어요.');
     father.hop(10, 300); hans.move(L(425, 455), GROUND, 500); gret.move(L(578, 550), GROUND, 500); /* 꼭 안기게 아빠 품으로 바짝 */

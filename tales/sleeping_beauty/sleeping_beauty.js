@@ -24,7 +24,7 @@
   ['mirror', 'heart', 'bubble', 'shoes', 'note', 'flute'].forEach(g => { ASP[`sb_prop_gift_${g}`] = 1.0; });
   /* 높이(SPEC §2-2): 사람·요정은 머리 지름 ≈ 80. 그림이 오면 같은 부위(얼굴 폭)를 재서 고친다 */
   const HT = {
-    sb_pr_stand: 205, sb_pr_climb: 205, sb_pr_reach: 205, sb_pr_yawn: 205, sb_pr_wave: 205, sb_pr_wake: 150, sb_pr_lie: 105, sb_pr_baby_sleep: 120, sb_pr_baby_giggle: 120,
+    sb_pr_stand: 205, sb_pr_climb: 205, sb_pr_reach: 205, sb_pr_yawn: 205, sb_pr_wave: 205, sb_pr_wake: 201, sb_pr_lie: 90, sb_pr_baby_sleep: 120, sb_pr_baby_giggle: 120,
     sb_king_joy: 215, sb_king_surprise: 215, sb_king_command: 215, sb_king_worry: 215, sb_queen_joy: 212, sb_queen_surprise: 212, sb_queen_worry: 212,
     sb_young_stand: 205, sb_young_wand: 215, sb_young_peek: 110, sb_old_stand: 200, sb_old_sulk: 200, sb_old_smile: 205, sb_granny_spin: 165, sb_granny_startle: 175,
     sb_prince_stand: 212, sb_prince_tiptoe: 212, sb_prince_wave: 212, sb_prince_kneel: 165, sb_grandpa_point: 208, sb_maid_stand: 210, sb_maid_sleep: 210,
@@ -538,7 +538,7 @@
       const POPC = { 딸랑: '#D9A94E', 덜컹: '#6B4A32', 쉿: '#1F2A56', 스르륵: '#3F6B4F', 하암: '#8A7A60' };
       let strips = [], gp = null, curF = null, night = null;
       const placeSet = (a, x, y, pose, to, s) => put(T, a, x, FL, { look: pose || undefined, to: to || undefined, s: s || 1 });
-      const lieOnBed = () => { if (bed.pos.isConnected) put(T, pr, bed.x - 8, bed.y + BED_TOP, { look: 'lie', to: 'left' }); };
+      const lieOnBed = () => { if (bed.pos.isConnected) put(T, pr, bed.x - 24, bed.y + BED_TOP, { look: 'lie', to: 'left' }); };
       const sleepRow = [[dog, X(590, 560), 'wag'], [maid, X(720, 640), 'stand'], [guardA, X(790, 720), 'stand'], [cook, X(860, 800), 'stand'], [kid, X(920, 870), 'stand'], [guardB, X(980, 940), 'stand']];
       const leaveF = (f, i) => { f.look('stand'); f.move(X(50 + 70 * i, -200), FL, 900, 'ease-out'); };
       const setCam = () => { const k = BGM.cam++; return inst() ? camSnap(P ? PCAM[Math.min(k, PCAM.length - 1)] : 500, 280, 1) : null; };
@@ -1025,7 +1025,7 @@
       setBg('sb_bg_bedroom_v2'); camSnap(500, 280, 1);
       put(T, candle, X(240, 380), FL, { look: 'lit' });
       put(T, bed, 500, FL + 6);
-      put(T, pr, bed.x - 8, bed.y + BED_TOP, { look: 'lie', to: 'left' });
+      put(T, pr, bed.x - 24, bed.y + BED_TOP, { look: 'lie', to: 'left' });
       put(T, queen, X(700, 640), FL, { look: 'worry' });
       put(T, king, X(800, 720), FL, { look: 'worry' });
     });
@@ -1039,7 +1039,7 @@
       scene('sb_bg_bedroom_v2');
       put(T, candle, X(240, 380), FL, { look: 'lit' });
       put(T, bed, 500, FL + 6);
-      put(T, pr, bed.x - 8, bed.y + BED_TOP, { look: 'lie', to: 'left' });
+      put(T, pr, bed.x - 24, bed.y + BED_TOP, { look: 'lie', to: 'left' });
       sleepers.forEach(([a, x, lk]) => put(T, a, x, FL, { look: lk }));
       put(T, young, X(300, 330), FL, { look: 'wand' });   // 세로도 침대 왼쪽: 요정이 잠든 공주를 가리지 않게(2026-10-24 검수)
       camSnap(X(500, 470), 280, 1);
@@ -1151,7 +1151,7 @@
       scene('sb_bg_bedroom_v2'); amb('birds_chirp_2');
       put(T, candle, X(240, 380), FL, { look: 'lit' });
       put(T, bed, 500, FL + 6);
-      put(T, pr, bed.x - 8, bed.y + BED_TOP, { look: 'lie', to: 'left' });
+      put(T, pr, bed.x - 24, bed.y + BED_TOP, { look: 'lie', to: 'left' });
       put(T, prince, X(660, 610), FL, { look: 'kneel', to: 'left' });
       put(T, maid, X(120, 330), FL, { look: 'sleep' });
       put(T, cook, X(860, 720), FL, { look: 'sleep' });

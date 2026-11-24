@@ -31,6 +31,10 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap the grain to carry it to the storeroom!",
   "c": "audio/el/ant_grasshopper/en/nar_b4e8b8775c.mp3"
  },
+ "곡식을 톡 눌러 봐요. 개미들이 한 알씩 창고로 날라요!": {
+  "t": "Tap the grain. The ants carry it to the storeroom, one grain at a time!",
+  "c": "audio/el/ant_grasshopper/en/nar_689ef39fba.mp3"
+ },
  "노란 곡식을 톡톡 눌러 봐요!": {
   "t": "Tap the yellow grain!",
   "c": "audio/el/ant_grasshopper/en/nar_ae4bab76be.mp3"

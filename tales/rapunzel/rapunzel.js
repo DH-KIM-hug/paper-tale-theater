@@ -492,7 +492,7 @@
       const bgKey = k => (k === 'rp_bg_cottage' || /_(v2|lb)$/.test(k) ? k : k === 'rp_bg_garden_night' ? k + '_lb' : k + '_v2');
       /* 대본 좌표(가로 기준) → 세로 화면 자리. 놀이판이 세로에서 X(가로, 세로) 로 쓰던 값을 장면별로 모은 것 */
       const PMAP = { 1: { 600: 470 }, 2: { 640: 540 }, 3: { 640: TX, 555: TX - 85, 646: TX + 6 }, 4: { 640: TX, 555: TX - 85, 646: TX + 6 }, 5: { 760: 520, 610: 370, 720: 480 },
-        6: { 640: TX, 260: 440, 330: 420, 120: 320, 470: 475, 480: 400 }, 7: { 760: 520, 770: 530, 600: 440, 640: TX }, 8: { 760: 520, 680: 440, 720: 480 }, 9: { 640: TX, 560: 440, 760: 540, 600: 480 }, 10: { 330: 420, 572: 492, 606: 526 } };
+        6: { 640: TX, 320: 425, 440: 475, 120: 320, 470: 475, 480: 400 }, 7: { 760: 520, 770: 530, 600: 440, 640: TX }, 8: { 760: 520, 680: 440, 720: 480 }, 9: { 640: TX, 560: 440, 760: 540, 600: 480 }, 10: { 330: 420, 572: 492, 606: 526 } };
       const mx = x => {
         if (x === 742) return TX + HOOK_DX + 2;
         if (!P) return x;
@@ -522,7 +522,7 @@
         prince: actor(prince, {
           at: (s, k, d) => { const [x] = NUM(s); if (k === 'float') { place0(prince, mx(x), FL + WIN_DY - 40, k, d); return; } place(prince, s, k, d); if (n === 6 && k === 'stand') T.world.insertBefore(prince.pos, tower.pos); },
           more: {
-            loop: async () => { T.world.insertBefore(prince.pos, tower.pos); await walk(prince, TX + 130, FL, 1800, 'ease-in-out'); await sleep(300); await walk(prince, X(330, 420), FL, 1800, 'linear'); },
+            loop: async () => { T.world.insertBefore(prince.pos, tower.pos); await walk(prince, TX + 130, FL, 1800, 'ease-in-out'); await sleep(300); await walk(prince, X(440, 475), FL, 1800, 'linear'); },
             land: async () => {
               const mv = prince.move(X(TX - 150, TX - 110), FL, 2600, 'ease-out');
               prince.wiggle(3, 900); setTimeout(() => prince.wiggle(3, 900), 1000);
@@ -792,16 +792,17 @@
     }, rap.pos);
     cue('horse_neigh_1', .5);
     const stepper = (async () => { for (let i = 0; i < 4; i++) { AudioFX.sfx('step_grass', .3); await sleep(1000); } })();
-    const ridePromise = walk(prince, X(260, 440), FL, 3500, 'linear');
+    const HX = X(320, 425), PXS = X(440, 475);   // 2026-11-24 아스트라: 말은 나무 오른쪽에 온몸이 보이게, 왕자는 말보다 한 걸음 더 오른쪽에서 탑을 본다
+    const ridePromise = walk(prince, HX, FL, 3500, 'linear');
     classical('songs_without_words'); // 숲을 건너온 노랫소리: 멘델스존 〈무언가〉 작품 19(피아노) 18초
     await say('어느 해질녘, 숲을 지나던 왕자가 노랫소리를 들었어요.');
     await Promise.all([ridePromise, stepper]);
     await hum(TX - 160, 140);
     prince.hop(6, 400);
     await say('어디서 이렇게 고운 노래가 들리지?');
-    hide(prince); put(T, horse, X(260, 440), FL);
-    put(T, prince, X(330, 420), FL, { look: 'stand' }); T.world.insertBefore(prince.pos, tower.pos);
-    const loop = (async () => { await walk(prince, TX + 130, FL, 1800, 'ease-in-out'); await sleep(300); await walk(prince, X(330, 420), FL, 1800, 'linear'); })();
+    hide(prince); put(T, horse, HX, FL);
+    put(T, prince, PXS, FL, { look: 'stand' }); T.world.insertBefore(prince.pos, tower.pos);
+    const loop = (async () => { await walk(prince, TX + 130, FL, 1800, 'ease-in-out'); await sleep(300); await walk(prince, PXS, FL, 1800, 'linear'); })();
     await say('왕자는 탑을 한 바퀴 돌았지만 문이 없었어요.');
     await loop;
     const gwalk = (async () => { put(T, gothel, -100, FL, { look: 'stand' }); await walk(gothel, X(470, 475), FL, WALK, 'linear'); })();

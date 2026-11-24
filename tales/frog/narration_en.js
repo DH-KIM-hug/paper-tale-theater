@@ -169,10 +169,6 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/frog/en/nar_b18f50b00a.mp3"
   ]
  },
- "엄마개구리를 톡톡 눌러서 부풀려 볼까요?": {
-  "t": "Shall we tap, tap, and puff up Mama Frog?",
-  "c": "audio/tc/frog/en/nar_dd4e176fcb.mp3"
- },
  "엄마개구리를 톡톡 눌러 봐요!": {
   "t": "Tap, tap, tap Mama Frog!",
   "c": "audio/tc/frog/en/nar_18ac544304.mp3"

@@ -1795,6 +1795,10 @@
     bucket.setAttribute('transform', 'translate(600,305)'); bucket.style.transform = '';
     AudioFX.splash(); T.pop(680, 260, '첨벙!', C.indigo);
     refl.animate([{ scale: 1 }, { scale: '1.08 .9' }, { scale: '.94 1.06' }, { scale: 1 }], { duration: 700 });
+    // 물만 담긴 두레박을 먼저 들어 올려 두 얼굴이 다 보이게 한 뒤 누르라고 한다 (2026-11-24 아스트라)
+    bucket.style.pointerEvents = 'none';
+    await T.anim(bucket, [{ transform: 'translate(600px,305px)' }, { transform: 'translate(640px,-120px)' }], { duration: 700, easing: 'ease-in-out' });
+    bucket.setAttribute('transform', 'translate(640,-120)'); bucket.style.transform = '';
     await T.ask('첨벙! 두레박에는 물만 가득. 우물 속 오누이 얼굴을 톡 눌러 봐요!', () => T.tap(refl, { prompt: '우물에 비친 오누이 얼굴을 톡!' }));
     giggle(T); T.pop(500, 120, '킥킥!', C.bean);
     await T.anim(refl, [{ rotate: '0deg' }, { rotate: '-6deg' }, { rotate: '6deg' }, { rotate: '-4deg' }, { rotate: '0deg' }], 700);

@@ -28,9 +28,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "How does the hen feel? Tap the sad face.",
   "c": "audio/el/red_hen/en/nar_a10e984924.mp3"
  },
- "지금은 웃을 때가 아니에요.": {
-  "t": "This is not a smiling time.",
-  "c": "audio/el/red_hen/en/nar_40e51319fa.mp3"
+ "친구들이 모두 싫다고 했지요. 암탉은 어떤 기분일까요?": {
+  "t": "The friends all said no. How does the hen feel?",
+  "c": "audio/el/red_hen/en/nar_81e237f6ca.mp3"
  },
  "암탉은 조금 시무룩했어요. 하지만 금방 기운을 냈지요.": {
   "t": "The hen felt a little sad. But soon she cheered up.",
@@ -304,9 +304,17 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Strawberries don't go on pizza!",
   "c": "audio/el/red_hen/en/cat_12b200614f.mp3"
  },
+ "딸기는 다음 요리에 쓰자!": {
+  "t": "Let's save the strawberries for the next dish!",
+  "c": "audio/el/red_hen/en/cat_5fa7cbd64a.mp3"
+ },
  "토마토는 팬케이크에 안 넣어!": {
   "t": "Tomatoes don't go on pancakes!",
   "c": "audio/el/red_hen/en/dog_0886febeca.mp3"
+ },
+ "토마토는 다음 요리에 쓰자!": {
+  "t": "Let's save the tomatoes for the next dish!",
+  "c": "audio/el/red_hen/en/dog_cd38f5a48b.mp3"
  },
  "꿀이 주르르.": {
   "t": "Drip, drip goes the honey.",

@@ -25,7 +25,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/kongjwi/step_5c8fa28863.mp3",
   "audio/el/kongjwi/nar_af42e95b79.mp3"
  ],
- "물동이를 톡톡톡 눌러서 물을 세 번 부어 봐요!": "audio/el/kongjwi/nar_52e5ed55fe.mp3",
+ "물동이를 톡 눌러 봐요. 콩쥐가 물을 세 번 부어요!": "audio/el/kongjwi/nar_228498ea05.mp3",
  "물동이를 톡톡톡! 물을 부어요.": "audio/el/kongjwi/nar_0594961e31.mp3",
  "앗! 독 밑에 구멍이 나서 물이 줄줄 새어 나왔어요.": "audio/el/kongjwi/nar_1c66b0485d.mp3",
  "그때 두꺼비가 폴짝 나타났어요. \"내가 구멍을 막아 줄게!\"": [
@@ -47,7 +47,8 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/kongjwi/nar_b6cafcf473.mp3",
   "audio/el/kongjwi/sparrow_c74df0baba.mp3"
  ],
- "참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요. 참새를 하나씩 세어 봐요!": "audio/el/kongjwi/nar_394d82427e.mp3",
+ "참새들이 콕콕 쪼아서 껍질을 벗겨 주었어요.": "audio/el/kongjwi/nar_fc59b1fa19.mp3",
+ "참새를 톡 눌러 봐요. 한 마리씩 세어요!": "audio/el/kongjwi/nar_4a662e78f4.mp3",
  "참새를 톡톡톡톡톡! 하나씩 세어요.": "audio/el/kongjwi/nar_a9a727d381.mp3",
  "참새가 하나, 둘, 셋, 넷, 다섯! 쌀이 금방 하얗게 되었어요.": "audio/el/kongjwi/nar_c3794f01d7.mp3",
  "이제 콩쥐는 베를 짜야 했어요. 콩쥐는 열심히 베를 짰어요.": "audio/el/kongjwi/nar_f7f67ba0f0.mp3",
@@ -59,7 +60,8 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/kongjwi/nar_afa83140cc.mp3",
   "audio/el/kongjwi/kong_c8a0ad58b1.mp3"
  ],
- "콩쥐는 잔치에 가려고 개울을 건너기로 했어요. 징검다리를 톡! 건너 봐요!": "audio/el/kongjwi/nar_29eeb27a45.mp3",
+ "콩쥐는 잔치에 가려고 개울을 건너기로 했어요.": "audio/el/kongjwi/nar_f0aa8d052c.mp3",
+ "콩쥐를 톡 눌러 봐요. 징검다리를 폴짝폴짝 건너요!": "audio/el/kongjwi/nar_f0c50b59d1.mp3",
  "풍덩! 꽃신 한 짝이 개울에 빠졌어요. 꽃신은 둥둥 떠내려갔어요.": "audio/el/kongjwi/nar_f4e2a4ee18.mp3",
  "콩쥐는 아쉬웠지만 한 짝만 신고 잔치로 갔어요.": "audio/el/kongjwi/nar_e316bf5431.mp3",
  "잔치에서는 북과 장구와 꽹과리 소리가 울렸어요. 북을 톡 눌러 봐요!": "audio/el/kongjwi/nar_55c1b03335.mp3",
@@ -70,7 +72,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/kongjwi/nar_7afeb07d62.mp3",
   "audio/el/kongjwi/won_0413796fac.mp3"
  ],
- "꽃신 세 켤레 중에서 나비 꽃신이 콩쥐의 꽃신이에요. 나비 꽃신을 톡!": "audio/el/kongjwi/nar_b58b64d8af.mp3",
+ "꽃신 세 짝 중에서 나비가 그려진 꽃신을 찾아봐요.": "audio/el/kongjwi/nar_8d285aa5e8.mp3",
  "나비 꽃신을 톡!": "audio/el/kongjwi/nar_7626cbd9f3.mp3",
  "나비가 그려진 꽃신을 찾아봐요.": "audio/el/kongjwi/nar_e75e6df3f9.mp3",
  "반짝이는 꽃신을 톡!": "audio/el/kongjwi/nar_dcfd595401.mp3",

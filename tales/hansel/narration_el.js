@@ -45,7 +45,7 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/hansel/nar_26756620c0.mp3"
  ],
  "헨젤은 빵 부스러기로 길을 표시하기로 했어요.": "audio/el/hansel/nar_9c5debd116.mp3",
- "헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!": "audio/el/hansel/nar_153b355d73.mp3",
+ "헨젤을 톡 눌러 봐요. 빵 부스러기를 하나씩 떨어뜨려요!": "audio/el/hansel/nar_5a291d8770.mp3",
  "헨젤을 톡톡톡톡톡! 부스러기를 세어요.": "audio/el/hansel/nar_4d494c69db.mp3",
  "빵 부스러기가 하나, 둘, 셋, 넷, 다섯! 길이 생겼어요.": "audio/el/hansel/nar_852d2672ea.mp3",
  "부스러기가 콩콩, 길게 줄을 이었지요.": "audio/el/hansel/nar_1920023c02.mp3",
@@ -83,7 +83,7 @@ Object.assign(NARRATION_CLIPS, {
  "벽은 쿠키, 지붕은 사탕이에요.": "audio/el/hansel/nar_736b14e8ec.mp3",
  "헨젤은 쿠키 벽을 와삭, 그레텔은 사탕 지붕을 오도독 깨물었어요.": "audio/el/hansel/nar_c1fcc6966b.mp3",
  "너무 맛있어서 둘은 배가 빵빵해졌어요.": "audio/el/hansel/nar_6ca303fdf8.mp3",
- "지붕에 사탕이 빠진 곳이 있어요. 헨젤이 하나씩 붙여 줘요. 같이 세어 봐요!": "audio/el/hansel/nar_b231dd18d7.mp3",
+ "헨젤을 톡 눌러 봐요. 지붕에 사탕을 하나씩 붙여요!": "audio/el/hansel/nar_6f69d24e38.mp3",
  "헨젤을 톡톡톡톡톡! 사탕을 세어요.": "audio/el/hansel/nar_6103e006c7.mp3",
  "사탕이 하나, 둘, 셋, 넷, 다섯! 지붕이 예뻐졌어요.": "audio/el/hansel/nar_6282685193.mp3",
  "그때 문이 열리고 마녀 할머니가 나왔어요.": "audio/el/hansel/nar_2e48e4d4c3.mp3",
@@ -168,8 +168,8 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/hansel/father_ceab999c7b.mp3",
   "audio/el/hansel/nar_ae25a8def7.mp3"
  ],
- "\"너희가 먼저 집으로 간 줄 알았단다. 눈을 뜰 때까지 곁에 있을걸.\" 아빠가 미안해하며 말했어요.": [
-  "audio/el/hansel/father_2e7c5d6169.mp3",
+ "\"얘들아, 너희를 숲에 두고 와서 미안하다. 얼마나 무서웠니?\" 아빠가 미안해하며 말했어요.": [
+  "audio/el/hansel/father_044025acb8.mp3",
   "audio/el/hansel/nar_1c2f7e4ab4.mp3"
  ],
  "\"아빠, 다시는 우리를 두고 가지 마세요.\" 헨젤이 말했어요.": [

@@ -44,7 +44,7 @@ Object.assign(NARRATION_CLIPS, {
  "뿅! 코가 빠졌어요. 엉덩방아 쿵!": "audio/el/fox_crane/nar_bc39066950.mp3",
  "두루미는 긴 부리로 쪽쪽 먹었어요. 여우는 배가 꼬르륵, 속상했어요.": "audio/el/fox_crane/nar_46ad4b994b.mp3",
  "식사를 마친 두루미와 배고픈 여우는 그릇을 바라보았어요.": "audio/el/fox_crane/nar_3cf61fce50.mp3",
- "둘 다 못 먹었어요. 왜 그랬을까요?": "audio/el/fox_crane/nar_e178e13681.mp3",
+ "여우도 두루미도 친구 집에 간 날은 배가 고팠어요. 왜 그랬을까요?": "audio/el/fox_crane/nar_8d70596510.mp3",
  "두루미 부리는 길쭉길쭉, 납작한 접시에는 콕콕 닿지 않아요.": "audio/el/fox_crane/nar_304104ecd8.mp3",
  "여우 입은 짧고 혀로 핥핥, 목이 긴 병에는 쏙 들어가지 않지요.": "audio/el/fox_crane/nar_37827fe730.mp3",
  "둘은 서로의 입 모양을 가만가만 들여다보았어요.": "audio/el/fox_crane/nar_6ee142bcd3.mp3",

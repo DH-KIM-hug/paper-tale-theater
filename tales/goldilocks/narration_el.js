@@ -106,6 +106,7 @@ Object.assign(NARRATION_CLIPS, {
  "골디락스: \"아기 곰 의자, 같이 고칠래?\"": "audio/el/goldilocks/goldi_36c116e142.mp3",
  "톡톡 눌러서 뚝딱뚝딱 고쳐요!": "audio/el/goldilocks/nar_2cf4c7c7be.mp3",
  "의자를 톡톡! 뚝딱뚝딱.": "audio/el/goldilocks/nar_f942e5e2a8.mp3",
+ "의자를 톡 눌러 봐요. 뚝딱뚝딱 고쳐요!": "audio/el/goldilocks/nar_39f152dc4d.mp3",
  "짠! 의자가 다 고쳐졌어요.": "audio/el/goldilocks/nar_9a921fb358.mp3",
  "아기 곰: \"고마워! 우리 친구 하자!\"": "audio/el/goldilocks/baby_d1981ec888.mp3",
  "엄마 곰이 새 죽을 끓였어요. 다 함께 먹어요!": "audio/el/goldilocks/nar_07a6592218.mp3",

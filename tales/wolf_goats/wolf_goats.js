@@ -148,6 +148,11 @@
       return { go, stop };
     })();
     const { sleep, say } = T;
+    /* 한 번 누르면 나머지 단계는 저절로 이어 간다(2026-11-24 아스트라 검수): 안내와 누르기 동시 */
+    const askSteps = async (text, target, count, prompt, onStep, gap = 450) => {
+      await T.ask(text, () => T.tap(target, { prompt }));
+      for (let i = 1; i <= count; i++) { onStep(i); if (i < count) await sleep(gap); }
+    };
     /* 효과음 (2026-10-28): 시간·장소 단서만 실제 소리, 나머지는 만화·악기 소리. 읽어 주기에서는 부드러운 배경 소리만(vol ≤ .2, dur ≤ 4) */
     const sfx = (n, v) => { try { return AudioFX.sfx(n, v); } catch (e) { return false; } };
     const amb = (n, o) => { try { return AudioFX.ambient(n, o); } catch (e) { return null; } };
@@ -468,7 +473,7 @@
     await say('늑대는 곰곰이 생각했어요.');
     await say('"목소리를 곱게 만들어야지. 분필을 먹어 볼까?"');
     const chalk = i => { wc.hop(14, 240); T.pop(500 + (i % 2 ? 60 : -60), 170, '와작!'); AudioFX.sfx('crunch'); };
-    await T.tap(wc.pos, { prompt: '늑대를 톡! 눌러 봐요!' }); // 한 번 누르면 나머지는 저절로 (2026-10-19)
+    await sleep(500); // 분필 씹기는 이야기 사건이라 아이가 누르지 않고 저절로 (2026-11-24 아스트라 C)
     for (let i = 1; i <= 3; i++) { await chalk(i); await sleep(500); }
     await cutArt(T, 'wg_cut_chalk', 'laugh');
     sfx('ding_glock', .5);
@@ -576,8 +581,9 @@
     sfx('sleepy_tuba', .5);
     await say('늑대는 배가 불러서, 나무 아래에서 쿨쿨 자고 있었어요.');
     T.pop(560, 250, '쿨쿨~', '#3F6B4F');
-    await Promise.all([mm3.move(400, 532, 1600), k7b.move(500, 540, 1600)]);
-    await say('엄마와 막내는 살금살금 다가갔어요.');
+    /* 대사 동안 한 발씩 디디며 오른쪽으로 다가간다(2026-11-24 아스트라 B) */
+    const creep = [0, 1, 2, 3, 4].map(k => sleep(k * 380).then(() => { mm3.hop(7, 220); sleep(120).then(() => k7b.hop(7, 220)); }));
+    await Promise.all([mm3.move(400, 532, 1900), k7b.move(500, 540, 1900), say('엄마와 막내는 살금살금 다가갔어요.'), ...creep]);
     await sleep(500);
     mm3.hop(14, 300);
     await say('"쉿! 늑대가 깨지 않게, 살살 배에서 아기들을 꺼내 줄게."');
@@ -592,11 +598,11 @@
     const LAND = [[440, 552], [520, 515], [470, 488], [600, 556], [800, 556], [880, 545]];
     kids = [1, 2, 3, 4, 5, 6].map(n => { const k = kid(T, n, BELLY[0], BELLY[1] + 40, 90); hide(k); k.pos.style.pointerEvents = 'none'; return k; });
     const hit = T.el('rect', { x: BELLY[0] - 95, y: BELLY[1] - 85, width: 190, height: 150, rx: 40, fill: '#000', 'fill-opacity': 0 }, T.world); // 눌러 볼 늑대 배
-    await T.ask('늑대 배를 톡톡 눌러 봐요!', () => T.mash(hit, { count: 6, prompt: '늑대 배를 톡톡 눌러 봐요!', onStep: i => {
+    await askSteps('늑대 배를 톡 눌러 봐요. 아기들이 한 마리씩 나와요!', hit, 6, '늑대 배를 톡 눌러 봐요.', i => {
       const k = kids[i - 1], [x, y] = LAND[i - 1]; appear(k); k.pose('joy'); k.look(x < BELLY[0] ? 'left' : 'right');
       k.hop(110, 640); k.move(x, y, 640); sfx('marimba_' + i, .6); T.pop(BELLY[0] + (i % 2 ? -50 : 50), 270, '뿅!'); // 한 마리에 한 음
       wb.wiggle(3, 300);
-    } }));
+    });
     hit.remove();
     kids.push(k7b); k7b.pose('joy');
     await sleep(500);

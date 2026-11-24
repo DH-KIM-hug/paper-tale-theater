@@ -35,9 +35,9 @@ Object.assign(NARRATION_CLIPS, {
   "audio/el/red_hood/wolf_6d5366ac68.mp3",
   "audio/el/red_hood/nar_2e15813edb.mp3"
  ],
- "\"할머니, 오셨어요?\" 그런데 침대 속 할머니가 어딘가 이상해요.": [
-  "audio/el/red_hood/hood_bb9747f68e.mp3",
-  "audio/el/red_hood/nar_03bbde0b16.mp3"
+ "\"할머니, 저 왔어요!\" 그런데 침대에 누운 할머니가 어딘가 이상해요.": [
+  "audio/el/red_hood/hood_f0240cf27c.mp3",
+  "audio/el/red_hood/nar_086083861b.mp3"
  ],
  "벽에 걸린 진짜 할머니 사진과 비교해서 다른 곳을 찾아봐요!": "audio/el/red_hood/nar_4ec7fa9cf1.mp3",
  "빨간 모자는 고개를 갸웃했어요. 또 이상한 곳이 있나 봐요.": "audio/el/red_hood/nar_a8ac754ad2.mp3",
@@ -72,19 +72,20 @@ Object.assign(NARRATION_CLIPS, {
  "빨간 모자를 톡! 새끼손가락을 걸어요.": "audio/el/red_hood/nar_5160babbec.mp3",
  "빨간 모자를 톡톡톡! 한 걸음씩 걸어가요.": "audio/el/red_hood/nar_620d95ef90.mp3",
  "꽃이랑 색깔이 같은 꽃병이 어디 있을까?": "audio/el/red_hood/nar_84da465409.mp3",
- "빨간 모자를 톡! 똑똑똑 노크해요.": "audio/el/red_hood/nar_a19920b07a.mp3",
+ "문을 톡! 똑똑똑 두드려요.": "audio/el/red_hood/nar_d1139bb2f4.mp3",
  "\"할머니, 귀가 왜 이렇게 커요?\"": "audio/el/red_hood/hood_3b4e5a5554.mp3",
  "\"네 말을 잘 들으려고 그렇지~\"": "audio/el/red_hood/wolf_ebcd8e8cf9.mp3",
  "\"할머니, 눈이 왜 이렇게 노랗고 커요?\"": "audio/el/red_hood/hood_7c35e5fa6e.mp3",
  "\"너를 잘 보려고 그렇지~\"": "audio/el/red_hood/wolf_5d82bd285b.mp3",
  "\"할머니, 입이 왜 이렇게 길어요?\"": "audio/el/red_hood/hood_385d2b34ce.mp3",
- "\"그건 말이지… 어흥! 놀랐지?\"": "audio/el/red_hood/wolf_f1cd915abc.mp3",
+ "\"너와 이야기를 나누려고 그렇지~\"": "audio/el/red_hood/wolf_8ba318a465.mp3",
+ "\"어흥! 내가 누군지 알겠니?\"": "audio/el/red_hood/wolf_6fff4c2c4c.mp3",
  "사진 속 할머니와 달라 보이는 곳을 톡!": "audio/el/red_hood/nar_75f81161cc.mp3",
  "이불 말고, 얼굴을 자세히 봐요.": "audio/el/red_hood/nar_5824d734eb.mp3",
  "얼굴에서 이상한 곳을 눌러 봐요!": "audio/el/red_hood/nar_ba20a0e6e6.mp3",
  "옷장을 톡! 쏙 숨어요.": "audio/el/red_hood/nar_65cb444ec0.mp3",
  "창문을 톡!": "audio/el/red_hood/nar_3d7cac6f4f.mp3",
- "늑대를 톡톡톡! 간지럼을 태워요.": "audio/el/red_hood/nar_b64a6afed6.mp3",
+ "늑대를 톡 눌러 봐요. 사냥꾼이 간질간질 간지럼을 태워요!": "audio/el/red_hood/nar_910cd003cb.mp3",
  "간식을 톡! 한 사람씩 나눠 줘요.": "audio/el/red_hood/nar_6f8e936ea8.mp3",
  "빨간 모자를 톡! 다시 약속해요.": "audio/el/red_hood/nar_0c1c295671.mp3",
  "빨간 꽃이에요! 같은 색 꽃병을 톡!": "audio/el/red_hood/nar_88c00f34e5.mp3",

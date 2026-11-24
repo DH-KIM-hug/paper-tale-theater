@@ -42,7 +42,7 @@ Object.assign(NARRATION_CLIPS, {
  "히히, 색을 섞으면 다른 색 사탕이 돼. 먹으면 어떻게 되는지는… 비밀! 같이 만들까?": "audio/el/witch_candy/witch_df120ff616.mp3",
  "네, 제가 할게요!": "audio/el/witch_candy/kid_2de3d5d023.mp3",
  "넣고 싶은 재료를 톡 눌러 솥에 넣어요.": "audio/el/witch_candy/nar_347a477bcb.mp3",
- "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.": "audio/el/witch_candy/name/7ca67ace62.mp3",
+ "다현아, 마음에 드는 재료를 하나나 두 개 골라 넣어 줘.": "audio/el/witch_candy/name/f29cbfd9eb.mp3",
  "세 가지는 맨 마지막에!": "audio/el/witch_candy/witch_79a79e89df.mp3",
  "하나는 넣어야지!": "audio/el/witch_candy/witch_a5f5f4c677.mp3",
  "다 넣었지? 그럼 저어 보자!": "audio/el/witch_candy/witch_88be3d096f.mp3",

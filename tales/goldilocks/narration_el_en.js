@@ -352,6 +352,10 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap the chair! Bang, bang.",
   "c": "audio/el/goldilocks/en/nar_1ffdc4f8bf.mp3"
  },
+ "의자를 톡 눌러 봐요. 뚝딱뚝딱 고쳐요!": {
+  "t": "Tap the chair. Bang, bang, let's fix it!",
+  "c": "audio/el/goldilocks/en/nar_e3411e29eb.mp3"
+ },
  "짠! 의자가 다 고쳐졌어요.": {
   "t": "Ta-da! The chair is all fixed.",
   "c": "audio/el/goldilocks/en/nar_cdedc8d5d5.mp3"

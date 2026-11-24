@@ -108,9 +108,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Crane sipped with that long beak, sip, sip. Fox's tummy rumbled, and Fox felt sad.",
   "c": "audio/el/fox_crane/en/nar_1898424814.mp3"
  },
- "둘 다 못 먹었어요. 왜 그랬을까요?": {
-  "t": "Neither of them could eat. Why was that?",
-  "c": "audio/el/fox_crane/en/nar_2db845dc3c.mp3"
+ "여우도 두루미도 친구 집에 간 날은 배가 고팠어요. 왜 그랬을까요?": {
+  "t": "Fox and Crane were both still hungry after visiting a friend's house. Why was that?",
+  "c": "audio/el/fox_crane/en/nar_30d0c07dc9.mp3"
  },
  "두루미는 부리가 길쭉해요. 어떤 그릇이 좋을까요?": {
   "t": "Crane has a long, thin beak. Which dish is best?",

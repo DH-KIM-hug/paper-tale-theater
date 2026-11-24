@@ -117,9 +117,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Hansel decided to mark the way with bread crumbs.",
   "c": "audio/el/hansel/en/nar_a8f97eefaa.mp3"
  },
- "헨젤이 빵 부스러기를 하나씩 떨어뜨려요. 같이 세어 봐요!": {
-  "t": "Hansel drops the crumbs one by one. Let's count them together!",
-  "c": "audio/el/hansel/en/nar_6790936c26.mp3"
+ "헨젤을 톡 눌러 봐요. 빵 부스러기를 하나씩 떨어뜨려요!": {
+  "t": "Tap Hansel. He drops the bread crumbs one by one!",
+  "c": "audio/el/hansel/en/nar_6e68c280b3.mp3"
  },
  "헨젤을 톡톡톡톡톡! 부스러기를 세어요.": {
   "t": "Tap Hansel, tap tap tap tap tap! Count the crumbs.",
@@ -224,9 +224,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "It was so yummy that their tummies got round and full.",
   "c": "audio/el/hansel/en/nar_53c073125f.mp3"
  },
- "지붕에 사탕이 빠진 곳이 있어요. 헨젤이 하나씩 붙여 줘요. 같이 세어 봐요!": {
-  "t": "Some candies are missing from the roof. Hansel sticks them on one by one. Let's count!",
-  "c": "audio/el/hansel/en/nar_f8953d3ce6.mp3"
+ "헨젤을 톡 눌러 봐요. 지붕에 사탕을 하나씩 붙여요!": {
+  "t": "Tap Hansel. He sticks the candies onto the roof one by one!",
+  "c": "audio/el/hansel/en/nar_ffea1e47a2.mp3"
  },
  "헨젤을 톡톡톡톡톡! 사탕을 세어요.": {
   "t": "Tap Hansel, tap tap tap tap tap! Count the candies.",
@@ -420,8 +420,8 @@ Object.assign(NARRATION_CLIPS_EN, {
    "audio/el/hansel/en/nar_57ce984d44.mp3"
   ]
  },
- "\"너희가 먼저 집으로 간 줄 알았단다. 눈을 뜰 때까지 곁에 있을걸.\" 아빠가 미안해하며 말했어요.": {
-  "t": "I thought you two had gone home ahead of me. I should have stayed beside you until you woke up. Papa said, feeling sorry.",
+ "\"얘들아, 너희를 숲에 두고 와서 미안하다. 얼마나 무서웠니?\" 아빠가 미안해하며 말했어요.": {
+  "t": "Children, I am sorry I left you in the forest. How scared you must have been! Papa said, feeling sorry.",
   "c": [
    "audio/el/hansel/en/father_f0c6431556.mp3",
    "audio/el/hansel/en/nar_88395cd1f7.mp3"

@@ -91,6 +91,17 @@
    ]
   },
   {
+   "text": "곡식을 톡 눌러 봐요. 개미들이 한 알씩 창고로 날라요!",
+   "en": "Tap the grain. The ants carry it to the storeroom, one grain at a time!",
+   "segs": [
+    [
+     "nar",
+     "Tap the grain. The ants carry it to the storeroom, one grain at a time!",
+     "happy:1.1"
+    ]
+   ]
+  },
+  {
    "text": "노란 곡식을 톡톡 눌러 봐요!",
    "en": "Tap the yellow grain!",
    "segs": [

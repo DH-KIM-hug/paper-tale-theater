@@ -228,9 +228,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap the youngest goat to hide him in the clock!",
   "c": "audio/el/wolf_goats/en/nar_d480125a3b.mp3"
  },
- "늑대 배를 톡톡 눌러 봐요!": {
-  "t": "Tap, tap the wolf's tummy!",
-  "c": "audio/el/wolf_goats/en/nar_67617c32b5.mp3"
+ "늑대 배를 톡 눌러 봐요. 아기들이 한 마리씩 나와요!": {
+  "t": "Tap the wolf's tummy. The little ones come out one by one!",
+  "c": "audio/el/wolf_goats/en/nar_5fd4c709dc.mp3"
  },
  "늑대를 톡! 눌러 봐요!": {
   "t": "Tap the wolf!",

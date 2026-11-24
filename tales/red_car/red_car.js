@@ -920,16 +920,16 @@
       layer('bricks', X(1005, 720), 585, { front: true });   // 앞 가림 층: 블록 더미
       if (P) camSnap(520, 280, 1);
     }, police.pos);
-    const l10 = say(S.L10);
+    const l10 = say(S.L10).then(() => say(S.L12));   // 쫓아가는 동안 설명하고, 멈춘 뒤에 '게 멈춰라!'와 두 손(검수 20261124)
     sfx('police_siren', .3); const u4 = vo('siren_police'); blink(T, police); T.pop(police.x, FL - 150, tr('삐뽀삐뽀!'));
     const stopR4 = rattle(.25, 1200);
-    follow(620, 4400);
-    await Promise.all([drive(thiefA, thiefA.x + 300, FL, 4400, 'linear', 8), drive(thiefB, thiefB.x + 300, FL, 4400, 'linear', 8), drive(police, police.x + 300, FL, 4400), l10]);
+    follow(620, 7000);
+    await Promise.all([drive(thiefA, thiefA.x + 440, FL, 7000, 'linear', 8), drive(thiefB, thiefB.x + 440, FL, 7000, 'linear', 8), drive(police, police.x + 440, FL, 7000), l10]);
     stopR4();
     await say(S.L11);
     thiefA.look('hands'); thiefB.look('hands'); thiefA.hop(12, 320); thiefB.hop(12, 320); sfx('squeak', .5);
     T.pop(police.x, FL - 150, tr('씽씽!'));
-    await say(S.L12);
+    await sleep(500);
     put(T, red, -120, FL, { look: 'run' });
     const stopR4b = rattle(.25, 1200);
     follow(380, 2500);

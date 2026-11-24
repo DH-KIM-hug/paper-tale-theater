@@ -704,14 +704,21 @@
       zTop = zone(T, TX - 125, 0, 250, 190); zBot = zone(T, TX - 125, 330, 250, 175);
       if (P) camSnap(TX, 280, 1);
     }, board.pos);
-    const showZones = () => [zTop, zBot].forEach(z => { z.animate([{ opacity: 0 }, { opacity: .22 }], { duration: 400, fill: 'forwards' }); });
-    const hideZones = async () => { await Promise.all([zTop, zBot].map(z => T.anim(z, [{ opacity: .22 }, { opacity: 0 }], 300))); };
+    /* 2026-11-24 아스트라: 묻는 동안 침대 쪽만 밝게 — 침대 기둥 밖(벽 깃발·덩굴·창)은 어두운 띠로 흐리게 한다(인물·침대 뒤) */
+    const dim = T.el('g', { 'pointer-events': 'none', opacity: 0 });
+    T.el('rect', { x: -300, y: -200, width: TX - 125 + 300, height: 1100, fill: '#2E241C' }, dim);
+    T.el('rect', { x: TX + 125, y: -200, width: 1600, height: 1100, fill: '#2E241C' }, dim);
+    T.world.insertBefore(dim, rig);
+    const vineOp = o => { try { L.pea_vine.pos.style.transition = 'opacity .4s'; L.pea_vine.pos.style.opacity = o; } catch (e) { /* 덩굴 없음 */ } };
+    const dimTo = o => { dim.animate([{ opacity: 0 }, { opacity: o }], { duration: 400, fill: 'forwards' }); vineOp(.55); };
+    const showZones = () => { dimTo(.55); [zTop, zBot].forEach(z => { z.animate([{ opacity: 0 }, { opacity: .22 }], { duration: 400, fill: 'forwards' }); }); };
+    const hideZones = async () => { vineOp(1); dim.animate([{ opacity: .55 }, { opacity: 0 }], { duration: 300, fill: 'forwards' }); await Promise.all([zTop, zBot].map(z => T.anim(z, [{ opacity: .22 }, { opacity: 0 }], 300))); dim.remove(); };
     showZones();
     cue('question', .6);
-    await T.ask('완두콩은 어디 있을까요? 탑의 위? 아래?', () => T.choose([
+    await T.ask('침대에 숨긴 완두콩은 매트리스 위에 있을까요, 아래에 있을까요?', () => T.choose([
       { el: zBot, ok: true },
-      { el: zTop, ok: false, onWrong: async () => { await wiggleEl(T, zTop); await say('거긴 탑의 위예요. 완두콩은 맨 아래에 있어요. 아래를 눌러 봐요.'); } },
-    ], { prompt: '완두콩은 어디 있을까요? 탑의 위? 아래?' }));
+      { el: zTop, ok: false, onWrong: async () => { await wiggleEl(T, zTop); await say('거긴 매트리스 위예요. 완두콩은 맨 아래에 있어요. 아래를 눌러 봐요.'); } },
+    ], { prompt: '침대에 숨긴 완두콩은 매트리스 위에 있을까요, 아래에 있을까요?' }));
     glow(peaB, 1500); peaB.hop(10, 360); cue('ding_glock', .8) || sparkleSfx(T); T.pop(TX, 420, tr('반짝!'));
     await say('맞아요! 완두콩은 맨 아래에 있어요.'); await sleep(400);
     cue('question', .6);

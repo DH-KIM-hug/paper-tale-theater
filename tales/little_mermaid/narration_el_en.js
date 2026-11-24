@@ -8,29 +8,29 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "The youngest, the little mermaid, was quiet and thoughtful. In her garden she collected things that had fallen from ships.",
   "c": "audio/el/little_mermaid/en/nar_5a6ebde4c2.mp3"
  },
- "무거운 것은 가라앉고, 가벼운 것은 떠요. 어느 것이 바다 밑까지 내려올까요?": {
-  "t": "Heavy things sink, and light things float. Which one will come all the way down to the sea floor?",
-  "c": "audio/el/little_mermaid/en/nar_a4b1a443d4.mp3"
+ "나무토막과 돌을 물에 넣으면 어떻게 될까요? 바닥에 닿을 것을 골라 봐요.": {
+  "t": "If we put the wood and the stone in the water, what will happen? Pick the one that reaches the bottom.",
+  "c": "audio/el/little_mermaid/en/nar_f26f1c9b43.mp3"
  },
- "나무토막은 가벼워서 둥둥 떠요.": {
-  "t": "The piece of wood is light, so it floats.",
-  "c": "audio/el/little_mermaid/en/nar_82ac34a8da.mp3"
+ "나무토막은 물 위에 둥둥 떠요.": {
+  "t": "The piece of wood floats on the water.",
+  "c": "audio/el/little_mermaid/en/nar_c8ca4878c0.mp3"
  },
- "무거운 돌이 가라앉았어요!": {
-  "t": "The heavy stone sank!",
-  "c": "audio/el/little_mermaid/en/nar_98c0c5681b.mp3"
+ "돌은 바닥으로 가라앉았어요!": {
+  "t": "The stone sank to the bottom!",
+  "c": "audio/el/little_mermaid/en/nar_1f6254a2da.mp3"
  },
  "이번에는 어느 것이 가라앉을까요?": {
   "t": "This time, which one will sink?",
   "c": "audio/el/little_mermaid/en/nar_976883eae4.mp3"
  },
- "코르크 병은 가벼워서 둥둥 떠요.": {
-  "t": "The cork bottle is light, so it floats.",
-  "c": "audio/el/little_mermaid/en/nar_07af133365.mp3"
+ "병은 물 위에 떠요.": {
+  "t": "The bottle floats on the water.",
+  "c": "audio/el/little_mermaid/en/nar_cdd1945bd1.mp3"
  },
- "무거운 닻도 가라앉았어요!": {
-  "t": "The heavy anchor sank too!",
-  "c": "audio/el/little_mermaid/en/nar_7889331797.mp3"
+ "닻은 바닥으로 가라앉았어요!": {
+  "t": "The anchor sank to the bottom!",
+  "c": "audio/el/little_mermaid/en/nar_c0a83e5c08.mp3"
  },
  "언니들은 열다섯 살이 되면 바다 위로 올라갔어요. 드디어 막내 차례예요!": {
   "t": "When each sister turned fifteen, she was allowed to swim up above the sea. At last it was the youngest one's turn!",

@@ -48,9 +48,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Yes! I want to do it!",
   "c": "audio/el/witch_candy/en/kid_9da68a1257.mp3"
  },
- "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.": {
-  "t": "Dahyun, you put them in. One or lots, it's all good.",
-  "c": "audio/el/witch_candy/en/name/c510326cde.mp3"
+ "다현아, 마음에 드는 재료를 하나나 두 개 골라 넣어 줘.": {
+  "t": "Dahyun, pick one or two ingredients you like and put them in.",
+  "c": "audio/el/witch_candy/en/name/c8b147c540.mp3"
  },
  "다현이는 아기 용 콧물이랑 빨간 소방차를 솥에 넣었어요. 뚝, 삐뽀삐뽀!": {
   "t": "Dahyun dropped baby dragon snot and the red fire truck into the cauldron. Drip, nee-naw nee-naw!",

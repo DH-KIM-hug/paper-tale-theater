@@ -711,13 +711,17 @@
     await say('"흥, 나도 황소만큼 클 수 있어!" 엄마개구리가 숨을 크게 들이마셨어요.');
     const SIZES = [1, 1.35, 1.7, 2.05, 2.4, 2.75, 3.1, 3.4, 3.65];
     const cheer = { 2: '"아직 황소가 더 커요!"', 5: '"와, 양만큼 커졌다! 그래도 황소가 더 커요!"' };
-    await T.ask('엄마개구리를 톡톡 눌러서 부풀려 볼까요?', () => T.mash(mom.pos, { count: 8, prompt: '엄마개구리를 톡톡 눌러 봐요!', onStep: i => {
+    // 한 번 누르면 나머지는 저절로 커지고, 아기들의 응원은 한 줄씩 끝까지 들려준다 (2026-11-24 아스트라)
+    await T.ask('엄마개구리를 톡 눌러 봐요. 얼마나 커질까요?', () => T.tap(mom.pos, { prompt: '엄마개구리를 톡톡 눌러 봐요!' }));
+    for (let i = 1; i <= 8; i++) {
+      AudioFX.countBeat && AudioFX.countBeat(i);
       T.tone([200 + i * 40, 420 + i * 40], .25, { type: 'sine', vol: .18 });
       mom.body.style.transition = 'transform .35s cubic-bezier(.3,1.6,.5,1)';
       mom.body.style.transform = `scale(${SIZES[i] * 1.08}, ${SIZES[i]})`;
-      if (cheer[i]) Narrator.speak(cheer[i], { onSeg: T.faceSeg });   // 말풍선 얼굴(2026-11-22): 아기 개구리 얼굴
       if (i >= 5) momArt.set('puffed'); // 부푼 그림이 있으면 (없으면 기본 그림을 키운 채로)
-    } }));
+      if (cheer[i]) await Narrator.speak(cheer[i], { onSeg: T.faceSeg });   // 말풍선 얼굴(2026-11-22): 아기 개구리 얼굴
+      else await sleep(450);
+    }
     await sleep(500);
 
     /* --- 7. 부들부들 --- */

@@ -57,13 +57,16 @@ const Tale = (() => {
         const to = `translate(${nx}px,${ny}px) scale(${a.flip * a.scale},${a.scale})`;
         pos.removeAttribute('transform');
         pos.classList.add('mv'); a.mvN = (a.mvN || 0) + 1;   // 걷는 동안은 흐림 없는 그림자(ppFast) — tale.css .mv
-        try { await anim(pos, [{ transform: from }, { transform: to }], { duration: dur, easing }); } finally { if (!--a.mvN) pos.classList.remove('mv'); }
+        const gw = paperGait(a, nx - a.x, ny - a.y, dur, easing);   // 종이 인형 걸음(GSAP 켜짐·걷는 인물일 때만, 아니면 null)
+        if (gw && gw.css) easing = gw.css;
+        try { await anim(pos, [{ transform: from }, { transform: to }], { duration: dur, easing }); } finally { if (gw) gw.stop(); if (!--a.mvN) pos.classList.remove('mv'); }
         pos.style.transform = '';
         a.place(nx, ny);
       },
       face(dir) { a.flip = dir === 'right' ? -1 : 1; a.place(a.x, a.y); },
       setScale(s) { a.scale = s; a.place(a.x, a.y); },
       hop(h = 30, dur = 420) {
+        if (a._gait) a._gait.yield();   // 동화가 걷는 중에 자기 통통 걸음을 주면 엔진 튀기는 비켜 준다(두 번 튀지 않게, 기울기는 남김)
         return anim(body, [{ transform: 'translateY(0)' }, { transform: `translateY(${-h}px)` }, { transform: 'translateY(0)' }], { duration: dur, easing: 'ease-out' });
       },
       wiggle(deg = 8, dur = 500) {
@@ -74,7 +77,81 @@ const Tale = (() => {
     return a;
   }
 
-  const paperTurn = () => AudioFX.sfx('paper_turn', .8) || AudioFX.swish();
+  /* 종이 인형 걸음(2026-11-24 사용자 결정: 걷기 그림 없이 미끄러져도 되지만 GSAP 로 더 자연스럽게).
+     move() 안에서만, GSAP 시험이 켜지고(MT_ON) '동작 줄이기'가 아닐 때만. 사람·네 발 동물만(그림 이름으로 가린다, 아래 GAIT_OK).
+     - 위치 이동은 move() 의 WAAPI 그대로(시간·도착 자리 같음). 기본 easing('ease-in-out')만 power2.inOut 곡선으로 바꾼다.
+     - 튀기(키의 4%)·기울기(±2.5°, 발 디딜 때 가장 기울고 뛰어오를 때 곧게)·도착 때 살짝 내려앉기는 body 의 개별 속성 translate·rotate 에만 쓴다.
+       body 의 transform(hop·wiggle·동화 연출)과 pos 의 transform(이동)은 건드리지 않는다. scale 은 쓰지 않는다(§4-1).
+     - 걸음 수는 걸은 거리(보폭 = 키의 절반)로 정하되 1초에 2~3번 안. 박자는 '간 거리'에 맞춰서 출발·도착 때는 걸음도 느려진다.
+     - 이동이 끝나면(또는 다른 코드가 body.style.translate·rotate 를 바꾸면) 그 자리에서 손을 떼고 원래 값으로 되돌린다.
+     - 걷는 중에 동화가 hop() 을 부르면(자체 통통 걸음) 엔진 튀기는 끈다. a.gait = false 로 끄고 'walk' 로 켤 수 있다. */
+  const GAIT_OK = new Set(('bb_beast bb_belle bb_father bb_prince bb_sisa bb_sisb bb_horse bj_boar bj_rabbit bj_squirrel bj_jara bj_sage ' +
+    'br_cat br2_cat br_dog br_donkey br_robber br_miller br_boss cd_cind cd_footman cd_prince cd_sis cd_step cd_mouse ' +
+    'cd2_cind cd2_coachman cd2_foot cd2_footman cd2_prince cd2_sis cd2_step cd2_horse cd2_rat cd2_mouse cd2_lizard ' +
+    'cf_agi cf_nuna cf_oppa cf_dog cf4_agi cf4_agig cf4_nuna cf4_nunab cf4_oppa cf4_oppag cf4_dog fc_fox fp_king fp_prin fp_prince ' +
+    'frog_ox frog_sheep gl_bear gl_goldi hb_heung hb_hwife hb_nol hb_nwife hen_cat hen_dog hen_pig hg_father hg_gret hg_hans hg_witch hg_step ' +
+    'kj_kong kj_pat kj_ox kj_step kj_won kk_agi kk_dog kk_nuna kk_oppa lm_lion lm_mouse mg_scholar mg_lady mg2_scholar mg2_lady ' +
+    'mj_farmer mj_father mj_fwife mj_rich mer_prince mer_lady mer_granny pj3_granny pj3_tiger tiger pp_king pp_prince pp_princess pp_queen ' +
+    'rab_rabbit rab_turtle rab_raccoon rc_child rc_childg rc_thief rh_granny rh_hood rh_hunter rh_mama rh_wolf ' +
+    'rp_father rp_gothel rp_horse rp_mother rp_prince rp_rap rp_rabbit sb_cook sb_dog sb_grandpa sb_granny sb_guard sb_kid sb_king sb_maid ' +
+    'sb_old sb_pr sb_prince sb_princess sb_queen sb_young sm_boy sm_girl sm_kids sm_mom sm_tiger sw_dwarf sw_dwarfa sw_dwarfb sw_dwarfc sw_dwarfs ' +
+    'sw_granny sw_hunter sw_prince sw_queen sw_snow sw_trav tn_cat tn_dog tn_girl tn_grandma tn_grandpa tn_mouse tn2_cat tn2_dog tn2_girl ' +
+    'tn2_grandma tn2_grandpa tn2_mouse tp_mama tp_pig tp_wolf uc_deer uc_horse uc_kid uc_kid2 uc_kid2b uc_sheep uc_unicorn ud_cat ud_farmer ud_grandma ' +
+    'wc_bear wc_cat wc_fox wc_kid wc_kidb wc_rabbit wc_witch wg_kid wg_mama wg_wolf').split(' '));
+  const GAIT_NO = /^(fly|flying|swim|float|sleep|lie|lying|sit|fall|fallen|flat|dizzy|bed|roll|ride|hide|peek|ghost|tf|face|crouch|splash|jump|bubble|wobble|dance|huddle|appear|pop|climb|slip|shadow|baby|bow|hooked|tired)$/;
+  const GAIT_EASE = { 'ease-in-out': ['power2.inOut', 'cubic-bezier(.455,.03,.515,.955)'], linear: ['none'], 'ease-in': ['power2.in'], 'ease-out': ['power2.out'], ease: ['power1.inOut'] };
+  function gaitShown(n, top) {
+    for (; n && n !== top; n = n.parentNode) {
+      if (n.getAttribute && (n.getAttribute('display') === 'none' || n.getAttribute('opacity') === '0' || n.getAttribute('visibility') === 'hidden')) return false;
+      if (n.style && (n.style.display === 'none' || n.style.opacity === '0' || n.style.visibility === 'hidden')) return false;
+    }
+    return true;
+  }
+  function gaitWalker(a) {
+    if (a.gait === false || a.gait === 'none') return false;
+    if (a.gait === 'walk') return true;
+    const im = [...a.body.querySelectorAll('image')].find(i => gaitShown(i, a.body));
+    if (!im) return false;
+    const href = im.getAttribute('href') || im.getAttributeNS('http://www.w3.org/1999/xlink', 'href') || '';
+    const t = href.split(/[?#]/)[0].split('/').pop().replace(/\.(webp|png|jpe?g)$/, '').split('_');
+    if (t.slice(1).some(w => GAIT_NO.test(w))) return false;
+    const sp = (t[1] || '').replace(/\d+$/, '');   // pig1·pig2 → pig
+    return GAIT_OK.has(t[0] + '_' + t[1]) || GAIT_OK.has(t[0] + '_' + sp) || GAIT_OK.has(t[0]);
+  }
+  function paperGait(a, dx, dy, dur, easing) {
+    try {
+      const g = gsx(); if (!g || vFast() || vRush || document.hidden) return null;
+      if (dur < 350 || Math.abs(dx) < 30 || Math.abs(dx) < Math.abs(dy) * .5) return null;   // 제자리·위아래로 옮기기(들어 올림, 떨어짐, 오르기)는 아니다
+      const st = a.body.style, t0 = st.translate, r0 = st.rotate;
+      if ((t0 && t0 !== 'none') || (r0 && r0 !== 'none')) return null;   // 다른 연출이 이미 쓰는 중이면 비켜 준다
+      if (a._gait || !gaitWalker(a)) return null;
+      const H = a.body.getBBox().height; if (!(H > 20)) return null;
+      const sec = dur / 1000, Hw = H * Math.abs(a.scale || 1), dist = Math.hypot(dx, dy);
+      const n = Math.max(1, Math.round(Math.min(Math.max(dist / (Hw * .5), 2 * sec), 3 * sec)));   // 걸음 수
+      const E = GAIT_EASE[easing] || (/^cubic-bezier|^steps/.test(easing) ? ['none'] : ['power2.inOut']);
+      const ez = g.parseEase(E[0]), A = H * .04, S = H * .015, R = 2.5, T0 = performance.now();
+      let bob = !a.body.getAnimations().length, lastT = null, lastR = null, live = true;
+      const tick = () => {
+        if (!live) return;
+        if (!a.body.isConnected || (lastT !== null && (st.translate !== lastT || st.rotate !== lastR))) { off(false); return; }   // 다른 코드가 손댐
+        const p = Math.min(1, (performance.now() - T0) / dur), u = ez(p), ph = Math.PI * n * u;
+        const env = Math.min(1, p / .15, (1 - p) / .15);
+        let y = bob ? -A * Math.abs(Math.sin(ph)) : 0;
+        if (p > .86) y += S * Math.sin(Math.PI * (p - .86) / .14);   // 도착: 한 번 살짝 내려앉았다 멈춤
+        st.translate = `0px ${y.toFixed(2)}px`; st.rotate = `${(R * Math.cos(ph) * env).toFixed(3)}deg`;
+        lastT = st.translate; lastR = st.rotate;
+      };
+      const off = restore => {
+        if (!live) return; live = false; g.ticker.remove(tick); a._gait = null;
+        if (restore && st.translate === lastT && st.rotate === lastR) { st.translate = t0; st.rotate = r0; }
+      };
+      g.ticker.add(tick); tick();
+      a._gait = { yield() { bob = false; } };
+      return { css: E[1] && easing === 'ease-in-out' ? E[1] : null, stop: () => off(true) };
+    } catch (e) { return null; }
+  }
+
+  const paperTurn =() => AudioFX.sfx('paper_turn', .8) || AudioFX.swish();
 
   /* ---------- 카메라 (SVG 사용자 좌표) ---------- */
   function camT(x, y, z) { return `translate(500px,280px) scale(${z}) translate(${-x}px,${-y}px)`; }
@@ -569,6 +646,17 @@ const Tale = (() => {
       const h = helper({ target: good.el, prompt });
       h.stop(); // 골라요는 정답 위치를 먼저 알려주지 않는다 — 12초 재안내만
       let t2 = prompt ? setTimeout(() => Narrator.speak(prompt), 12000) : null;
+      /* 5초 손가락 힌트(2026-11-24 아스트라): 5초 동안 입력이 없으면 손가락이 선택지를 차례로 가리킨다(정답만 알려 주지 않는다). 입력이 오면 멈추고 다시 5초를 센다 */
+      let hT = null, hI = 0, hOn = false;
+      const hintStop = () => { clearTimeout(hT); hT = null; if (hOn) { hOn = false; hideHand(); } };
+      const hintStep = () => {
+        if (AUTO()) return;
+        const o = options[hI++ % options.length];
+        if (o && o.el && o.el.isConnected) { hOn = true; showHand(o.el, 'tap'); }
+        hT = setTimeout(hintStep, 1900);
+      };
+      const hintArm = () => { hintStop(); if (!AUTO()) hT = setTimeout(hintStep, 5000); };
+      hintArm();
       /* 세로 휴대폰(2026-10-31 사용자): 고를 것을 무대 아래 빈 곳에 크게 꺼내 놓는다(무대 속 것도 그대로 눌린다) */
       const tray = $('#choiceTray'), useTray = tray && !AUTO() && !VERIFY && matchMedia('(orientation: portrait)').matches;
       const sync = () => { if (!useTray) return; options.forEach(o => { if (o._tb) { o._tb.style.opacity = o.el.style.opacity || ''; o._tb.classList.toggle('hint', !!o.el.style.filter); } }); };
@@ -592,7 +680,7 @@ const Tale = (() => {
         o._on = async e => {
           e.stopPropagation();
           if (busy || locked) return;
-          locked = true; clearTimeout(t2);
+          locked = true; clearTimeout(t2); hintStop();
           if (o.ok) {
             gPress(o.el, 'ok');
             options.forEach(x => { x.el.removeEventListener('pointerdown', x._on); arm(x.el, false); x.el.style.filter = ''; x.el.style.opacity = ''; });
@@ -609,7 +697,7 @@ const Tale = (() => {
             pulse(good.el);
             if (who) await say(who);
           }
-          locked = false; sync();
+          locked = false; sync(); hintArm();
           t2 = prompt ? setTimeout(() => Narrator.speak(prompt), 12000) : null;
         };
         o.el.addEventListener('pointerdown', o._on);

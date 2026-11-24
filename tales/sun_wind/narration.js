@@ -38,7 +38,6 @@ const NARRATION_CLIPS = {
  "\"에이, 안 되네!\"": "audio/tc/sun_wind/wind_54d553eb58.mp3",
  "어? 날아간 모자가 나그네 머리에 쏙 떨어졌어요!": "audio/tc/sun_wind/nar_aed6abc041.mp3",
  "이번엔 해님 차례예요.": "audio/tc/sun_wind/nar_c36d64288f.mp3",
- "해님을 톡톡 눌러서 따뜻하게 비춰 줘요!": "audio/tc/sun_wind/nar_387c42aac0.mp3",
  "해님을 톡톡 눌러 봐요!": "audio/tc/sun_wind/nar_5c44849a01.mp3",
  "\"아, 따뜻하다~\" 나그네가 단추를 풀었어요.": [
   "audio/tc/sun_wind/man_2d21813e53.mp3",
@@ -74,7 +73,6 @@ const NARRATION_CLIPS = {
  "추우면 입고, 더우면 벗어요.": "audio/tc/sun_wind/nar_e2a3763b46.mp3",
  "나그네는 개울가에서 쉬어요.": "audio/tc/sun_wind/nar_2e4d91df2a.mp3",
  "시원한 물에 발을 퐁당 담갔어요.": "audio/tc/sun_wind/nar_fdbe1d89f4.mp3",
- "바람아, 이번엔 살살 불어 줄래? 톡, 살살~": "audio/tc/sun_wind/nar_98d4900f62.mp3",
  "바람을 살살 톡톡 눌러 봐요!": "audio/tc/sun_wind/nar_e86108ec2c.mp3",
  "\"아, 시원해. 고마워, 바람아!\"": "audio/tc/sun_wind/man_ba624738f6.mp3",
  "해님과 바람이 마주 보고 웃었어요.": "audio/tc/sun_wind/nar_c56db122d5.mp3",

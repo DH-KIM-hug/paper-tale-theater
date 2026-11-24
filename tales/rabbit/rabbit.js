@@ -1293,14 +1293,18 @@
     bob = rp.bobEl.animate([{ translate: '0 0' }, { translate: '0 -14px' }], { duration: 200, iterations: Infinity, direction: 'alternate' });
     every(900, () => speedLines(T, 5, 420));
     classical('cancan'); // 쌩쌩 달리는 토끼: 오펜바흐 〈캉캉〉(오케스트라) 18초
-    await T.ask('토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!', () => T.mash(wrap, { count: 3, prompt: '화면을 톡톡 눌러 봐요!', onStep: i => { // 예전엔 '옆으로 쓱'이었지만 톡이 더 쉽다 (놀이 피드백)
+    // 한 번 톡 하면 달리기가 세 번 저절로 이어진다 (2026-11-24 아스트라)
+    await T.ask('화면을 톡 눌러요. 토끼가 쌩쌩 달려가요!', () => T.tap(wrap, { prompt: '화면을 톡 눌러요. 토끼가 쌩쌩 달려가요!' }));
+    for (let i = 1; i <= 3; i++) {
       // 그림: 3번 눌러 -390 → 1.35배 그림 안에 머문다
       far.style.transform = `translateX(${(ART.bg_hill ? -130 : -280) * i}px)`; near.style.transform = `translateX(${-900 * i}px)`;
+      AudioFX.countBeat && AudioFX.countBeat(i);
       AudioFX.whoosh(); elfx('el_run_patter', .55); speedLines(T, 16, 480); rabbit.hop(70, 500); T.pop(rabbit.x + 60, 300, '쌩!', C.persimmon);
       const cx = T.portrait() ? 370 : 490; // 세로 화면은 토끼 쪽으로
       camTo(cx, 300, 1.2, 180).then(() => camTo(cx - 20, 300, 1.12, 300));
       setRace(.3 + .1 * i, null, 700);
-    } }));
+      await sleep(i < 3 ? 700 : 200);
+    }
     await sleep(900);
     stopLoops(); bob.cancel(); rp.pose('stand');
     await rabbit.move(ART.bg_hill ? 470 : 430, ART.bg_hill ? 505 : 440, 500);

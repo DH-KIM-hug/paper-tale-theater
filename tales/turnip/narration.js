@@ -26,7 +26,6 @@ const NARRATION_CLIPS = {
  "할머니가 할아버지 허리를 잡고, 톡톡톡 영차!": "audio/tc/turnip/nar_c0f62d1ba1.mp3",
  "순무를 톡톡 눌러서 영차!": "audio/tc/turnip/nar_bfb752eba5.mp3",
  "순무가 한 뼘 올라왔어요! 그래도 안 뽑혀요.": "audio/tc/turnip/nar_c0a7222597.mp3",
- "할머니가 누구를 부를까요?": "audio/tc/turnip/nar_df130d8c27.mp3",
  "음매~ 소는 풀을 먹고 있대요. 사람 친구를 먼저 불러요!": "audio/tc/turnip/nar_1a1ac73b0e.mp3",
  "손녀예요! 반짝이는 친구를 눌러 봐요!": "audio/tc/turnip/nar_46b2b4eb76.mp3",
  "\"손녀야~!\" 손녀가 할머니 허리를 잡았어요. 영차!": [
@@ -60,7 +59,6 @@ const NARRATION_CLIPS = {
   "audio/tc/turnip/mouse_1ad02088bd.mp3",
   "audio/tc/turnip/nar_9f94cd5447.mp3"
  ],
- "이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!": "audio/tc/turnip/nar_79888438d1.mp3",
  "순무를 톡톡 눌러요. 영~차!": "audio/tc/turnip/nar_8530df05a9.mp3",
  "쑥! 커다란 순무가 뽑혔어요! 모두 벌렁 넘어졌어요.": "audio/tc/turnip/nar_a896e0f532.mp3",
  "작은 생쥐까지 모두 힘을 모았더니 뽑혔어요!": "audio/tc/turnip/nar_b48246ab71.mp3",
@@ -82,7 +80,6 @@ const NARRATION_CLIPS = {
  "고양이: \"나는 다음이야~\"": "audio/tc/turnip/cat_2a92afa84e.mp3",
  "생쥐: \"나는 다음이야~\"": "audio/tc/turnip/mouse_f20e29fc2a.mp3",
  "와! 할아버지, 할머니, 손녀, 강아지, 고양이, 생쥐! 차례를 다 기억했어요.": "audio/tc/turnip/nar_ebb49bd12c.mp3",
- "순무국을 한 그릇씩 나눠 줘요. 냄비를 톡 눌러요!": "audio/tc/turnip/nar_675b27797b.mp3",
  "냄비를 톡 눌러서 한 그릇씩!": "audio/tc/turnip/nar_98719ae509.mp3",
  "여섯 그릇, 여섯 명! 딱 맞아요.": "audio/tc/turnip/nar_de6635ce29.mp3",
  "모두 함께 맛있게 먹었답니다.": "audio/tc/turnip/nar_c059b8192c.mp3"

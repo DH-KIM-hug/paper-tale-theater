@@ -168,9 +168,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tap the ingredients you want to drop into the cauldron.",
   "c": "audio/el/witch_candy/en/nar_7161fe9cba.mp3"
  },
- "다현아, 네가 넣어 줘. 하나든 여러 개든 좋아.": {
-  "t": "Dahyun, you put them in. One or lots, it's all good.",
-  "c": "audio/el/witch_candy/en/name/c510326cde.mp3"
+ "다현아, 마음에 드는 재료를 하나나 두 개 골라 넣어 줘.": {
+  "t": "Dahyun, pick one or two ingredients you like and put them in.",
+  "c": "audio/el/witch_candy/en/name/c8b147c540.mp3"
  },
  "세 가지는 맨 마지막에!": {
   "t": "Three colours? That's for the very end!",

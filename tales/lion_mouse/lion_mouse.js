@@ -1166,12 +1166,18 @@
     await sleep(900);
     await say('바람을 가르며 초원을 달려요! 신난다!');
     T.finale();
-    await T.ask('사자랑 생쥐를 톡톡 눌러 봐요. 같이 웃어요!', () => T.tap(rider.pos));
-    rider.hop(26, 320); T.pop(250, 250, '찍!', C.pine); vo('hi_mouse');
-    await sleep(500);
-    await T.tap(lion.pos);
-    vo('hi_lion'); lion.parts.mouth('open'); setTimeout(() => lion.parts.mouth('smile'), 500); lion.hop(20, 360); T.pop(640, 190, '어흥~', C.persimmon);
-    await sleep(900);
+    /* 먼저 누른 동물이 먼저 인사한다(2026-11-24). 사자 쪽 누름은 같은 입력 하나로 넘겨 받는다(동시에 두 입력을 열면 앞 입력이 끝날 때 뒤 입력이 막힌다) */
+    let firstWho = 'mouse';
+    const greetMouse = async () => { rider.hop(26, 320); T.pop(250, 250, '찍!', C.pine); const p = vo('hi_mouse'); await Promise.all([p, sleep(900)]); };
+    const greetLion = async () => { lion.parts.mouth('open'); setTimeout(() => lion.parts.mouth('smile'), 500); lion.hop(20, 360); T.pop(640, 190, '어흥~', C.persimmon); const p = vo('hi_lion'); await Promise.all([p, sleep(900)]); };
+    await T.ask('사자랑 생쥐를 톡톡 눌러 봐요. 같이 웃어요!', () => {
+      const onLion = () => { firstWho = 'lion'; rider.pos.dispatchEvent(new PointerEvent('pointerdown')); };
+      lion.pos.classList.add('tap-target', 'armed');
+      lion.pos.addEventListener('pointerdown', onLion, { once: true });
+      return T.tap(rider.pos).finally(() => { lion.pos.removeEventListener('pointerdown', onLion); lion.pos.classList.remove('armed'); });
+    });
+    if (firstWho === 'mouse') { await greetMouse(); await T.tap(lion.pos); await greetLion(); }
+    else { await greetLion(); await T.tap(rider.pos); await greetMouse(); }
     await say(`그날부터 ${josa(LION, '과/와')} ${josa(MOUSE, '은/는')} 둘도 없는 친구가 되었답니다.`);
     finaleMusic(); await finaleWait(); stopAmb();
     return '작아도 큰 친구를 도울 수 있어요!';

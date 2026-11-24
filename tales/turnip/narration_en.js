@@ -73,10 +73,6 @@ const NARRATION_CLIPS_EN = {
   "t": "The turnip came up a little! But it still won't come out.",
   "c": "audio/tc/turnip/en/nar_28bcea7e30.mp3"
  },
- "할머니가 누구를 부를까요?": {
-  "t": "Who will Grandma call?",
-  "c": "audio/tc/turnip/en/nar_60edd6ef8b.mp3"
- },
  "음매~ 소는 풀을 먹고 있대요. 사람 친구를 먼저 불러요!": {
   "t": "Moo~ The cow is busy eating grass. Let's call a people friend first!",
   "c": "audio/tc/turnip/en/nar_f2e23a7f1e.mp3"
@@ -173,10 +169,6 @@ const NARRATION_CLIPS_EN = {
    "audio/tc/turnip/en/nar_0bd35374b1.mp3"
   ]
  },
- "이번엔 여섯이 다 함께! 순무를 톡톡 눌러요. 영~차!": {
-  "t": "This time, all six together! Tap the turnip. Heave-ho!",
-  "c": "audio/tc/turnip/en/nar_9558c58bfe.mp3"
- },
  "순무를 톡톡 눌러요. 영~차!": {
   "t": "Tap the turnip. Heave-ho!",
   "c": "audio/tc/turnip/en/nar_fe40010d63.mp3"
@@ -260,10 +252,6 @@ const NARRATION_CLIPS_EN = {
  "와! 할아버지, 할머니, 손녀, 강아지, 고양이, 생쥐! 차례를 다 기억했어요.": {
   "t": "Wow! Grandpa, Grandma, the granddaughter, the puppy, the cat, the mouse! You remembered the whole order.",
   "c": "audio/tc/turnip/en/nar_3a37c9d7b9.mp3"
- },
- "순무국을 한 그릇씩 나눠 줘요. 냄비를 톡 눌러요!": {
-  "t": "Let's share the soup, one bowl each. Tap the pot!",
-  "c": "audio/tc/turnip/en/nar_45a39611fe.mp3"
  },
  "냄비를 톡 눌러서 한 그릇씩!": {
   "t": "Tap the pot for one bowl each!",

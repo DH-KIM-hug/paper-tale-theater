@@ -1135,7 +1135,7 @@
       mood(fox, 'sad');
     }, fox.pos);
     cue('question', .7);
-    await say('둘 다 못 먹었어요. 왜 그랬을까요?');
+    await say('여우도 두루미도 친구 집에 간 날은 배가 고팠어요. 왜 그랬을까요?');
     const qs = [
       { who: crane, q: '두루미는 부리가 길쭉해요. 어떤 그릇이 좋을까요?', ok: 'bottle', no: 'plate',
         where: '길쭉한 부리가 쏙 들어가는 그릇을 찾아봐요!', old: () => plateL, at: [T.portrait() ? 405 : 280, 480] },
@@ -1262,12 +1262,14 @@
     await Promise.all([party.fox.hop(30), party.crane.hop(30)]);
     await say('"괜찮아!" 둘은 다시 사이좋은 친구가 되었어요.');
     T.finale();
-    let firstFriend = true;
+    let firstFriend = true, yumChain = Promise.resolve(); // 앞 친구의 목소리가 끝난 뒤에 다음 목소리를 낸다(먹는 동작은 바로)
     for (const k of Object.keys(party)) { // 한 친구씩 차례로 톡 → 냠냠
       const tapF = () => T.tap(party[k].pos);
       await (firstFriend ? T.ask('친구들을 톡톡 눌러 봐요. 냠냠 맛있게 먹어요!', tapF) : tapF()); firstFriend = false;
-      await eat(T, party[k], plates[k]); vo('yum_' + k);
+      yumChain = yumChain.then(() => vo('yum_' + k)).catch(() => {});
+      await eat(T, party[k], plates[k]);
     }
+    await Promise.race([yumChain, T.sleep(4000)]);
     T.confetti(); finaleMusic(); // 합성 팡파르 대신 끝 축하 음악(2026-10-31 사용자)
     await say('배부르게 먹고, 모두 행복하게 웃었답니다.');
     await finaleWait(); bgmOff(2); stopAmb();

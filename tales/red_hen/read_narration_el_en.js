@@ -268,9 +268,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Tomato, cheese, corn: one on top of the other.",
   "c": "audio/el/red_hen/en/nar_13c47a7f65.mp3"
  },
- "딸기는 피자에 안 넣어!": {
-  "t": "Strawberries don't go on pizza!",
-  "c": "audio/el/red_hen/en/cat_12b200614f.mp3"
+ "딸기는 다음 요리에 쓰자!": {
+  "t": "Let's save the strawberries for the next dish!",
+  "c": "audio/el/red_hen/en/cat_5fa7cbd64a.mp3"
  },
  "먼저 반죽을 만들자. 밀가루랑 우유를 넣고…": {
   "t": "First, let's make the batter. Flour and milk…",
@@ -292,9 +292,9 @@ Object.assign(NARRATION_CLIPS_EN, {
   "t": "Drip, drip goes the honey.",
   "c": "audio/el/red_hen/en/nar_2ed99310bd.mp3"
  },
- "토마토는 팬케이크에 안 넣어!": {
-  "t": "Tomatoes don't go on pancakes!",
-  "c": "audio/el/red_hen/en/dog_0886febeca.mp3"
+ "토마토는 다음 요리에 쓰자!": {
+  "t": "Let's save the tomatoes for the next dish!",
+  "c": "audio/el/red_hen/en/dog_cd38f5a48b.mp3"
  },
  "모두 나무 아래 둘러앉았어요.": {
   "t": "Everyone sat together under the big tree.",

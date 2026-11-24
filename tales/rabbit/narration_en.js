@@ -170,10 +170,6 @@ const NARRATION_CLIPS_EN = {
   "t": "Look at the bar below to see who is ahead.",
   "c": "audio/tc/rabbit/en/nar_bd17865543.mp3"
  },
- "토끼는 쌩쌩 달려요! 화면을 톡톡 눌러 봐요!": {
-  "t": "The rabbit zooms along! Tap the screen again and again!",
-  "c": "audio/tc/rabbit/en/nar_3ce7557674.mp3"
- },
  "화면을 톡톡 눌러 봐요!": {
   "t": "Tap the screen again and again!",
   "c": "audio/tc/rabbit/en/nar_78ca221de0.mp3"

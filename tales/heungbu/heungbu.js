@@ -149,8 +149,11 @@
     /* 누르는 대상이 아닌 그림은 누름을 받지 않고(옆 그림이 가리지 않게), 대상은 live() 로 열며 짧은 변 90단위(휴대폰 세로에서도 80px 이상)로 넓힌다 (2026-10-22) */
     const live = (a, w = 90) => {
       if (!a._hit) { a._hit = T.el('rect', { x: -w / 2, y: -Math.max(a.h || 0, 90), width: w, height: Math.max(a.h || 0, 90), fill: '#000', 'fill-opacity': 0 }, a.pos); a.pos.insertBefore(a._hit, a.pos.firstChild); }
+      if (w > +a._hit.getAttribute('width')) { a._hit.setAttribute('width', w); a._hit.setAttribute('x', -w / 2); } /* 먼저 좁게 열린 대상도 더 넓게 다시 연다 */
       a.pos.style.pointerEvents = 'auto'; return a.pos;
     };
+    /* 한 번 톡 누른 뒤 나머지 수는 저절로 이어서 센다 */
+    const autoCount = async (n, step, gap = 600) => { for (let i = 1; i <= n; i++) { try { AudioFX.countBeat && AudioFX.countBeat(i); } catch (e) { /* 무시 */ } step(i); if (i < n) await sleep(gap); } };
     const latest = {}; // 배역마다 가장 최근에 만든 그림 배우(장면마다 새로 만든다)
     T.faceArt({ dok: '../../assets/v3w/hb_dok_face.webp' }); // 말풍선 얼굴(2026-11-22): 도깨비는 컷 그림뿐이라 컷에서 얼굴만 오린 그림
     T.faces({ heung: () => latest.heung, nol: () => latest.nol, nwife: () => latest.nwife }); // 말하는 인물 얼굴(세로 휴대폰 대사 상자). 도깨비는 컷 그림뿐이라 뺀다
@@ -268,7 +271,7 @@
             const ns2 = S.nol_shy; if (!ns2) return;
             const bags = [...Array(+n)].map((_, i) => spr('rice', cl(460, i, 80), 100, 500));
             return (async () => {
-              for (let i = 0; i < bags.length; i++) { await sleep(300); sfx('pop'); await bags[i].move(ns2.x, 470, 450, 'ease-in'); bags[i].hop(12, 240); }
+              for (let i = 0; i < bags.length; i++) { await sleep(300); sfx('pop'); await bags[i].move(ns2.x + (i - 1) * 90, 470, 450, 'ease-in'); bags[i].hop(12, 240); }
             })();
           }
         },
@@ -354,9 +357,9 @@
     const hw = spr('hwife', 300, 300), h3 = spr('heung_hello', 700, 310);
     amb('birds_chirp_2', { vol: .25, dur: 4 }); // 아기 제비 짹짹
     await say('흥부네 초가집 처마에는 제비 가족이 살았어요.');
-    await T.ask('아기 제비는 몇 마리일까요? 둥지를 톡톡톡 눌러서 세어 봐요!', () => T.mash(live(chicks, 160), { /* 둥지 전체가 누름 영역(휴대폰 세로에서도 폭 110px 넘게) */ count: 3, prompt: '둥지를 톡톡톡! 아기 제비를 세어 봐요.', onStep: i => {
-      chicks.hop(14, 260); sfx('marimba_' + i, .6); T.pop(chicks.x + (i - 2) * 70, chicks.y + 70, NUM[i - 1]);
-    } }));
+    /* 한 번 누르면 나머지는 저절로 센다(2026-11-24 아스트라: 누른 뒤 기다리는 아이에게 다음 동작이 바로 이어지게) */
+    await T.ask('둥지를 톡 눌러 봐요. 아기 제비를 함께 세어요!', () => T.tap(live(chicks, 160), { /* 둥지 전체가 누름 영역(휴대폰 세로에서도 폭 110px 넘게) */ prompt: '둥지를 톡 눌러 봐요. 아기 제비를 함께 세어요!' }));
+    await autoCount(3, i => { chicks.hop(14, 260); sfx('marimba_' + i, .6); T.pop(chicks.x + (i - 2) * 70, chicks.y + 70, NUM[i - 1]); });
     await say('아기 제비가 하나, 둘, 셋! 세 마리예요.');
     /* 강제로 떨어진다: 아이가 아무것도 안 눌러도 둥지에서 굴러떨어져 땅에 아프게 눕는다 */
     const tumble = spr('chick_fall', 500, 90, 120); tumble.place(NEST_FALL.x, NEST_FALL.y);
@@ -406,10 +409,11 @@
     const vine = spr('vine', 740, 360), hs = spr('heung_saw', 456, 300), hw2 = spr('hwife_joy', 195, 300); /* 2026-10-20 새 그림이 더 넓어 둘이 겹치던 것 벌림 */
     hs.face('right'); /* 톱날이 박 쪽을 향하게 뒤집고 줄기는 박 뒤로(톱이 박 반대쪽을 보고 줄기가 흥부를 가리던 것, 2026-11-02 싱크 점검) */
     const gourds = [];
-    await T.ask('쑥쑥 자란 줄기에 박이 열렸어요. 줄기를 톡톡톡 눌러서 박을 세어 봐요!', () => T.mash(live(vine), { count: 3, prompt: '줄기를 톡톡톡! 박을 세어 봐요.', onStep: i => {
+    await T.ask('줄기를 톡 눌러 봐요. 박을 함께 세어요!', () => T.tap(live(vine), { prompt: '줄기를 톡 눌러 봐요. 박을 함께 세어요!' }));
+    await autoCount(3, i => {
       const g = spr('gourd', cl(640, i - 1, 100), 140); g.hop(14, 260); gourds.push(g);
       sfx('marimba_' + i, .6); T.pop(g.x, g.y - 170, NUM[i - 1]);
-    } }));
+    });
     await say('박이 하나, 둘, 셋! 세 통이에요.');
 
     /* 6. 박 타기 */
@@ -422,10 +426,13 @@
     const autoOpen1 = async g => { await sleep(500); g.hop(18, 300); hs.hop(14, 300); elfx('el_gourd_saw', .85, () => sfx('pop')); T.pop(g.x, g.y - 170, '슬근슬근!'); };
     await cutSay('rice_pour2', 'pop', '첫 번째 박에서 하얀 쌀이 쏟아졌어요! 아이들이 신나서 소리쳤어요.');
     const sacks = [];
-    await T.ask('쌀자루를 톡톡톡 눌러서 세어 봐요!', () => T.mash(live(gourds[0]), { count: 3, prompt: '쌀자루를 톡톡톡! 세어 봐요.', onStep: i => {
+    /* 쌀자루는 첫 번째 박에서 나온다: 안내도 박을 누르라고 하고, 방금 탄 박을 열린 모습으로 바꿔 눌리게 한다(2026-11-24 아스트라 A). 한 번 누르면 세 자루가 하나씩 나온다 */
+    gourds[0].set('gourd_open', 120);
+    await T.ask('첫 번째 박을 톡 눌러 봐요. 쌀자루가 몇 개 나올까요?', () => T.tap(live(gourds[0], 160), { prompt: '첫 번째 박을 톡!' })); /* 세로 휴대폰에서도 폭 80px 이상 */
+    await autoCount(3, i => {
       const s = spr('rice', cl(620, i - 1, 90), 90, 545); s.hop(14, 260); sacks.push(s);
       sfx('marimba_' + i, .6); T.pop(s.x, s.y - 140, NUM[i - 1]);
-    } }));
+    });
     await say('쌀자루가 하나, 둘, 셋! 이제 배불리 먹을 수 있어요.');
     sacks.forEach(s => s.pos.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 600, fill: 'forwards' }));
     await autoOpen1(gourds[1]);
@@ -491,7 +498,7 @@
     for (let i = 0; i < 3; i++) {
       if (i === 0) await T.ask('쌀자루를 톡 눌러 형님께 건네줘요.', () => T.tap(live(bags[i]), { prompt: '쌀자루를 톡! 형님께 보내요.' })); else await sleep(500); /* 한 번 누르면 나머지는 저절로 */
       bags[i].pos.style.pointerEvents = 'none';
-      sfx('marimba_' + (i + 1), .6); await bags[i].move(ns2.x, 470, 450, 'ease-in'); bags[i].hop(12, 240); T.pop(ns2.x, 120, NUM[i]);
+      sfx('marimba_' + (i + 1), .6); await bags[i].move(ns2.x + (i - 1) * 90, 470, 450, 'ease-in'); bags[i].hop(12, 240); T.pop(ns2.x + (i - 1) * 90, 120, NUM[i]); /* 놀부 앞 왼쪽·가운데·오른쪽에 한 자루씩 내려놓아 세 자루가 다 보인다(2026-11-24 아스트라) */
     }
     await say('쌀자루가 하나, 둘, 셋! 놀부는 눈물이 핑 돌았어요.');
     await T.ask('흥부를 톡! 눌러서 모두 함께 만세!', () => T.tap(live(hg), { prompt: '흥부를 톡! 모두 만세!' }));

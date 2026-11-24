@@ -108,10 +108,6 @@ const NARRATION_CLIPS_EN = {
   "t": "Crane sipped with that long beak, sip, sip. Fox's tummy rumbled, and Fox felt sad.",
   "c": "audio/tc/fox_crane/en/nar_14cd09b7b1.mp3"
  },
- "둘 다 못 먹었어요. 왜 그랬을까요?": {
-  "t": "Neither of them could eat. Why was that?",
-  "c": "audio/tc/fox_crane/en/nar_7df5fac268.mp3"
- },
  "두루미는 부리가 길쭉해요. 어떤 그릇이 좋을까요?": {
   "t": "Crane has a long, thin beak. Which dish is best?",
   "c": "audio/tc/fox_crane/en/nar_18a813d879.mp3"
