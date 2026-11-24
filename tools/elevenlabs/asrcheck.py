@@ -4,7 +4,7 @@
   guarded 는 --no-asr 가 있거나 whisper(mlx_whisper)가 없으면 검사 없이 한 번만 만들고 True.
 판정(하나라도 걸리면 의심): ① 받아쓰기 글자 수 >= 기대 글자 수 x 1.6 (그리고 3자 이상 차이)  ② 받아쓰기 안에 기대 문장이 2번 이상
   ③ 앞 절반과 뒤 절반이 거의 같음(difflib 0.8 이상, 6자 이상)  ④ 기대 문장과 너무 다름(유사도 한국어 0.5/영어 0.45, 8자 이하는 0.3 미만, 이름 낱말은 뺌)
-  ⑤ 한 낱말 대사는 말 덩어리 수(ffmpeg silencedetect)가 2 이상.
+  ⑤ 한 낱말 대사는 말 덩어리 수(ffmpeg silencedetect)가 2 이상.  ⑥ 받아쓰기 안에서 같은 구(2낱말 이상 또는 한 낱말 3글자 이상)가 연달아 두 번, 기대 문장에는 그런 되풀이가 없을 때.
 '--no-asr' 로 끈다. 의심으로 남은 파일은 쓰지 않고 SUSPECTS 에 모아 report() 가 끝에 요약한다."""
 import difflib, os, re, subprocess, sys
 
@@ -47,6 +47,16 @@ def chunks(path):  # 말 덩어리 수: 소리 구간 수(0.25초 넘는 쉼으�
     if total - t > 0.12: segs += 1
     return segs
 
+def phrase_repeat(a, got):
+    """받아쓰기 낱말들에서 같은 구가 연달아 두 번 나오면(2낱말 이상, 또는 한 낱말 3글자 이상) 그 구를 돌려준다.
+    기대 문장(a, norm 한 글)에도 그 구가 연달아 두 번 있으면(Vroom vroom, 뽀글뽀글) 정상이라 건너뛴다."""
+    w = [x for x in (norm(t) for t in re.split(r'\s+', got or '')) if x]
+    for k in range(1, len(w) // 2 + 1):
+        for i in range(len(w) - 2 * k + 1):
+            if w[i:i + k] == w[i + k:i + 2 * k] and (k >= 2 or len(w[i]) >= 3) and (''.join(w[i:i + k]) * 2) not in a:
+                return ' '.join(w[i:i + k])
+    return None
+
 def verdict(expected, got, lang, nchunks=None):
     """(ok, [이유]) 받아쓰기 글(got)을 기대 문장(expected)과 견준다."""
     exp_raw = spoken(expected)
@@ -59,6 +69,8 @@ def verdict(expected, got, lang, nchunks=None):
     if len(b) >= 1.6 * len(a) and len(b) - len(a) >= 3: why.append(f'글자 {len(b)}/{len(a)} 길다')
     if len(a) >= 2 and b.count(a) >= 2: why.append('기대 문장이 받아쓰기에 2번 이상')
     elif 2 <= len(a) <= 5 and lang == 'ko' and re.search(r'(.{2,})\1', b) and not re.search(r'(.{2,})\1', a): why.append('받아쓰기에 같은 말 되풀이')
+    rp = phrase_repeat(a, g)
+    if rp: why.append(f'같은 구 되풀이 {rp!r}')
     if len(b) >= 6:
         h = len(b) // 2
         ha = len(a) // 2   # 기대 문장 자체가 되풀이(Chirp chirp, 뽀글뽀글)면 앞뒤가 같아도 정상
