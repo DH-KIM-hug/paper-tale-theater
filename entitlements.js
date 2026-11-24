@@ -461,7 +461,8 @@ const Entitlements = (() => {
   }
 
   /* 실제 앱(Capacitor)이면 네이티브 StoreKit 플러그인(Store)에 연결: 스토어 거래 기록이 구매 여부의 기준 */
-  const nativeStore = typeof window !== 'undefined' && window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Store;
+  /* 앱 안 플러그인(StorePlugin)은 capacitorDidLoad 에서 등록돼 Capacitor.Plugins 에 안 보일 수 있다 → registerPlugin 으로 잡는다(2026-11-24 TestFlight 결제 안 됨) */
+  const nativeStore = (() => { try { const C = typeof window !== 'undefined' && window.Capacitor; if (!C || !(C.isNativePlatform ? C.isNativePlatform() : true)) return null; return (C.Plugins && C.Plugins.Store) || (C.registerPlugin ? C.registerPlugin('Store') : null); } catch (e) { return null; } })();
   if (nativeStore) {
     const viaStore = async r => { if (r && r.owned) { sendReceipt(r); return { ok: true }; } return { ok: false, reason: (r && r.reason) || 'error' }; };
     bridge = {

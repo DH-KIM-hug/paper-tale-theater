@@ -43,7 +43,8 @@
   const B = window.__BED = { mode: MODE, queue: Q.map(t => t.id), idx: -1, said: 0, skipped: [], timeouts: [], failed: 0, titles: 0, started: false, done: false, phase: 'start', lines: 0 };
   let held = false, unhold = null, stopped = false, skipFlag = false, wakeGap = null, ended = false;
   const HOME = { ko: Object.assign({}, NARRATION_CLIPS), en: Object.assign({}, NARRATION_CLIPS_EN) };
-  const plug = () => { try { return window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.BedtimeAudio; } catch (e) { return null; } };
+  let bedPlug;   // capacitorDidLoad 에서 등록한 앱 안 플러그인은 Capacitor.Plugins 에 없을 수 있어 registerPlugin 으로 잡는다
+  const plug = () => { try { if (bedPlug !== undefined) return bedPlug; const C = window.Capacitor; bedPlug = (C && (!C.isNativePlatform || C.isNativePlatform())) ? ((C.Plugins && C.Plugins.BedtimeAudio) || (C.registerPlugin ? C.registerPlugin('BedtimeAudio') : null)) : null; return bedPlug; } catch (e) { return null; } };
   const nativeCall = m => { const p = plug(); if (!p || !p[m]) return Promise.resolve(); try { return Promise.resolve(p[m]()).catch(() => {}); } catch (e) { return Promise.resolve(); } };
 
   /* ── 화면 ── */
