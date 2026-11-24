@@ -82,7 +82,8 @@ public class StorePlugin: CAPPlugin, CAPBridgedPlugin {
         Task {
             do {
                 let products = try await Product.products(for: [unlockAllProductID])
-                if let p = products.first { call.resolve(["price": p.displayPrice]) } else { call.resolve([:]) }
+                let sf = await Storefront.current   // 스토어 나라 확인용(2026-11-25: TestFlight 에서 한국 계정인데 달러로 보임)
+                if let p = products.first { call.resolve(["price": p.displayPrice, "currency": p.priceFormatStyle.currencyCode, "storefront": sf?.countryCode ?? ""]) } else { call.resolve(["storefront": sf?.countryCode ?? ""]) }
             } catch { call.resolve([:]) }
         }
     }
@@ -115,7 +116,8 @@ public class StorePlugin: CAPPlugin, CAPBridgedPlugin {
         Task {
             do {
                 let products = try await Product.products(for: [renameProductID])
-                if let p = products.first { call.resolve(["price": p.displayPrice]) } else { call.resolve([:]) }
+                let sf = await Storefront.current   // 스토어 나라 확인용(2026-11-25: TestFlight 에서 한국 계정인데 달러로 보임)
+                if let p = products.first { call.resolve(["price": p.displayPrice, "currency": p.priceFormatStyle.currencyCode, "storefront": sf?.countryCode ?? ""]) } else { call.resolve(["storefront": sf?.countryCode ?? ""]) }
             } catch { call.resolve([:]) }
         }
     }

@@ -1452,7 +1452,7 @@
       h = noticeHTML(name);
     } else if (k === 'about') {
       h = `<h3>${name}</h3>
-        <dl class="g-dl"><dt>${L('버전', 'Version')}</dt><dd>${APP_VERSION}</dd>
+        <dl class="g-dl"><dt>${L('버전', 'Version')}</dt><dd>${APP_VERSION}${Entitlements.STORE_INFO ? ` <small>${Entitlements.STORE_INFO}</small>` : ''}</dd>
         ${deviceNoRow()}
         <dt>${L('문의', 'Contact')}</dt><dd style="user-select:text;-webkit-user-select:text">${FEEDBACK_TO}</dd></dl>
         <div class="g-btns"><button type="button" class="ticket alt" data-act="mail">${L('의견 보내기', 'Send feedback')}</button></div>
