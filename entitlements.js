@@ -27,7 +27,7 @@ const Entitlements = (() => {
   const ID_RE = /^[a-z0-9_]{1,40}$/;
   const CAST_RE = /^[a-z0-9_]{1,40}\.[a-z0-9_]{1,40}$/;
   const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
-  let price = '', renamePrice = '', pricing = null, storeInfo = '';   // storeInfo = 'KOR KRW' 처럼 스토어 나라와 통화(보호자 '정보'에 작게, 2026-11-25 확인용)   // StoreKit displayPrice. 못 받았으면 빈 글(화면은 '가격 불러오는 중', 2026-11-24 달러 기본값 없앰). pricing = 다시 받는 중인 약속
+  let price = '', renamePrice = '', pricing = null;   // StoreKit displayPrice. 못 받았으면 빈 글(화면은 '가격 불러오는 중', 2026-11-24 달러 기본값 없앰). pricing = 다시 받는 중인 약속
   const OWNED_KEY = 'owned_all';        // 옛 구매 기록(호환): state.owned 와 함께 읽는다
   const K_ACCOUNT = 'sync_account', K_STATE = 'sync_state', K_DIRTY = 'sync_dirty', K_RECEIPT = 'sync_receipt';
   const store = {
@@ -490,8 +490,6 @@ const Entitlements = (() => {
       const before = price + '|' + renamePrice;
       if (a && a.price) price = a.price;
       if (b && b.price) renamePrice = b.price;
-      const sf = (a && a.storefront) || (b && b.storefront) || '';
-      storeInfo = [sf, (a && a.currency) || (b && b.currency) || ''].filter(Boolean).join(' ');
       if (price + '|' + renamePrice !== before) notify();
       return { price, renamePrice };
     }).finally(() => { pricing = null; });
@@ -512,7 +510,7 @@ const Entitlements = (() => {
   function _reset(s) { st = s === undefined ? null : normalize(s); }
 
   const api = {
-    FREE_ALWAYS, PER_WEEK, STAR_NEED, STICKER_MAX, get PRICE() { return price; }, get RENAME_PRICE() { return renamePrice; }, get STORE_INFO() { return storeInfo; }, refreshPrices, API_BASE, PRODUCT_ID, RENAME_ID, nameCall, purchaseRename, owned,
+    FREE_ALWAYS, PER_WEEK, STAR_NEED, STICKER_MAX, get PRICE() { return price; }, get RENAME_PRICE() { return renamePrice; }, refreshPrices, API_BASE, PRODUCT_ID, RENAME_ID, nameCall, purchaseRename, owned,
     appMode, weekNumber, dateStr, freeThisWeek, status, canPlay, isFree, lockedChoices,
     purchase, restore, grantAll, revokeAll, setBridge, guard,
     state: () => load(), merge, normalize, balanceOf,
