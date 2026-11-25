@@ -774,9 +774,12 @@ const Narrator = (() => {
   async function speak(text, { keep = false, onSeg, simultaneous = false, recordedOnly = false, bubble = true } = {}) {
     const gen = ++speakGen;
     AudioFX.stopNarration(); // 겹침 방지: 진행 중인 클립 중단
-    const en = englishOn() && NARRATION_CLIPS_EN[text]; // 영어 자료가 없는 문장은 한국어로
+    /* 영어 모드(영어 자료가 있는 동화)에서 영어 녹음이 없는 문장은 한국어 녹음으로 떨어뜨리지 않고 말없이 넘어간다(2026-11-25: 앱 영어 모드에서 한국어가 섞여 나옴).
+       영어에서도 한국어 소리를 일부러 쓰는 줄(사탕 마녀 유령 소리)은 동화 코드가 영어 맵에 그 녹음을 넣어 둔다 */
+    const enMode = englishOn(), en = enMode && NARRATION_CLIPS_EN[text];
+    if (enMode && !en && typeof NARRATION_CLIPS !== 'undefined' && NARRATION_CLIPS[text]) console.warn('[en] 영어 녹음 없음(한국어로 틀지 않음):', text);
     if (bubble) showBubble(nameView(en ? en.t : text)); else hideBubble();     // 홈은 말풍선 없이 목소리만(2026-10-28 사용자 결정)
-    const clip = en ? en.c : (typeof NARRATION_CLIPS !== 'undefined') && NARRATION_CLIPS[text];
+    const clip = en ? en.c : !enMode && (typeof NARRATION_CLIPS !== 'undefined') && NARRATION_CLIPS[text];
     if (clip) {
       /* 이 말하기 뒤에 멈춤(Narrator.stop·AudioFX.stopNarration)이 오면 cut: 기다림을 바로 끝내고 남은 조각도 틀지 않는다 */
       let cut = false;
@@ -820,8 +823,11 @@ const Narrator = (() => {
     hideBubble();
   }
 
-  /* 말풍선 없는 소리 대사(VOICE_LINES): 영어 모드면 영어 클립, 없으면 한국어 */
-  const voiceLine = k => (englishOn() && typeof VOICE_LINES_EN !== 'undefined' && VOICE_LINES_EN[k]) || (typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k]) || null;
+  /* 말풍선 없는 소리 대사(VOICE_LINES): 영어 모드면 영어 클립만(없으면 null, 한국어로 떨어뜨리지 않는다 2026-11-25), 한국어 모드면 한국어 */
+  const voiceLine = k => {
+    if (englishOn()) return (typeof VOICE_LINES_EN !== 'undefined' && VOICE_LINES_EN[k]) || null;
+    return (typeof VOICE_LINES !== 'undefined' && VOICE_LINES[k]) || null;
+  };
 
   return { speak, stop, hideBubble, voiceLine };
 })();

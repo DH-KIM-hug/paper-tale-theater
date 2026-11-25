@@ -108,7 +108,9 @@
     const preCut = key => T.preload(cutUrl(key)).then(ok => { cutOK[key] = ok; if (!ok && CUT_NEW[key]) T.preload(cutUrl(key)); });
     FRIENDS.forEach(f => ['', '_b'].forEach(s => preCut(f.id + s)));
     FRIENDS.forEach(f => preCut('wrong_' + f.id));
-    if (typeof NARRATION_CLIPS !== 'undefined') AudioFX.preloadAll(Object.values(NARRATION_CLIPS).flat());
+    /* 영어 모드는 영어 녹음만 미리 받는다(2026-11-25: 영어에서 한국어 녹음 71개를 받고 있었다) */
+    if (typeof englishOn === 'function' && englishOn()) AudioFX.preloadAll(Object.values(NARRATION_CLIPS_EN).flatMap(e => [].concat((e && e.c) || [])));
+    else if (typeof NARRATION_CLIPS !== 'undefined') AudioFX.preloadAll(Object.values(NARRATION_CLIPS).flat());
     /* ---------- 효과음 (2026-10-28 SFX 배선): 놀이=만화 효과음, 읽어 주기=조용한 장소 소리만 ---------- */
     const SFX_NAMES = ['intro_cozy', 'birds_chirp_1', 'winter_wind_1', 'crickets_night_1', 'crickets_night_2', 'waves', 'whistle_down', 'whistle_up', 'daegeum', 'finale_happy', 'chime_up', 'ding_glock'];
     try { AudioFX.preloadSfx(SFX_NAMES); } catch (e) { /* 소리 없이도 진행 */ }

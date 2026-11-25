@@ -33,7 +33,13 @@ def _whisper():
 def asr(path, lang):
     w = _whisper()
     if not w: return None
-    r = w.transcribe(path, path_or_hf_repo='mlx-community/whisper-large-v3-turbo', language=lang, condition_on_previous_text=False)
+    M = 'mlx-community/whisper-large-v3-turbo'
+    if lang == 'en' and '/en/' in path:   # 영어 녹음은 언어를 정하지 않고 먼저 받아써서 한국어가 섞였는지 본다(2026-11-25)
+        r = w.transcribe(path, path_or_hf_repo=M, condition_on_previous_text=False)
+        t = r['text'].strip()
+        if re.search('[가-힣]', t): return t
+        if r.get('language') == 'en': return t
+    r = w.transcribe(path, path_or_hf_repo=M, language=lang, condition_on_previous_text=False)
     return r['text'].strip()
 
 def chunks(path):  # 말 덩어리 수: 소리 구간 수(0.25초 넘는 쉼으로 나눔)
@@ -65,7 +71,8 @@ def verdict(expected, got, lang, nchunks=None):
     for x, y in ALIAS: g = g.replace(x, y)
     b = norm(NAME_RE.sub(' ', g) if lang == 'en' else g)
     why = []
-    if not a: return True, why
+    if lang == 'en' and re.search('[가-힣]', g): why.append('영어 녹음 받아쓰기에 한글(한국어 섞임)')
+    if not a: return not why, why
     if len(b) >= 1.6 * len(a) and len(b) - len(a) >= 3: why.append(f'글자 {len(b)}/{len(a)} 길다')
     if len(a) >= 2 and b.count(a) >= 2: why.append('기대 문장이 받아쓰기에 2번 이상')
     elif 2 <= len(a) <= 5 and lang == 'ko' and re.search(r'(.{2,})\1', b) and not re.search(r'(.{2,})\1', a): why.append('받아쓰기에 같은 말 되풀이')
