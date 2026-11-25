@@ -78,12 +78,13 @@ for tale, jobs in JOBS.items():
                     h = hashlib.md5(f'{voice}|{M}|{sent}|{json.dumps(st, sort_keys=True)}'.encode()).hexdigest()[:10]
                     rel = f'audio/el/{tale}/look/{code}/' + ('en/' if en else '') + f'{r}_{h}.mp3'
                     p = os.path.join(ROOT, rel)
+                    api = asrcheck.en_sent(sent) if en else sent   # 영어: 연기 지시 속 한국어 낱말을 빼고 보낸다(이름은 뺀기 전 글로, gen_tale.py 와 같게)
                     if not os.path.exists(p):
-                        chars += len(sent)
-                        if dry: print('NEED', rel, '|', sent)
-                        else: os.makedirs(os.path.dirname(p), exist_ok=True)
-                        if not tts(p, voice, sent, M, st): print('SUSPECT', rel, sent, flush=True); return None
-                        print('ok', rel, sent, flush=True)
+                        chars += len(api)
+                        if dry: print('NEED', rel, '|', api); return rel
+                        os.makedirs(os.path.dirname(p), exist_ok=True)
+                        if not tts(p, voice, api, M, st): print('SUSPECT', rel, api, flush=True); return None
+                        print('ok', rel, api, flush=True)
                     return rel
                 seen = set()
                 for ln in lines_of(spec):

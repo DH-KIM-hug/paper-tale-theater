@@ -18,6 +18,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 ROOT = os.path.dirname(os.path.dirname(HERE))
 from name_split_spec import D, P2, WH
 from polish import polish
+import asrcheck   # 영어 보낼 글 한글 막기(guard_en_sent), 태그 정리(en_sent)
 
 BASE = json.load(open(os.path.join(HERE, 'name_split_base.json')))
 MANIFEST = os.path.join(HERE, 'name_split_manifest.json')
@@ -105,7 +106,7 @@ def asr_fix(t):
 def clean_tag(tag, lang='ko'):  # 사탕 마녀 '뿅'이 두세 번 읽히던 원인(말투 지시 'a pop on 뿅')을 뺀다
     t = re.sub(r',?\s*a pop on 뿅', '', tag)
     if lang == 'en':   # 영어 녹음 태그 속 한국어 낱말 지시(a small pause before 잠잘 때도 등)는 뜻이 없고 'Munch munch' 를 겹쳐 읽게 했다(2026-11-22 받아쓰기) → 뺀다
-        t = re.sub(r',\s*[^,\[\]]*[가-힣][^,\[\]]*', '', t)
+        return asrcheck.en_sent(t)   # 2026-11-25: 태그 맨 앞 지시('[quick at 휙, ...]')도 빼게 asrcheck.en_sent 로(지금 줄들은 결과가 같다)
     return re.sub(r'\[\s*,\s*', '[', t)
 
 # ---------- 줄 모으기 ----------
@@ -232,7 +233,9 @@ def tts(path, j):
     body = {'text': j['text'], 'model_id': j['model'], 'voice_settings': j['settings']}
     if j.get('prev'): body['previous_text'] = j['prev']
     if j.get('next'): body['next_text'] = j['next']
-    if j.get('lang') == 'en': body['language_code'] = 'en'
+    if j.get('lang') == 'en':
+        body['language_code'] = 'en'
+        for k in ('text', 'prev', 'next'): asrcheck.guard_en_sent(path, j.get(k), 'en')   # 영어 조각 보낼 글·문맥에 한글이 남으면 녹음 전에 멈춘다(2026-11-25)
     for a in range(5):
         r = urllib.request.Request(f"https://api.elevenlabs.io/v1/text-to-speech/{j['voice']}?output_format=mp3_44100_128", json.dumps(body).encode(),
                                    {'xi-api-key': key, 'Content-Type': 'application/json'})

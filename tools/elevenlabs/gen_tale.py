@@ -81,15 +81,18 @@ def main():
         h = hashlib.md5((f'{V[role]}|{M}|{sent}' + (f'|{json.dumps(ST, sort_keys=True)}' if ST else '')).encode()).hexdigest()[:10]
         rel = f'audio/el/{tale}/{sub}{role}_{h}.mp3'
         path = os.path.join(ROOT, rel)
+        # 영어 녹음: 한국어 대본에서 가져온 연기 지시 속 한국어 낱말('a pause after 유니콘은')은 ElevenLabs 가 그대로 읽는다(2026-11-25 받아쓰기) → 보낼 때 뺀다.
+        #   클립 이름(해시)은 예전처럼 뺀기 전 글로 만들어 경로와 맵을 그대로 둔다. 보낼 글에 한글이 남으면 asrcheck.guarded 가 녹음 전에 멈춘다.
+        api = asrcheck.en_sent(sent) if en else sent
         if redo or not os.path.exists(path):
-            if chars + len(sent) > cap: return None
-            chars += len(sent)
+            if chars + len(api) > cap: return None
+            chars += len(api)
             if not dry:
                 try:
-                    if not tts(path, V[role], sent, M, ST): errs += 1; chars -= len(sent); print('SUSPECT', role, text, flush=True); return None
-                    made += 1; print('ok', role, sent, flush=True)
+                    if not tts(path, V[role], api, M, ST): errs += 1; chars -= len(api); print('SUSPECT', role, text, flush=True); return None
+                    made += 1; print('ok', role, api, flush=True)
                 except urllib.error.HTTPError as e:
-                    errs += 1; chars -= len(sent); print('ERR', e.code, e.read()[:200], role, text, flush=True); return None
+                    errs += 1; chars -= len(api); print('ERR', e.code, e.read()[:200], role, text, flush=True); return None
             else: print('NEED', rel, '|', text, flush=True)  # --dry: 새로 만들어야 할 클립 경로 (trim_line.py 가 이 경로에 잘라 낸 녹음을 둔다)
         return rel
     def lead(dr):  # '=' 전체 글 방향에서 맨 앞 태그만 (영어는 한국어 글을 못 쓰니)
