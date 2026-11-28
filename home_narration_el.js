@@ -419,7 +419,50 @@ const NARRATION_CLIPS = {
  "무대가 가득 찼어요": "audio/el/home/nar_b3b0287876.mp3",
  "처음부터 해요": "audio/el/home/nar_a20d526698.mp3",
  "지웠어요": "audio/el/home/nar_62cddd6809.mp3",
- "빨간 암탉": "audio/el/home/nar_4f86c1ac2d.mp3"
+ "빨간 암탉": "audio/el/home/nar_4f86c1ac2d.mp3",
+ "크리스마스": "audio/el/home/nar_106e049cf3.mp3",
+ "호두까기 인형": "audio/el/home/nar_14717eec0c.mp3",
+ "크리스마스 전날 밤": "audio/el/home/nar_b7aa5806bc.mp3",
+ "진저브레드맨": "audio/el/home/nar_94ebb5fb8a.mp3",
+ "구두장이와 요정": "audio/el/home/nar_13d52782e3.mp3",
+ "클라라(만세)": "audio/el/home/nar_26ef842547.mp3",
+ "드로셀마이어 대부": "audio/el/home/nar_95d0f4e4cd.mp3",
+ "프리츠 오빠": "audio/el/home/nar_071cd6cd6a.mp3",
+ "생쥐 왕": "audio/el/home/nar_aa0c09cb17.mp3",
+ "클라라(손수건 매기)": "audio/el/home/nar_f36007ff39.mp3",
+ "장난감 병정": "audio/el/home/nar_720c95c9a9.mp3",
+ "회색 생쥐": "audio/el/home/nar_31aad02192.mp3",
+ "사탕 요정": "audio/el/home/nar_87f7f52b1a.mp3",
+ "산타 할아버지(하하)": "audio/el/home/nar_350bbec8b1.mp3",
+ "아빠(손 흔들기)": "audio/el/home/nar_34c392534c.mp3",
+ "순록(하늘 날기)": "audio/el/home/nar_14feca614a.mp3",
+ "아이(새근새근)": "audio/el/home/nar_b09f1dd0d7.mp3",
+ "생쥐(쿨쿨)": "audio/el/home/nar_c9f072b01e.mp3",
+ "산타 할아버지(윙크)": "audio/el/home/nar_1d4aff605d.mp3",
+ "조그만 썰매": "audio/el/home/nar_f62b14dc30.mp3",
+ "순록": "audio/el/home/nar_61483363da.mp3",
+ "선물 양말": "audio/el/home/nar_a43ff99352.mp3",
+ "산타 할아버지(선물 넣기)": "audio/el/home/nar_a68719ea9f.mp3",
+ "진저브레드맨(만세)": "audio/el/home/nar_73257ae502.mp3",
+ "할머니(반죽)": "audio/el/home/nar_f482efca14.mp3",
+ "할아버지(허허)": "audio/el/home/nar_61a4564d37.mp3",
+ "소": "audio/el/home/nar_094a41564e.mp3",
+ "돼지": "audio/el/home/nar_9103452793.mp3",
+ "진저브레드맨(달리기)": "audio/el/home/nar_86bc0fda11.mp3",
+ "도리깨질하는 아저씨": "audio/el/home/nar_7a3dd8478d.mp3",
+ "풀 베는 아저씨": "audio/el/home/nar_b5adb7f059.mp3",
+ "여우(앉기)": "audio/el/home/nar_28c8cff9ca.mp3",
+ "진저브레드맨(메롱)": "audio/el/home/nar_7e63a209a1.mp3",
+ "요정(망치질)": "audio/el/home/nar_0fc44b33c8.mp3",
+ "요정(바느질)": "audio/el/home/nar_abb7828b12.mp3",
+ "구두장이": "audio/el/home/nar_66c7d2002b.mp3",
+ "구두장이 아내": "audio/el/home/nar_09dbb6dbf4.mp3",
+ "신사 손님": "audio/el/home/nar_a0bab31134.mp3",
+ "아주머니 손님": "audio/el/home/nar_6e16d0fafa.mp3",
+ "할아버지 손님": "audio/el/home/nar_ded6c9d654.mp3",
+ "빨간 구두": "audio/el/home/nar_35b31fb52e.mp3",
+ "요정(새 옷 춤)": "audio/el/home/nar_ec835c79c0.mp3",
+ "요정(새 옷 노래)": "audio/el/home/nar_4a432aa3ba.mp3"
 };
 const NARRATION_CLIPS_EN = {
  "이솝 우화": {
@@ -2385,5 +2428,181 @@ const NARRATION_CLIPS_EN = {
  "빨간 암탉": {
   "t": "The Little Red Hen",
   "c": "audio/el/home/en/nar_a9daf4c060.mp3"
+ },
+ "크리스마스": {
+  "t": "Christmas",
+  "c": "audio/el/home/en/nar_03e331d798.mp3"
+ },
+ "호두까기 인형": {
+  "t": "The Nutcracker",
+  "c": "audio/el/home/en/nar_31425ebd36.mp3"
+ },
+ "크리스마스 전날 밤": {
+  "t": "The Night Before Christmas",
+  "c": "audio/el/home/en/nar_208665b3e0.mp3"
+ },
+ "진저브레드맨": {
+  "t": "The Gingerbread Man",
+  "c": "audio/el/home/en/nar_1374c28e4f.mp3"
+ },
+ "구두장이와 요정": {
+  "t": "The Elves and the Shoemaker",
+  "c": "audio/el/home/en/nar_f88303a1aa.mp3"
+ },
+ "Clara (cheering)": {
+  "t": "Clara (cheering)",
+  "c": "audio/el/home/en/nar_cc98cd3b3c.mp3"
+ },
+ "Nutcracker": {
+  "t": "Nutcracker",
+  "c": "audio/el/home/en/nar_34bcdb0dce.mp3"
+ },
+ "Godfather Drosselmeyer": {
+  "t": "Godfather Drosselmeyer",
+  "c": "audio/el/home/en/nar_edb962cfa3.mp3"
+ },
+ "Fritz": {
+  "t": "Fritz",
+  "c": "audio/el/home/en/nar_fea01c5abd.mp3"
+ },
+ "Mouse King": {
+  "t": "Mouse King",
+  "c": "audio/el/home/en/nar_9c54a6c2cc.mp3"
+ },
+ "Clara (tying the hanky)": {
+  "t": "Clara (tying the hanky)",
+  "c": "audio/el/home/en/nar_3605b414bf.mp3"
+ },
+ "Toy soldier": {
+  "t": "Toy soldier",
+  "c": "audio/el/home/en/nar_d847f28214.mp3"
+ },
+ "Grey mouse": {
+  "t": "Grey mouse",
+  "c": "audio/el/home/en/nar_4dd4c3b1ee.mp3"
+ },
+ "Sugar Plum Fairy": {
+  "t": "Sugar Plum Fairy",
+  "c": "audio/el/home/en/nar_57ada8eb00.mp3"
+ },
+ "St. Nick (laughing)": {
+  "t": "St. Nick (laughing)",
+  "c": "audio/el/home/en/nar_ca95460645.mp3"
+ },
+ "Dad (waving)": {
+  "t": "Dad (waving)",
+  "c": "audio/el/home/en/nar_a7a69ec4d7.mp3"
+ },
+ "Reindeer (flying)": {
+  "t": "Reindeer (flying)",
+  "c": "audio/el/home/en/nar_e9bc2c876e.mp3"
+ },
+ "Child (sleeping)": {
+  "t": "Child (sleeping)",
+  "c": "audio/el/home/en/nar_d860345b4a.mp3"
+ },
+ "Mouse (sleeping)": {
+  "t": "Mouse (sleeping)",
+  "c": "audio/el/home/en/nar_b71e5b8bd9.mp3"
+ },
+ "St. Nick (winking)": {
+  "t": "St. Nick (winking)",
+  "c": "audio/el/home/en/nar_19a6505bc0.mp3"
+ },
+ "Tiny sleigh": {
+  "t": "Tiny sleigh",
+  "c": "audio/el/home/en/nar_31eab8c1f5.mp3"
+ },
+ "Reindeer": {
+  "t": "Reindeer",
+  "c": "audio/el/home/en/nar_f6f5914af4.mp3"
+ },
+ "Christmas stocking": {
+  "t": "Christmas stocking",
+  "c": "audio/el/home/en/nar_412888fe22.mp3"
+ },
+ "St. Nick (filling stockings)": {
+  "t": "St. Nick (filling stockings)",
+  "c": "audio/el/home/en/nar_acb6e28486.mp3"
+ },
+ "Gingerbread Man (cheering)": {
+  "t": "Gingerbread Man (cheering)",
+  "c": "audio/el/home/en/nar_e4e536cd34.mp3"
+ },
+ "Granny (rolling dough)": {
+  "t": "Granny (rolling dough)",
+  "c": "audio/el/home/en/nar_0ee5fef591.mp3"
+ },
+ "Grandpa (laughing)": {
+  "t": "Grandpa (laughing)",
+  "c": "audio/el/home/en/nar_bcd399823b.mp3"
+ },
+ "Cow": {
+  "t": "Cow",
+  "c": "audio/el/home/en/nar_75c334f82f.mp3"
+ },
+ "Pig": {
+  "t": "Pig",
+  "c": "audio/el/home/en/nar_ae54793fc7.mp3"
+ },
+ "Gingerbread Man (running)": {
+  "t": "Gingerbread Man (running)",
+  "c": "audio/el/home/en/nar_d8fd91600e.mp3"
+ },
+ "Thresher": {
+  "t": "Thresher",
+  "c": "audio/el/home/en/nar_1ab31cfbe3.mp3"
+ },
+ "Mower": {
+  "t": "Mower",
+  "c": "audio/el/home/en/nar_7bc86072c9.mp3"
+ },
+ "Fox (sitting)": {
+  "t": "Fox (sitting)",
+  "c": "audio/el/home/en/nar_bd4d062ac3.mp3"
+ },
+ "Gingerbread Man (teasing)": {
+  "t": "Gingerbread Man (teasing)",
+  "c": "audio/el/home/en/nar_975bf92071.mp3"
+ },
+ "Elf (hammering)": {
+  "t": "Elf (hammering)",
+  "c": "audio/el/home/en/nar_7669d85951.mp3"
+ },
+ "Elf (sewing)": {
+  "t": "Elf (sewing)",
+  "c": "audio/el/home/en/nar_0579d5060d.mp3"
+ },
+ "Shoemaker": {
+  "t": "Shoemaker",
+  "c": "audio/el/home/en/nar_4fa11c0d5e.mp3"
+ },
+ "Shoemaker's wife": {
+  "t": "Shoemaker's wife",
+  "c": "audio/el/home/en/nar_6800d07181.mp3"
+ },
+ "Gentleman customer": {
+  "t": "Gentleman customer",
+  "c": "audio/el/home/en/nar_2461d33517.mp3"
+ },
+ "Lady customer": {
+  "t": "Lady customer",
+  "c": "audio/el/home/en/nar_54773a3d99.mp3"
+ },
+ "Old man customer": {
+  "t": "Old man customer",
+  "c": "audio/el/home/en/nar_91b586e376.mp3"
+ },
+ "Red shoe": {
+  "t": "Red shoe",
+  "c": "audio/el/home/en/nar_32961f6898.mp3"
+ },
+ "Elf (dancing in new clothes)": {
+  "t": "Elf (dancing in new clothes)",
+  "c": "audio/el/home/en/nar_c5d7a3ea1e.mp3"
+ },
+ "Elf (singing in new clothes)": {
+  "t": "Elf (singing in new clothes)",
+  "c": "audio/el/home/en/nar_f6a7282e0d.mp3"
  }
 };

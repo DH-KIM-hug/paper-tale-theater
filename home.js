@@ -164,7 +164,7 @@
   const SKILL = Object.fromEntries(TAGS.skill.map(t => [t.key, t]));
 
   const match = t =>
-    (sel.origin.size === 0 || sel.origin.has(t.origin) || (t.also || []).some(k => sel.origin.has(k))) &&
+    (sel.origin.size === 0 || (sel.origin.has(t.origin) && !(t.origin === 'world' && (t.also || []).includes('christmas'))) || (t.also || []).some(k => sel.origin.has(k))) &&   // 크리스마스 동화는 '세계' 칩에서 빠지고 '크리스마스' 칩에만 잡힌다
     (sel.skill.size === 0 || t.skills.some(k => sel.skill.has(k)));
 
   /* 새 썸네일 = 종이에 모양 구멍이 이미 뚫린 그림: 네모 그대로, 가장자리만 종이 색에 녹인다.
@@ -207,6 +207,7 @@
     recent: '<path fill-rule="evenodd" d="M12 2.5a9.5 9.5 0 1 1 0 19 9.5 9.5 0 0 1 0-19zM11 6.5v6.2l4.3 2.6 1-1.7-3.3-2V6.5z"/>',
     week: '<path fill-rule="evenodd" d="M5 4h2V2.5h2V4h6V2.5h2V4h2a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM5 9v10h14V9zm7 1.5l1.1 2.3 2.5.3-1.8 1.7.4 2.5-2.2-1.2-2.2 1.2.4-2.5-1.8-1.7 2.5-.3z"/>',
     original: '<path fill-rule="evenodd" d="M15.6 3.2l5.2 5.2L9 20.2l-6 1 1-6zM14.5 5.7l-.7.7 3.8 3.8.7-.7z"/>',
+    christmas: '<path d="M12 2l5.2 7h-3l4.3 6h-4.6v2.4h2.1V22H8V17.4h2.1V15H5.5l4.3-6h-3z"/>',
     princess: '<path d="M3 7.5l4.5 4L12 4l4.5 7.5L21 7.5 19 18H5z"/><rect x="5" y="19" width="14" height="2.4" rx="1"/>',
     korean: '<path d="M2 10.5c3.2 0 6.5-2.3 10-6.5 3.5 4.2 6.8 6.5 10 6.5v1.8H2z"/><path fill-rule="evenodd" d="M5 13.5h14V21H5zM10 16v5h4v-5z"/>',
     aesop: '<path d="M4 3l5 5h6l5-5v9a8 8 0 0 1-16 0z"/>',
@@ -424,16 +425,17 @@
     hz.addEventListener('click', e => { if (hz.dataset.swiped) { e.preventDefault(); e.stopPropagation(); } }, true);
   }
 
-  /* ── S1 서가 줄 7개: 최근 본 · 이번 주 무료(앱 모드만, 2026-10-31 사용자: 최근 본 아래) · 창작 · 공주 · 동물(이솝) · 우리나라 · 세계. 비는 줄은 숨기고, 같은 동화가 여러 줄에 나와도 된다.
+  /* ── S1 서가 줄 8개: 최근 본 · 이번 주 무료(앱 모드만, 2026-10-31 사용자: 최근 본 아래) · 크리스마스(2026-11-28, 철 따라 가장 앞) · 창작 · 공주 · 동물(이솝) · 우리나라 · 세계. 비는 줄은 숨기고, 같은 동화가 여러 줄에 나와도 된다.
      동화는 모두 origin 이 하나 있으므로 31편이 최소 한 줄에는 보인다 ── */
   const ROWS = [
     { k: 'recent', ko: '최근 본', en: 'Recently played', pick: () => readList(recentKey).map(id => TALES.find(t => t.id === id)).filter(Boolean) },
     { k: 'week', ko: '이번 주 무료', en: 'Free this week', pick: () => storeMode ? Entitlements.freeThisWeek().map(id => TALES.find(t => t.id === id)).filter(Boolean) : [] },
+    { k: 'christmas', ko: '크리스마스', en: 'Christmas', pick: () => TALES.filter(t => (t.also || []).includes('christmas')) },
     { k: 'original', ko: '창작 동화', en: 'Original tales', pick: () => TALES.filter(t => t.origin === 'original') },
     { k: 'princess', ko: '공주', en: 'Princesses', pick: () => TALES.filter(t => (t.also || []).includes('princess')) },
     { k: 'aesop', ko: '동물 이야기', en: 'Animal tales', pick: () => TALES.filter(t => t.origin === 'aesop' || (t.also || []).includes('animal')) },
     { k: 'korean', ko: '우리나라 옛이야기', en: 'Korean tales', pick: () => TALES.filter(t => t.origin === 'korean') },
-    { k: 'world', ko: '세계 옛이야기', en: 'World tales', pick: () => TALES.filter(t => t.origin === 'world') }
+    { k: 'world', ko: '세계 옛이야기', en: 'World tales', pick: () => TALES.filter(t => t.origin === 'world' && !(t.also || []).includes('christmas')) }
   ];
   /* 열린 것 → 잠긴 것 → 만드는 중 순서로 (카탈로그 순서는 그대로) */
   const playable = t => isOpen(t) && Entitlements.canPlay(t.id);

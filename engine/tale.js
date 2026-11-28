@@ -2347,7 +2347,7 @@ const Tale = (() => {
     if (typeof STICKERS !== 'undefined') return Promise.resolve();
     return new Promise(res => {
       const sc = document.createElement('script');
-      sc.src = ROOT_URL + 'tales/stickers.js?v=20261027cast1';
+      sc.src = ROOT_URL + 'tales/stickers.js?v=20261128xst1';
       sc.onload = sc.onerror = () => res();
       document.head.appendChild(sc);
       setTimeout(res, 2500);

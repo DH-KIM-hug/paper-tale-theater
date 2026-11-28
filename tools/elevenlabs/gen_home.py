@@ -44,6 +44,12 @@ STAGE = {  # 스티커북 '내 무대 꾸미기' 안내 (docs/STICKER_STAGE_PLAN
   '무대가 가득 찼어요': 'The stages are full', '처음부터 해요': 'Starting over', '지웠어요': 'Deleted',
 }
 
+XMAS = {  # 크리스마스 줄 이름(칩 say)과 크리스마스 동화 네 편 제목 (2026-11-28 사용자 결정)
+  '크리스마스': 'Christmas',
+  '호두까기 인형': 'The Nutcracker', '크리스마스 전날 밤': 'The Night Before Christmas',
+  '진저브레드맨': 'The Gingerbread Man', '구두장이와 요정': 'The Elves and the Shoemaker',
+}
+
 def tales():
     js = open(os.path.join(ROOT, 'tales/catalog.js')).read() + '\nconsole.log(JSON.stringify(TALES.map(t=>({title:t.title,en:t.en&&t.en.title}))))'
     open('/tmp/_cat.js', 'w').write('const document={},window={},localStorage={getItem(){return null}};\n' + js)
@@ -52,6 +58,7 @@ def tales():
 def main():
     dry = '--dry' in sys.argv
     if '--stage' in sys.argv: return stage(dry)
+    if '--xmas' in sys.argv: return stage(dry, XMAS)
     items = dict((k, v) for k, v in TAGS.items())
     for t in tales():
         items[t['title']] = t['en']; items[SOON(t['title'])] = f"{t['en']}. Opening soon."
@@ -80,13 +87,13 @@ def main():
         f.write('/* 홈 화면 문구 내레이션 — ElevenLabs (tools/elevenlabs/gen_home.py 가 생성, 손으로 고치지 말 것) */\n')
         f.write('const NARRATION_CLIPS = ' + json.dumps(clips, ensure_ascii=False, indent=1) + ';\n')
         f.write('const NARRATION_CLIPS_EN = ' + json.dumps(clips_en, ensure_ascii=False, indent=1) + ';\n')
-def stage(dry):
-    """--stage: STAGE 줄만 녹음해 지금 home_narration_el.js 에 더한다(다른 스크립트가 넣은 줄·옛 클립은 그대로)."""
+def stage(dry, spec=None):
+    """--stage: STAGE 줄만(--xmas 는 XMAS 줄만) 녹음해 지금 home_narration_el.js 에 더한다(다른 스크립트가 넣은 줄·옛 클립은 그대로)."""
     out = os.path.join(ROOT, 'home_narration_el.js'); src = open(out).read()
     def obj(name):
         m = re.search(r'const ' + name + r' = (\{.*?\n\});', src, re.S); return json.loads(m.group(1))
     clips, clips_en, chars = obj('NARRATION_CLIPS'), obj('NARRATION_CLIPS_EN'), 0
-    for ko, en in STAGE.items():
+    for ko, en in (spec or STAGE).items():
         for lang, text in (('ko', ko), ('en', en)):
             sent = TAG + text
             h = hashlib.md5(f'{VOICE}|{MODEL}|{sent}|{SET}'.encode()).hexdigest()[:10]

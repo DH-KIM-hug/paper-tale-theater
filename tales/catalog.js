@@ -30,6 +30,7 @@ const TAGS = {
     { key: 'world',  label: '외국 전래',   say: '외국 전래동화',   color: '#1F2A56', en: 'World' },
     { key: 'original', label: '창작 동화', say: '창작 동화',       color: '#E8703A', en: 'Original' },
     { key: 'princess', label: '공주 동화', say: '공주 동화',       color: '#8B2F5A', en: 'Princess' },
+    { key: 'christmas', label: '크리스마스', say: '크리스마스',     color: '#A93B32', en: 'Christmas' },
   ],
   skill: [
     { key: 'count',  label: '수 세기',     say: '수 세기' },
@@ -411,5 +412,23 @@ const TALES = (() => {
       <rect x="72" y="56" width="52" height="12" rx="3" fill="${c.ck}"/>
       <circle cx="136" cy="60" r="14" fill="none" stroke="${c.bk}" stroke-width="4"/>${[0, 60, 120].map(a => `<path d="M136 46 v28" stroke="${c.bk}" stroke-width="2.5" transform="rotate(${a} 136 60)"/>`).join('')}<path d="M126 48 l-10 -14" stroke="${c.gy}" stroke-width="3" stroke-linecap="round"/>
       <circle cx="22" cy="30" r="7" fill="${c.rd}"/><circle cx="14" cy="42" r="5" fill="${c.rd}"/><path d="M10 50 q10 -22 24 -28" stroke="${c.pn}" stroke-width="3" fill="none"/></g>` },
+  /* 크리스마스 명작 4편(2026-11-28 홈 등록). origin 은 world 그대로(퍼즐판·무료 순환이 origin 을 본다), also: ['christmas'] 로 홈 '크리스마스' 줄에 나오고 '세계 옛이야기' 줄에서는 빠진다. 무료·잠금은 다른 외국 전래와 같다(항상 무료 아님, 매주 무료 순환 후보).
+     카드·배너 그림은 tools/app/gen/mk_jobs_xmas_home.py. art 는 카드 그림이 없을 때만 쓰는 예비 조각 */
+  { id: 'nutcracker', title: '호두까기 인형', origin: 'world', also: ['christmas'], skills: ['spot', 'position', 'heart'], ready: true, read: true, readEn: true, readMin: 3,
+    line: '같은 색을 찾고 위치말을 배워요. 크리스마스이브에 선물 받은 호두까기 인형의 턱이 삐끗하자 클라라가 손수건으로 묶어 주고, 한밤에 살아난 인형을 따라 눈송이 숲을 지나 과자 나라로 가요.',
+    en: { title: 'The Nutcracker', line: 'Find the matching colour and learn position words. On Christmas Eve Clara ties a handkerchief around her hurt nutcracker, and at midnight the nutcracker comes to life and leads her through the snowy forest to the Land of Sweets.' },
+    art: `<rect width="160" height="110" fill="${c.ind}"/><g class="pc"><rect y="88" width="160" height="22" fill="${c.bk}"/><path d="M118 88 L134 30 L150 88Z" fill="${c.pn}"/><rect x="62" y="22" width="26" height="18" fill="${c.ind}"/><rect x="58" y="38" width="34" height="4" fill="${c.ind}"/><circle cx="75" cy="50" r="10" fill="${c.sk}"/><rect x="63" y="60" width="24" height="26" rx="4" fill="${c.rd}"/>${eye(71, 49)}${eye(79, 49)}</g>` },
+  { id: 'night_before', title: '크리스마스 전날 밤', origin: 'world', also: ['christmas'], skills: ['position', 'spot', 'heart'], ready: true, read: true, readEn: true, readMin: 4,
+    line: '크리스마스 전날 밤, 지붕 위에서 작은 발굽 소리가 들려요. 굴뚝으로 쿵 내려온 산타 할아버지가 양말 속에 선물을 넣어요. 지붕 위, 양말 속 같은 위치말과 같은 색 찾기를 배워요.',
+    en: { title: 'The Night Before Christmas', line: 'On the night before Christmas, tiny hooves clatter on the roof. Santa comes down the chimney with a bump and fills the stockings. Learn position words like on the roof and in the stocking, and find matching colours.' },
+    art: `<rect width="160" height="110" fill="${c.ind}"/><g class="pc"><circle cx="128" cy="24" r="13" fill="${c.cr}"/><path d="M20 70 L80 40 L140 70Z" fill="${c.sn}"/><rect x="30" y="70" width="100" height="40" fill="${c.bk}"/><rect x="104" y="36" width="12" height="22" fill="${c.rd}"/><rect x="66" y="78" width="28" height="22" fill="${c.am}"/></g>` },
+  { id: 'gingerbread', title: '진저브레드맨', origin: 'world', also: ['christmas'], skills: ['position', 'order', 'heart'], ready: true, read: true, readEn: true, readMin: 6,
+    line: '오븐에서 뛰어나온 진저브레드맨이 "날 잡아 봐!" 하고 달아나요. 할머니, 할아버지, 소, 돼지가 줄줄이 뒤쫓아요. 맨 앞과 맨 뒤 같은 위치말, 빠르고 느린 것, 차례를 배워요.',
+    en: { title: 'The Gingerbread Man', line: 'The Gingerbread Man jumps out of the oven and runs away: "Catch me if you can!" Grandma, Grandpa, a cow and a pig chase after him one by one. Learn first and last, fast and slow, and what comes next.' },
+    art: `<rect width="160" height="110" fill="#CDE6F7"/><g class="pc"><rect y="84" width="160" height="26" fill="${c.sn}"/><circle cx="80" cy="38" r="14" fill="#B5733A"/><rect x="68" y="50" width="24" height="26" rx="8" fill="#B5733A"/><path d="M58 56 h44" stroke="#B5733A" stroke-width="8" stroke-linecap="round"/><circle cx="80" cy="58" r="2.6" fill="${c.rd}"/><circle cx="80" cy="66" r="2.6" fill="${c.pn}"/>${eye(75, 36)}${eye(85, 36)}</g>` },
+  { id: 'elves_shoemaker', title: '구두장이와 요정', origin: 'world', also: ['christmas'], skills: ['spot', 'size', 'heart'], ready: true, read: true, readEn: true, readMin: 7,
+    line: '가난한 구두장이의 구두를 밤마다 누가 만들어 줄까요? 짝이 맞는 구두를 찾고 크고 작은 것을 견주어요. 숨어서 지켜본 부부는 작은 요정들에게 고마움을 갚아요.',
+    en: { title: 'The Elves and the Shoemaker', line: 'Who makes the poor shoemaker\'s shoes every night? Find the matching pairs and compare big and small. The shoemaker and his wife hide and watch, then thank the little elves.' },
+    art: `<rect width="160" height="110" fill="${c.bk}"/><g class="pc"><rect x="96" y="14" width="40" height="34" rx="16" fill="${c.ind}"/><circle cx="122" cy="26" r="5" fill="${c.cr}"/><rect y="78" width="160" height="32" fill="#8A5232"/><path d="M40 78 q0 -14 18 -14 h14 q10 0 10 14z" fill="${c.rd}"/><rect x="104" y="60" width="6" height="18" fill="${c.cr}"/><path d="M107 52 q4 4 0 8 q-4 -4 0 -8z" fill="${c.am}"/></g>` },
   ];
 })();
