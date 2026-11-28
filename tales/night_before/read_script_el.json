@@ -1,0 +1,936 @@
+{
+ "mode": "read",
+ "tale": "night_before",
+ "lang": "ko",
+ "title": "크리스마스 전날 밤",
+ "voices_from": "voice_script_el.json",
+ "moral": "모두에게 즐거운 크리스마스, 그리고 모두 포근히 잘 자요.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md, 2026-11-28). 놀이판 12장 그대로. 조작 안내 6줄(ASK_*)과 오답 줄(NO_*)만 빼고 나머지 줄은 글자 그대로 재사용(같은 클립). 조작 자리는 저절로: 4장 덧문이 열림(b:open), 7장 지붕 위 발굽(auto:roof), 9장 코와 수염 반짝(auto:nose, auto:beard, 카드는 띄우지 않음), 10장 양말 넷 쏙쏙쏙쏙(auto:fill), 12장 산타 인사(auto:wave). 끝 교훈 낭독 없음. 살 붙이기 두 줄(A5, L5)은 놀이에도 있다.",
+ "acts": {
+  "set:n": "n장 차리기와 곡",
+  "b:이름[:인자]": "night_before.js 의 B 동작",
+  "cut:id": "그림 컷",
+  "auto:roof|nose|beard|fill|wave": "조작 자리를 저절로"
+ },
+ "scenes": [
+  {
+   "key": "R01",
+   "card": "고요한 집",
+   "set": "1",
+   "enter": [],
+   "lines": [
+    {
+     "text": "크리스마스 전날 밤, 집 안은 고요해요.",
+     "segs": [
+      [
+       "nar",
+       "크리스마스 전날 밤, 집 안은 고요해요.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "A1",
+     "before": [
+      "b:tick"
+     ]
+    },
+    {
+     "text": "쥐 한 마리도 꼼짝 안 해요. 새근새근, 쿨쿨.",
+     "segs": [
+      [
+       "nar",
+       "쥐 한 마리도 꼼짝 안 해요. 새근새근, 쿨쿨.",
+       "whisper"
+      ]
+     ],
+     "src": "reuse",
+     "from": "A2",
+     "before": [
+      "b:snore"
+     ]
+    },
+    {
+     "text": "벽난로 옆엔 양말을 걸었어요. 조심조심, 나란히.",
+     "segs": [
+      [
+       "nar",
+       "벽난로 옆엔 양말을 걸었어요. 조심조심, 나란히.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "A3",
+     "before": [
+      "b:sway"
+     ]
+    },
+    {
+     "text": "산타 할아버지가 오시길 바라면서요.",
+     "segs": [
+      [
+       "nar",
+       "산타 할아버지가 오시길 바라면서요.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "A4"
+    },
+    {
+     "text": "창밖에는 눈이 조용히, 조용히 내려요.",
+     "segs": [
+      [
+       "nar",
+       "창밖에는 눈이 조용히, 조용히 내려요.",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "A5",
+     "before": [
+      "b:chime"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02",
+   "card": "달콤한 사탕 꿈",
+   "set": "2",
+   "enter": [],
+   "lines": [
+    {
+     "text": "아이들은 이불 속에 포옥, 새근새근 잠들었어요.",
+     "segs": [
+      [
+       "nar",
+       "아이들은 이불 속에 포옥, 새근새근 잠들었어요.",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "B1"
+    },
+    {
+     "text": "머릿속엔 달콤한 사탕들이 빙글빙글 춤을 춰요.",
+     "segs": [
+      [
+       "nar",
+       "머릿속엔 달콤한 사탕들이 빙글빙글 춤을 춰요.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "B2",
+     "before": [
+      "b:dream"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03",
+   "card": "쿵쾅! 무슨 소리지?",
+   "set": "3",
+   "enter": [],
+   "lines": [
+    {
+     "text": "엄마는 머릿수건, 나는 잠 모자.",
+     "segs": [
+      [
+       "nar",
+       "엄마는 머릿수건, 나는 잠 모자.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "C1"
+    },
+    {
+     "text": "긴 겨울밤 잠에 폭 빠지려는데,",
+     "segs": [
+      [
+       "nar",
+       "긴 겨울밤 잠에 폭 빠지려는데,",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "C2",
+     "before": [
+      "b:harp"
+     ]
+    },
+    {
+     "text": "마당에서 쿵쾅! 와글와글! 무슨 소리지?",
+     "segs": [
+      [
+       "nar",
+       "마당에서 쿵쾅! 와글와글! 무슨 소리지?",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "C3",
+     "before": [
+      "b:thump"
+     ]
+    },
+    {
+     "text": "나는 침대에서 벌떡 일어났어요.",
+     "segs": [
+      [
+       "nar",
+       "나는 침대에서 벌떡 일어났어요.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "C4",
+     "before": [
+      "b:wake"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04",
+   "card": "창문을 열자",
+   "set": "4",
+   "enter": [],
+   "lines": [
+    {
+     "text": "번개처럼 쌩! 창가로 달려갔어요.",
+     "segs": [
+      [
+       "nar",
+       "번개처럼 쌩! 창가로 달려갔어요.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "D1",
+     "before": [
+      "b:dash"
+     ],
+     "after": [
+      "b:open"
+     ]
+    },
+    {
+     "text": "덧문을 열고, 창을 쓱 올렸어요.",
+     "segs": [
+      [
+       "nar",
+       "덧문을 열고, 창을 쓱 올렸어요.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "D2"
+    },
+    {
+     "text": "새하얀 눈 위에 달빛이 비쳐, 낮처럼 환해요.",
+     "segs": [
+      [
+       "nar",
+       "새하얀 눈 위에 달빛이 비쳐, 낮처럼 환해요.",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "D3",
+     "after": [
+      "cut:nb_cut_window_moon"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05",
+   "card": "작은 썰매와 순록 여덟",
+   "set": "5",
+   "enter": [],
+   "lines": [
+    {
+     "text": "그런데 저게 뭐지? 눈이 동그래졌어요.",
+     "segs": [
+      [
+       "nar",
+       "그런데 저게 뭐지? 눈이 동그래졌어요.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "E1"
+    },
+    {
+     "text": "조그만 썰매 하나, 조그만 순록 여덟 마리!",
+     "segs": [
+      [
+       "nar",
+       "조그만 썰매 하나, 조그만 순록 여덟 마리!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "E2",
+     "before": [
+      "par:arrive"
+     ]
+    },
+    {
+     "text": "썰매를 몰고 온 작은 할아버지, 날쌔고 재빨라요.",
+     "segs": [
+      [
+       "nar",
+       "썰매를 몰고 온 작은 할아버지, 날쌔고 재빨라요.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "E3",
+     "before": [
+      "b:hopSanta"
+     ]
+    },
+    {
+     "text": "아, 알겠다! 산타 할아버지야!",
+     "segs": [
+      [
+       "nar",
+       "아, 알겠다! 산타 할아버지야!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "E4",
+     "before": [
+      "b:realize"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06",
+   "card": "이름 부르기",
+   "set": "6",
+   "enter": [],
+   "lines": [
+    {
+     "text": "순록들은 독수리보다 빨리 달려왔어요.",
+     "segs": [
+      [
+       "nar",
+       "순록들은 독수리보다 빨리 달려왔어요.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "F1",
+     "before": [
+      "b:cam6",
+      "b:gallop"
+     ]
+    },
+    {
+     "text": "할아버지가 휘익 휘파람을 불고, 이름을 하나하나 불렀어요.",
+     "segs": [
+      [
+       "nar",
+       "할아버지가 휘익 휘파람을 불고, 이름을 하나하나 불렀어요.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "F2",
+     "before": [
+      "b:whistle"
+     ]
+    },
+    {
+     "text": "이랴, 대셔! 이랴, 댄서! 이랴, 프랜서, 빅슨!",
+     "segs": [
+      [
+       "santa",
+       "이랴, 대셔! 이랴, 댄서! 이랴, 프랜서, 빅슨!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "F3",
+     "before": [
+      "par:names:0"
+     ]
+    },
+    {
+     "text": "가자, 코밋! 가자, 큐피드! 가자, 돈더, 블리첸!",
+     "segs": [
+      [
+       "santa",
+       "가자, 코밋! 가자, 큐피드! 가자, 돈더, 블리첸!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "F4",
+     "before": [
+      "par:names:1"
+     ]
+    },
+    {
+     "text": "현관 위로! 담장 위로!",
+     "segs": [
+      [
+       "santa",
+       "현관 위로! 담장 위로!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "F5",
+     "before": [
+      "b:raise"
+     ]
+    },
+    {
+     "text": "달려, 달려, 모두 달려!",
+     "segs": [
+      [
+       "santa",
+       "달려, 달려, 모두 달려!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "F6",
+     "before": [
+      "b:runAll"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07",
+   "card": "지붕 위로",
+   "set": "7",
+   "enter": [],
+   "lines": [
+    {
+     "text": "마른 잎이 바람에 휘익 날아오르듯,",
+     "segs": [
+      [
+       "nar",
+       "마른 잎이 바람에 휘익 날아오르듯,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "G1",
+     "before": [
+      "b:leaves"
+     ]
+    },
+    {
+     "text": "순록들은 지붕 위로 훨훨 날아올랐어요.",
+     "segs": [
+      [
+       "nar",
+       "순록들은 지붕 위로 훨훨 날아올랐어요.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G2",
+     "before": [
+      "par:fly"
+     ],
+     "after": [
+      "cut:nb_cut_fly_up"
+     ]
+    },
+    {
+     "text": "장난감 가득한 썰매도, 산타 할아버지도!",
+     "segs": [
+      [
+       "nar",
+       "장난감 가득한 썰매도, 산타 할아버지도!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G3"
+    },
+    {
+     "text": "눈 깜짝할 사이에 소리가 들려요. 또각또각, 작은 발굽 소리.",
+     "segs": [
+      [
+       "nar",
+       "눈 깜짝할 사이에 소리가 들려요. 또각또각, 작은 발굽 소리.",
+       "whisper"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G4",
+     "before": [
+      "b:hooves"
+     ],
+     "after": [
+      "auto:roof"
+     ]
+    },
+    {
+     "text": "지붕 위에서 또각또각, 통통!",
+     "segs": [
+      [
+       "nar",
+       "지붕 위에서 또각또각, 통통!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G5"
+    }
+   ]
+  },
+  {
+   "key": "R08",
+   "card": "굴뚝에서 쿵",
+   "set": "8",
+   "enter": [],
+   "lines": [
+    {
+     "text": "나는 얼른 고개를 넣고 몸을 돌렸어요.",
+     "segs": [
+      [
+       "nar",
+       "나는 얼른 고개를 넣고 몸을 돌렸어요.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "H1",
+     "before": [
+      "b:turn"
+     ]
+    },
+    {
+     "text": "그때!",
+     "segs": [
+      [
+       "nar",
+       "그때!",
+       "whisper"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H2",
+     "before": [
+      "b:hush"
+     ],
+     "after": [
+      "cut:nb_cut_chimney",
+      "b:down"
+     ]
+    },
+    {
+     "text": "굴뚝에서 산타 할아버지가 쿵 하고 내려왔어요!",
+     "segs": [
+      [
+       "nar",
+       "굴뚝에서 산타 할아버지가 쿵 하고 내려왔어요!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H3"
+    }
+   ]
+  },
+  {
+   "key": "R09",
+   "card": "산타 할아버지의 모습",
+   "set": "9",
+   "enter": [],
+   "lines": [
+    {
+     "text": "머리부터 발끝까지 털옷을 입었어요. 옷엔 재와 그을음이 잔뜩.",
+     "segs": [
+      [
+       "nar",
+       "머리부터 발끝까지 털옷을 입었어요. 옷엔 재와 그을음이 잔뜩.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "I1",
+     "before": [
+      "b:shine:fur"
+     ]
+    },
+    {
+     "text": "등에는 장난감 꾸러미를 짊어졌어요. 보따리를 막 푸는 장난감 장수 같아요.",
+     "segs": [
+      [
+       "nar",
+       "등에는 장난감 꾸러미를 짊어졌어요. 보따리를 막 푸는 장난감 장수 같아요.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "I2",
+     "before": [
+      "b:showPack"
+     ],
+     "after": [
+      "b:standPack",
+      "cut:nb_cut_santa_face"
+     ]
+    },
+    {
+     "text": "눈은 반짝반짝! 보조개는 생글생글!",
+     "segs": [
+      [
+       "nar",
+       "눈은 반짝반짝! 보조개는 생글생글!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I3",
+     "before": [
+      "b:shine:eye"
+     ]
+    },
+    {
+     "text": "볼은 장미처럼 빨갛고,",
+     "segs": [
+      [
+       "nar",
+       "볼은 장미처럼 빨갛고,",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I4",
+     "before": [
+      "b:shine:cheek"
+     ],
+     "after": [
+      "auto:nose"
+     ]
+    },
+    {
+     "text": "코는 체리처럼 빨개요!",
+     "segs": [
+      [
+       "nar",
+       "코는 체리처럼 빨개요!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I5"
+    },
+    {
+     "text": "작은 입은 활처럼 살짝 올라갔어요.",
+     "segs": [
+      [
+       "nar",
+       "작은 입은 활처럼 살짝 올라갔어요.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "I6",
+     "before": [
+      "b:shine:mouth"
+     ],
+     "after": [
+      "auto:beard"
+     ]
+    },
+    {
+     "text": "턱수염은 눈처럼 하얘요!",
+     "segs": [
+      [
+       "nar",
+       "턱수염은 눈처럼 하얘요!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I7"
+    },
+    {
+     "text": "넓적한 얼굴에 조그만 똥똥 배.",
+     "segs": [
+      [
+       "nar",
+       "넓적한 얼굴에 조그만 똥똥 배.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "I8",
+     "before": [
+      "b:shine:belly"
+     ]
+    },
+    {
+     "text": "웃을 때마다 젤리 그릇처럼 출렁출렁!",
+     "segs": [
+      [
+       "nar",
+       "웃을 때마다 젤리 그릇처럼 출렁출렁!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I9",
+     "before": [
+      "b:laugh"
+     ]
+    },
+    {
+     "text": "통통하고 똥똥한, 유쾌한 꼬마 요정 할아버지.",
+     "segs": [
+      [
+       "nar",
+       "통통하고 똥똥한, 유쾌한 꼬마 요정 할아버지.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I10",
+     "before": [
+      "b:standPack"
+     ]
+    },
+    {
+     "text": "나도 모르게 웃음이 났어요. 하하!",
+     "segs": [
+      [
+       "nar",
+       "나도 모르게 웃음이 났어요. 하하!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I11",
+     "before": [
+      "b:giggle"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10",
+   "card": "양말 속에 쏙",
+   "set": "10",
+   "enter": [],
+   "lines": [
+    {
+     "text": "할아버지가 눈을 찡긋, 고개를 까딱.",
+     "segs": [
+      [
+       "nar",
+       "할아버지가 눈을 찡긋, 고개를 까딱.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "J1",
+     "before": [
+      "b:wink"
+     ]
+    },
+    {
+     "text": "아, 무서워할 게 하나도 없구나.",
+     "segs": [
+      [
+       "nar",
+       "아, 무서워할 게 하나도 없구나.",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "J2",
+     "before": [
+      "b:relieved"
+     ]
+    },
+    {
+     "text": "할아버지는 한마디도 없이 곧장 일을 시작했어요.",
+     "segs": [
+      [
+       "nar",
+       "할아버지는 한마디도 없이 곧장 일을 시작했어요.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "J3",
+     "before": [
+      "par:work"
+     ],
+     "after": [
+      "auto:fill"
+     ]
+    },
+    {
+     "text": "양말마다 선물이 가득 찼어요.",
+     "segs": [
+      [
+       "nar",
+       "양말마다 선물이 가득 찼어요.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "J4"
+    }
+   ]
+  },
+  {
+   "key": "R11",
+   "card": "굴뚝 위로 쑤욱",
+   "set": "11",
+   "enter": [],
+   "lines": [
+    {
+     "text": "할아버지는 휙 돌아서서,",
+     "segs": [
+      [
+       "nar",
+       "할아버지는 휙 돌아서서,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "K1",
+     "before": [
+      "b:spin"
+     ]
+    },
+    {
+     "text": "코 옆에 손가락을 대고 고개를 끄덕.",
+     "segs": [
+      [
+       "nar",
+       "코 옆에 손가락을 대고 고개를 끄덕.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "K2",
+     "before": [
+      "b:nod"
+     ]
+    },
+    {
+     "text": "그러고는 굴뚝 위로 쑤욱 올라갔어요!",
+     "segs": [
+      [
+       "nar",
+       "그러고는 굴뚝 위로 쑤욱 올라갔어요!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "K3",
+     "before": [
+      "par:rise"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R12",
+   "card": "메리 크리스마스",
+   "set": "12",
+   "enter": [],
+   "lines": [
+    {
+     "text": "썰매에 폴짝 올라 휘익 휘파람을 불자,",
+     "segs": [
+      [
+       "nar",
+       "썰매에 폴짝 올라 휘익 휘파람을 불자,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "L1",
+     "before": [
+      "b:hopSleigh",
+      "b:whistle12"
+     ]
+    },
+    {
+     "text": "모두 엉겅퀴 솜털처럼 가볍게 날아갔어요.",
+     "segs": [
+      [
+       "nar",
+       "모두 엉겅퀴 솜털처럼 가볍게 날아갔어요.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "L2",
+     "before": [
+      "par:away"
+     ],
+     "after": [
+      "cut:nb_cut_moon_sleigh"
+     ]
+    },
+    {
+     "text": "저 멀리 사라지기 전에, 할아버지 목소리가 들렸어요.",
+     "segs": [
+      [
+       "nar",
+       "저 멀리 사라지기 전에, 할아버지 목소리가 들렸어요.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "L3",
+     "after": [
+      "auto:wave"
+     ]
+    },
+    {
+     "text": "모두 모두 메리 크리스마스! 모두 모두 잘 자요!",
+     "segs": [
+      [
+       "santa",
+       "모두 모두 메리 크리스마스! 모두 모두 잘 자요!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "L4"
+    },
+    {
+     "text": "집 안은 다시 고요해요. 모두 포근히 잘 자요.",
+     "segs": [
+      [
+       "nar",
+       "집 안은 다시 고요해요. 모두 포근히 잘 자요.",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "L5",
+     "before": [
+      "par:gone"
+     ],
+     "after": [
+      "b:ding"
+     ]
+    }
+   ]
+  }
+ ]
+}

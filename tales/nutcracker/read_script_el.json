@@ -1,0 +1,766 @@
+{
+ "mode": "read",
+ "tale": "nutcracker",
+ "lang": "ko",
+ "title": "호두까기 인형",
+ "voices_from": "voice_script_el.json",
+ "moral": "친구가 곤란할 때 곁에서 도와줄 수 있어요.",
+ "notes": "읽어 주기 대본(build_scripts.py 가 만든다). 놀이판 11장과 같은 순서·자세·컷. 조작 네 자리(2 상자, 4 손수건, 7 슬리퍼, 9 눈송이)는 연출을 저절로 하고 이야기꾼 한 줄(B_READ·D_READ·G_READ·I_READ)로 대신한다. 안내·정답·오답 줄은 없다.",
+ "scenes": [
+  {
+   "key": "R01",
+   "card": "이브의 문소리",
+   "set": "1",
+   "enter": [],
+   "lines": [
+    {
+     "text": "크리스마스이브예요. 초록 나무 아래서 잔치가 열렸어요.",
+     "segs": [
+      [
+       "nar",
+       "크리스마스이브예요. 초록 나무 아래서 잔치가 열렸어요.",
+       null
+      ]
+     ],
+     "from": "A1",
+     "before": [
+      "&bgm:march_light"
+     ],
+     "after": []
+    },
+    {
+     "text": "대부님이 오셨어!",
+     "segs": [
+      [
+       "clara",
+       "대부님이 오셨어!",
+       "toneup"
+      ]
+     ],
+     "from": "A2",
+     "before": [
+      "&sfx:door_knock",
+      "wait:700",
+      "look:fritz:nudge:left",
+      "door_open",
+      "look:clara:wave",
+      "&hop:clara"
+     ],
+     "after": []
+    },
+    {
+     "text": "메리 크리스마스, 얘들아.",
+     "segs": [
+      [
+       "godfather",
+       "메리 크리스마스, 얘들아.",
+       "happy"
+      ]
+     ],
+     "from": "A3",
+     "before": [
+      "&bgm:dip:5",
+      "look:godfather:nod"
+     ],
+     "after": [
+      "look:fritz:wait:right",
+      "wait:600"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02",
+   "card": "상자 안의 친구",
+   "set": "2",
+   "enter": [],
+   "lines": [
+    {
+     "text": "클라라, 이 선물은 네 거란다.",
+     "segs": [
+      [
+       "godfather",
+       "클라라, 이 선물은 네 거란다.",
+       "happy"
+      ]
+     ],
+     "from": "B1",
+     "before": [
+      "look:godfather:offer",
+      "box_down",
+      "look:clara:receive"
+     ],
+     "after": []
+    },
+    {
+     "text": "상자 뚜껑이 열렸어요.",
+     "segs": [
+      [
+       "nar",
+       "상자 뚜껑이 열렸어요.",
+       null
+      ]
+     ],
+     "from": "B_READ",
+     "before": [
+      "look:godfather:pause",
+      "look:fritz:peek",
+      "box_open"
+     ],
+     "after": []
+    },
+    {
+     "text": "호두 껍데기를 톡 깨 주는 인형이야.",
+     "segs": [
+      [
+       "godfather",
+       "호두 껍데기를 톡 깨 주는 인형이야.",
+       null
+      ]
+     ],
+     "from": "B2",
+     "before": [
+      "look:godfather:point"
+     ],
+     "after": []
+    },
+    {
+     "text": "안녕? 내 옆에 앉을래?",
+     "segs": [
+      [
+       "clara",
+       "안녕? 내 옆에 앉을래?",
+       "happy"
+      ]
+     ],
+     "from": "B3",
+     "before": [
+      "look:clara:laugh",
+      "&hop:clara"
+     ],
+     "after": [
+      "look:godfather:smile",
+      "wait:900"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03",
+   "card": "너무 큰 호두",
+   "set": "3",
+   "enter": [],
+   "lines": [
+    {
+     "text": "이 큰 호두도 깰 수 있을까?",
+     "segs": [
+      [
+       "fritz",
+       "이 큰 호두도 깰 수 있을까?",
+       "toneup"
+      ]
+     ],
+     "from": "C1",
+     "before": [
+      "&bgm:reedflutes"
+     ],
+     "after": []
+    },
+    {
+     "text": "아, 턱이 빠졌어!",
+     "segs": [
+      [
+       "clara",
+       "아, 턱이 빠졌어!",
+       "sad"
+      ]
+     ],
+     "from": "C2",
+     "before": [
+      "stand_turn",
+      "look:fritz:press",
+      "nut_press",
+      "&bgm:off:0.4",
+      "jaw_crack",
+      "look:clara:worry"
+     ],
+     "after": []
+    },
+    {
+     "text": "내가 너무 세게 눌렀어. 미안해.",
+     "segs": [
+      [
+       "fritz",
+       "내가 너무 세게 눌렀어. 미안해.",
+       "sad"
+      ]
+     ],
+     "from": "C3",
+     "before": [
+      "look:fritz:sorry"
+     ],
+     "after": [
+      "&bgm:reedflutes",
+      "wait:700"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04",
+   "card": "파란 손수건",
+   "set": "4",
+   "enter": [],
+   "lines": [
+    {
+     "text": "가만있어. 내가 턱을 감싸 줄게.",
+     "segs": [
+      [
+       "clara",
+       "가만있어. 내가 턱을 감싸 줄게.",
+       "tonedown"
+      ]
+     ],
+     "from": "D1",
+     "before": [
+      "&bgm:waltz_box",
+      "look:fritz:listen",
+      "look:clara:tie"
+     ],
+     "after": []
+    },
+    {
+     "text": "클라라가 파란 손수건으로 인형의 턱을 살며시 묶었어요.",
+     "segs": [
+      [
+       "nar",
+       "클라라가 파란 손수건으로 인형의 턱을 살며시 묶었어요.",
+       null
+      ]
+     ],
+     "from": "D_READ",
+     "before": [
+      "cloth_show",
+      "tie"
+     ],
+     "after": []
+    },
+    {
+     "text": "이제 내 옆에서 쉬어.",
+     "segs": [
+      [
+       "clara",
+       "이제 내 옆에서 쉬어.",
+       "whisper"
+      ]
+     ],
+     "from": "D2",
+     "before": [
+      "cut:nc_cut_knot:3000",
+      "to_chair"
+     ],
+     "after": []
+    },
+    {
+     "text": "인형은 바구니에, 클라라는 그 곁 의자에 포근히 누웠어요.",
+     "segs": [
+      [
+       "nar",
+       "인형은 바구니에, 클라라는 그 곁 의자에 포근히 누웠어요.",
+       "tonedown"
+      ]
+     ],
+     "from": "D3",
+     "before": [
+      "&bgm:off:4",
+      "basket_tuck",
+      "clara_sit"
+     ],
+     "after": [
+      "look:clara:doze",
+      "wait:1200"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05",
+   "card": "한밤의 눈짓",
+   "set": "5",
+   "enter": [],
+   "lines": [
+    {
+     "text": "한밤중, 시계가 뎅 울렸어요.",
+     "segs": [
+      [
+       "nar",
+       "한밤중, 시계가 뎅 울렸어요.",
+       "whisper"
+      ]
+     ],
+     "from": "E1",
+     "before": [
+      "sfx:clock_bong",
+      "wait:500",
+      "look:clara:listen"
+     ],
+     "after": []
+    },
+    {
+     "text": "어? 나무가 천장에 닿겠어!",
+     "segs": [
+      [
+       "clara",
+       "어? 나무가 천장에 닿겠어!",
+       "toneup"
+      ]
+     ],
+     "from": "E2",
+     "before": [
+      "&bgm:sugarplum_night",
+      "tree_grow",
+      "look:clara:amaze"
+     ],
+     "after": []
+    },
+    {
+     "text": "클라라, 나야!",
+     "segs": [
+      [
+       "doll",
+       "클라라, 나야!",
+       "happy"
+      ]
+     ],
+     "from": "E3",
+     "before": [
+      "pan:basket",
+      "doll_rise"
+     ],
+     "after": [
+      "pan:home",
+      "look:clara:turn",
+      "wait:700"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06",
+   "card": "마루의 작은 행진",
+   "set": "6",
+   "enter": [],
+   "lines": [
+    {
+     "text": "바스락. 왕관을 쓴 생쥐가 코를 내밀었어요.",
+     "segs": [
+      [
+       "nar",
+       "바스락. 왕관을 쓴 생쥐가 코를 내밀었어요.",
+       null
+      ]
+     ],
+     "from": "F1",
+     "before": [
+      "king_peek"
+     ],
+     "after": []
+    },
+    {
+     "text": "찍찍! 우리도 잔치에 왔다!",
+     "segs": [
+      [
+       "king",
+       "찍찍! 우리도 잔치에 왔다!",
+       "toneup"
+      ]
+     ],
+     "from": "F2",
+     "before": [
+      "mice_peek",
+      "look:king:call",
+      "&hop:king"
+     ],
+     "after": []
+    },
+    {
+     "text": "병정들아, 나란히!",
+     "segs": [
+      [
+       "doll",
+       "병정들아, 나란히!",
+       null
+      ]
+     ],
+     "from": "F3",
+     "before": [
+      "pan:home",
+      "look:doll:lead"
+     ],
+     "after": [
+      "&bgm:march_parade",
+      "march",
+      "look:king:beckon",
+      "look:grey:ear",
+      "look:brown:sniff",
+      "&sfx:mouse_pizz",
+      "wait:600",
+      "mice_gather",
+      "look:doll:brace",
+      "pan:home",
+      "wait:700"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07",
+   "card": "슬리퍼가 톡",
+   "set": "7",
+   "enter": [],
+   "lines": [
+    {
+     "text": "나올 틈이 없구나. 내가 도와줄게!",
+     "segs": [
+      [
+       "clara",
+       "나올 틈이 없구나. 내가 도와줄게!",
+       null
+      ]
+     ],
+     "from": "G1",
+     "before": [
+      "&bgm:reedflutes",
+      "look:clara:toss",
+      "slipper_show"
+     ],
+     "after": []
+    },
+    {
+     "text": "클라라가 슬리퍼를 던졌어요. 깔개 위에 톡!",
+     "segs": [
+      [
+       "nar",
+       "클라라가 슬리퍼를 던졌어요. 깔개 위에 톡!",
+       null
+      ]
+     ],
+     "from": "G_READ",
+     "before": [
+      "&bgm:off:0.6",
+      "slipper_toss"
+     ],
+     "after": []
+    },
+    {
+     "text": "어이쿠, 집으로!",
+     "segs": [
+      [
+       "king",
+       "어이쿠, 집으로!",
+       "toneup"
+      ]
+     ],
+     "from": "G2",
+     "before": [
+      "cut:nc_cut_slipper:2000",
+      "look:king:turn"
+     ],
+     "after": []
+    },
+    {
+     "text": "작은 꼬리들이 우르르, 구멍 속으로 쏙!",
+     "segs": [
+      [
+       "nar",
+       "작은 꼬리들이 우르르, 구멍 속으로 쏙!",
+       "happy"
+      ]
+     ],
+     "from": "G3",
+     "before": [
+      "&bgm:reedflutes",
+      "mice_out"
+     ],
+     "after": [
+      "look:doll:relax",
+      "pan:home",
+      "wait:700"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R08",
+   "card": "매듭을 맨 왕자",
+   "set": "8",
+   "enter": [],
+   "lines": [
+    {
+     "text": "클라라, 도와줘서 고마워.",
+     "segs": [
+      [
+       "doll",
+       "클라라, 도와줘서 고마워.",
+       "happy"
+      ]
+     ],
+     "from": "H1",
+     "before": [
+      "&bgm:waltz_box",
+      "slipper_on",
+      "look:doll:thanks"
+     ],
+     "after": []
+    },
+    {
+     "text": "어머, 왕자님! 내 손수건을 맸네?",
+     "segs": [
+      [
+       "clara",
+       "어머, 왕자님! 내 손수건을 맸네?",
+       "toneup"
+      ]
+     ],
+     "from": "H2",
+     "before": [
+      "transform",
+      "cut:nc_cut_prince:3000",
+      "look:clara:meet"
+     ],
+     "after": []
+    },
+    {
+     "text": "응, 나야. 함께 과자 나라에 갈래?",
+     "segs": [
+      [
+       "prince",
+       "응, 나야. 함께 과자 나라에 갈래?",
+       "happy"
+      ]
+     ],
+     "from": "H3",
+     "before": [
+      "&bgm:off:0.6",
+      "look:prince:knot",
+      "&sfx:warm_chord"
+     ],
+     "after": []
+    },
+    {
+     "text": "좋아!",
+     "segs": [
+      [
+       "clara",
+       "좋아!",
+       "happy"
+      ]
+     ],
+     "from": "H4",
+     "before": [
+      "&bgm:waltz_box",
+      "look:prince:invite"
+     ],
+     "after": [
+      "&hop:clara",
+      "wait:700"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R09",
+   "card": "눈송이 숲의 다리",
+   "set": "9",
+   "enter": [],
+   "lines": [
+    {
+     "text": "나뭇가지 사이로 하얀 숲길이 열렸어요.",
+     "segs": [
+      [
+       "nar",
+       "나뭇가지 사이로 하얀 숲길이 열렸어요.",
+       null
+      ]
+     ],
+     "from": "I1",
+     "before": [
+      "&bgm:waltz_snow"
+     ],
+     "after": []
+    },
+    {
+     "text": "내 손 잡아. 다리를 건너자.",
+     "segs": [
+      [
+       "prince",
+       "내 손 잡아. 다리를 건너자.",
+       null
+      ]
+     ],
+     "from": "I2",
+     "before": [
+      "look:prince:guide",
+      "look:clara:reach"
+     ],
+     "after": []
+    },
+    {
+     "text": "다리 위에 앉았던 눈송이가 사뿐 떠올랐어요.",
+     "segs": [
+      [
+       "nar",
+       "다리 위에 앉았던 눈송이가 사뿐 떠올랐어요.",
+       null
+      ]
+     ],
+     "from": "I_READ",
+     "before": [
+      "flake_up"
+     ],
+     "after": []
+    },
+    {
+     "text": "눈송이가 내 손에 앉았어!",
+     "segs": [
+      [
+       "clara",
+       "눈송이가 내 손에 앉았어!",
+       "toneup"
+      ]
+     ],
+     "from": "I3",
+     "before": [],
+     "after": [
+      "cross",
+      "wait:500"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10",
+   "card": "꽃이 피는 과자 나라",
+   "set": "10",
+   "enter": [],
+   "lines": [
+    {
+     "text": "저 문 안이 과자 나라야.",
+     "segs": [
+      [
+       "prince",
+       "저 문 안이 과자 나라야.",
+       null
+      ]
+     ],
+     "from": "J1",
+     "before": [
+      "&bgm:waltz_main",
+      "look:prince:gate"
+     ],
+     "after": []
+    },
+    {
+     "text": "어서 와! 너희를 위한 춤이야.",
+     "segs": [
+      [
+       "fairy",
+       "어서 와! 너희를 위한 춤이야.",
+       "happy"
+      ]
+     ],
+     "from": "J2",
+     "before": [
+      "gate_open",
+      "look:fairy:curtsy",
+      "look:prince:guest"
+     ],
+     "after": []
+    },
+    {
+     "text": "빙글, 빙글. 꽃도 춤을 추네!",
+     "segs": [
+      [
+       "clara",
+       "빙글, 빙글. 꽃도 춤을 추네!",
+       "happy"
+      ]
+     ],
+     "from": "J3",
+     "before": [
+      "&bgm:next:sugarplum",
+      "look:fairy:bud",
+      "wait:600",
+      "bloom",
+      "look:clara:clap",
+      "look:prince:listen",
+      "look:fairy:listen"
+     ],
+     "after": []
+    },
+    {
+     "text": "마지막 꽃잎이 살며시 접혔어요.",
+     "segs": [
+      [
+       "nar",
+       "마지막 꽃잎이 살며시 접혔어요.",
+       "tonedown"
+      ]
+     ],
+     "from": "J4",
+     "before": [
+      "cut:nc_cut_garden:4000",
+      "look:fairy:finish",
+      "look:prince:petal",
+      "petal_fold"
+     ],
+     "after": [
+      "wait:700"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R11",
+   "card": "좋은 아침",
+   "set": "11",
+   "enter": [],
+   "lines": [
+    {
+     "text": "창으로 아침 햇살이 들어왔어요. 클라라가 눈을 떴어요.",
+     "segs": [
+      [
+       "nar",
+       "창으로 아침 햇살이 들어왔어요. 클라라가 눈을 떴어요.",
+       null
+      ]
+     ],
+     "from": "K1",
+     "before": [
+      "&sfx:morning_birds",
+      "&bgm:waltz_morning"
+     ],
+     "after": []
+    },
+    {
+     "text": "여기 있었구나. 좋은 아침, 호두까기 인형아.",
+     "segs": [
+      [
+       "clara",
+       "여기 있었구나. 좋은 아침, 호두까기 인형아.",
+       "tonedown"
+      ]
+     ],
+     "from": "K2",
+     "before": [
+      "lift_doll"
+     ],
+     "after": [
+      "wait:1800",
+      "bgm:off:2.5"
+     ]
+    }
+   ]
+  }
+ ]
+}

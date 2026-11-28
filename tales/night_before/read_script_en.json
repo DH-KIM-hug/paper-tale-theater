@@ -1,0 +1,991 @@
+{
+ "mode": "read",
+ "tale": "night_before",
+ "lang": "en",
+ "title": "The Night Before Christmas",
+ "voices_from": "voice_script_el.json",
+ "moral": "모두에게 즐거운 크리스마스, 그리고 모두 포근히 잘 자요.",
+ "notes": "읽어 주기 대본(docs/READ_MODE.md, 2026-11-28). 놀이판 12장 그대로. 조작 안내 6줄(ASK_*)과 오답 줄(NO_*)만 빼고 나머지 줄은 글자 그대로 재사용(같은 클립). 조작 자리는 저절로: 4장 덧문이 열림(b:open), 7장 지붕 위 발굽(auto:roof), 9장 코와 수염 반짝(auto:nose, auto:beard, 카드는 띄우지 않음), 10장 양말 넷 쏙쏙쏙쏙(auto:fill), 12장 산타 인사(auto:wave). 끝 교훈 낭독 없음. 살 붙이기 두 줄(A5, L5)은 놀이에도 있다.",
+ "acts": {
+  "set:n": "n장 차리기와 곡",
+  "b:이름[:인자]": "night_before.js 의 B 동작",
+  "cut:id": "그림 컷",
+  "auto:roof|nose|beard|fill|wave": "조작 자리를 저절로"
+ },
+ "scenes": [
+  {
+   "key": "R01",
+   "card": "A Quiet House",
+   "set": "1",
+   "enter": [],
+   "lines": [
+    {
+     "text": "크리스마스 전날 밤, 집 안은 고요해요.",
+     "en": "'Twas the night before Christmas, when all through the house",
+     "segs": [
+      [
+       "nar",
+       "'Twas the night before Christmas, when all through the house",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "A1",
+     "before": [
+      "b:tick"
+     ]
+    },
+    {
+     "text": "쥐 한 마리도 꼼짝 안 해요. 새근새근, 쿨쿨.",
+     "en": "Not a creature was stirring, not even a mouse;",
+     "segs": [
+      [
+       "nar",
+       "Not a creature was stirring, not even a mouse;",
+       "whisper"
+      ]
+     ],
+     "src": "reuse",
+     "from": "A2",
+     "before": [
+      "b:snore"
+     ]
+    },
+    {
+     "text": "벽난로 옆엔 양말을 걸었어요. 조심조심, 나란히.",
+     "en": "The stockings were hung by the chimney with care,",
+     "segs": [
+      [
+       "nar",
+       "The stockings were hung by the chimney with care,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "A3",
+     "before": [
+      "b:sway"
+     ]
+    },
+    {
+     "text": "산타 할아버지가 오시길 바라면서요.",
+     "en": "In hopes that St. Nicholas soon would be there;",
+     "segs": [
+      [
+       "nar",
+       "In hopes that St. Nicholas soon would be there;",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "A4"
+    },
+    {
+     "text": "창밖에는 눈이 조용히, 조용히 내려요.",
+     "en": "Outside, the snow fell softly, softly down.",
+     "segs": [
+      [
+       "nar",
+       "Outside, the snow fell softly, softly down.",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "A5",
+     "before": [
+      "b:chime"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R02",
+   "card": "Sweet Dreams",
+   "set": "2",
+   "enter": [],
+   "lines": [
+    {
+     "text": "아이들은 이불 속에 포옥, 새근새근 잠들었어요.",
+     "en": "The children were nestled all snug in their beds,",
+     "segs": [
+      [
+       "nar",
+       "The children were nestled all snug in their beds,",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "B1"
+    },
+    {
+     "text": "머릿속엔 달콤한 사탕들이 빙글빙글 춤을 춰요.",
+     "en": "While visions of sugar-plums danced in their heads;",
+     "segs": [
+      [
+       "nar",
+       "While visions of sugar-plums danced in their heads;",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "B2",
+     "before": [
+      "b:dream"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R03",
+   "card": "Clatter! What Was That?",
+   "set": "3",
+   "enter": [],
+   "lines": [
+    {
+     "text": "엄마는 머릿수건, 나는 잠 모자.",
+     "en": "And mamma in her 'kerchief, and I in my cap,",
+     "segs": [
+      [
+       "nar",
+       "And mamma in her 'kerchief, and I in my cap,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "C1"
+    },
+    {
+     "text": "긴 겨울밤 잠에 폭 빠지려는데,",
+     "en": "Had just settled our brains for a long winter's nap,",
+     "segs": [
+      [
+       "nar",
+       "Had just settled our brains for a long winter's nap,",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "C2",
+     "before": [
+      "b:harp"
+     ]
+    },
+    {
+     "text": "마당에서 쿵쾅! 와글와글! 무슨 소리지?",
+     "en": "When out on the lawn there arose such a clatter,",
+     "segs": [
+      [
+       "nar",
+       "When out on the lawn there arose such a clatter,",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "C3",
+     "before": [
+      "b:thump"
+     ]
+    },
+    {
+     "text": "나는 침대에서 벌떡 일어났어요.",
+     "en": "I sprang from the bed to see what was the matter.",
+     "segs": [
+      [
+       "nar",
+       "I sprang from the bed to see what was the matter.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "C4",
+     "before": [
+      "b:wake"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R04",
+   "card": "Open the Window",
+   "set": "4",
+   "enter": [],
+   "lines": [
+    {
+     "text": "번개처럼 쌩! 창가로 달려갔어요.",
+     "en": "Away to the window I flew like a flash,",
+     "segs": [
+      [
+       "nar",
+       "Away to the window I flew like a flash,",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "D1",
+     "before": [
+      "b:dash"
+     ],
+     "after": [
+      "b:open"
+     ]
+    },
+    {
+     "text": "덧문을 열고, 창을 쓱 올렸어요.",
+     "en": "Tore open the shutters and threw up the sash.",
+     "segs": [
+      [
+       "nar",
+       "Tore open the shutters and threw up the sash.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "D2"
+    },
+    {
+     "text": "새하얀 눈 위에 달빛이 비쳐, 낮처럼 환해요.",
+     "en": "The moon on the breast of the new-fallen snow Gave the lustre of mid-day to objects below,",
+     "segs": [
+      [
+       "nar",
+       "The moon on the breast of the new-fallen snow Gave the lustre of mid-day to objects below,",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "D3",
+     "after": [
+      "cut:nb_cut_window_moon"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R05",
+   "card": "A Tiny Sleigh and Eight Reindeer",
+   "set": "5",
+   "enter": [],
+   "lines": [
+    {
+     "text": "그런데 저게 뭐지? 눈이 동그래졌어요.",
+     "en": "When, what to my wondering eyes should appear,",
+     "segs": [
+      [
+       "nar",
+       "When, what to my wondering eyes should appear,",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "E1"
+    },
+    {
+     "text": "조그만 썰매 하나, 조그만 순록 여덟 마리!",
+     "en": "But a miniature sleigh, and eight tiny reindeer,",
+     "segs": [
+      [
+       "nar",
+       "But a miniature sleigh, and eight tiny reindeer,",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "E2",
+     "before": [
+      "par:arrive"
+     ]
+    },
+    {
+     "text": "썰매를 몰고 온 작은 할아버지, 날쌔고 재빨라요.",
+     "en": "With a little old driver, so lively and quick,",
+     "segs": [
+      [
+       "nar",
+       "With a little old driver, so lively and quick,",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "E3",
+     "before": [
+      "b:hopSanta"
+     ]
+    },
+    {
+     "text": "아, 알겠다! 산타 할아버지야!",
+     "en": "I knew in a moment it must be St. Nick.",
+     "segs": [
+      [
+       "nar",
+       "I knew in a moment it must be St. Nick.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "E4",
+     "before": [
+      "b:realize"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R06",
+   "card": "Calling the Names",
+   "set": "6",
+   "enter": [],
+   "lines": [
+    {
+     "text": "순록들은 독수리보다 빨리 달려왔어요.",
+     "en": "More rapid than eagles his coursers they came,",
+     "segs": [
+      [
+       "nar",
+       "More rapid than eagles his coursers they came,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "F1",
+     "before": [
+      "b:cam6",
+      "b:gallop"
+     ]
+    },
+    {
+     "text": "할아버지가 휘익 휘파람을 불고, 이름을 하나하나 불렀어요.",
+     "en": "And he whistled, and shouted, and called them by name;",
+     "segs": [
+      [
+       "nar",
+       "And he whistled, and shouted, and called them by name;",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "F2",
+     "before": [
+      "b:whistle"
+     ]
+    },
+    {
+     "text": "이랴, 대셔! 이랴, 댄서! 이랴, 프랜서, 빅슨!",
+     "en": "\"Now, Dasher! now, Dancer! now, Prancer and Vixen!",
+     "segs": [
+      [
+       "santa",
+       "\"Now, Dasher! now, Dancer! now, Prancer and Vixen!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "F3",
+     "before": [
+      "par:names:0"
+     ]
+    },
+    {
+     "text": "가자, 코밋! 가자, 큐피드! 가자, 돈더, 블리첸!",
+     "en": "On, Comet! on, Cupid! on, Donder and Blitzen!",
+     "segs": [
+      [
+       "santa",
+       "On, Comet! on, Cupid! on, Donder and Blitzen!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "F4",
+     "before": [
+      "par:names:1"
+     ]
+    },
+    {
+     "text": "현관 위로! 담장 위로!",
+     "en": "To the top of the porch! to the top of the wall!",
+     "segs": [
+      [
+       "santa",
+       "To the top of the porch! to the top of the wall!",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "F5",
+     "before": [
+      "b:raise"
+     ]
+    },
+    {
+     "text": "달려, 달려, 모두 달려!",
+     "en": "Now dash away! dash away! dash away all!\"",
+     "segs": [
+      [
+       "santa",
+       "Now dash away! dash away! dash away all!\"",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "F6",
+     "before": [
+      "b:runAll"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R07",
+   "card": "Up to the Roof",
+   "set": "7",
+   "enter": [],
+   "lines": [
+    {
+     "text": "마른 잎이 바람에 휘익 날아오르듯,",
+     "en": "As dry leaves that before the wild hurricane fly, When they meet with an obstacle, mount to the sky,",
+     "segs": [
+      [
+       "nar",
+       "As dry leaves that before the wild hurricane fly, When they meet with an obstacle, mount to the sky,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "G1",
+     "before": [
+      "b:leaves"
+     ]
+    },
+    {
+     "text": "순록들은 지붕 위로 훨훨 날아올랐어요.",
+     "en": "So up to the house-top the coursers they flew,",
+     "segs": [
+      [
+       "nar",
+       "So up to the house-top the coursers they flew,",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G2",
+     "before": [
+      "par:fly"
+     ],
+     "after": [
+      "cut:nb_cut_fly_up"
+     ]
+    },
+    {
+     "text": "장난감 가득한 썰매도, 산타 할아버지도!",
+     "en": "With the sleigh full of toys, and St. Nicholas too.",
+     "segs": [
+      [
+       "nar",
+       "With the sleigh full of toys, and St. Nicholas too.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G3"
+    },
+    {
+     "text": "눈 깜짝할 사이에 소리가 들려요. 또각또각, 작은 발굽 소리.",
+     "en": "And then, in a twinkling, I heard on the roof The prancing and pawing of each little hoof.",
+     "segs": [
+      [
+       "nar",
+       "And then, in a twinkling, I heard on the roof The prancing and pawing of each little hoof.",
+       "whisper"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G4",
+     "before": [
+      "b:hooves"
+     ],
+     "after": [
+      "auto:roof"
+     ]
+    },
+    {
+     "text": "지붕 위에서 또각또각, 통통!",
+     "en": "Up on the roof, clip-clop, tap-tap!",
+     "segs": [
+      [
+       "nar",
+       "Up on the roof, clip-clop, tap-tap!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "G5"
+    }
+   ]
+  },
+  {
+   "key": "R08",
+   "card": "Down the Chimney",
+   "set": "8",
+   "enter": [],
+   "lines": [
+    {
+     "text": "나는 얼른 고개를 넣고 몸을 돌렸어요.",
+     "en": "As I drew in my head, and was turning around,",
+     "segs": [
+      [
+       "nar",
+       "As I drew in my head, and was turning around,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "H1",
+     "before": [
+      "b:turn"
+     ]
+    },
+    {
+     "text": "그때!",
+     "en": "And then!",
+     "segs": [
+      [
+       "nar",
+       "And then!",
+       "whisper"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H2",
+     "before": [
+      "b:hush"
+     ],
+     "after": [
+      "cut:nb_cut_chimney",
+      "b:down"
+     ]
+    },
+    {
+     "text": "굴뚝에서 산타 할아버지가 쿵 하고 내려왔어요!",
+     "en": "Down the chimney St. Nicholas came with a bound.",
+     "segs": [
+      [
+       "nar",
+       "Down the chimney St. Nicholas came with a bound.",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "H3"
+    }
+   ]
+  },
+  {
+   "key": "R09",
+   "card": "What St. Nick Looked Like",
+   "set": "9",
+   "enter": [],
+   "lines": [
+    {
+     "text": "머리부터 발끝까지 털옷을 입었어요. 옷엔 재와 그을음이 잔뜩.",
+     "en": "He was dressed all in fur, from his head to his foot, And his clothes were all tarnished with ashes and soot;",
+     "segs": [
+      [
+       "nar",
+       "He was dressed all in fur, from his head to his foot, And his clothes were all tarnished with ashes and soot;",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "I1",
+     "before": [
+      "b:shine:fur"
+     ]
+    },
+    {
+     "text": "등에는 장난감 꾸러미를 짊어졌어요. 보따리를 막 푸는 장난감 장수 같아요.",
+     "en": "A bundle of toys he had flung on his back, And he looked like a peddler just opening his pack.",
+     "segs": [
+      [
+       "nar",
+       "A bundle of toys he had flung on his back, And he looked like a peddler just opening his pack.",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "I2",
+     "before": [
+      "b:showPack"
+     ],
+     "after": [
+      "b:standPack",
+      "cut:nb_cut_santa_face"
+     ]
+    },
+    {
+     "text": "눈은 반짝반짝! 보조개는 생글생글!",
+     "en": "His eyes, how they twinkled! his dimples, how merry!",
+     "segs": [
+      [
+       "nar",
+       "His eyes, how they twinkled! his dimples, how merry!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I3",
+     "before": [
+      "b:shine:eye"
+     ]
+    },
+    {
+     "text": "볼은 장미처럼 빨갛고,",
+     "en": "His cheeks were like roses,",
+     "segs": [
+      [
+       "nar",
+       "His cheeks were like roses,",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I4",
+     "before": [
+      "b:shine:cheek"
+     ],
+     "after": [
+      "auto:nose"
+     ]
+    },
+    {
+     "text": "코는 체리처럼 빨개요!",
+     "en": "his nose like a cherry!",
+     "segs": [
+      [
+       "nar",
+       "his nose like a cherry!",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I5"
+    },
+    {
+     "text": "작은 입은 활처럼 살짝 올라갔어요.",
+     "en": "His droll little mouth was drawn up like a bow,",
+     "segs": [
+      [
+       "nar",
+       "His droll little mouth was drawn up like a bow,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "I6",
+     "before": [
+      "b:shine:mouth"
+     ],
+     "after": [
+      "auto:beard"
+     ]
+    },
+    {
+     "text": "턱수염은 눈처럼 하얘요!",
+     "en": "And the beard of his chin was as white as the snow;",
+     "segs": [
+      [
+       "nar",
+       "And the beard of his chin was as white as the snow;",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I7"
+    },
+    {
+     "text": "넓적한 얼굴에 조그만 똥똥 배.",
+     "en": "He had a broad face and a little round belly,",
+     "segs": [
+      [
+       "nar",
+       "He had a broad face and a little round belly,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "I8",
+     "before": [
+      "b:shine:belly"
+     ]
+    },
+    {
+     "text": "웃을 때마다 젤리 그릇처럼 출렁출렁!",
+     "en": "That shook, when he laughed, like a bowlful of jelly.",
+     "segs": [
+      [
+       "nar",
+       "That shook, when he laughed, like a bowlful of jelly.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I9",
+     "before": [
+      "b:laugh"
+     ]
+    },
+    {
+     "text": "통통하고 똥똥한, 유쾌한 꼬마 요정 할아버지.",
+     "en": "He was chubby and plump, a right jolly old elf,",
+     "segs": [
+      [
+       "nar",
+       "He was chubby and plump, a right jolly old elf,",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I10",
+     "before": [
+      "b:standPack"
+     ]
+    },
+    {
+     "text": "나도 모르게 웃음이 났어요. 하하!",
+     "en": "And I laughed when I saw him, in spite of myself;",
+     "segs": [
+      [
+       "nar",
+       "And I laughed when I saw him, in spite of myself;",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "I11",
+     "before": [
+      "b:giggle"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R10",
+   "card": "Into the Stockings",
+   "set": "10",
+   "enter": [],
+   "lines": [
+    {
+     "text": "할아버지가 눈을 찡긋, 고개를 까딱.",
+     "en": "A wink of his eye and a twist of his head,",
+     "segs": [
+      [
+       "nar",
+       "A wink of his eye and a twist of his head,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "J1",
+     "before": [
+      "b:wink"
+     ]
+    },
+    {
+     "text": "아, 무서워할 게 하나도 없구나.",
+     "en": "Soon gave me to know I had nothing to dread;",
+     "segs": [
+      [
+       "nar",
+       "Soon gave me to know I had nothing to dread;",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "J2",
+     "before": [
+      "b:relieved"
+     ]
+    },
+    {
+     "text": "할아버지는 한마디도 없이 곧장 일을 시작했어요.",
+     "en": "He spoke not a word, but went straight to his work,",
+     "segs": [
+      [
+       "nar",
+       "He spoke not a word, but went straight to his work,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "J3",
+     "before": [
+      "par:work"
+     ],
+     "after": [
+      "auto:fill"
+     ]
+    },
+    {
+     "text": "양말마다 선물이 가득 찼어요.",
+     "en": "And filled all the stockings;",
+     "segs": [
+      [
+       "nar",
+       "And filled all the stockings;",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "J4"
+    }
+   ]
+  },
+  {
+   "key": "R11",
+   "card": "Up the Chimney",
+   "set": "11",
+   "enter": [],
+   "lines": [
+    {
+     "text": "할아버지는 휙 돌아서서,",
+     "en": "then turned with a jerk,",
+     "segs": [
+      [
+       "nar",
+       "then turned with a jerk,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "K1",
+     "before": [
+      "b:spin"
+     ]
+    },
+    {
+     "text": "코 옆에 손가락을 대고 고개를 끄덕.",
+     "en": "And laying his finger aside of his nose, And giving a nod,",
+     "segs": [
+      [
+       "nar",
+       "And laying his finger aside of his nose, And giving a nod,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "K2",
+     "before": [
+      "b:nod"
+     ]
+    },
+    {
+     "text": "그러고는 굴뚝 위로 쑤욱 올라갔어요!",
+     "en": "up the chimney he rose;",
+     "segs": [
+      [
+       "nar",
+       "up the chimney he rose;",
+       "toneup"
+      ]
+     ],
+     "src": "reuse",
+     "from": "K3",
+     "before": [
+      "par:rise"
+     ]
+    }
+   ]
+  },
+  {
+   "key": "R12",
+   "card": "Happy Christmas to All",
+   "set": "12",
+   "enter": [],
+   "lines": [
+    {
+     "text": "썰매에 폴짝 올라 휘익 휘파람을 불자,",
+     "en": "He sprang to his sleigh, to his team gave a whistle,",
+     "segs": [
+      [
+       "nar",
+       "He sprang to his sleigh, to his team gave a whistle,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "L1",
+     "before": [
+      "b:hopSleigh",
+      "b:whistle12"
+     ]
+    },
+    {
+     "text": "모두 엉겅퀴 솜털처럼 가볍게 날아갔어요.",
+     "en": "And away they all flew like the down of a thistle.",
+     "segs": [
+      [
+       "nar",
+       "And away they all flew like the down of a thistle.",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "L2",
+     "before": [
+      "par:away"
+     ],
+     "after": [
+      "cut:nb_cut_moon_sleigh"
+     ]
+    },
+    {
+     "text": "저 멀리 사라지기 전에, 할아버지 목소리가 들렸어요.",
+     "en": "But I heard him exclaim, ere he drove out of sight,",
+     "segs": [
+      [
+       "nar",
+       "But I heard him exclaim, ere he drove out of sight,",
+       null
+      ]
+     ],
+     "src": "reuse",
+     "from": "L3",
+     "after": [
+      "auto:wave"
+     ]
+    },
+    {
+     "text": "모두 모두 메리 크리스마스! 모두 모두 잘 자요!",
+     "en": "\"Happy Christmas to all, and to all a good-night!\"",
+     "segs": [
+      [
+       "santa",
+       "\"Happy Christmas to all, and to all a good-night!\"",
+       "happy"
+      ]
+     ],
+     "src": "reuse",
+     "from": "L4"
+    },
+    {
+     "text": "집 안은 다시 고요해요. 모두 포근히 잘 자요.",
+     "en": "The house was quiet once more. Good night, everyone.",
+     "segs": [
+      [
+       "nar",
+       "The house was quiet once more. Good night, everyone.",
+       "tonedown"
+      ]
+     ],
+     "src": "reuse",
+     "from": "L5",
+     "before": [
+      "par:gone"
+     ],
+     "after": [
+      "b:ding"
+     ]
+    }
+   ]
+  }
+ ]
+}

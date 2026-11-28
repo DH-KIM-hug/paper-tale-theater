@@ -1,0 +1,1145 @@
+{
+ "notes": "구두장이와 요정 영어 녹음 대본. 목소리는 voice_script_el.json 과 같다(같은 목소리로 영어). 영어 글에는 한국어 연기 지시를 붙이지 않는다. 앱 재생 0.9배.",
+ "voices": {
+  "nar": "pFZP5JQG7iQjIQuC4Bku",
+  "shoe": "5ON5Fnz24cnOozEQfGAm",
+  "wife": "hpp4J3VqNfWAUOO0d1Us",
+  "elfa": "tapn1QwocNXk3viVSowa",
+  "elfb": "Lb7qkOn5hF8p7qfCDH8q",
+  "custa": "cjVigY5qzO86Huf0OWal",
+  "custb": "FGY2WhTYpPnrIDTdsKH5",
+  "custc": "CwhRBWXzGAHq8TQ4Fs17"
+ },
+ "lines": [
+  {
+   "key": "N1",
+   "text": "눈 내리는 작은 마을에 구두장이가 살았어요. 구두를 아주 잘 만들었지요.",
+   "en": "In a little snowy town lived a shoemaker. He made very fine shoes.",
+   "segs": [
+    [
+     "nar",
+     "In a little snowy town lived a shoemaker. He made very fine shoes.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N2",
+   "text": "하지만 구두장이는 점점 가난해졌어요. 남은 가죽은 딱 구두 한 켤레 몫이었어요.",
+   "en": "But the shoemaker grew poorer and poorer. He had leather left for just one pair of shoes.",
+   "segs": [
+    [
+     "nar",
+     "But the shoemaker grew poorer and poorer. He had leather left for just one pair of shoes.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S1",
+   "text": "가죽이 이것뿐이네. 그래도 정성껏 만들어야지.",
+   "en": "This is all the leather I have. I will still do my very best.",
+   "segs": [
+    [
+     "shoe",
+     "This is all the leather I have. I will still do my very best.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "key": "N3",
+   "text": "구두장이는 저녁에 가죽을 구두 모양으로 잘라 두었어요.",
+   "en": "In the evening, the shoemaker cut the leather into shoe shapes.",
+   "segs": [
+    [
+     "nar",
+     "In the evening, the shoemaker cut the leather into shoe shapes.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2",
+   "text": "내일 아침에 꿰매야겠다. 하암, 졸려.",
+   "en": "I will sew them in the morning. Oh, I am sleepy.",
+   "segs": [
+    [
+     "shoe",
+     "I will sew them in the morning. Oh, I am sleepy.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "key": "N4",
+   "text": "구두장이는 마음 편히 잠이 들었어요.",
+   "en": "The shoemaker went to bed with a peaceful heart.",
+   "segs": [
+    [
+     "nar",
+     "The shoemaker went to bed with a peaceful heart.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "key": "N5",
+   "text": "다음 날 아침, 구두장이가 일을 하려고 탁자에 앉았어요.",
+   "en": "The next morning, the shoemaker sat down at his table to work.",
+   "segs": [
+    [
+     "nar",
+     "The next morning, the shoemaker sat down at his table to work.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N6",
+   "text": "그런데 탁자 위에 구두가 다 만들어져 있었어요!",
+   "en": "But the shoes were already finished, right there on the table!",
+   "segs": [
+    [
+     "nar",
+     "But the shoes were already finished, right there on the table!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "S3",
+   "text": "어? 이게 누구 솜씨지?",
+   "en": "Huh? Who made these?",
+   "segs": [
+    [
+     "shoe",
+     "Huh? Who made these?",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "N7",
+   "text": "구두장이는 구두를 들고 요리조리 살펴보았어요.",
+   "en": "The shoemaker picked up the shoes and looked them over, this way and that.",
+   "segs": [
+    [
+     "nar",
+     "The shoemaker picked up the shoes and looked them over, this way and that.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S4",
+   "text": "바늘땀 하나 틀린 데가 없어. 정말 멋진 구두야!",
+   "en": "Not one stitch is wrong. What wonderful shoes!",
+   "segs": [
+    [
+     "shoe",
+     "Not one stitch is wrong. What wonderful shoes!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "W1",
+   "text": "세상에, 밤새 누가 만들었을까요?",
+   "en": "My goodness, who made them in the night?",
+   "segs": [
+    [
+     "wife",
+     "My goodness, who made them in the night?",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "N8",
+   "text": "곧 손님이 가게에 들어왔어요.",
+   "en": "Soon a customer came into the shop.",
+   "segs": [
+    [
+     "nar",
+     "Soon a customer came into the shop.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "C1",
+   "text": "와, 이 구두 좀 봐! 이렇게 고운 구두는 처음이에요.",
+   "en": "Oh, look at these shoes! I have never seen such fine ones.",
+   "segs": [
+    [
+     "custa",
+     "Oh, look at these shoes! I have never seen such fine ones.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "C2",
+   "text": "값을 더 드릴게요. 이 구두는 제가 살게요!",
+   "en": "I will pay you extra. These shoes are mine!",
+   "segs": [
+    [
+     "custa",
+     "I will pay you extra. These shoes are mine!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "N9",
+   "text": "손님은 보통보다 훨씬 많은 돈을 냈어요.",
+   "en": "The customer paid much more than usual.",
+   "segs": [
+    [
+     "nar",
+     "The customer paid much more than usual.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S5",
+   "text": "이 돈이면 가죽을 두 켤레 몫 살 수 있겠어!",
+   "en": "With this money, I can buy leather for two pairs!",
+   "segs": [
+    [
+     "shoe",
+     "With this money, I can buy leather for two pairs!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "N10",
+   "text": "구두장이는 저녁에 가죽 두 켤레 몫을 잘라 두었어요.",
+   "en": "That evening, the shoemaker cut leather for two pairs of shoes.",
+   "segs": [
+    [
+     "nar",
+     "That evening, the shoemaker cut leather for two pairs of shoes.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N11",
+   "text": "다음 날 아침에도 구두는 다 만들어져 있었어요. 이번엔 두 켤레!",
+   "en": "The next morning, the shoes were finished again. This time, two pairs!",
+   "segs": [
+    [
+     "nar",
+     "The next morning, the shoes were finished again. This time, two pairs!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "N12",
+   "text": "손님들이 또 찾아왔어요.",
+   "en": "More customers came.",
+   "segs": [
+    [
+     "nar",
+     "More customers came.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "C3",
+   "text": "어머, 참 곱네요. 저도 한 켤레 살게요.",
+   "en": "Oh my, how lovely. I will take a pair too.",
+   "segs": [
+    [
+     "custb",
+     "Oh my, how lovely. I will take a pair too.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "C4",
+   "text": "허허, 내 발에 꼭 맞겠구먼.",
+   "en": "Ho ho, these will fit my feet just right.",
+   "segs": [
+    [
+     "custc",
+     "Ho ho, these will fit my feet just right.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "N13",
+   "text": "구두장이는 가죽을 네 켤레 몫 샀어요. 저녁에 자르면, 아침에 다 되어 있었어요. 날마다 날마다요.",
+   "en": "The shoemaker bought leather for four pairs. What he cut in the evening was finished in the morning. Day after day after day.",
+   "segs": [
+    [
+     "nar",
+     "The shoemaker bought leather for four pairs. What he cut in the evening was finished in the morning. Day after day after day.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N14",
+   "text": "선반에 구두가 가득 찼어요. 그런데 짝이 섞여 버렸네요.",
+   "en": "The shelf was full of shoes. But the pairs got all mixed up!",
+   "segs": [
+    [
+     "nar",
+     "The shelf was full of shoes. But the pairs got all mixed up!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "A1",
+   "text": "빨간 구두의 짝은 어디 있을까? 똑같은 구두를 톡 눌러 봐요.",
+   "en": "Where is the match for the red shoe? Tap the shoe that looks just the same.",
+   "segs": [
+    [
+     "shoe",
+     "Where is the match for the red shoe? Tap the shoe that looks just the same.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S6",
+   "text": "그렇지, 한 켤레가 됐다!",
+   "en": "That's it! Now they are a pair!",
+   "segs": [
+    [
+     "shoe",
+     "That's it! Now they are a pair!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "A2",
+   "text": "이번엔 파란 구두야. 짝을 톡 눌러 봐요.",
+   "en": "Now the blue shoe. Tap its match.",
+   "segs": [
+    [
+     "shoe",
+     "Now the blue shoe. Tap its match.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S7",
+   "text": "짝을 다 맞췄어. 이제 팔 수 있겠네.",
+   "en": "All the pairs are together. Now I can sell them.",
+   "segs": [
+    [
+     "shoe",
+     "All the pairs are together. Now I can sell them.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "N15",
+   "text": "구두장이는 이제 가난하지 않았어요. 넉넉하게 살게 되었지요.",
+   "en": "The shoemaker was not poor anymore. He lived comfortably.",
+   "segs": [
+    [
+     "nar",
+     "The shoemaker was not poor anymore. He lived comfortably.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N16",
+   "text": "크리스마스가 가까운 어느 저녁이었어요. 창밖에 눈이 펄펄 내렸어요.",
+   "en": "It was an evening close to Christmas. Snow was falling softly outside.",
+   "segs": [
+    [
+     "nar",
+     "It was an evening close to Christmas. Snow was falling softly outside.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "key": "N17",
+   "text": "구두장이는 오늘도 가죽을 잘라 두었어요. 그러다 아내에게 말했어요.",
+   "en": "The shoemaker cut his leather as always. Then he said to his wife,",
+   "segs": [
+    [
+     "nar",
+     "The shoemaker cut his leather as always. Then he said to his wife,",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S8",
+   "text": "여보, 오늘 밤은 자지 말고 지켜보면 어떨까? 누가 우리를 도와주는지 보고 싶어.",
+   "en": "Dear, what if we stay up tonight and watch? I want to see who is helping us.",
+   "segs": [
+    [
+     "shoe",
+     "Dear, what if we stay up tonight and watch? I want to see who is helping us.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "W2",
+   "text": "좋아요. 촛불을 켜 두어요.",
+   "en": "Good idea. Let's light a candle.",
+   "segs": [
+    [
+     "wife",
+     "Good idea. Let's light a candle.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "A3",
+   "text": "촛불을 톡 눌러 켜 봐요.",
+   "en": "Tap the candle to light it.",
+   "segs": [
+    [
+     "nar",
+     "Tap the candle to light it.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N18",
+   "text": "촛불이 켜졌어요. 두 사람은 벽에 걸린 옷 뒤에 숨어서 기다렸어요.",
+   "en": "The candle glowed. The two of them hid behind the clothes hanging on the wall and waited.",
+   "segs": [
+    [
+     "nar",
+     "The candle glowed. The two of them hid behind the clothes hanging on the wall and waited.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "W3",
+   "text": "쉿, 조용히요.",
+   "en": "Shh, be quiet.",
+   "segs": [
+    [
+     "wife",
+     "Shh, be quiet.",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "key": "N19",
+   "text": "밤 열두 시, 시계가 땡 울렸어요.",
+   "en": "At midnight, the clock went dong.",
+   "segs": [
+    [
+     "nar",
+     "At midnight, the clock went dong.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "key": "N20",
+   "text": "그때, 작은 요정 둘이 쪼르르 들어왔어요. 다 해진 누더기 한 장만 걸치고 있었어요.",
+   "en": "Then two tiny elves scurried in. They wore nothing but a ragged old cloth.",
+   "segs": [
+    [
+     "nar",
+     "Then two tiny elves scurried in. They wore nothing but a ragged old cloth.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N21",
+   "text": "요정들은 탁자에 폴짝 올라앉아, 잘라 둔 가죽을 집었어요.",
+   "en": "The elves hopped up onto the table and picked up the cut leather.",
+   "segs": [
+    [
+     "nar",
+     "The elves hopped up onto the table and picked up the cut leather.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N22",
+   "text": "작은 손가락으로 바느질을 하고, 망치로 땅땅 두드렸어요. 어찌나 빠른지!",
+   "en": "With their tiny fingers they stitched and sewed, and tap, tap, tapped with a hammer. So fast!",
+   "segs": [
+    [
+     "nar",
+     "With their tiny fingers they stitched and sewed, and tap, tap, tapped with a hammer. So fast!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "S9",
+   "text": "저렇게 작은 손으로!",
+   "en": "Such tiny hands!",
+   "segs": [
+    [
+     "shoe",
+     "Such tiny hands!",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "key": "W4",
+   "text": "쉿, 보기만 해요.",
+   "en": "Shh, just watch.",
+   "segs": [
+    [
+     "wife",
+     "Shh, just watch.",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "key": "N23",
+   "text": "요정들은 구두를 다 만들어 탁자에 세워 두고는, 후다닥 달려 나갔어요.",
+   "en": "The elves finished all the shoes, set them on the table, and dashed away.",
+   "segs": [
+    [
+     "nar",
+     "The elves finished all the shoes, set them on the table, and dashed away.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N24",
+   "text": "다음 날 아침, 아내가 말했어요.",
+   "en": "The next morning, the wife said,",
+   "segs": [
+    [
+     "nar",
+     "The next morning, the wife said,",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "W5",
+   "text": "그 작은 요정들이 우리를 잘살게 해 주었어요.",
+   "en": "Those little elves have made us rich.",
+   "segs": [
+    [
+     "wife",
+     "Those little elves have made us rich.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "W6",
+   "text": "그런데 입은 게 다 해진 누더기였어요. 얼마나 춥겠어요.",
+   "en": "But they wear nothing but rags. They must be so cold.",
+   "segs": [
+    [
+     "wife",
+     "But they wear nothing but rags. They must be so cold.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "key": "W7",
+   "text": "내가 작은 셔츠와 웃옷, 조끼, 바지와 치마를 지을게요. 양말도 짤게요.",
+   "en": "I will sew them little shirts, coats, vests, trousers, and a skirt. And I will knit them socks.",
+   "segs": [
+    [
+     "wife",
+     "I will sew them little shirts, coats, vests, trousers, and a skirt. And I will knit them socks.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "W8",
+   "text": "당신은 작은 구두를 한 켤레씩 만들어 주세요.",
+   "en": "And you make each of them a pair of little shoes.",
+   "segs": [
+    [
+     "wife",
+     "And you make each of them a pair of little shoes.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S10",
+   "text": "좋지! 고마운 마음을 꼭 갚아야지.",
+   "en": "Gladly! We must give thanks for their kindness.",
+   "segs": [
+    [
+     "shoe",
+     "Gladly! We must give thanks for their kindness.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "N25",
+   "text": "아내는 바느질을 시작했어요. 똑딱똑딱, 뜨개바늘도 바빴어요.",
+   "en": "The wife began to sew. Tick, tock, her knitting needles were busy too.",
+   "segs": [
+    [
+     "nar",
+     "The wife began to sew. Tick, tock, her knitting needles were busy too.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "A4",
+   "text": "요정은 아주 작아요. 가장 작은 셔츠를 톡 눌러 봐요.",
+   "en": "Elves are very small. Tap the smallest shirt.",
+   "segs": [
+    [
+     "wife",
+     "Elves are very small. Tap the smallest shirt.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "W9",
+   "text": "맞아요, 이게 요정 몫이에요.",
+   "en": "Yes, this one is for the elves.",
+   "segs": [
+    [
+     "wife",
+     "Yes, this one is for the elves.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "A5",
+   "text": "이번엔 양말이에요. 가장 작은 양말을 톡 눌러 봐요.",
+   "en": "Now the socks. Tap the smallest sock.",
+   "segs": [
+    [
+     "wife",
+     "Now the socks. Tap the smallest sock.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "W10",
+   "text": "좋아요. 작은 발에 꼭 맞겠어요.",
+   "en": "Good. That will fit a tiny foot just right.",
+   "segs": [
+    [
+     "wife",
+     "Good. That will fit a tiny foot just right.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "N26",
+   "text": "구두장이도 작은 가죽을 잘라 작은 구두를 만들었어요.",
+   "en": "The shoemaker cut small leather and made tiny shoes.",
+   "segs": [
+    [
+     "nar",
+     "The shoemaker cut small leather and made tiny shoes.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "A6",
+   "text": "망치를 톡 눌러 봐요.",
+   "en": "Tap the hammer.",
+   "segs": [
+    [
+     "nar",
+     "Tap the hammer.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S11",
+   "text": "땅, 땅, 땅! 세상에서 가장 작은 구두 완성!",
+   "en": "Tap, tap, tap! The tiniest shoes in the whole world, done!",
+   "segs": [
+    [
+     "shoe",
+     "Tap, tap, tap! The tiniest shoes in the whole world, done!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "N27",
+   "text": "저녁이 되자 선물이 모두 준비되었어요.",
+   "en": "By evening, all the presents were ready.",
+   "segs": [
+    [
+     "nar",
+     "By evening, all the presents were ready.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N28",
+   "text": "두 사람은 가죽 대신 작은 옷과 구두를 탁자에 가지런히 놓았어요.",
+   "en": "Instead of leather, the two of them laid the little clothes and shoes neatly on the table.",
+   "segs": [
+    [
+     "nar",
+     "Instead of leather, the two of them laid the little clothes and shoes neatly on the table.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S12",
+   "text": "요정들이 좋아하면 좋겠다.",
+   "en": "I hope the elves like them.",
+   "segs": [
+    [
+     "shoe",
+     "I hope the elves like them.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "W11",
+   "text": "자, 우리는 다시 숨어요.",
+   "en": "Now, let's hide again.",
+   "segs": [
+    [
+     "wife",
+     "Now, let's hide again.",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "key": "N29",
+   "text": "촛불을 켜고, 둘은 옷 뒤에 숨어 기다렸어요.",
+   "en": "They lit the candle, hid behind the clothes, and waited.",
+   "segs": [
+    [
+     "nar",
+     "They lit the candle, hid behind the clothes, and waited.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N30",
+   "text": "밤 열두 시. 요정들이 폴짝폴짝 뛰어 들어왔어요.",
+   "en": "Midnight. The elves came hopping in.",
+   "segs": [
+    [
+     "nar",
+     "Midnight. The elves came hopping in.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N31",
+   "text": "일을 하려고 탁자를 보았는데, 가죽이 없었어요. 대신 예쁜 작은 옷이 놓여 있었지요.",
+   "en": "They looked at the table to start work, but there was no leather. Instead, there were pretty little clothes.",
+   "segs": [
+    [
+     "nar",
+     "They looked at the table to start work, but there was no leather. Instead, there were pretty little clothes.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "EA1",
+   "text": "어? 가죽이 없네?",
+   "en": "Huh? Where is the leather?",
+   "segs": [
+    [
+     "elfa",
+     "Huh? Where is the leather?",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "EB1",
+   "text": "이게 뭐지? 작은 옷이잖아!",
+   "en": "What is this? Little clothes!",
+   "segs": [
+    [
+     "elfb",
+     "What is this? Little clothes!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "A7",
+   "text": "요정들은 어떤 마음일까요? 활짝 웃는 얼굴을 톡 눌러 봐요.",
+   "en": "How do the elves feel? Tap the big happy face.",
+   "segs": [
+    [
+     "nar",
+     "How do the elves feel? Tap the big happy face.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N32",
+   "text": "요정들은 너무 기뻐서 폴짝폴짝 뛰었어요.",
+   "en": "The elves were so happy, they jumped and jumped.",
+   "segs": [
+    [
+     "nar",
+     "The elves were so happy, they jumped and jumped.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "N33",
+   "text": "요정들은 후다닥 옷을 입고, 옷매무새를 매만졌어요.",
+   "en": "They quickly put on the clothes and smoothed them down.",
+   "segs": [
+    [
+     "nar",
+     "They quickly put on the clothes and smoothed them down.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N34",
+   "text": "그러고는 신이 나서 노래했어요.",
+   "en": "Then they sang with joy.",
+   "segs": [
+    [
+     "nar",
+     "Then they sang with joy.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "N35",
+   "text": "요정들은 춤을 추었어요. 의자를 넘고, 긴 걸상을 넘고, 폴짝폴짝!",
+   "en": "The elves danced. Over the chair, over the bench, hop, hop, hop!",
+   "segs": [
+    [
+     "nar",
+     "The elves danced. Over the chair, over the bench, hop, hop, hop!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "N36",
+   "text": "그러고는 춤을 추며 문 밖으로 나갔어요. 눈 내리는 밤 속으로요.",
+   "en": "Then they danced right out the door, into the snowy night.",
+   "segs": [
+    [
+     "nar",
+     "Then they danced right out the door, into the snowy night.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S13",
+   "text": "잘 가, 작은 요정들아. 고마웠어.",
+   "en": "Goodbye, little elves. Thank you.",
+   "segs": [
+    [
+     "shoe",
+     "Goodbye, little elves. Thank you.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "W12",
+   "text": "따뜻하게 지내렴.",
+   "en": "Stay warm!",
+   "segs": [
+    [
+     "wife",
+     "Stay warm!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N37",
+   "text": "그 뒤로 요정들은 다시 오지 않았어요.",
+   "en": "After that, the elves never came back.",
+   "segs": [
+    [
+     "nar",
+     "After that, the elves never came back.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "key": "N38",
+   "text": "하지만 구두장이는 오래오래 잘 살았어요. 하는 일마다 잘되었지요.",
+   "en": "But the shoemaker lived happily for a long, long time. Everything he did went well.",
+   "segs": [
+    [
+     "nar",
+     "But the shoemaker lived happily for a long, long time. Everything he did went well.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "N39",
+   "text": "크리스마스 아침이에요. 가게 창문에 따뜻한 불이 켜졌어요.",
+   "en": "It is Christmas morning. A warm light glows in the shop window.",
+   "segs": [
+    [
+     "nar",
+     "It is Christmas morning. A warm light glows in the shop window.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "A8",
+   "text": "구두장이 부부를 톡 눌러 인사해요.",
+   "en": "Tap the shoemaker and his wife to say hello.",
+   "segs": [
+    [
+     "nar",
+     "Tap the shoemaker and his wife to say hello.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S14",
+   "text": "메리 크리스마스!",
+   "en": "Merry Christmas!",
+   "segs": [
+    [
+     "shoe",
+     "Merry Christmas!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "W13",
+   "text": "따뜻한 크리스마스 보내세요!",
+   "en": "Have a warm and happy Christmas!",
+   "segs": [
+    [
+     "wife",
+     "Have a warm and happy Christmas!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "X1",
+   "text": "색이 달라요. 손에 든 구두랑 같은 색을 찾아 봐요.",
+   "en": "That's a different color. Find the one that matches the shoe in his hand.",
+   "segs": [
+    [
+     "shoe",
+     "That's a different color. Find the one that matches the shoe in his hand.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "X2",
+   "text": "이 구두가 짝이에요.",
+   "en": "This shoe is the match.",
+   "segs": [
+    [
+     "shoe",
+     "This shoe is the match.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "X3",
+   "text": "그건 너무 커요. 더 작은 걸 찾아 봐요.",
+   "en": "That one is too big. Find a smaller one.",
+   "segs": [
+    [
+     "wife",
+     "That one is too big. Find a smaller one.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "X4",
+   "text": "제일 작은 이거예요.",
+   "en": "This is the smallest one.",
+   "segs": [
+    [
+     "wife",
+     "This is the smallest one.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "X5",
+   "text": "선물을 받았는데 슬플까요? 다시 골라 봐요.",
+   "en": "They got a present. Would they be sad? Try again.",
+   "segs": [
+    [
+     "nar",
+     "They got a present. Would they be sad? Try again.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "X6",
+   "text": "활짝 웃는 얼굴이에요.",
+   "en": "It's the big happy face.",
+   "segs": [
+    [
+     "nar",
+     "It's the big happy face.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "R1",
+   "text": "구두장이는 섞인 구두를 하나하나 짝 맞춰 선반에 놓았어요.",
+   "en": "The shoemaker matched the mixed-up shoes one by one and put them on the shelf.",
+   "segs": [
+    [
+     "nar",
+     "The shoemaker matched the mixed-up shoes one by one and put them on the shelf.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "R2",
+   "text": "아내는 초에 불을 붙였어요.",
+   "en": "The wife lit the candle.",
+   "segs": [
+    [
+     "nar",
+     "The wife lit the candle.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "R3",
+   "text": "아내는 가장 작은 셔츠와 가장 작은 양말을 골라 요정 몫으로 두었어요.",
+   "en": "The wife picked the smallest shirt and the smallest sock for the elves.",
+   "segs": [
+    [
+     "nar",
+     "The wife picked the smallest shirt and the smallest sock for the elves.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "R4",
+   "text": "구두장이는 작은 망치로 땅, 땅, 땅 두드려 작은 구두를 만들었어요.",
+   "en": "The shoemaker tapped with his little hammer, tap, tap, tap, and made tiny shoes.",
+   "segs": [
+    [
+     "nar",
+     "The shoemaker tapped with his little hammer, tap, tap, tap, and made tiny shoes.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "R5",
+   "text": "요정들은 처음엔 깜짝 놀랐어요. 그다음엔 활짝 웃었지요.",
+   "en": "At first the elves were surprised. Then they smiled wide.",
+   "segs": [
+    [
+     "nar",
+     "At first the elves were surprised. Then they smiled wide.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "R6",
+   "text": "구두장이와 아내가 창가에서 손을 흔들어요.",
+   "en": "The shoemaker and his wife wave from the window.",
+   "segs": [
+    [
+     "nar",
+     "The shoemaker and his wife wave from the window.",
+     null
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "ch_EE1": [
+   [
+    "elfa",
+    "Look at us, so smart and new! No more shoes for us to do!",
+    "happy"
+   ],
+   [
+    "elfb",
+    "Look at us, so smart and new! No more shoes for us to do!",
+    "happy"
+   ]
+  ],
+  "ch_EE2": [
+   [
+    "elfa",
+    "Hooray!",
+    "happy"
+   ],
+   [
+    "elfb",
+    "Hooray!",
+    "happy"
+   ]
+  ]
+ }
+}

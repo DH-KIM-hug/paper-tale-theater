@@ -1,0 +1,507 @@
+{
+ "notes": "호두까기 인형 녹음 대본(2026-11-28 코드와 함께, build_scripts.py 가 만든다). ElevenLabs 만, 아직 녹음 전. 배역 목소리(audio/el/audition/choices.json 원칙): nar=Huelyn(요정 Lily·여자아이 Annie 와 겹치지 않는 해설), clara=Annie(여자아이), fritz=Sparkles(남자아이), godfather=Namchun(할아버지), doll·prince=Eric(젊은 남성, 인형과 왕자는 한 배역 한 목소리 PLAN §3), king=Callum(우스운 악역, 통통 튀는 중저음), fairy=Lily(요정). 크리스마스 다른 세 편(gb_·es_·nb_)의 내레이터와 voice_id 가 겹치지 않는지 녹음 전에 확인. 영어는 앱에서 0.9배로 들어 본다.",
+ "voices": {
+  "nar": "gnWujHp24oqX3I03lRbU",
+  "clara": "Lb7qkOn5hF8p7qfCDH8q",
+  "fritz": "tapn1QwocNXk3viVSowa",
+  "godfather": "5ON5Fnz24cnOozEQfGAm",
+  "doll": "cjVigY5qzO86Huf0OWal",
+  "prince": "cjVigY5qzO86Huf0OWal",
+  "king": "N2lVS1w4EtoT3dr4eOWO",
+  "fairy": "pFZP5JQG7iQjIQuC4Bku"
+ },
+ "voice_names": {
+  "nar": "Huelyn",
+  "clara": "Annie",
+  "fritz": "Sparkles",
+  "godfather": "Namchun",
+  "doll": "Eric",
+  "prince": "Eric",
+  "king": "Callum",
+  "fairy": "Lily"
+ },
+ "lines": [
+  {
+   "key": "A1",
+   "text": "크리스마스이브예요. 초록 나무 아래서 잔치가 열렸어요.",
+   "segs": [
+    [
+     "nar",
+     "크리스마스이브예요. 초록 나무 아래서 잔치가 열렸어요.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "A2",
+   "text": "대부님이 오셨어!",
+   "segs": [
+    [
+     "clara",
+     "대부님이 오셨어!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "A3",
+   "text": "메리 크리스마스, 얘들아.",
+   "segs": [
+    [
+     "godfather",
+     "메리 크리스마스, 얘들아.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "B1",
+   "text": "클라라, 이 선물은 네 거란다.",
+   "segs": [
+    [
+     "godfather",
+     "클라라, 이 선물은 네 거란다.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "B_ASK",
+   "text": "선물 상자를 톡 열어 봐요.",
+   "segs": [
+    [
+     "nar",
+     "선물 상자를 톡 열어 봐요.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "B2",
+   "text": "호두 껍데기를 톡 깨 주는 인형이야.",
+   "segs": [
+    [
+     "godfather",
+     "호두 껍데기를 톡 깨 주는 인형이야.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "B3",
+   "text": "안녕? 내 옆에 앉을래?",
+   "segs": [
+    [
+     "clara",
+     "안녕? 내 옆에 앉을래?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "C1",
+   "text": "이 큰 호두도 깰 수 있을까?",
+   "segs": [
+    [
+     "fritz",
+     "이 큰 호두도 깰 수 있을까?",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "C2",
+   "text": "아, 턱이 빠졌어!",
+   "segs": [
+    [
+     "clara",
+     "아, 턱이 빠졌어!",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "key": "C3",
+   "text": "내가 너무 세게 눌렀어. 미안해.",
+   "segs": [
+    [
+     "fritz",
+     "내가 너무 세게 눌렀어. 미안해.",
+     "sad"
+    ]
+   ]
+  },
+  {
+   "key": "D1",
+   "text": "가만있어. 내가 턱을 감싸 줄게.",
+   "segs": [
+    [
+     "clara",
+     "가만있어. 내가 턱을 감싸 줄게.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "key": "D_ASK",
+   "text": "모자띠랑 같은 파란 손수건을 찾아봐요.",
+   "segs": [
+    [
+     "nar",
+     "모자띠랑 같은 파란 손수건을 찾아봐요.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "D_OK",
+   "text": "파란색이 꼭 같네!",
+   "segs": [
+    [
+     "nar",
+     "파란색이 꼭 같네!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "D_NO",
+   "text": "이건 노란색이네. 모자띠는 파란색이야.",
+   "segs": [
+    [
+     "nar",
+     "이건 노란색이네. 모자띠는 파란색이야.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "D2",
+   "text": "이제 내 옆에서 쉬어.",
+   "segs": [
+    [
+     "clara",
+     "이제 내 옆에서 쉬어.",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "key": "D3",
+   "text": "인형은 바구니에, 클라라는 그 곁 의자에 포근히 누웠어요.",
+   "segs": [
+    [
+     "nar",
+     "인형은 바구니에, 클라라는 그 곁 의자에 포근히 누웠어요.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "key": "E1",
+   "text": "한밤중, 시계가 뎅 울렸어요.",
+   "segs": [
+    [
+     "nar",
+     "한밤중, 시계가 뎅 울렸어요.",
+     "whisper"
+    ]
+   ]
+  },
+  {
+   "key": "E2",
+   "text": "어? 나무가 천장에 닿겠어!",
+   "segs": [
+    [
+     "clara",
+     "어? 나무가 천장에 닿겠어!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "E3",
+   "text": "클라라, 나야!",
+   "segs": [
+    [
+     "doll",
+     "클라라, 나야!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "F1",
+   "text": "바스락. 왕관을 쓴 생쥐가 코를 내밀었어요.",
+   "segs": [
+    [
+     "nar",
+     "바스락. 왕관을 쓴 생쥐가 코를 내밀었어요.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "F2",
+   "text": "찍찍! 우리도 잔치에 왔다!",
+   "segs": [
+    [
+     "king",
+     "찍찍! 우리도 잔치에 왔다!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "F3",
+   "text": "병정들아, 나란히!",
+   "segs": [
+    [
+     "doll",
+     "병정들아, 나란히!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "G1",
+   "text": "나올 틈이 없구나. 내가 도와줄게!",
+   "segs": [
+    [
+     "clara",
+     "나올 틈이 없구나. 내가 도와줄게!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "G_ASK",
+   "text": "슬리퍼를 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "슬리퍼를 톡 눌러 봐요.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "G2",
+   "text": "어이쿠, 집으로!",
+   "segs": [
+    [
+     "king",
+     "어이쿠, 집으로!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "G3",
+   "text": "작은 꼬리들이 우르르, 구멍 속으로 쏙!",
+   "segs": [
+    [
+     "nar",
+     "작은 꼬리들이 우르르, 구멍 속으로 쏙!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "H1",
+   "text": "클라라, 도와줘서 고마워.",
+   "segs": [
+    [
+     "doll",
+     "클라라, 도와줘서 고마워.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "H2",
+   "text": "어머, 왕자님! 내 손수건을 맸네?",
+   "segs": [
+    [
+     "clara",
+     "어머, 왕자님! 내 손수건을 맸네?",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "H3",
+   "text": "응, 나야. 함께 과자 나라에 갈래?",
+   "segs": [
+    [
+     "prince",
+     "응, 나야. 함께 과자 나라에 갈래?",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "H4",
+   "text": "좋아!",
+   "segs": [
+    [
+     "clara",
+     "좋아!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "I1",
+   "text": "나뭇가지 사이로 하얀 숲길이 열렸어요.",
+   "segs": [
+    [
+     "nar",
+     "나뭇가지 사이로 하얀 숲길이 열렸어요.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "I2",
+   "text": "내 손 잡아. 다리를 건너자.",
+   "segs": [
+    [
+     "prince",
+     "내 손 잡아. 다리를 건너자.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "I_ASK",
+   "text": "다리 위에 앉은 눈송이를 톡 눌러 봐요.",
+   "segs": [
+    [
+     "nar",
+     "다리 위에 앉은 눈송이를 톡 눌러 봐요.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "I_OK",
+   "text": "그래, 다리 위에 앉았지!",
+   "segs": [
+    [
+     "nar",
+     "그래, 다리 위에 앉았지!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "I_NO",
+   "text": "거기는 다리 아래야. 위를 볼까?",
+   "segs": [
+    [
+     "nar",
+     "거기는 다리 아래야. 위를 볼까?",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "I3",
+   "text": "눈송이가 내 손에 앉았어!",
+   "segs": [
+    [
+     "clara",
+     "눈송이가 내 손에 앉았어!",
+     "toneup"
+    ]
+   ]
+  },
+  {
+   "key": "J1",
+   "text": "저 문 안이 과자 나라야.",
+   "segs": [
+    [
+     "prince",
+     "저 문 안이 과자 나라야.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "J2",
+   "text": "어서 와! 너희를 위한 춤이야.",
+   "segs": [
+    [
+     "fairy",
+     "어서 와! 너희를 위한 춤이야.",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "J3",
+   "text": "빙글, 빙글. 꽃도 춤을 추네!",
+   "segs": [
+    [
+     "clara",
+     "빙글, 빙글. 꽃도 춤을 추네!",
+     "happy"
+    ]
+   ]
+  },
+  {
+   "key": "J4",
+   "text": "마지막 꽃잎이 살며시 접혔어요.",
+   "segs": [
+    [
+     "nar",
+     "마지막 꽃잎이 살며시 접혔어요.",
+     "tonedown"
+    ]
+   ]
+  },
+  {
+   "key": "K1",
+   "text": "창으로 아침 햇살이 들어왔어요. 클라라가 눈을 떴어요.",
+   "segs": [
+    [
+     "nar",
+     "창으로 아침 햇살이 들어왔어요. 클라라가 눈을 떴어요.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "K2",
+   "text": "여기 있었구나. 좋은 아침, 호두까기 인형아.",
+   "segs": [
+    [
+     "clara",
+     "여기 있었구나. 좋은 아침, 호두까기 인형아.",
+     "tonedown"
+    ]
+   ]
+  }
+ ],
+ "models": {
+  "nar": "eleven_v4",
+  "clara": "eleven_v4",
+  "fritz": "eleven_v4",
+  "godfather": "eleven_v4",
+  "doll": "eleven_v4",
+  "prince": "eleven_v4",
+  "king": "eleven_v4",
+  "fairy": "eleven_v4"
+ },
+ "settings": {
+  "nar": {},
+  "clara": {},
+  "fritz": {},
+  "godfather": {},
+  "doll": {},
+  "prince": {},
+  "king": {},
+  "fairy": {}
+ }
+}

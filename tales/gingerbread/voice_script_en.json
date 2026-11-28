@@ -1,0 +1,944 @@
+{
+ "notes": "진저브레드맨 영어 녹음 대본(mk_script.py). 목소리·모델은 voice_script_el.json 그대로. 영어 글에는 한국어 연기 지시를 붙이지 않는다(2026-11 재녹음 사고). 녹음 뒤 mlx_whisper 로 받아써 반복과 한국어 혼입을 검사.",
+ "voices": {
+  "nar": "Lb7qkOn5hF8p7qfCDH8q",
+  "man": "tapn1QwocNXk3viVSowa",
+  "granny": "gnWujHp24oqX3I03lRbU",
+  "grandpa": "5ON5Fnz24cnOozEQfGAm",
+  "thresha": "cjVigY5qzO86Huf0OWal",
+  "threshb": "FGY2WhTYpPnrIDTdsKH5",
+  "mowa": "DGDjWy2CQ8Ishu0meQte",
+  "mowb": "TX3LPaxmHKxFdv7VOQHJ",
+  "cow": "ZjAPD4f11zlnEnZpKDgo",
+  "pig": "4tLzQecqf3Jg3zct76Fm",
+  "fox": "N2lVS1w4EtoT3dr4eOWO"
+ },
+ "lines": [
+  {
+   "key": "S1-1",
+   "text": "눈이 펄펄 내리는 크리스마스 전날이에요. 숲가 작은 집에 할머니와 할아버지가 살았어요.",
+   "en": "It is the day before Christmas, and snow is falling softly. In a little house at the edge of the woods lived a little old woman and a little old man.",
+   "segs": [
+    [
+     "nar",
+     "It is the day before Christmas, and snow is falling softly. In a little house at the edge of the woods lived a little old woman and a little old man.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S1-2",
+   "text": "두 사람은 사이좋게 지냈지만, 집에 아이가 없어 늘 조금 쓸쓸했어요.",
+   "en": "They were happy together, but they had no little child, and that made them a little lonely.",
+   "segs": [
+    [
+     "nar",
+     "They were happy together, but they had no little child, and that made them a little lonely.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S1-3",
+   "text": "오늘은 진저브레드 아이를 하나 만들어 볼까?",
+   "en": "Shall I make a little gingerbread boy today?",
+   "segs": [
+    [
+     "granny",
+     "Shall I make a little gingerbread boy today?",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S1-4",
+   "text": "좋지! 달콤한 생강 냄새가 집 안에 가득하겠구나.",
+   "en": "Oh yes! The whole house will smell of sweet ginger.",
+   "segs": [
+    [
+     "grandpa",
+     "Oh yes! The whole house will smell of sweet ginger.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S1-5",
+   "text": "할머니는 반죽을 밀고, 아이 모양 틀로 꾹 찍었어요.",
+   "en": "The little old woman rolled out the dough and pressed down the boy-shaped cutter.",
+   "segs": [
+    [
+     "nar",
+     "The little old woman rolled out the dough and pressed down the boy-shaped cutter.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2-1",
+   "text": "눈은 건포도, 단추는 사탕, 신발은 설탕으로 해야지.",
+   "en": "Raisins for the eyes, candies for the buttons, and sugar for the shoes.",
+   "segs": [
+    [
+     "granny",
+     "Raisins for the eyes, candies for the buttons, and sugar for the shoes.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2-2",
+   "text": "입은 할머니가 먼저. 설탕으로 활짝 웃는 입!",
+   "en": "I'll do the mouth first. A big sugar smile!",
+   "segs": [
+    [
+     "granny",
+     "I'll do the mouth first. A big sugar smile!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2-A1",
+   "text": "건포도 눈은 어디에 붙일까요? 위, 가운데, 아래 중에서 톡 눌러요.",
+   "en": "Where do the raisin eyes go? Tap the top, the middle, or the bottom.",
+   "segs": [
+    [
+     "nar",
+     "Where do the raisin eyes go? Tap the top, the middle, or the bottom.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2-3",
+   "text": "그렇지, 눈은 위에!",
+   "en": "That's right, eyes on top!",
+   "segs": [
+    [
+     "granny",
+     "That's right, eyes on top!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2-A2",
+   "text": "사탕 단추는 어디에 붙일까요?",
+   "en": "Where do the candy buttons go?",
+   "segs": [
+    [
+     "nar",
+     "Where do the candy buttons go?",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2-4",
+   "text": "맞아, 단추는 가운데!",
+   "en": "Yes, buttons in the middle!",
+   "segs": [
+    [
+     "granny",
+     "Yes, buttons in the middle!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2-A3",
+   "text": "설탕 신발은 어디에 붙일까요?",
+   "en": "Where do the sugar shoes go?",
+   "segs": [
+    [
+     "nar",
+     "Where do the sugar shoes go?",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2-5",
+   "text": "그래, 신발은 아래에!",
+   "en": "Good, shoes at the bottom!",
+   "segs": [
+    [
+     "granny",
+     "Good, shoes at the bottom!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2-W1",
+   "text": "거기는 아니야. 눈은 얼굴, 위쪽이지.",
+   "en": "Not there. Eyes go on the face, up at the top.",
+   "segs": [
+    [
+     "granny",
+     "Not there. Eyes go on the face, up at the top.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2-W2",
+   "text": "단추는 배, 가운데란다.",
+   "en": "Buttons go on the tummy, in the middle.",
+   "segs": [
+    [
+     "granny",
+     "Buttons go on the tummy, in the middle.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2-W3",
+   "text": "신발은 발, 맨 아래지.",
+   "en": "Shoes go on the feet, right at the bottom.",
+   "segs": [
+    [
+     "granny",
+     "Shoes go on the feet, right at the bottom.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2-R",
+   "text": "할머니는 건포도 눈을 위에, 사탕 단추를 가운데, 설탕 신발을 아래에 붙였어요.",
+   "en": "She put the raisin eyes on top, the candy buttons in the middle, and the sugar shoes at the bottom.",
+   "segs": [
+    [
+     "nar",
+     "She put the raisin eyes on top, the candy buttons in the middle, and the sugar shoes at the bottom.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S2-6",
+   "text": "허허, 꼭 살아 있는 아이 같구나.",
+   "en": "Ho ho, he looks just like a real little boy.",
+   "segs": [
+    [
+     "grandpa",
+     "Ho ho, he looks just like a real little boy.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S3-1",
+   "text": "할머니는 쟁반을 오븐에 넣었어요. 생강 냄새가 솔솔 퍼졌어요.",
+   "en": "She slid the tray into the oven. Soon the smell of ginger filled the kitchen.",
+   "segs": [
+    [
+     "nar",
+     "She slid the tray into the oven. Soon the smell of ginger filled the kitchen.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S3-2",
+   "text": "킁킁, 다 됐나 보네!",
+   "en": "Sniff, sniff. I think he's done!",
+   "segs": [
+    [
+     "grandpa",
+     "Sniff, sniff. I think he's done!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S3-A",
+   "text": "오븐 문을 톡 눌러 열어 봐요.",
+   "en": "Tap the oven door to open it.",
+   "segs": [
+    [
+     "nar",
+     "Tap the oven door to open it.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S3-R",
+   "text": "할머니가 오븐 문을 열었어요.",
+   "en": "The little old woman opened the oven door.",
+   "segs": [
+    [
+     "nar",
+     "The little old woman opened the oven door.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S3-3",
+   "text": "덜컥! 문이 열리자마자, 진저브레드맨이 폴짝 뛰어나왔어요!",
+   "en": "Clunk! The moment the door opened, out jumped the Gingerbread Man!",
+   "segs": [
+    [
+     "nar",
+     "Clunk! The moment the door opened, out jumped the Gingerbread Man!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S3-4",
+   "text": "안녕! 나는 진저브레드맨!",
+   "en": "Hello! I'm the Gingerbread Man!",
+   "segs": [
+    [
+     "man",
+     "Hello! I'm the Gingerbread Man!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S3-5",
+   "text": "어머나!",
+   "en": "Oh my!",
+   "segs": [
+    [
+     "granny",
+     "Oh my!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S3-6",
+   "text": "아이고! 저기 간다!",
+   "en": "Goodness! There he goes!",
+   "segs": [
+    [
+     "grandpa",
+     "Goodness! There he goes!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S3-7",
+   "text": "진저브레드맨은 문밖으로 쌩 달려 나갔어요.",
+   "en": "The Gingerbread Man dashed right out the door.",
+   "segs": [
+    [
+     "nar",
+     "The Gingerbread Man dashed right out the door.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S4-1",
+   "text": "얘야, 거기 서!",
+   "en": "Little boy, stop right there!",
+   "segs": [
+    [
+     "granny",
+     "Little boy, stop right there!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S4-2",
+   "text": "돌아오너라!",
+   "en": "Come back here!",
+   "segs": [
+    [
+     "grandpa",
+     "Come back here!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S4-A",
+   "text": "진저브레드맨을 톡 눌러요. 같이 외쳐 봐요!",
+   "en": "Tap the Gingerbread Man. Shout it with him!",
+   "segs": [
+    [
+     "nar",
+     "Tap the Gingerbread Man. Shout it with him!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "RUN",
+   "text": "달려라 달려, 날 잡아 봐! 나는 진저브레드맨!",
+   "en": "Run, run, as fast as you can! You can't catch me, I'm the Gingerbread Man!",
+   "segs": [
+    [
+     "man",
+     "Run, run, as fast as you can! You can't catch me, I'm the Gingerbread Man!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S4-3",
+   "text": "할머니와 할아버지가 헐떡헐떡 뒤를 쫓았어요. 하지만 진저브레드맨이 훨씬 빨랐어요.",
+   "en": "The little old woman and the little old man ran after him, huffing and puffing. But the Gingerbread Man was much faster.",
+   "segs": [
+    [
+     "nar",
+     "The little old woman and the little old man ran after him, huffing and puffing. But the Gingerbread Man was much faster.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S5-1",
+   "text": "진저브레드맨은 헛간 앞을 지났어요. 사람들이 도리깨로 탁탁 곡식을 털고 있었어요.",
+   "en": "He ran past a barn, where threshers were beating the grain, thump, thump.",
+   "segs": [
+    [
+     "nar",
+     "He ran past a barn, where threshers were beating the grain, thump, thump.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S5-3",
+   "text": "할머니한테서도, 할아버지한테서도 도망쳤는데, 너희한테서도 도망칠 수 있지!",
+   "en": "I've run away from a little old woman, and a little old man, and I can run away from you, I can!",
+   "segs": [
+    [
+     "man",
+     "I've run away from a little old woman, and a little old man, and I can run away from you, I can!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S5-4",
+   "text": "탈곡하는 사람들도 도리깨를 던지고 뒤를 쫓았어요. 하지만 따라잡을 수 없었어요.",
+   "en": "The threshers dropped their flails and ran after him. But they could not catch him.",
+   "segs": [
+    [
+     "nar",
+     "The threshers dropped their flails and ran after him. But they could not catch him.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S6-1",
+   "text": "눈 덮인 들판에서는 사람들이 마른 풀을 베고 있었어요.",
+   "en": "In a snowy field, mowers were cutting the dry grass.",
+   "segs": [
+    [
+     "nar",
+     "In a snowy field, mowers were cutting the dry grass.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S6-3",
+   "text": "할머니, 할아버지, 탈곡하는 사람들한테서도 도망쳤는데, 너희한테서도 도망칠 수 있지!",
+   "en": "I've run away from a little old woman, a little old man, and a barn full of threshers, and I can run away from you, I can!",
+   "segs": [
+    [
+     "man",
+     "I've run away from a little old woman, a little old man, and a barn full of threshers, and I can run away from you, I can!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S6-4",
+   "text": "풀 베는 사람들도 낫을 내려놓고 뒤를 쫓았어요. 줄이 점점 길어졌어요.",
+   "en": "The mowers put down their scythes and ran after him too. The line grew longer and longer.",
+   "segs": [
+    [
+     "nar",
+     "The mowers put down their scythes and ran after him too. The line grew longer and longer.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S7-1",
+   "text": "길가 울타리 안에서 소가 건초를 우물우물 먹고 있었어요.",
+   "en": "By the road, a cow was munching hay behind a fence.",
+   "segs": [
+    [
+     "nar",
+     "By the road, a cow was munching hay behind a fence.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S7-2",
+   "text": "음매! 진저브레드맨, 거기 서!",
+   "en": "Moo! Gingerbread Man, stop right there!",
+   "segs": [
+    [
+     "cow",
+     "Moo! Gingerbread Man, stop right there!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S7-3",
+   "text": "할머니, 할아버지, 탈곡하는 사람들, 풀 베는 사람들한테서도 도망쳤는데, 너한테서도 도망칠 수 있지!",
+   "en": "I've run away from a little old woman, a little old man, a barn full of threshers, and a field full of mowers, and I can run away from you, I can!",
+   "segs": [
+    [
+     "man",
+     "I've run away from a little old woman, a little old man, a barn full of threshers, and a field full of mowers, and I can run away from you, I can!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S7-4",
+   "text": "소는 느릿느릿 쫓아왔어요. 진저브레드맨은 쌩쌩 달렸어요.",
+   "en": "The cow plodded along slowly. The Gingerbread Man zipped ahead.",
+   "segs": [
+    [
+     "nar",
+     "The cow plodded along slowly. The Gingerbread Man zipped ahead.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S7-A",
+   "text": "누가 더 빨라요? 더 빠른 쪽을 톡 눌러요.",
+   "en": "Who is faster? Tap the faster one.",
+   "segs": [
+    [
+     "nar",
+     "Who is faster? Tap the faster one.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S7-5",
+   "text": "그래요, 진저브레드맨이 훨씬 빨라요. 소는 느릿느릿.",
+   "en": "Yes, the Gingerbread Man is much faster. The cow is slow, slow, slow.",
+   "segs": [
+    [
+     "nar",
+     "Yes, the Gingerbread Man is much faster. The cow is slow, slow, slow.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S7-W",
+   "text": "소는 느릿느릿 걸어요. 쌩쌩 달리는 쪽은 누구일까요?",
+   "en": "The cow walks slowly. Who is the one zipping along?",
+   "segs": [
+    [
+     "nar",
+     "The cow walks slowly. Who is the one zipping along?",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S8-1",
+   "text": "돼지 우리 옆을 지날 때, 돼지가 꿀꿀 고개를 내밀었어요.",
+   "en": "As he passed the pigpen, a pig poked its head over the fence. Oink!",
+   "segs": [
+    [
+     "nar",
+     "As he passed the pigpen, a pig poked its head over the fence. Oink!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S8-2",
+   "text": "꿀꿀! 진저브레드맨, 나도 잡을 거야!",
+   "en": "Oink, oink! Gingerbread Man, I'll catch you too!",
+   "segs": [
+    [
+     "pig",
+     "Oink, oink! Gingerbread Man, I'll catch you too!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S8-3",
+   "text": "할머니, 할아버지, 탈곡하는 사람들, 풀 베는 사람들, 소한테서도 도망쳤는데, 너한테서도 도망칠 수 있지!",
+   "en": "I've run away from a little old woman, a little old man, a barn full of threshers, a field full of mowers, and a cow, and I can run away from you, I can!",
+   "segs": [
+    [
+     "man",
+     "I've run away from a little old woman, a little old man, a barn full of threshers, a field full of mowers, and a cow, and I can run away from you, I can!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S8-4",
+   "text": "돼지도 뒤따라 달렸어요. 이제 줄이 아주 길어졌어요.",
+   "en": "The pig ran after him too. Now the line was very, very long.",
+   "segs": [
+    [
+     "nar",
+     "The pig ran after him too. Now the line was very, very long.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S8-A",
+   "text": "줄 맨 뒤에서 달리는 건 누구일까요? 톡 눌러요.",
+   "en": "Who is running at the very back of the line? Tap them.",
+   "segs": [
+    [
+     "nar",
+     "Who is running at the very back of the line? Tap them.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S8-5",
+   "text": "맞아요, 맨 뒤는 할머니예요. 맨 앞은 물론 진저브레드맨!",
+   "en": "That's right, the little old woman is at the back. And at the front, of course, the Gingerbread Man!",
+   "segs": [
+    [
+     "nar",
+     "That's right, the little old woman is at the back. And at the front, of course, the Gingerbread Man!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S8-W",
+   "text": "그건 줄 가운데에 있어요. 맨 뒤, 끝에 있는 건 누구일까요?",
+   "en": "That one is in the middle. Who is at the very back, at the end?",
+   "segs": [
+    [
+     "nar",
+     "That one is in the middle. Who is at the very back, at the end?",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S8-R",
+   "text": "맨 앞은 진저브레드맨, 맨 뒤는 할머니였어요.",
+   "en": "The Gingerbread Man was at the front, and the little old woman was at the very back.",
+   "segs": [
+    [
+     "nar",
+     "The Gingerbread Man was at the front, and the little old woman was at the very back.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S9-1",
+   "text": "진저브레드맨은 숲가까지 달려왔어요. 나무 아래 여우가 느긋하게 누워 있었어요.",
+   "en": "The Gingerbread Man ran all the way to the edge of the woods. Under a tree, a fox was lying lazily.",
+   "segs": [
+    [
+     "nar",
+     "The Gingerbread Man ran all the way to the edge of the woods. Under a tree, a fox was lying lazily.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S9-2",
+   "text": "어, 여우다!",
+   "en": "Oh, a fox!",
+   "segs": [
+    [
+     "man",
+     "Oh, a fox!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S9-3",
+   "text": "할머니, 할아버지, 탈곡하는 사람들, 풀 베는 사람들, 소, 돼지한테서도 도망쳤는데, 너한테서도 도망칠 수 있지!",
+   "en": "I've run away from a little old woman, a little old man, a barn full of threshers, a field full of mowers, a cow, and a pig, and I can run away from you, I can!",
+   "segs": [
+    [
+     "man",
+     "I've run away from a little old woman, a little old man, a barn full of threshers, a field full of mowers, a cow, and a pig, and I can run away from you, I can!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S9-4",
+   "text": "흐음, 세상에서 네가 가장 빠르다고?",
+   "en": "Hmm. So you're the fastest in the whole world?",
+   "segs": [
+    [
+     "fox",
+     "Hmm. So you're the fastest in the whole world?",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S9-5",
+   "text": "그럼!",
+   "en": "Of course!",
+   "segs": [
+    [
+     "man",
+     "Of course!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S9-6",
+   "text": "그래? 한번 보자.",
+   "en": "Is that so? Let's see.",
+   "segs": [
+    [
+     "fox",
+     "Is that so? Let's see.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S9-7",
+   "text": "여우는 천천히 일어나 기지개를 쭉 폈어요.",
+   "en": "The fox got up slowly and stretched, long and lazy.",
+   "segs": [
+    [
+     "nar",
+     "The fox got up slowly and stretched, long and lazy.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S10-1",
+   "text": "여우가 달리기 시작했어요. 여우는 소보다, 돼지보다, 누구보다 빨랐어요!",
+   "en": "Then the fox began to run. He was faster than the cow, faster than the pig, faster than anyone!",
+   "segs": [
+    [
+     "nar",
+     "Then the fox began to run. He was faster than the cow, faster than the pig, faster than anyone!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S10-2",
+   "text": "어어?",
+   "en": "Uh oh?",
+   "segs": [
+    [
+     "man",
+     "Uh oh?",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S10-3",
+   "text": "휙! 여우가 진저브레드맨 바로 앞을 가로막았어요.",
+   "en": "Whoosh! The fox leaped right in front of the Gingerbread Man.",
+   "segs": [
+    [
+     "nar",
+     "Whoosh! The fox leaped right in front of the Gingerbread Man.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S10-4",
+   "text": "잡았다!",
+   "en": "Got you!",
+   "segs": [
+    [
+     "fox",
+     "Got you!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S10-5",
+   "text": "어? 조금 없어졌네.",
+   "en": "Oh dear! I'm quarter gone!",
+   "segs": [
+    [
+     "man",
+     "Oh dear! I'm quarter gone!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S10-6",
+   "text": "반이 없어졌네.",
+   "en": "I'm half gone!",
+   "segs": [
+    [
+     "man",
+     "I'm half gone!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S10-7",
+   "text": "다 없어졌어!",
+   "en": "I'm all gone!",
+   "segs": [
+    [
+     "man",
+     "I'm all gone!",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S10-8",
+   "text": "그 뒤로 진저브레드맨은 아무 말도 하지 않았어요.",
+   "en": "And after that, the Gingerbread Man never said another word.",
+   "segs": [
+    [
+     "nar",
+     "And after that, the Gingerbread Man never said another word.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S10-9",
+   "text": "음, 달콤한 생강 맛이구나.",
+   "en": "Mmm. Sweet and gingery.",
+   "segs": [
+    [
+     "fox",
+     "Mmm. Sweet and gingery.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S11-1",
+   "text": "여우는 배를 두드리며 숲으로 느릿느릿 사라졌어요.",
+   "en": "The fox patted his tummy and strolled away into the woods.",
+   "segs": [
+    [
+     "nar",
+     "The fox patted his tummy and strolled away into the woods.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S11-2",
+   "text": "뒤쫓아 온 사람들과 소, 돼지가 숲가에 멈춰 서서 헐떡였어요.",
+   "en": "The people, the cow, and the pig all stopped at the edge of the woods, huffing and puffing.",
+   "segs": [
+    [
+     "nar",
+     "The people, the cow, and the pig all stopped at the edge of the woods, huffing and puffing.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S11-3",
+   "text": "하아, 하아. 참 빨랐구나.",
+   "en": "Huff, puff. He sure was fast.",
+   "segs": [
+    [
+     "grandpa",
+     "Huff, puff. He sure was fast.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S11-4",
+   "text": "그래도 참 예쁘게 웃는 아이였지.",
+   "en": "He had such a lovely smile, didn't he?",
+   "segs": [
+    [
+     "granny",
+     "He had such a lovely smile, didn't he?",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S11-5",
+   "text": "눈이 소리 없이 내렸어요. 모두 천천히 집으로 돌아갔어요.",
+   "en": "Snow fell quietly. Slowly, everyone went back home.",
+   "segs": [
+    [
+     "nar",
+     "Snow fell quietly. Slowly, everyone went back home.",
+     null
+    ]
+   ]
+  },
+  {
+   "key": "S11-6",
+   "text": "작은 집 창문에 따뜻한 불이 켜졌어요.",
+   "en": "In the little house, a warm light came on in the window.",
+   "segs": [
+    [
+     "nar",
+     "In the little house, a warm light came on in the window.",
+     null
+    ]
+   ]
+  }
+ ],
+ "extra": {
+  "ch_S5_2": [
+   [
+    "thresha",
+    "Look! A gingerbread man! Stop him, catch him!",
+    null
+   ],
+   [
+    "threshb",
+    "Look! A gingerbread man! Stop him, catch him!",
+    null
+   ]
+  ],
+  "ch_S6_2": [
+   [
+    "mowa",
+    "Look there! A gingerbread man! Stop!",
+    null
+   ],
+   [
+    "mowb",
+    "Look there! A gingerbread man! Stop!",
+    null
+   ]
+  ]
+ }
+}

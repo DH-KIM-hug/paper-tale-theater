@@ -449,3 +449,255 @@ ElevenLabs Creator 요금제(유료 구독 중 생성)로 만든 소리. 유료 
 | `sfx/el_jar_copy.mp3` | Sound Effects | 항아리 속 뽀옹 + 띠용 + 글로켄슈필 반짝 | 요술 항아리 괭이·엽전이 늘어날 때 |
 
 묶음 B에서 다시 쓴 효과음: `sfx/el_tiger_sneak.mp3`(악당만 — 헨젤과 그레텔 마녀, 콩쥐 팥쥐 새엄마, 인어공주 바다 마녀, 요술 항아리 욕심쟁이 부자), `sfx/mouse_squeak_1.mp3`·`sfx/mouse_squeak_2.mp3`·`sfx/giggle_xylo.mp3`(사자와 생쥐 찍찍·골디락스 킥킥, 합성음 대신).
+
+
+## ElevenLabs 크리스마스 3편 배경 음악·효과음 (2026-11-26 사용자 결정: 크리스마스 전날 밤·구두장이와 요정·진저브레드맨)
+
+ElevenLabs Creator 요금제(유료 구독 중 생성)로 만들었다. 상업 이용 조건은 위 「ElevenLabs 생성 효과음·배경 음악」 절과 같다(음악은 Music Model-Specific Terms Creator 표 기준, Indie Game 범위; 효과음은 유료 요금제 결과물). 사람 말소리·가사 없음.
+**멜로디 방식**: 공공 영역 캐럴(Silent Night 1818, We Wish You a Merry Christmas 전통 영국 캐럴, Jingle Bells 1857) 멜로디는 이 프로젝트가 음표로 직접 옮겨 오르골 소리로 렌더한 짧은 기준 음원(tools/elevenlabs/xmas/carols.py, render.py, CC0)을 만들어 Eleven Music 에 올리고(`/v1/music/upload`), 그 소리를 conditioning_ref(condition_strength xhigh)로 걸어 music_v2_5 가 편곡 연주하게 했다. 글 프롬프트만으로는 멜로디가 따라오지 않았다(시험 6회). 기준 음원 업로드가 저작권 검사에 걸리면(「Joy to the World」 등) 템포를 바꿔 다시 올렸고, 걸린 곡은 쓰지 않았다.
+**멜로디 확인**: 기준 음표 시각마다 생성곡의 음이름 에너지 순위를 재서(tools/elevenlabs/xmas/align2.py), 무작위 음표 대조군 최고값보다 높은 것만 골랐다. 점수(참/대조군 최고): 전날 밤 오르골 0.91/0.68, 하프(첼레스타) 0.86/0.63, 구두장이 작업실 0.86/0.63, 12장 0.83/0.64, 진저브레드맨 부엌 0.98/0.62, 쫓기 0.92/0.64, 눈 저녁 0.82/0.61. 기계 확인일 뿐 사람 귀 확인은 아직이다.
+후처리: 앞뒤 무음 자르기, 2.5초 등전력 크로스페이드 반복 이음매, 모노 64k mp3, 음악 -24 LUFS(기존 el_*_bgm 과 같음), 효과음은 앞뒤 무음 자르기·피크 -2dBFS·-16 LUFS 넘지 않게. 효과음 135개는 받아쓰기(whisper)로 사람 소리가 섞인 의심 소리를 다시 만들었다.
+재현 도구: tools/elevenlabs/xmas/ (2026-11-28 정리: 작업 폴더는 `xcfg.py` 의 `assets/raw/_work/xmas`(git 제외) 또는 `XMAS_WORK` 환경 변수, 결과는 저장소 `sounds/` 로. 순서: `music_run2.py [--att=N] [트랙…]` → `align2.py N [트랙…]` → `finish_music.py 트랙=N…`, 효과음은 `sfx_run.py <목록>` → `voicecheck.py`/`qa_sfx.py` → `finish_sfx.py <목록>`).
+
+| 파일 | 곡 | 길이 | 쓰는 곳 |
+|---|---|---|---|
+| `music/el_nb_silent_box.mp3` | Silent Night(Stille Nacht, 1818) | 48.5초 | 크리스마스 전날 밤 1~3장: 오르골·첼레스타 자장가 |
+| `music/el_nb_silent_harp.mp3` | Silent Night(1818) | 49.2초 | 크리스마스 전날 밤 10~12장: 첼레스타·부드러운 현 |
+| `music/el_es_wish_workshop.mp3` | We Wish You a Merry Christmas(영국 전통, 16세기) | 43.7초 | 구두장이와 요정 1장: 첼레스타·오르골·피치카토 |
+| `music/el_es_wish_xmas.mp3` | We Wish You a Merry Christmas | 43.9초 | 구두장이와 요정 12장: 글로켄슈필·첼레스타·방울 |
+| `music/el_gb_jingle_bake.mp3` | Jingle Bells(1857) | 37.6초 | 진저브레드맨 1~3장 부엌: 마림바·오르골·기타 |
+| `music/el_gb_jingle_chase.mp3` | Jingle Bells(1857) | 42.6초 | 진저브레드맨 4~8장 쫓기: 실로폰·피치카토·우드블록 |
+| `music/el_gb_jingle_snow.mp3` | Jingle Bells(1857) | 49.2초 | 진저브레드맨 11장 눈 내리는 저녁: 느린 오르골·첼레스타 |
+
+효과음 135개(`sfx/xm_*.mp3` 공통 21개, `sfx/el_nb_*.mp3` 전날 밤 34개, `sfx/el_es_*.mp3` 구두장이 36개, `sfx/el_gb_*.mp3` 진저브레드맨 44개. 전부 Sound Effects eleven_text_to_sound_v2, 프롬프트에 'no voice'):
+
+| 파일 | 장면 | 길이 | 쓰임 |
+|---|---|---|---|
+| `sfx/xm_sleigh_bells.mp3` | 공통 | 2.0초 | 썰매 방울 딸랑(이름마다 짧게 쓸 수 있음) |
+| `sfx/xm_sleigh_glide.mp3` | 공통 | 4.0초 | 썰매 등장 |
+| `sfx/xm_bells_fade_away.mp3` | 공통 | 5.0초 | 멀어지는 방울 |
+| `sfx/xm_snow_wind_soft.mp3` | 공통 | 5.47초 | 눈 오는 밤 바람 분위기 |
+| `sfx/xm_wind_chime_snow.mp3` | 공통 | 3.0초 | 눈 내리는 휘이 윈드차임 |
+| `sfx/xm_xylo_up_swirl.mp3` | 공통 | 1.49초 | 사탕 빙글·조각 떠오름 |
+| `sfx/xm_xylo_down3.mp3` | 공통 | 1.48초 | 끝 실로폰 하행 |
+| `sfx/xm_harp_gliss_up.mp3` | 공통 | 2.0초 | 아침 하프 |
+| `sfx/xm_harp_gliss_down.mp3` | 공통 | 2.2초 | 달빛 쏟아짐 |
+| `sfx/xm_boing_cartoon.mp3` | 공통 | 1.0초 | 띠용 |
+| `sfx/xm_boop_soft.mp3` | 공통 | 0.5초 | 오답 작은 뿅 |
+| `sfx/xm_ding_bell.mp3` | 공통 | 1.76초 | 정답 딩/끝 종 |
+| `sfx/xm_star_twinkle.mp3` | 공통 | 1.2초 | 반짝 별 |
+| `sfx/xm_triangle_ta_da.mp3` | 공통 | 1.48초 | 짠 |
+| `sfx/xm_pizz_tiptoe.mp3` | 공통 | 1.78초 | 살금살금 |
+| `sfx/xm_whistle_slide_up.mp3` | 공통 | 1.2초 | 위로 휙 |
+| `sfx/xm_whistle_slide_down.mp3` | 공통 | 1.2초 | 아래로 휙 |
+| `sfx/xm_snare_roll_short.mp3` | 공통 | 1.22초 | 드럼롤 |
+| `sfx/xm_cymbal_tap.mp3` | 공통 | 1.2초 | 챙 작게 |
+| `sfx/xm_woodblock_tok.mp3` | 공통 | 0.48초 | 똑 |
+| `sfx/xm_woodblock_tok3.mp3` | 공통 | 1.15초 | 똑똑똑 |
+| `sfx/el_nb_clock_tick.mp3` | nb 1 | 3.73초 | 1장 시계 똑딱 |
+| `sfx/el_nb_embers.mp3` | nb 1 | 6.0초 | 1장 벽난로 불씨 |
+| `sfx/el_nb_mouse_snore.mp3` | nb 1 | 2.26초 | 1장 생쥐 코골이 |
+| `sfx/el_nb_candy_swirl.mp3` | nb 2 | 2.42초 | 2장 사탕 꿈 |
+| `sfx/el_nb_thump_clatter.mp3` | nb 3 | 1.95초 | 3장 마당 쿵쾅 |
+| `sfx/el_nb_bed_spring.mp3` | nb 3 | 1.0초 | 3장 벌떡 |
+| `sfx/el_nb_dash_whistle.mp3` | nb 4 | 1.0초 | 4장 쌩 달리기 |
+| `sfx/el_nb_shutters_open.mp3` | nb 4 | 1.76초 | 4장 덧문 벌컥, 창 쓱 |
+| `sfx/el_nb_moon_shimmer.mp3` | nb 4 | 1.78초 | 4장 달빛 |
+| `sfx/el_nb_sleigh_land.mp3` | nb 5 | 2.63초 | 5장 썰매 멈춤 |
+| `sfx/el_nb_realize_ding.mp3` | nb 5 | 1.0초 | 5장 알겠다 딩 |
+| `sfx/el_nb_deer_prance.mp3` | nb 6 | 1.2초 | 6장 순록 깡충 |
+| `sfx/el_nb_deer_names.mp3` | nb 6 | 0.99초 | 6장 이름 부를 때 딸랑 |
+| `sfx/el_nb_drumroll_gallop.mp3` | nb 6 | 1.75초 | 6장 달려 드럼롤 |
+| `sfx/el_nb_whistle_santa.mp3` | nb 6 | 1.2초 | 6장 휘익 |
+| `sfx/el_nb_fly_up.mp3` | nb 7 | 1.61초 | 7장 날아오름 |
+| `sfx/el_nb_roof_hooves.mp3` | nb 7 | 3.0초 | 7장 지붕 또각또각 |
+| `sfx/el_nb_roof_wrong.mp3` | nb 7 | 0.8초 | 7장 오답 |
+| `sfx/el_nb_snow_dust.mp3` | nb 7 | 1.48초 | 7장 눈 가루 |
+| `sfx/el_nb_chimney_slide.mp3` | nb 8 | 1.48초 | 8장 굴뚝 슈욱 쿵 |
+| `sfx/el_nb_soot_poof.mp3` | nb 8 | 0.79초 | 8장 재 퐁 |
+| `sfx/el_nb_sparkle_part.mp3` | nb 9 | 1.0초 | 9장 묘사 반짝 |
+| `sfx/el_nb_jelly_wobble.mp3` | nb 9 | 1.27초 | 9장 젤리 출렁 |
+| `sfx/el_nb_stifle_giggle.mp3` | nb 9 | 0.73초 | 9장 킥 |
+| `sfx/el_nb_wink_ting.mp3` | nb 10 | 0.8초 | 10장 윙크 |
+| `sfx/el_nb_gift_pop_1.mp3` | nb 10 | 0.43초 | 10장 뽁(낮은) |
+| `sfx/el_nb_gift_pop_2.mp3` | nb 10 | 0.43초 | 10장 뽁(중) |
+| `sfx/el_nb_gift_pop_3.mp3` | nb 10 | 0.48초 | 10장 뽁(높은) |
+| `sfx/el_nb_gift_pop_4.mp3` | nb 10 | 0.46초 | 10장 뽁(가장 높은) |
+| `sfx/el_nb_nod_tok.mp3` | nb 11 | 0.42초 | 11장 끄덕 |
+| `sfx/el_nb_up_chimney.mp3` | nb 11 | 1.76초 | 11장 굴뚝 위로 |
+| `sfx/el_nb_sleigh_hop.mp3` | nb 12 | 1.0초 | 12장 폴짝 |
+| `sfx/el_nb_sleigh_takeoff_bells.mp3` | nb 12 | 3.18초 | 12장 날아감 |
+| `sfx/el_nb_wave_bell.mp3` | nb 12 | 1.07초 | 12장 끝 종 |
+| `sfx/el_es_scissors_leather.mp3` | es 1 | 1.97초 | 1장 가위 싹둑 |
+| `sfx/el_es_yawn_slide.mp3` | es 1 | 1.76초 | 1장 하품(악기) |
+| `sfx/el_es_candle_snuff.mp3` | es 1 | 0.99초 | 1장 촛불 꺼짐 |
+| `sfx/el_es_sleep_pizz.mp3` | es 1 | 1.72초 | 1장 잠 |
+| `sfx/el_es_morning_harp.mp3` | es 2 | 2.48초 | 2장 아침 |
+| `sfx/el_es_xylo_three.mp3` | es 2 | 1.48초 | 2장 구두 살펴보기 |
+| `sfx/el_es_surprise_boing.mp3` | es 2 | 0.49초 | 2장 놀람 띠용 |
+| `sfx/el_es_shop_bell.mp3` | es 3 | 2.0초 | 3장 문 종 딸랑 |
+| `sfx/el_es_oh_whistle_up.mp3` | es 3 | 1.0초 | 3장 우와 감탄 |
+| `sfx/el_es_coins_clink.mp3` | es 3 | 2.0초 | 3장 동전 찰랑 |
+| `sfx/el_es_shelf_xylo_up.mp3` | es 4 | 1.4초 | 4장 선반에 구두 늘어남 |
+| `sfx/el_es_shoe_fly.mp3` | es 4 | 0.85초 | 4장 구두 휙+톡 |
+| `sfx/el_es_snow_door_wind.mp3` | es 5 | 2.88초 | 5장 눈바람 |
+| `sfx/el_es_match_strike.mp3` | es 5 | 1.38초 | 5장 성냥 칙 |
+| `sfx/el_es_hide_pizz.mp3` | es 5 | 1.35초 | 5장 살금살금 |
+| `sfx/el_es_clock_midnight.mp3` | es 6 | 3.0초 | 6장 땡 세 번 |
+| `sfx/el_es_door_creak.mp3` | es 6 | 1.17초 | 6장 문 삐걱 |
+| `sfx/el_es_elves_harp.mp3` | es 6 | 1.6초 | 6장 요정 등장 |
+| `sfx/el_es_elves_run.mp3` | es 6 | 1.48초 | 6장 쪼르르 |
+| `sfx/el_es_sew_rhythm.mp3` | es 6 | 2.55초 | 6장 바느질 |
+| `sfx/el_es_hammer_tiny.mp3` | es 6 | 1.53초 | 6장 망치 땅땅땅 |
+| `sfx/el_es_resolve_triangle.mp3` | es 7 | 1.2초 | 7장 결심 짠 |
+| `sfx/el_es_stitch_tick.mp3` | es 8 | 2.48초 | 8장 똑딱 바느질 |
+| `sfx/el_es_knit_clicks.mp3` | es 8 | 2.42초 | 8장 뜨개 사각사각 |
+| `sfx/el_es_size_ding.mp3` | es 8 | 1.0초 | 8장 정답 딩 |
+| `sfx/el_es_gift_tok.mp3` | es 9 | 0.38초 | 9장 선물 놓기 |
+| `sfx/el_es_spring_hop.mp3` | es 10 | 1.0초 | 10장 폴짝 |
+| `sfx/el_es_puzzled_violin.mp3` | es 10 | 1.02초 | 10장 응? 갸웃 |
+| `sfx/el_es_joy_glock.mp3` | es 10 | 1.89초 | 10장 기쁨 상승 |
+| `sfx/el_es_dress_rustle.mp3` | es 10 | 1.76초 | 10장 옷 입기 사삭 |
+| `sfx/el_es_tambourine_dance.mp3` | es 11 | 3.0초 | 11장 춤 |
+| `sfx/el_es_chair_hop.mp3` | es 11 | 0.86초 | 11장 의자 넘기 휙 |
+| `sfx/el_es_door_snow_open.mp3` | es 11 | 2.97초 | 11장 문 열림 눈바람 |
+| `sfx/el_es_tiny_footsteps_away.mp3` | es 11 | 2.88초 | 11장 멀어지는 발소리 |
+| `sfx/el_es_window_glow.mp3` | es 12 | 1.93초 | 12장 창 불빛 |
+| `sfx/el_es_bells_ring.mp3` | es 12 | 2.87초 | 12장 딸랑딸랑 |
+| `sfx/el_gb_window_chime.mp3` | gb 1 | 2.87초 | 1장 눈 내리는 휘이 |
+| `sfx/el_gb_teacup.mp3` | gb 1 | 1.35초 | 1장 찻잔 달그락 |
+| `sfx/el_gb_rolling_pin.mp3` | gb 1 | 2.04초 | 1장 밀대 쓱쓱 |
+| `sfx/el_gb_cutter_press.mp3` | gb 1 | 0.28초 | 1장 쿠키 틀 꾹 |
+| `sfx/el_gb_dough_pull.mp3` | gb 1 | 0.6초 | 1장 반죽 뽁 |
+| `sfx/el_gb_piece_float.mp3` | gb 2 | 1.0초 | 2장 조각 떠오름 띵 |
+| `sfx/el_gb_stick_pops.mp3` | gb 2 | 1.76초 | 2장 조각 붙음 폭(위 가운데 아래) |
+| `sfx/el_gb_harp_done.mp3` | gb 2 | 1.48초 | 2장 완성 |
+| `sfx/el_gb_oven_hum.mp3` | gb 3 | 1.96초 | 3장 오븐 우웅 |
+| `sfx/el_gb_smell_harp.mp3` | gb 3 | 2.44초 | 3장 냄새 솔솔 |
+| `sfx/el_gb_sniff_kazoo.mp3` | gb 3 | 1.2초 | 3장 킁킁 |
+| `sfx/el_gb_oven_door.mp3` | gb 3 | 0.8초 | 3장 덜컥 |
+| `sfx/el_gb_jump_out.mp3` | gb 3 | 0.68초 | 3장 폴짝 뽀잉 |
+| `sfx/el_gb_land_timp.mp3` | gb 3 | 0.66초 | 3장 착지 통 |
+| `sfx/el_gb_run_out.mp3` | gb 3 | 1.58초 | 3장 쌩 달려 나감 |
+| `sfx/el_gb_woodblock_run.mp3` | gb 4-8 | 2.9초 | 4~8장 진저브레드맨 달리기 |
+| `sfx/el_gb_woodblock_slow.mp3` | gb 4-8 | 2.88초 | 4~8장 느린 달리기 |
+| `sfx/el_gb_snow_crunch.mp3` | gb 4 | 2.0초 | 4장 눈 뽀드득 |
+| `sfx/el_gb_chorus_roll.mp3` | gb 4-9 | 1.26초 | 반복 구절 앞뒤 |
+| `sfx/el_gb_flail.mp3` | gb 5 | 2.48초 | 5장 도리깨 탁탁탁 |
+| `sfx/el_gb_flail_throw.mp3` | gb 5 | 1.48초 | 5장 도리깨 던짐 |
+| `sfx/el_gb_scythe.mp3` | gb 6 | 2.45초 | 6장 낫 싹둑 |
+| `sfx/el_gb_scythe_down.mp3` | gb 6 | 0.6초 | 6장 낫 내려놓음 |
+| `sfx/el_gb_cow_bell.mp3` | gb 7 | 2.89초 | 7장 소 방울 |
+| `sfx/el_gb_cow_munch.mp3` | gb 7 | 1.94초 | 7장 우물우물 |
+| `sfx/el_gb_cow_steps.mp3` | gb 7 | 2.48초 | 7장 소 쿵쿵 |
+| `sfx/el_gb_fence_hop.mp3` | gb 8 | 1.48초 | 8장 울타리 뽀잉 통 |
+| `sfx/el_gb_chime_pullback.mp3` | gb 8 | 2.87초 | 8장 멀어짐 휘이이 |
+| `sfx/el_gb_long_line_run.mp3` | gb 8 | 3.12초 | 8장 긴 줄 달리기 |
+| `sfx/el_gb_skid.mp3` | gb 9 | 1.2초 | 9장 멈칫 끼익 |
+| `sfx/el_gb_fox_bass.mp3` | gb 9 | 2.48초 | 9장 여우 등장(베이스 두 음) |
+| `sfx/el_gb_ear_ting.mp3` | gb 9 | 0.8초 | 9장 귀 세움 |
+| `sfx/el_gb_stretch.mp3` | gb 9 | 2.48초 | 9장 기지개 |
+| `sfx/el_gb_fox_zoom.mp3` | gb 10 | 1.3초 | 10장 쌩 |
+| `sfx/el_gb_block_thump.mp3` | gb 10 | 1.2초 | 10장 쿵+띠용 |
+| `sfx/el_gb_snap_kazoo.mp3` | gb 10 | 0.8초 | 10장 와앙 |
+| `sfx/el_gb_snow_burst.mp3` | gb 10 | 1.88초 | 10장 눈가루 퍽 |
+| `sfx/el_gb_tok_descend.mp3` | gb 10 | 1.63초 | 10장 똑 똑 똑 |
+| `sfx/el_gb_lip_smack.mp3` | gb 10 | 0.65초 | 10장 쩝 |
+| `sfx/el_gb_harp_two_low.mp3` | gb 10 | 1.48초 | 10장 만족 하프 |
+| `sfx/el_gb_fox_leave.mp3` | gb 11 | 3.0초 | 11장 여우 멀어짐 |
+| `sfx/el_gb_pant_slow.mp3` | gb 11 | 3.0초 | 11장 도착 멈춤 |
+| `sfx/el_gb_window_ding.mp3` | gb 11 | 2.48초 | 11장 창 불 켜짐 딩 |
+| `sfx/el_gb_oops_xylo.mp3` | gb 11 | 1.02초 | 11장 허허 뒤 실로폰 |
+
+### 2026-11-28 추가: 세 편 모든 장면 캐럴 + 호두까기 인형 차이콥스키 음악, 효과음
+
+사용자 지시 "호두까기 인형은 차이콥스키 음악이 나오면 좋겠어. 나머지도 일레븐랩스로 캐롤 등이 배경음으로 깔려야 돼." 만드는 방식은 위와 같다(직접 음표로 옮긴 기준 음원 → `/v1/music/upload` → conditioning_ref xhigh → music_v2_5, align2 로 무작위 대조군 최고값보다 높은 것만 채택, -24 LUFS, 모노 64k, 2.5초 반복 이음매). 가사, 사람 목소리 없음(받아쓰기 `voicecheck.py` 로 전부 확인, 의심 0).
+- **곡조 출처**: 캐럴은 전부 작곡, 곡조 저작권이 끝난 전래 곡조를 이 프로젝트가 직접 음표로 옮겼다(`carols.py`). 「호두까기 인형」(차이콥스키 1892)은 공공 영역 악보에서 주선율만 눈으로 읽어 옮겼다: G. Schirmer 1918 판 모음곡 4손 피아노 악보(Internet Archive `suiteforfullorch00tcha`, 행진곡, 꽃의 왈츠), 같은 1918 판 「Dance of the Candy Fairy」「Dance of the Reed-Flutes」(Wikimedia Commons, Public domain). 녹음, 공연, 현대 편곡은 입력에 쓰지 않았다. 원전 총보(IMSLP 1892 Jurgenson)는 봇 확인에 막혀 열지 못했다.
+- **저작권 검사**: 업로드 검사에 걸린 기준 음원은 Deck the Halls 160bpm 하나, 템포 1.04배(166bpm)로 다시 올려 통과. 빠진 곡 없음.
+- **align 점수**(참/대조군 최고, 1.0 = 기준 음이 늘 가장 셈): 아래 표. 기계 확인일 뿐 사람 귀 확인은 아직이다.
+
+| 파일 | 곡(작곡, 곡조 연도) | 길이 | 쓰는 장면 | align |
+|---|---|---|---|---|
+| `music/el_nb_noel_moon.mp3` | The First Noel(영국 전래, 1823, 1833 출판) | 54.8초 | 크리스마스 전날 밤 4~5장: 첼레스타, 하프, 달빛 | 0.83/0.62 |
+| `music/el_nb_deck_sleigh.mp3` | Deck the Halls(웨일스 곡조 Nos Galan, 16세기 무렵) | 53.2초 | 전날 밤 6~7장: 오르골, 글로켄슈필, 작은 방울 | 0.87/0.60 |
+| `music/el_nb_wenceslas_jolly.mp3` | Good King Wenceslas(곡조 Tempus adest floridum, 1582) | 38.0초 | 전날 밤 8~9장: 글로켄슈필, 피치카토 | 0.96/0.65 |
+| `music/el_es_deck_day.mp3` | Deck the Halls | 55.2초 | 구두장이와 요정 2~4장: 피들, 글로켄슈필, 기타 | 0.94/0.58 |
+| `music/el_es_noel_candle.mp3` | The First Noel | 55.2초 | 구두장이 5장, 9장: 오르골, 현, 촛불 저녁 | 0.81/0.61 |
+| `music/el_es_wenceslas_tiptoe.mp3` | Good King Wenceslas | 47.6초 | 구두장이 6장: 첼레스타, 드문 피치카토, 아주 낮게 | 0.94/0.63 |
+| `music/el_es_deck_dance.mp3` | Deck the Halls | 50.0초 | 구두장이 10~11장: 피콜로, 탬버린 | 0.83/0.60 |
+| `music/el_gb_deck_chase.mp3` | Deck the Halls | 46.3초 | 진저브레드맨 6~8장: 실로폰, 피치카토, 우드블록 | 0.86/0.59 |
+| `music/el_gb_godrest_fox.mp3` | God Rest Ye Merry, Gentlemen(영국 전래, 18세기) | 38.7초 | 진저브레드맨 9~10장(10장 잡히는 순간부터 쉼): 바순, 클라리넷 | 1.00/0.65 |
+| `music/el_nc_march_light.mp3` | 차이콥스키 「호두까기 인형」 행진곡(1892) | 45.3초 | 호두까기 1~2장: 클라리넷, 플루트, 가볍게 | 0.82/0.59 |
+| `music/el_nc_march_parade.mp3` | 행진곡(1892) | 45.3초 | 호두까기 6장 재현: 피콜로, 작은북 | 0.92/0.61 |
+| `music/el_nc_reedflutes.mp3` | 갈대피리의 춤(1892) | 39.0초 | 호두까기 3장, 7장(쉼 지시 지킴): 플루트 셋 | 0.87/0.62 |
+| `music/el_nc_waltz_box.mp3` | 꽃의 왈츠 호른 주제(1892) | 42.3초 | 호두까기 4장, 8장: 오르골, 느린 세 박자 | 0.91/0.65 |
+| `music/el_nc_waltz_snow.mp3` | 꽃의 왈츠(1892) | 42.5초 | 호두까기 9장: 호른, 하프, 느린 세 박자 | 0.92/0.64 |
+| `music/el_nc_waltz_main.mp3` | 꽃의 왈츠(1892) | 49.4초 | 호두까기 10장 본 연주: 호른, 현, 하프 | 0.80/0.63 |
+| `music/el_nc_waltz_morning.mp3` | 꽃의 왈츠(1892) | 38.7초 | 호두까기 11장 끝맺음: 플루트, 하프, 조용히 | 0.90/0.64 |
+| `music/el_nc_sugarplum_night.mp3` | 사탕 요정의 춤(1892) | 47.3초 | 호두까기 5장 한밤: 첼레스타, 낮은 베이스클라리넷 | 0.98/0.59 |
+| `music/el_nc_sugarplum.mp3` | 사탕 요정의 춤(1892) | 37.7초 | 호두까기 10장(왈츠 뒤, 겹치지 않게): 첼레스타 | 0.99/0.59 |
+
+악기 이름은 생성 지시(프롬프트)에 적은 것이다. 실제 소리는 사람이 들어 보고 확정한다.
+
+**웅장한 관현악 판(2026-11-28 사용자 "좀 더 웅장하게는 안 되나?")**: 위 호두까기 9곡과 같은 기준 음원(conditioning_ref xhigh)에 프롬프트만 큰 관현악(현악 합주, 호른, 트럼펫, 팀파니, 하프, 첼레스타, 넓은 공간감)으로 바꿔 따로 만들었다. 기존 파일은 그대로 두었다. 곡마다 3~6회 생성해 align 과 간단한 웅장함 측정(`grandeur.py`: 음량 범위 LRA, 250Hz 아래 저음 비율, 스펙트럼 중심)으로 골랐다. 프롬프트에 작곡가 이름이나 곡 제목을 넣으면 생성이 '저작권 자료 감지'로 거절되어 뺐다. 받아쓰기 의심이 나온 2개(왈츠 본 연주, 아침)는 의심 없는 다른 시도로 바꿨다.
+
+| 파일 | 곡 | 길이 | 쓰는 장면 | align |
+|---|---|---|---|---|
+| `music/el_nc_march_light_orch.mp3` | 행진곡 | 45.1초 | 1~2장 | 0.81/0.60 |
+| `music/el_nc_march_parade_orch.mp3` | 행진곡 | 43.6초 | 6장 | 0.90/0.61 |
+| `music/el_nc_reedflutes_orch.mp3` | 갈대피리의 춤 | 38.0초 | 3장, 7장 | 0.84/0.60 |
+| `music/el_nc_waltz_box_orch.mp3` | 꽃의 왈츠 | 42.4초 | 4장, 8장(부드럽게) | 0.92/0.64 |
+| `music/el_nc_waltz_snow_orch.mp3` | 꽃의 왈츠 | 41.6초 | 9장 | 0.88/0.62 |
+| `music/el_nc_waltz_main_orch.mp3` | 꽃의 왈츠 | 48.6초 | 10장 본 연주(가장 크게) | 0.90/0.62 |
+| `music/el_nc_waltz_morning_orch.mp3` | 꽃의 왈츠 | 37.1초 | 11장(부드럽게) | 0.98/0.63 |
+| `music/el_nc_sugarplum_night_orch.mp3` | 사탕 요정의 춤 | 46.0초 | 5장 한밤(부드럽게) | 0.97/0.59 |
+| `music/el_nc_sugarplum_orch.mp3` | 사탕 요정의 춤 | 37.5초 | 10장 | 0.99/0.59 |
+
+어느 판을 쓸지는 사용자가 들어 보고 정한다.
+
+**화려한 캐럴 판(2026-11-28 사용자 "진저브레드와 구두장이는 더 화려한 캐롤")**: 두 편 11곡을 같은 기준 음원에 크리스마스 영화 음악 같은 관현악(썰매방울, 글로켄슈필, 금관, 현악 합주, 팀파니) 프롬프트로 따로 만들었다. 기존 파일은 그대로 두었다. 곡마다 3회(We Wish 두 곡은 선율이 묻혀 프롬프트를 바꿔 가며 9~14회) 생성해 align 과 `grandeur.py` 로 골랐다. 크리스마스 전날 밤은 잠자리 동화라 바꾸지 않았다.
+
+| 파일 | 곡 | 길이 | 쓰는 장면 | align |
+|---|---|---|---|---|
+| `music/el_es_wish_workshop_orch.mp3` | We Wish You a Merry Christmas | 44.0초 | 구두장이 1장, 7~8장 | 0.84/0.63 |
+| `music/el_es_deck_day_orch.mp3` | Deck the Halls | 53.7초 | 구두장이 2~4장 | 1.00/0.57 |
+| `music/el_es_noel_candle_orch.mp3` | The First Noel | 54.3초 | 구두장이 5장, 9장(화려하되 부드럽게) | 0.82/0.62 |
+| `music/el_es_wenceslas_tiptoe_orch.mp3` | Good King Wenceslas | 47.0초 | 구두장이 6장(화려하되 부드럽게) | 0.92/0.60 |
+| `music/el_es_deck_dance_orch.mp3` | Deck the Halls | 50.4초 | 구두장이 10~11장 | 0.99/0.57 |
+| `music/el_es_wish_xmas_orch.mp3` | We Wish You a Merry Christmas | 43.2초 | 구두장이 12장 | 0.81/0.65 |
+| `music/el_gb_jingle_bake_orch.mp3` | Jingle Bells | 37.7초 | 진저브레드맨 1~3장 | 0.97/0.65 |
+| `music/el_gb_jingle_chase_orch.mp3` | Jingle Bells | 41.3초 | 진저브레드맨 4~5장 | 0.81/0.61 |
+| `music/el_gb_deck_chase_orch.mp3` | Deck the Halls | 45.4초 | 진저브레드맨 6~8장 | 0.87/0.58 |
+| `music/el_gb_godrest_fox_orch.mp3` | God Rest Ye Merry, Gentlemen | 39.2초 | 진저브레드맨 9~10장 | 1.00/0.63 |
+| `music/el_gb_jingle_snow_orch.mp3` | Jingle Bells | 50.2초 | 진저브레드맨 11장(화려하되 부드럽게) | 1.00/0.68 |
+
+호두까기 인형 효과음 26개(`sfx/el_nc_*.mp3`, Sound Effects eleven_text_to_sound_v2, 프롬프트에 'no voice', 받아쓰기 의심 0. 턱 딱, 매듭 현, 작은북 3개는 첫 생성이 웃음 비슷한 받아쓰기, 거의 무음이라 다시 만듦):
+
+| 파일 | 장면 | 길이 | 쓰임 |
+|---|---|---|---|
+| `sfx/el_nc_door_knock.mp3` | nc 1 | 1.2초 | 1장 문 두드림 똑똑똑 |
+| `sfx/el_nc_door_bell.mp3` | nc 1 | 1.7초 | 1장 문 열림 작은 방울 |
+| `sfx/el_nc_box_rustle.mp3` | nc 2 | 0.91초 | 2장 상자 종이 사각 |
+| `sfx/el_nc_lid_ding.mp3` | nc 2 | 1.48초 | 2장 뚜껑 열림 맑은 딩 |
+| `sfx/el_nc_jaw_crack.mp3` | nc 3 | 0.48초 | 3장 턱 이음새 딱 |
+| `sfx/el_nc_nut_roll.mp3` | nc 3 | 1.81초 | 3장 호두 또르르 |
+| `sfx/el_nc_cloth_swish.mp3` | nc 4 | 0.77초 | 4장 손수건 스륵 |
+| `sfx/el_nc_knot_pluck.mp3` | nc 4 | 1.0초 | 4장 매듭 현 튕김 |
+| `sfx/el_nc_basket_set.mp3` | nc 4 | 0.96초 | 4장 바구니 사박 |
+| `sfx/el_nc_clock_bong.mp3` | nc 5 | 3.0초 | 5장 시계 뎅 |
+| `sfx/el_nc_tree_grow.mp3` | nc 5 | 2.48초 | 5장 나뭇가지 바스락 |
+| `sfx/el_nc_wink_ting.mp3` | nc 5 | 0.8초 | 5장 인형 눈짓 팅 |
+| `sfx/el_nc_snare_march.mp3` | nc 6 | 1.15초 | 6장 작은북 행진 |
+| `sfx/el_nc_mouse_pizz.mp3` | nc 6 | 0.59초 | 6장 생쥐 귀 피치카토 |
+| `sfx/el_nc_slipper_whoosh.mp3` | nc 7 | 0.52초 | 7장 슬리퍼 휙 |
+| `sfx/el_nc_slipper_tap.mp3` | nc 7 | 0.6초 | 7장 깔개에 톡 |
+| `sfx/el_nc_mice_scurry.mp3` | nc 7 | 1.25초 | 7장 꼬리들 도로록 |
+| `sfx/el_nc_cape_flutter.mp3` | nc 8 | 1.01초 | 8장 옷자락 사락 |
+| `sfx/el_nc_warm_chord.mp3` | nc 8 | 2.48초 | 8장 매듭 보일 때 따뜻한 화음 |
+| `sfx/el_nc_snow_tin.mp3` | nc 9 | 1.0초 | 9장 눈송이 틴 |
+| `sfx/el_nc_snow_touch.mp3` | nc 9 | 1.2초 | 9장 손에 닿는 포슬 |
+| `sfx/el_nc_gate_wafer.mp3` | nc 10 | 1.48초 | 10장 웨이퍼 문 사각 |
+| `sfx/el_nc_tiptoe_ting.mp3` | nc 10 | 0.8초 | 10장 요정 발끝 또롱 |
+| `sfx/el_nc_petal_fold.mp3` | nc 10 | 1.2초 | 10장 마지막 꽃잎 사락 |
+| `sfx/el_nc_morning_birds.mp3` | nc 11 | 3.83초 | 11장 아침 새소리 |
+| `sfx/el_nc_transform_shimmer.mp3` | nc 8 | 2.0초 | 8장 변신 반짝(원작 마법) |
