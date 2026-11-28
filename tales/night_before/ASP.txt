@@ -9,7 +9,7 @@ dad_sleep: 1.875
 dad_wake: 1.2
 dad_dash: 1.0067
 dad_open_window: 0.8017
-dad_look_out: 0.4717
+dad_look_out: 0.4
 dad_window_face: 0.7583
 dad_window_up: 0.76
 dad_turn: 0.5267

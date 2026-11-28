@@ -732,18 +732,31 @@
       fg('gb_fg_fir_branch_l', X(70, 330), 230, HT.gb_fg_fir_branch_l);
     }
     /* 눈가루 덮기: 흰 둥근 조각 40개가 아래에서 위로 퍽 → 덮였다가 흩어짐(코드 파티클) */
+    /* 눈가루 퍽(10장): 먹는 모습은 보이지 않게 여우와 진저브레드맨 둘레만 눈 조각이 잠깐 덮는다.
+       2026-11-28 사용자 결정: 화면 전체를 2~3초 덮던 것(흰 판 + 큰 조각 40개)을 1초 안쪽, 여우 둘레만으로 줄였다.
+       덮인 사이(0.35초)에 진저브레드맨을 숨기고 여우 입을 다문다. 끝나면 조각은 스스로 지운다 */
     function snowBurst() {
-      const g = T.el('g', { 'pointer-events': 'none' }, T.fx); S.burst = g;
-      const cover = T.el('rect', { x: -400, y: -200, width: 1800, height: 1000, fill: '#F4F6FA', opacity: 0 }, g);
-      cover.animate([{ opacity: 0 }, { opacity: .96 }], { duration: 600, fill: 'forwards', delay: 200 });
-      for (let i = 0; i < 40; i++) {
-        const r = 30 + Math.random() * 60, x = (P ? LX - 220 : -40) + Math.random() * (P ? 440 : 1080);
-        const c = T.el('circle', { cx: x, cy: 640, r, fill: i % 3 ? '#FFFFFF' : '#DCEBF5' }, g);
-        c.animate([{ transform: 'translate(0,0)' }, { transform: `translate(${(Math.random() - .5) * 120}px, ${-300 - Math.random() * 520}px)` }], { duration: 600, easing: 'ease-out', fill: 'forwards', delay: Math.random() * 150 });
-      }
+      const cx = (fox.x + man.x) / 2, cy = ROAD - 95, done = () => { hide(man); fox.look('block_front'); };
       cue('el_gb_snow_burst', .7) || cue('xm_cymbal_tap', .5);
+      if (document.hidden) { done(); return sleep(50); }
+      const g = T.el('g', { 'pointer-events': 'none' }, T.fx);
+      for (let i = 0; i < 24; i++) {
+        const ang = Math.random() * Math.PI * 2, d = Math.sqrt(Math.random());
+        const x = cx + Math.cos(ang) * 120 * d, y = cy + Math.sin(ang) * 95 * d, r = 26 + Math.random() * 26;
+        const c = T.el('circle', { cx: x, cy: ROAD, r, fill: i % 3 ? '#FFFFFF' : '#DCEBF5', opacity: 0 }, g);
+        c.style.transformBox = 'fill-box'; c.style.transformOrigin = 'center';   // 줄고 커질 때 제자리에서(SVG 기본은 원점 기준이라 왼쪽 위로 날아갔다)
+        const dx = (x - cx) * .9, dy = (y - cy) * .9 - 40;
+        c.animate([
+          { transform: 'translate(0px,0px) scale(.3)', opacity: 0 },
+          { transform: `translate(0px,${y - ROAD}px) scale(1)`, opacity: 1, offset: .32 },
+          { transform: `translate(0px,${y - ROAD}px) scale(1)`, opacity: 1, offset: .5 },
+          { transform: `translate(${dx}px,${y - ROAD + dy}px) scale(.6)`, opacity: 0 }
+        ], { duration: 850, easing: 'ease-out', fill: 'forwards', delay: Math.random() * 60 });
+      }
+      setTimeout(done, 340);
+      return sleep(920).then(() => g.remove());
     }
-    const unBurst = async () => { const g = S.burst; if (!g) return; S.burst = null; await g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: document.hidden ? 50 : 1200, fill: 'forwards' }).finished; g.remove(); };
+    const unBurst = async () => { /* 2026-11-28: 눈가루가 스스로 걷힌다(옛 화면 덮개 걷기 자리) */ };
     const small = k => { try { const b = document.getElementById('bubbleText'); if (b) b.style.fontSize = k ? `${k}em` : ''; } catch (e) { /* */ } };
     B[10] = [
       async () => {
@@ -768,9 +781,8 @@
         stopRun(man); man.look('caught_front'); man.place(X(745, 650), ROAD); man.hop(10, 220);
       },
       'S10-3',
-      async () => { fox.look('mouth_open', 'left'); cue('el_gb_snap_kazoo', .5); await sleep(400); snowBurst(); await sleep(600); hide(man); },
-      'S10-4',
-      async () => { small(.85); cue('xm_woodblock_tok', .4); },
+      'S10-4',   // "잡았다!" 뒤에 와앙 → 눈가루 퍽(기획서 장면표 순서. 2026-11-28 눈가루를 짧게 줄이며 '잡았다' 앞에서 뒤로 옮김: 앞에 두면 진저브레드맨이 대사 전에 사라져 보였다)
+      async () => { fox.look('mouth_open', 'left'); cue('el_gb_snap_kazoo', .5); await sleep(400); await snowBurst(); small(.85); cue('xm_woodblock_tok', .4); },
       'S10-5',
       async () => { small(.7); cue('xm_woodblock_tok', .35); },
       'S10-6',

@@ -11,7 +11,8 @@
   const BG_YARD = 'nb_bg_yard';      // ← 앞마당 빛 상자가 합성 검수를 통과하면 'nb_bg_yard_lb' 로 바꾼다(5~7장)
   const BG_SKY = 'nb_bg_sky_lb';     // ← 12장 빛 상자판(검수 탈락이면 'nb_bg_sky')
   const AS = '../../assets/v3w/';
-  const src = k => AS + k + '.webp';
+  const IMGV = { nb_dad_look_out: 'lo2' };   // 같은 이름으로 다시 그린 그림: 옛 그림이 캐시에 남지 않게(2026-11-28)
+  const src = k => AS + k + '.webp' + (IMGV[k] ? '?v=' + IMGV[k] : '');
   const QS = (() => { try { return new URLSearchParams(location.search); } catch (e) { return new URLSearchParams(''); } })();
   const L = typeof NB_LINES !== 'undefined' ? NB_LINES : {};
   const MORAL = '모두에게 즐거운 크리스마스, 그리고 모두 포근히 잘 자요.';
@@ -19,18 +20,18 @@
 
   /* ---------- 비율(ASP.txt). preload 가 실제 그림 비율로 다시 덮는다 ---------- */
   const ASP = {};
-  'santa_stand_pack .7917 deer_stand .9617 mom_sleep 1.9438 kid1_sleep 1.7143 kid2_sleep 1.7208 mouse_sleep 1.115 dad_stand .4067 dad_sleep 1.875 dad_wake 1.2 dad_dash 1.0067 dad_open_window .8017 dad_look_out .4717 dad_window_face .7583 dad_window_up .76 dad_turn .5267 dad_startled .4017 dad_peek .3683 dad_giggle .405 dad_relieved .3783 dad_watch_up .5283 dad_wave .5567 santa_drive .9717 santa_whistle .8233 santa_bound_down .8083 santa_land 1.055 santa_show_pack .7767 santa_laugh .78 santa_wink .8133 santa_fill 1.0633 santa_done .75 santa_finger_nose .8083 santa_rise .7817 santa_jump_sleigh .9233 santa_sleigh_wave 1.1583 deer_prance .6617 deer_run 1.425 deer_fly 1.22 deer_roof .8083 kid1_smile 1.7143 kid2_smile 1.7208 prop_sleigh 1.4917 prop_stocking_red .5883 prop_stocking_green .59 prop_stocking_blue .5883 prop_stocking_yellow .5867 prop_stocking_red_full .6117 prop_stocking_green_full .6167 prop_stocking_blue_full .6 prop_stocking_yellow_full .5867 prop_gift_a .8717 prop_gift_b .87 prop_gift_c .8717 prop_gift_d .8717 prop_shutter_l .5733 prop_shutter_r .575 prop_sash .975 prop_dream_bubble 1.1267 prop_card_cherry .765 prop_card_snowball .7667 prop_card_jelly .765 prop_marker_roof 3.7815 prop_marker_yard 3.7657 prop_marker_wall .3967 prop_marker_sock 3.75 prop_marker_shelf 3.7657 prop_marker_floor 3.7975 prop_ash_cloud 2.9412 prop_leaves 1.495 prop_snow_puff 1.1917 prop_holly 1.3383 prop_candle .7567 prop_lamb_toy 1.41 prop_harness_red 1.0983 prop_harness_green 1.0983 prop_harness_blue 1.0983 prop_harness_marigold 1.0967 prop_harness_plum 1.0983 prop_harness_persimmon 1.0533 prop_harness_lagoon 1.1017 prop_harness_pink 1.0983'
+  'santa_stand_pack .7917 deer_stand .9617 mom_sleep 1.9438 kid1_sleep 1.7143 kid2_sleep 1.7208 mouse_sleep 1.115 dad_stand .4067 dad_sleep 1.875 dad_wake 1.2 dad_dash 1.0067 dad_open_window .8017 dad_look_out .4 dad_window_face .7583 dad_window_up .76 dad_turn .5267 dad_startled .4017 dad_peek .3683 dad_giggle .405 dad_relieved .3783 dad_watch_up .5283 dad_wave .5567 santa_drive .9717 santa_whistle .8233 santa_bound_down .8083 santa_land 1.055 santa_show_pack .7767 santa_laugh .78 santa_wink .8133 santa_fill 1.0633 santa_done .75 santa_finger_nose .8083 santa_rise .7817 santa_jump_sleigh .9233 santa_sleigh_wave 1.1583 deer_prance .6617 deer_run 1.425 deer_fly 1.22 deer_roof .8083 kid1_smile 1.7143 kid2_smile 1.7208 prop_sleigh 1.4917 prop_stocking_red .5883 prop_stocking_green .59 prop_stocking_blue .5883 prop_stocking_yellow .5867 prop_stocking_red_full .6117 prop_stocking_green_full .6167 prop_stocking_blue_full .6 prop_stocking_yellow_full .5867 prop_gift_a .8717 prop_gift_b .87 prop_gift_c .8717 prop_gift_d .8717 prop_shutter_l .5733 prop_shutter_r .575 prop_sash .975 prop_dream_bubble 1.1267 prop_card_cherry .765 prop_card_snowball .7667 prop_card_jelly .765 prop_marker_roof 3.7815 prop_marker_yard 3.7657 prop_marker_wall .3967 prop_marker_sock 3.75 prop_marker_shelf 3.7657 prop_marker_floor 3.7975 prop_ash_cloud 2.9412 prop_leaves 1.495 prop_snow_puff 1.1917 prop_holly 1.3383 prop_candle .7567 prop_lamb_toy 1.41 prop_harness_red 1.0983 prop_harness_green 1.0983 prop_harness_blue 1.0983 prop_harness_marigold 1.0967 prop_harness_plum 1.0983 prop_harness_persimmon 1.0533 prop_harness_lagoon 1.1017 prop_harness_pink 1.0983'
     .split(' ').reduce((k, v, i, a) => { if (i % 2) ASP['nb_' + a[i - 1]] = +v; return k; }, 0);
 
   /* ---------- 높이(HT, 장면 비율 K=1 기준) ----------
-     아빠: 얼굴 폭(그림 px, 높이 600 그림, 누움 480) stand 136 · dash 159 · giggle 134 · look_out 133 · peek 139 · relieved 132 · startled 139 · turn 133 · watch_up 128 · wave 130 ·
+     아빠: 얼굴 폭(그림 px, 높이 600 그림, 누움 480) stand 136 · dash 159 · giggle 134 · look_out 127(2026-11-28 까치발 자세로 다시 그림) · peek 139 · relieved 132 · startled 139 · turn 133 · watch_up 128 · wave 130 ·
            window_face 240 · window_up 224 · sleep 206(높이 480) · wake 179. 덧문 열기(뒷모습)는 얼굴이 1/4만 보여 서기와 같게 둔다.
      산타(아빠의 0.7): 앞쪽 볼 지름(자동 측정 뒤 나란히 놓고 사진으로 고친 값) stand_pack 40 · drive 39 · whistle 40 · bound_down 40 · land 43 · show_pack 40 · laugh 40 · wink 39 · fill 40 · done 39 · finger_nose 38 · rise 38 · jump_sleigh 42 · sleigh_wave 42.
      순록(아빠의 0.42, 뿔 끝까지): 귀 안쪽 길이 stand 81 · roof 78 · prance 73 · run 73 · fly(귀가 접혀 사진으로 견줌) 73.
      엄마 머리 = 아빠 머리, 아이 머리 = 아빠의 0.85(PLAN 크기표). 소품은 PLAN 크기표 그대로 */
   const DAD = 220, SANTA = DAD * .7, DEER = DAD * .42;
   const HT = {};
-  const DADFW = { stand: 136, dash: 159, giggle: 134, look_out: 133, open_window: 136, peek: 139, relieved: 132, startled: 139, turn: 133, watch_up: 128, wave: 130, window_face: 240, window_up: 224, sleep: 206, wake: 179 };
+  const DADFW = { stand: 136, dash: 159, giggle: 134, look_out: 127, open_window: 136, peek: 139, relieved: 132, startled: 139, turn: 133, watch_up: 128, wave: 130, window_face: 240, window_up: 224, sleep: 206, wake: 179 };
   Object.entries(DADFW).forEach(([p, fw]) => { HT['nb_dad_' + p] = Math.round((p === 'sleep' ? 480 : 600) * (136 * DAD / 600) / fw); });
   const SCK = { stand_pack: 40, drive: 39, whistle: 40, bound_down: 40, land: 43, show_pack: 40, laugh: 40, wink: 39, fill: 40, done: 39, finger_nose: 38, rise: 38, jump_sleigh: 41, sleigh_wave: 45 };   // 2026-11-28 나란히 놓고 머리 크기로 다시 봄(볼 자동 측정이 수염·코와 붙어 튄 값은 사진으로 고침)
   Object.entries(SCK).forEach(([p, c]) => { HT['nb_santa_' + p] = Math.round(SANTA * 40 / c); });
@@ -400,7 +401,7 @@
           await gl.animate(fade, { duration: 600, fill: 'forwards' }).finished.catch(() => {});
           await sleep(700);
         }
-        S.dad.look('look_out', 'right'); S.dad.place(840, 474);
+        S.dad.look('look_out', 'right'); S.dad.place(862, 474);   // 2026-11-28: 까치발 자세로 다시 그려 두 손이 창턱에 얹히게(옛 자세는 손이 창턱보다 약 80 낮았다)
       },
       /* 5 */
       async arrive() {
